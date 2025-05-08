@@ -16,7 +16,7 @@
 namespace extend\ba;
 
 use Throwable;
-use Exception;
+use exception;
 
 /**
  * 依赖管理
