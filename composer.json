@@ -27,7 +27,6 @@
     "php": ">=8.1",
     "workerman/webman-framework": "^2.1",
     "monolog/monolog": "^2.0",
-    "rocareer/radmin": "dev-master",
     "rocareer/webman-dev": "dev-master",
     "ext-gd": "*"
   },
