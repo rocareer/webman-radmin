@@ -14,10 +14,10 @@
  *
  */
 
-use middleware\RadminAuthMiddleware;
+use app\middleware\RadminAuthMiddleware;
 use Webman\Route;
 
-    
+
 // 关键：禁用默认的静态文件处理
 //Route::disableDefaultRoute();
 

@@ -1,10 +1,9 @@
 <?php
 
-namespace middleware;
+namespace app\middleware;
 
 
 use exception\BusinessException;
-use service\member\state\State;
 use support\member\Member;
 use support\StatusCode;
 use support\token\Token;

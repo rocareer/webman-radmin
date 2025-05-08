@@ -13,20 +13,20 @@
  *
  */
 
-namespace middleware;
+namespace app\middleware;
 
-use Throwable;
+use app\admin\model\DataRecycle;
+use app\admin\model\DataRecycleLog;
+use app\admin\model\SensitiveData;
+use app\admin\model\SensitiveDataLog;
 use exception;
+use extend\ba\TableManager;
 use support\Log;
 use support\think\Db;
+use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
-use extend\ba\TableManager;
-use app\admin\model\DataRecycle;
-use app\admin\model\SensitiveData;
-use app\admin\model\DataRecycleLog;
-use app\admin\model\SensitiveDataLog;
 
 class AdminSecurity implements MiddlewareInterface
 {

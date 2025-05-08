@@ -14,7 +14,7 @@ return [
 
     // 扫描错误码
     'status_scan_path' => array_merge([
-        radmin_base(),
+        base_path(),
 
 //        config_path(),
 //        base_path() . '/process',
