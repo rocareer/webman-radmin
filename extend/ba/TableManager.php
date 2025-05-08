@@ -146,7 +146,7 @@ class TableManager
     public static function getConnectionConfig(?string $connection = null): array
     {
         $connection = self::getConnection($connection);
-        $connection = radmin_config("think-orm.connections.$connection");
+        $connection =  config("think-orm.connections.$connection");
         if (!is_array($connection)) {
             throw new Exception('Database connection configuration error');
         }

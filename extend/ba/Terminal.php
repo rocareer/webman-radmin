@@ -146,7 +146,7 @@ class Terminal
             return false;
         }
 
-        $commands = radmin_config('terminal.commands');
+        $commands =  config('terminal.commands');
         if (stripos($key, '.')) {
             $key = explode('.', $key);
             if (!array_key_exists($key[0], $commands) || !is_array($commands[$key[0]]) || !array_key_exists($key[1], $commands[$key[0]])) {
@@ -462,7 +462,7 @@ class Terminal
     public static function changeTerminalConfig($config = []): bool
     {
         // 不保存在数据库中，因为切换包管理器时，数据库资料可能还未配置
-        $oldPackageManager = radmin_config('terminal.npm_package_manager');
+        $oldPackageManager =  config('terminal.npm_package_manager');
         $newPackageManager = request()->post('manager', $config['manager'] ?? $oldPackageManager);
 
         if ($oldPackageManager == $newPackageManager) {
