@@ -1,10 +1,11 @@
 <?php
 
+
 namespace support\member\admin;
 
-use support\member\Authenticator;
-use support\member\Member;
-use exception\UnauthorizedHttpException;
+use plugin\radmin\support\member\Authenticator;
+use plugin\radmin\support\member\Member;
+use Rocareer\Radmin\Exception\UnauthorizedHttpException;
 
 class AdminAuthenticator extends Authenticator
 {

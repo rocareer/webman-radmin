@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * File      AdminService.php
  * Author    albert@rocareer.com
@@ -8,17 +10,16 @@
 
 namespace support\member\admin;
 
-use app\admin\model\AdminGroup;
-use support\member\Service;
-use support\token\Token;
+use plugin\radmin\app\admin\model\AdminGroup;
+use plugin\radmin\support\member\Service;
+use plugin\radmin\support\token\Token;
 use support\think\Db;
 use Throwable;
 
 class AdminService extends Service
 {
-    protected string               $role = 'admin';
-
-    public ?int $id = null;
+    protected string $role = 'admin';
+    public ?int      $id   = null;
     /**
      * 默认配置
      * @var array|string[]

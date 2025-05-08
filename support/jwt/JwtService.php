@@ -1,13 +1,14 @@
 <?php
 
+
 namespace support\jwt;
 
-use exception;
+use Exception;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use support\StatusCode;
-use exception\TokenException;
+use Rocareer\Radmin\Exception\TokenException;
 use stdClass;
 use support\Cache;
 
@@ -149,7 +150,7 @@ class JwtService
         if ($this->inBlackList($token)) {
             return true;
         }
-        Cache::set('Jwt:blacklist-' . $token, 1, $expire);
+        Cache::set('Jwt-blacklist-' . $token, 1, $expire);
         return true;
     }
 
@@ -158,6 +159,6 @@ class JwtService
      */
     public function inBlackList(string $token): bool
     {
-        return Cache::has('Jwt:blacklist-' . $token);
+        return Cache::has('Jwt-blacklist-' . $token);
     }
 }

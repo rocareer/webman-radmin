@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * File      UserService.php
  * Author    albert@rocareer.com
@@ -8,9 +10,20 @@
 
 namespace support\member\user;
 
-use support\member\Service;
+use plugin\radmin\support\member\Service;
 
 class UserService extends Service
 {
+    protected string $role = 'user';
+
+    /**
+     * 附加用户信息
+     * By albert  2025/05/08 18:23:55
+     * @return void
+     */
+    public function extendMemberInfo(): void
+    {
+
+    }
 
 }

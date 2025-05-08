@@ -28,7 +28,16 @@
     "workerman/webman-framework": "^2.1",
     "monolog/monolog": "^2.0",
     "rocareer/webman-dev": "dev-master",
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "ext-iconv": "*",
+    "nelexa/zip": "^4.0",
+    "firebase/php-jwt": "^6.11",
+    "rocareer/webman-migration": "dev-master",
+    "rocareer/webman-status-code": "dev-master",
+    "webman/think-orm": "^2.1",
+    "webman/event": "^1.0",
+    "webman/cache": "^2.1",
+    "webman/console": "^2.1"
   },
   "suggest": {
     "ext-event": "For better performance. "
@@ -38,7 +47,7 @@
       "": "./",
       "app\\": "./app",
       "App\\": "./app",
-      "app\\View\\Components\\": "./app/view/components"
+      "app\\View\\": "./app/view/"
     }
   },
   "scripts": {

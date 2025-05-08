@@ -1,9 +1,10 @@
 <?php
 
+
 namespace support\member\admin;
 
-use support\member\State;
-use exception\AuthException;
+use plugin\radmin\support\member\State;
+use Rocareer\Radmin\Exception\AuthException;
 
 class AdminState extends State
 {

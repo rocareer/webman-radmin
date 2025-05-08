@@ -1,16 +1,18 @@
 <?php
+
+
 namespace support\member;
 
-use exception\BusinessException;
-use support\member\admin\AdminAuthenticator;
-use support\member\admin\AdminModel;
-use support\member\admin\AdminService;
-use support\member\admin\AdminState;
-use support\member\user\UserAuthenticator;
-use support\member\user\UserModel;
-use support\member\user\UserService;
-use support\member\user\UserState;
+use plugin\radmin\support\member\admin\AdminAuthenticator;
+use plugin\radmin\support\member\admin\AdminModel;
+use plugin\radmin\support\member\admin\AdminService;
+use plugin\radmin\support\member\admin\AdminState;
+use plugin\radmin\support\member\user\UserAuthenticator;
+use plugin\radmin\support\member\user\UserModel;
+use plugin\radmin\support\member\user\UserService;
+use plugin\radmin\support\member\user\UserState;
 use support\StatusCode;
+use Rocareer\Radmin\Exception\BusinessException;
 
 class Factory
 {
@@ -18,22 +20,22 @@ class Factory
 
     private static array $serviceClasses = [
         'admin' => AdminService::class,
-        'user' => UserService::class,
+        'user'  => UserService::class,
     ];
 
     private static array $modelClasses = [
         'admin' => AdminModel::class,
-        'user' => UserModel::class,
+        'user'  => UserModel::class,
     ];
 
     private static array $stateManagerClasses = [
         'admin' => AdminState::class,
-        'user' => UserState::class,
+        'user'  => UserState::class,
     ];
 
     private static array $authenticatorClasses = [
         'admin' => AdminAuthenticator::class,
-        'user' => UserAuthenticator::class,
+        'user'  => UserAuthenticator::class,
     ];
 
     /**
@@ -41,13 +43,14 @@ class Factory
      * @param string $role 角色类型
      * @param string $type 类型 (service, model, state, authenticator)
      * @return object
+     * @throws BusinessException
      */
     public static function getInstance(string $role, string $type): object
     {
         $classMap = [
-            'service' => self::$serviceClasses,
-            'model' => self::$modelClasses,
-            'state' => self::$stateManagerClasses,
+            'service'       => self::$serviceClasses,
+            'model'         => self::$modelClasses,
+            'state'         => self::$stateManagerClasses,
             'authenticator' => self::$authenticatorClasses,
         ];
 
@@ -63,7 +66,7 @@ class Factory
         $cacheKey = "{$type}_{$role}";
 
         if (!isset(self::$instances[$cacheKey])) {
-            $class = $classMap[$type][$role];
+            $class    = $classMap[$type][$role];
             $instance = new $class();
 
             // 检查接口实现
@@ -98,17 +101,17 @@ class Factory
 
     /**
      * 注册自定义类
-     * @param string $role 角色类型
+     * @param string $role  角色类型
      * @param string $class 类名
-     * @param string $type 类型 (service, model, state, authenticator)
+     * @param string $type  类型 (service, model, state, authenticator)
      * @throws BusinessException
      */
     public static function register(string $role, string $class, string $type): void
     {
         $classMap = [
-            'service' => &self::$serviceClasses,
-            'model' => &self::$modelClasses,
-            'state' => &self::$stateManagerClasses,
+            'service'       => &self::$serviceClasses,
+            'model'         => &self::$modelClasses,
+            'state'         => &self::$stateManagerClasses,
             'authenticator' => &self::$authenticatorClasses,
         ];
 
@@ -188,7 +191,7 @@ class Factory
     /**
      * 清除实例缓存
      * @param string|null $role 指定类型，为null时清除所有
-     * @param string $type 类型 (service, model, state, authenticator)
+     * @param string      $type 类型 (service, model, state, authenticator)
      */
     public static function clearInstances(?string $role = null, string $type = 'service'): void
     {

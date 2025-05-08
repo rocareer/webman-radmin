@@ -1,43 +1,30 @@
 <?php
 
+
 namespace support\member\user;
 
-use app\admin\model\User;
-use exception\AuthException;
-use exception\BusinessException;
-use support\member\Authenticator;
+use plugin\radmin\support\member\Authenticator;
+use plugin\radmin\support\member\Member;
+use Rocareer\Radmin\Exception\UnauthorizedHttpException;
 
 class UserAuthenticator extends Authenticator
 {
-
-    protected string $role ='user';
-    /**
-     * 构造函数
-     */
-    public function __construct()
-    {
-        $this->userModel = new User();
-    }
+    protected string $role = 'user';
 
     /**
      * 认证用户
      * @param array $credentials 用户凭证
-     * @return array 认证结果
-     * @throws AuthException|BusinessException
+     * @return object
+     * @throws UnauthorizedHttpException
      */
-    public function authenticate(array $credentials): array
+    public function authenticate(array $credentials): object
     {
         return parent::authenticate($credentials);
     }
 
-
-    /**
-     * 扩展用户特有信息
-     * @return array
-     */
-    protected function extendUserInfo(): array
+    public function extendMemberInfo(): void
     {
-        return [];
+
     }
 
 

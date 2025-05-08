@@ -251,7 +251,7 @@ class ClickCaptcha
     /**
      * 绘制Icon
      */
-    protected function iconCover($bgImg, $iconImgData)
+    protected function iconCover($bgImg, $iconImgData): void
     {
         $iconImage      = imagecreatefrompng(Filesystem::fsFit(radmin_public() . '/static/images/captcha/click/icons/' . $iconImgData['name'] . '.png'));
         $trueColorImage = imagecreatetruecolor($iconImgData['width'], $iconImgData['height']);

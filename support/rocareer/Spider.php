@@ -1,24 +1,12 @@
 <?php
-/*
- *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
- */
+
 
 
 namespace support\rocareer;
 
 
 
-use support\think\ThinkLang;
+use plugin\radmin\support\think\ThinkLang;
 use think\Facade;
 
 /**

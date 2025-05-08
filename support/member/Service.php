@@ -1,28 +1,26 @@
 <?php
 
+
 namespace support\member;
 
-use exception;
-use exception\BusinessException;
+use Exception;
 use Firebase\JWT\ExpiredException;
-use service\member\TokenException;
+use Rocareer\Radmin\Exception\TokenException;
 use support\StatusCode;
-use support\token\Token;
+use plugin\radmin\support\token\Token;
+use Rocareer\Radmin\Exception\BusinessException;
 use Throwable;
 use Webman\Event\Event;
 
 abstract class Service implements InterfaceService
 {
-
     //common
-    protected InterfaceService $service;
-    protected string           $role = 'admin';
-
-    protected string $error = '';
-
-    public ?int $id = null;
-
-    public ?string $username = null;
+    protected InterfaceAuthenticator $authenticator;
+    protected InterfaceService       $service;
+    protected string                 $role     = 'admin';
+    protected string                 $error    = '';
+    public ?int                      $id       = null;
+    public ?string                   $username = null;
     //state
     public bool $isLogin = false;
 
@@ -31,8 +29,8 @@ abstract class Service implements InterfaceService
     protected ?string $app;
 
     //instance
-    protected object                 $memberModel;
-    protected InterfaceAuthenticator $authenticator;
+    protected ?object $memberModel = null;
+
 
     public function __construct()
     {
@@ -109,15 +107,20 @@ abstract class Service implements InterfaceService
     /**
      * 登录 todo 参数修剪
      * By albert  2025/05/06 17:37:22
-     * @param array  $credentials
-     * @param string $role
-     * @param bool   $keep
+     * @param array $credentials
+     * @param bool  $keep
      * @return array
+     * @throws BusinessException
+     * @throws Throwable
      */
-    public function login(array $credentials, string $role, bool $keep = false): array
+    public function login(array $credentials, bool $keep = false): array
     {
         $credentials['keep'] = $keep;
-        $this->memberModel   = $this->authenticator->authenticate($credentials);
+        try {
+            $this->memberModel = $this->authenticator->authenticate($credentials);
+        } catch (Throwable $e) {
+            throw $e;
+        }
         //设置用户信息
         $this->setMember($this->memberModel);
         return $this->memberModel->toArray();
@@ -229,7 +232,6 @@ abstract class Service implements InterfaceService
      */
     public function setMember($member): void
     {
-        $this->memberModel = $member;
         $this->memberModel = $member;
         $this->id          = $member->id;
         $this->username    = $member->username;

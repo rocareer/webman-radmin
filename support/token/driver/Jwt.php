@@ -1,12 +1,24 @@
 <?php
+/**
+ *
+ *   +----------------------------------------------------------------------
+ *   | Rocareer [ ROC YOUR CAREER ]
+ *   +----------------------------------------------------------------------
+ *   | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
+ *   +----------------------------------------------------------------------
+ *   | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *   +----------------------------------------------------------------------
+ *   | Author: albert <Albert@rocareer.com>
+ *   +----------------------------------------------------------------------
+ **/
 
 namespace support\token\driver;
 
-use support\jwt\Jwt as JwtFacade;
+use plugin\radmin\support\jwt\Jwt as JwtFacade;
 use support\StatusCode;
-use support\token\TokenInterface;
-use exception\TokenException;
-use exception\TokenExpirationException;
+use plugin\radmin\support\token\TokenInterface;
+use Rocareer\Radmin\Exception\TokenException;
+use Rocareer\Radmin\Exception\TokenExpirationException;
 use stdClass;
 
 class Jwt implements TokenInterface

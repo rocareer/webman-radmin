@@ -1,4 +1,6 @@
 <?php
+/** @noinspection ALL */
+
 /*
  *
  *  * // +----------------------------------------------------------------------
@@ -59,7 +61,7 @@ class Depends
      * @param array $content
      * @throws Throwable
      */
-    public function setContent(array $content = [])
+    public function setContent(array $content = []): void
     {
         if (!$content) $content = $this->jsonContent;
         if (!isset($content['name'])) {
@@ -114,7 +116,7 @@ class Depends
      
      * @throws Throwable
      */
-    public function addDepends(array $depends, bool $devEnv = false, bool $cover = false)
+    public function addDepends(array $depends, bool $devEnv = false, bool $cover = false): void
     {
         $content = $this->getContent(true);
         $dKey    = $devEnv ? ($this->type == 'npm' ? 'devDependencies' : 'require-dev') : ($this->type == 'npm' ? 'dependencies' : 'require');
@@ -136,7 +138,7 @@ class Depends
      
      * @throws Throwable
      */
-    public function removeDepends(array $depends, bool $devEnv = false)
+    public function removeDepends(array $depends, bool $devEnv = false): void
     {
         $content = $this->getContent(true);
         $dKey    = $devEnv ? ($this->type == 'npm' ? 'devDependencies' : 'require-dev') : ($this->type == 'npm' ? 'dependencies' : 'require');
