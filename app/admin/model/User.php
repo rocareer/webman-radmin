@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use app\common\model\BaseModel;
+use think\db\exception\DbException;
 use think\model\relation\BelongsTo;
 
 /**
@@ -44,6 +45,7 @@ class User extends BaseModel
      * @param int|string $uid         用户ID
      * @param string     $newPassword 新密码
      * @return int|User
+     * @throws DbException
      */
     public function resetPassword(int|string $uid, string $newPassword): int|User
     {

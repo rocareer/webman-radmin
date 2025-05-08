@@ -145,7 +145,7 @@ class Api extends BaseController
 
         //		 性能日志记录阈值可配置化
         //		$elapsed = microtime(true) - $start;
-        //		if($elapsed > config('plugin.radmin.slow_request_threshold', 0.7)) {
+        //		if($elapsed > config('slow_request_threshold', 0.7)) {
         //			Log::debug('Slow response: '.round($elapsed, 3).'s', [
         //				'uri'  => $this->request->uri(),
         //				'data' => $data,

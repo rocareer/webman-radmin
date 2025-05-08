@@ -41,7 +41,7 @@ class Index extends Frontend
 
         if ($this->request->adminIsLogin) {
             $rules     = [];
-            $userMenus = AdminHelper::getMenus();
+            $userMenus = Member::getMenus();
 
             // 首页加载的规则，验权，但过滤掉会员中心菜单
             foreach ($userMenus as $item) {
@@ -100,7 +100,7 @@ class Index extends Frontend
                     'allowed_mime_types',
                 ]),
             ],
-            'openMemberCenter' => config('plugin.radmin.buildadmin.open_member_center'),
+            'openMemberCenter' => config('buildadmin.open_member_center'),
             'userInfo'         => $userInfo,
             'menus'            => $menus,
             'rules'            => array_values($rules),

@@ -256,7 +256,7 @@ if (!function_exists('get_controller_list')) {
      */
     function get_controller_list(string $app = 'admin'): array
     {
-        $controllerDir = base_path() . '/plugin/radmin/app' . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
+        $controllerDir = app_path()  . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
         return Filesystem::getDirFiles($controllerDir);
     }
 }

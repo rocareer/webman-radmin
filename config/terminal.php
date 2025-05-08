@@ -37,23 +37,23 @@ return [
         // 测试命令
         'test'                  => [
             'npm'  => [
-                'cwd'     => 'plugin/radmin/public/npm-install-test',
+                'cwd'     => 'public/npm-install-test',
                 'command' => 'npm install',
             ],
             'cnpm' => [
-                'cwd'     => 'plugin/radmin/public/npm-install-test',
+                'cwd'     => 'public/npm-install-test',
                 'command' => 'cnpm install',
             ],
             'yarn' => [
-                'cwd'     => 'plugin/radmin/public/npm-install-test',
+                'cwd'     => 'public/npm-install-test',
                 'command' => 'yarn install',
             ],
             'pnpm' => [
-                'cwd'     => 'plugin/radmin/public/npm-install-test',
+                'cwd'     => 'public/npm-install-test',
                 'command' => 'pnpm install',
             ],
             'ni'   => [
-                'cwd'     => 'plugin/radmin/public/npm-install-test',
+                'cwd'     => 'public/npm-install-test',
                 'command' => 'ni install',
             ],
         ],

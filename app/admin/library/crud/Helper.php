@@ -575,7 +575,7 @@ class Helper
     {
         $pathArr = [];
         if ($value) {
-			$value=str_replace("plugin/radmin/app/admin/$type/","",$value);
+			$value=str_replace("app/admin/$type/","",$value);
             $value        = str_replace('.php', '', $value);
             $value        = str_replace(['.', '/', '\\', '_'], '/', $value);
             $pathArrTemp  = explode('/', $value);
@@ -604,8 +604,8 @@ class Helper
             throw new Exception('Unable to use internal variable:' . $lastName);
         }
 
-        $appDir       = base_path().'/plugin/radmin/app/' . $app . DIRECTORY_SEPARATOR;
-        $namespace    = "plugin\\radmin\\app\\$app\\$type" . ($pathArr ? '\\' . implode('\\',
+        $appDir       = base_path().'/app/' . $app . DIRECTORY_SEPARATOR;
+        $namespace    = "app\\$app\\$type" . ($pathArr ? '\\' . implode('\\',
 			        $pathArr) :
 		        '');
         $parseFile    = $appDir . $type . DIRECTORY_SEPARATOR . ($pathArr ? implode(DIRECTORY_SEPARATOR, $pathArr) . DIRECTORY_SEPARATOR : '') . $lastName . '.php';
@@ -687,7 +687,7 @@ class Helper
      */
     public static function getStubFilePath(string $name): string
     {
-        return radmin_app() .'/admin/'. DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'crud' . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . Filesystem::fsFit($name) . '.stub';
+        return app_path().'/admin/'. DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'crud' . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . Filesystem::fsFit($name) . '.stub';
     }
 
     /**
