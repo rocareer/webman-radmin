@@ -81,7 +81,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        $this->dontReport = radmin_config('exception.exception_handler.dont_report', []);
+        $this->dontReport =  config('exception.exception_handler.dont_report', []);
         parent::report($exception);
     }
 
@@ -92,7 +92,7 @@ class Handler extends ExceptionHandler
      */
     public function render(Request $request, Throwable $exception): Response
     {
-        $this->config = array_merge($this->config, radmin_config('exception.exception_handler', []) ?? []);
+        $this->config = array_merge($this->config,  config('exception.exception_handler', []) ?? []);
 
         $this->addRequestInfoToResponse($request);
         $this->solveAllException($exception);
