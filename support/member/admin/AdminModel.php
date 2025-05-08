@@ -52,18 +52,24 @@ class AdminModel extends Model
 
 
     /**
-     * @var string 自动写入时间戳
+     * @var mixed 自动写入时间戳
      */
-    protected $autoWriteTimestamp = true;
+    protected mixed $autoWriteTimestamp = true;
 
     /**
      * 追加属性
      */
-    protected $append = [
+    protected array $append = [
         'group_arr',
         'group_name_arr',
     ];
 
+    /**
+     * @param $value
+     * @param $row
+     * @return array
+     * @noinspection PhpUnusedParameterInspection
+     */
     public function getGroupArrAttr($value, $row): array
     {
         return Db::name('admin_group_access')
@@ -71,12 +77,13 @@ class AdminModel extends Model
             ->column('group_id');
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function getGroupNameArrAttr($value, $row): array
     {
         $groupAccess = Db::name('admin_group_access')
             ->where('uid', $row['id'])
             ->column('group_id');
-        return AdminGroup::whereIn('id', $groupAccess)->column('name');
+        return (new AdminGroup)->whereIn('id', $groupAccess)->column('name');
     }
 
     public function getAvatarAttr($value): string
