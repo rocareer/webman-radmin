@@ -14,6 +14,7 @@
 
 return [
     'files' => [
+        base_path() . '/support/Helper.php',
         base_path() . '/app/functions.php',
         base_path() . '/app/common.php',
         base_path() . '/support/Request.php',
