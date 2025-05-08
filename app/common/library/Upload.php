@@ -19,7 +19,7 @@ use Throwable;
 use exception;
 use support\Log;
 use Webman\Http\UploadFile;
-use Illuminate\Support\Str;
+use think\helper\Str;
 use extend\ba\Random;
 use extend\ba\Filesystem;
 

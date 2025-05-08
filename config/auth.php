@@ -56,19 +56,19 @@ return [
         '/admin/captcha',
 
         // API免认证路径
-        '/app/radmin/api/common/refreshToken', // 刷新token
-        '/app/radmin/api/index/index',
-        '/app/radmin/api/user/checkIn',
+        '/api/common/refreshToken', // 刷新token
+        '/api/index/index',
+        '/api/user/checkIn',
 
         // 兼容旧路径
-        '/app/radmin/admin/Index/login',
+        '/admin/Index/login',
 
         // 测试路由
-        // '/app/radmin/test/auth/index',
-        '/app/radmin/test/auth/login',
+        // '/test/auth/index',
+        '/test/auth/login',
 
         // 终端免验证
-        '/app/radmin/admin/ajax/terminal'
+        '/admin/ajax/terminal'
     ],
 
 
