@@ -1,4 +1,7 @@
 <?php
+/** @noinspection PhpDynamicAsStaticMethodCallInspection */
+/** @noinspection PhpUndefinedVariableInspection */
+
 /*
  *
  *  * // +----------------------------------------------------------------------
@@ -15,7 +18,11 @@
 
 namespace app\api\controller;
 
-use service\auth\Auth;
+use exception\UnauthorizedHttpException;
+use support\member\Member;
+use support\Response;
+use support\StatusCode;
+use support\token\Token;
 use Throwable;
 use extend\ba\Captcha;
 use extend\ba\ClickCaptcha;
@@ -38,7 +45,7 @@ class User extends Frontend
      * 会员签入(登录和注册)
      * @throws Throwable
      */
-    public function checkIn()
+    public function checkIn(): Response
     {
         $openMemberCenter = radmin_config('buildadmin.open_member_center');
         if (!$openMemberCenter) {
@@ -85,7 +92,7 @@ class User extends Frontend
                     'captchaSwitch' => $captchaSwitch,
                 ];
 
-                $res = Member::login($credentials,'user', !empty($params['keep']));
+                $res = Member::login($credentials, !empty($params['keep']));
 
 
             } elseif ($params['tab'] == 'register') {
@@ -114,13 +121,17 @@ class User extends Frontend
         ]);
     }
 
-    public function logout()
+    /**
+     * @throws UnauthorizedHttpException
+     */
+    public function logout(): Response
     {
         if ($this->request->isPost()) {
             $refreshToken = $this->request->post('refreshToken', '');
-            if ($refreshToken) Token::delete((string)$refreshToken);
+            if ($refreshToken) Token::destroy((string)$refreshToken);
             $this->auth->logout();
             return $this->success();
         }
+        throw new UnauthorizedHttpException('Unauthorized', __('Unauthorized'),StatusCode::UNAUTHORIZED);
     }
 }
