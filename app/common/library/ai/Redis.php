@@ -72,7 +72,7 @@ class Redis
     public function __construct($config)
     {
 		
-        $this->config = array_merge(radmin_config('ai.redis'), $config);
+        $this->config = array_merge( config('ai.redis'), $config);
         if (is_null($this->client)) {
             $this->client = $this->initClient();
         }

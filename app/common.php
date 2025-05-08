@@ -168,7 +168,7 @@ if(!function_exists('getProtocol')) {
      *
      * @return string
      */
-    function getProtocol($request)
+    function getProtocol($request): string
     {
         // 优先级 1：处理反向代理转发 (如 Nginx)
         if($request->header('x-forwarded-proto')) {
@@ -182,6 +182,7 @@ if(!function_exists('getProtocol')) {
 
         // 优先级 3：通过端口判断
         //		return $request->server('server_port') == 443 ? 'https' : 'http';
+        return $request->isSsl() ? 'https' : 'http';
     }
 }
 
@@ -196,12 +197,12 @@ if(!function_exists('full_url')) {
      *
      * @return string
      */
-    function full_url($relativeUrl = '', string|bool $domain = true, string $default = ''): string
+    function full_url(string $relativeUrl = '', string|bool $domain = true, string $default = ''): string
     {
         // 存储/上传资料配置
         //		Event::trigger('uploadConfigInit', App::getInstance());
 
-        $cdnUrl = radmin_config('buildadmin.cdn_url');
+        $cdnUrl =  config('buildadmin.cdn_url');
         if(!$cdnUrl) {
             $cdnUrl = request()->upload['cdn'] ?? '//'.request()->host();
         }
@@ -223,7 +224,7 @@ if(!function_exists('full_url')) {
         }
 
         $url          = $domain.$relativeUrl;
-        $cdnUrlParams = radmin_config('buildadmin.cdn_url_params');
+        $cdnUrlParams =  config('buildadmin.cdn_url_params');
         if($domain === $cdnUrl && $cdnUrlParams) {
             $separator = str_contains($url, '?') ? '&' : '?';
             $url       .= $separator.$cdnUrlParams;
@@ -241,10 +242,10 @@ if(!function_exists('set_timezone')) {
      * @throws Throwable
      * @变更说明：修改配置读取方式(radmin_config → config)
      */
-    function set_timezone($timezone = null)
+    function set_timezone($timezone = null): void
     {
 
-        $defaultTimezone = radmin_config('radmin.default_timezone');
+        $defaultTimezone =  config('radmin.default_timezone');
 
         $timezone = is_null($timezone) ? get_sys_config('time_zone') : $timezone;
         if($timezone && $defaultTimezone != $timezone) {
@@ -257,7 +258,7 @@ function get_upload_config(): array
 {
     //	Event::dispatch('uploadConfigInit', []);
 
-    $uploadConfig = radmin_config('upload', []);
+    $uploadConfig =  config('upload', []);
 
     // 确保有默认配置
     if(empty($uploadConfig)) {
@@ -358,6 +359,8 @@ if(!function_exists('build_suffix_svg')) {
      *
      * @return string
      * @变更说明：无需修改，无框架依赖
+     * @noinspection HtmlDeprecatedAttribute
+     * @noinspection XmlUnusedNamespaceDeclaration
      */
     function build_suffix_svg(string $suffix = 'file', ?string $background = null): string
     {
@@ -433,7 +436,7 @@ if(!function_exists('hsv2rgb')) {
      * @return array
      * @变更说明：无需修改，无框架依赖
      */
-    function hsv2rgb($h, $s, $v): array
+    function hsv2rgb(float $h, float $s, float $v): array
     {
         $r = $g = $b = 0;
 
@@ -490,7 +493,7 @@ if(!function_exists('ip_check')) {
      *
      * @throws Throwable
      */
-    function ip_check()
+    function ip_check(): void
     {
         $no_access_ip = get_sys_config('no_access_ip');
         // 确保总是返回数组
@@ -498,7 +501,7 @@ if(!function_exists('ip_check')) {
 
         $ip = request()->getRealIp();
         if(in_array($ip, $no_access_ip)) {
-            throw new \Exception('IP not allowed');
+            throw new Exception('IP not allowed');
         }
     }
 }
@@ -597,6 +600,7 @@ if (!function_exists('verify_password')) {
      * @param string $password 密码
      * @param string $hash     散列值
      * @param array  $extend   扩展数据
+     * @noinspection PhpDeprecationInspection
      */
     function verify_password(string $password, string $hash, array $extend = []): bool
     {
@@ -616,10 +620,10 @@ if (!function_exists('get_ba_client')) {
      * 获取一个请求 BuildAdmin 开源社区的 Client
      * @throws Throwable
      */
-    function get_ba_client()
+    function get_ba_client(): string
     {
         // return new Client([
-        //     'base_uri'        => radmin_config('buildadmin.api_url'),
+        //     'base_uri'        =>  config('buildadmin.api_url'),
         //     'timeout'         => 30,
         //     'connect_timeout' => 30,
         //     'verify'          => false,
@@ -638,8 +642,7 @@ if (!function_exists('get_ba_client')) {
         function configSet(array $config, $configs, ?string $name = null): array
         {
             if (empty($name)) {
-                $configs = array_merge($configs, array_change_key_case($config));
-                return $configs;
+                return array_merge($configs, array_change_key_case($config));
             }
 
             if (isset($configs[$name])) {

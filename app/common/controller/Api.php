@@ -3,10 +3,11 @@
 namespace app\common\controller;
 
 use app\controller\BaseController;
+use Exception;
+use exception\ServerErrorHttpException;
 use support\think\Lang;
 use support\Response;
 use support\think\Db;
-use think\db\exception\PDOException;
 use Throwable;
 
 /**
@@ -36,15 +37,15 @@ class Api extends BaseController
      * @access protected
      * @throws Throwable
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         // 系统站点配置
         if ($this->useSystemSettings) {
             // 检查数据库连接
             try {
                 Db::execute("SELECT 1");
-            } catch (PDOException $e) {
-             return $this->error(mb_convert_encoding($e->getMessage(), 'UTF-8', 'UTF-8,GBK,GB2312,BIG5'));
+            } catch (Exception) {
+                throw new ServerErrorHttpException('数据库连接失败');
             }
 
             ip_check(); // ip检查
@@ -62,7 +63,7 @@ class Api extends BaseController
      * 加载控制器语言包
      * @变更说明：修改为Webman兼容的语言包加载方式
      */
-    protected function loadControllerLang()
+    protected function loadControllerLang(): void
     {
         $langSet        = Lang::getLangSet();
         $controllerPath = str_replace('\\', '/', static::class);
@@ -76,7 +77,7 @@ class Api extends BaseController
         }
         else {
             // 默认加载中文公共语言文件
-            $commonLangFile = radmin_app('lang').$langSet.'/zh-cn.php';
+            $commonLangFile = app_path('lang').$langSet.'/zh-cn.php';
             if(is_file($commonLangFile)) {
                 Lang::load($commonLangFile);
             }
@@ -85,30 +86,30 @@ class Api extends BaseController
 
     /**
      * 操作成功
-     * @param string      $msg     提示消息
-     * @param mixed       $data    返回数据
-     * @param int         $code    错误码
-     * @param string|null $type    输出类型
-     * @param array       $header  发送的 header 信息
-     * @param array       $options Response 输出参数
+     * @param string      $msg    提示消息
+     * @param mixed       $data   返回数据
+     * @param int         $code   错误码
+     * @param string|null $type   输出类型
+     * @param array       $header 发送的 header 信息
+     * @return Response
      */
-    protected function success(string $msg = '', mixed $data = null, int $code = 1, string $type = null, array $header = [], array $options = [])
+    protected function success(string $msg = '', mixed $data = null, int $code = 1, ?string $type = null, array $header = []): Response
     {
-       return $this->result($msg, $data, $code, $type, $header, $options);
+       return $this->result($msg, $data, $code, $type, $header);
     }
 
     /**
      * 操作失败
-     * @param string      $msg     提示消息
-     * @param mixed       $data    返回数据
-     * @param int         $code    错误码
-     * @param string|null $type    输出类型
-     * @param array       $header  发送的 header 信息
-     * @param array       $options Response 输出参数
+     * @param string      $msg    提示消息
+     * @param mixed       $data   返回数据
+     * @param int         $code   错误码
+     * @param string|null $type   输出类型
+     * @param array       $header 发送的 header 信息
+     * @return Response
      */
-    protected function error(string $msg = '', mixed $data = null, int $code = 0, string $type = null, array $header = [], array $options = [])
+    protected function error(string $msg = '', mixed $data = null, int $code = 0, ?string $type = null, array $header = []): Response
     {
-      return  $this->result($msg, $data, $code, $type, $header, $options);
+      return  $this->result($msg, $data, $code, $type, $header);
     }
 
     /**
@@ -119,10 +120,11 @@ class Api extends BaseController
      * @param string|null $contentType
      * @param array       $headers
      * @return Response
+     * @noinspection DuplicatedCode
      */
     public function result(string $msg, mixed $data = null, int $code = 0, ?string $contentType = null, array $headers = []): Response
     {
-        $start = microtime(true);
+        // $start = microtime(true);
 
         $responseData = [
             'code' => $code,

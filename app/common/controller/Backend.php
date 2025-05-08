@@ -3,7 +3,6 @@
 namespace app\common\controller;
 
 use exception\BusinessException;
-use exception\MemberException;
 use support\member\Member;
 use support\StatusCode;
 use support\think\Model;
@@ -123,7 +122,7 @@ class Backend extends Api
      * 引入traits
      * traits内实现了index、add、edit等方法
      */
-    use \plugin\radmin\app\admin\library\traits\Backend;
+    use \app\admin\library\traits\Backend;
 
     /**
      * 初始化

@@ -22,7 +22,7 @@ class Module extends Backend
     public function index()
     {
      return $this->success('', [
-            'sysVersion' => radmin_config('buildadmin.version'),
+            'sysVersion' =>  config('buildadmin.version'),
             'installed'  => Server::installedList(root_path() . 'modules' . DIRECTORY_SEPARATOR),
         ]);
     }

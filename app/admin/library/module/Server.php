@@ -240,7 +240,7 @@ class Server
 
                 $tempLine .= $line;
                 if (str_ends_with(trim($line), ';')) {
-                    $tempLine = str_ireplace('__PREFIX__', radmin_config('database.connections.mysql.prefix'), $tempLine);
+                    $tempLine = str_ireplace('__PREFIX__',  config('database.connections.mysql.prefix'), $tempLine);
                     $tempLine = str_ireplace('INSERT INTO ', 'INSERT IGNORE INTO ', $tempLine);
                     try {
                         Db::execute($tempLine);
@@ -537,7 +537,7 @@ class Server
 
         file_put_contents($runtimeFilePath, json_encode([
             'files' => $filePaths,
-            'pure'  => radmin_config('buildadmin.module_pure_install'),
+            'pure'  =>  config('buildadmin.module_pure_install'),
         ]));
     }
 

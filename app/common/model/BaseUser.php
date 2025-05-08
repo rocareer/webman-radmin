@@ -21,7 +21,7 @@ abstract class BaseUser extends BaseModel
     public string    $last_login_ip;
     public string    $username;
     public string $modelType     = 'user';
-    protected string $resultSetType = '\plugin\radmin\app\common\model\BaseUser';
+    protected string $resultSetType = '\app\common\model\BaseUser';
     /**
      * @var array 状态映射
      */
@@ -74,8 +74,8 @@ abstract class BaseUser extends BaseModel
         }
 
         // 检查登录失败次数
-        $maxFailures = radmin_config('auth.max_login_failures', 10);
-        $lockTime    = radmin_config('auth.login_lock_time', 900);
+        $maxFailures =  config('auth.max_login_failures', 10);
+        $lockTime    =  config('auth.login_lock_time', 900);
 
         if (($this->login_failure ?? 0) >= $maxFailures) {
             $lastLoginTime = $this->last_login_time ?? 0;

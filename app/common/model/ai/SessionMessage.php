@@ -52,7 +52,7 @@ class SessionMessage extends BaseModel
     {
         if (!isset($row['kbs'])) return [];
         return [
-	        'title' => \plugin\radmin\app\common\model\ai\KbsContent::whereIn('id', $row['kbs'])->column('title', 'id'),
+	        'title' => \app\common\model\ai\KbsContent::whereIn('id', $row['kbs'])->column('title', 'id'),
         ];
     }
 
@@ -77,6 +77,6 @@ class SessionMessage extends BaseModel
 
     public function session(): \think\model\relation\BelongsTo
     {
-        return $this->belongsTo(\plugin\radmin\app\common\model\ai\Session::class, 'session_id', 'id');
+        return $this->belongsTo(\app\common\model\ai\Session::class, 'session_id', 'id');
     }
 }

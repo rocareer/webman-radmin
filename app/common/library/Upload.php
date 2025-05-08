@@ -88,7 +88,7 @@ class Upload
     protected array $driver = [
         'name'      => 'local', // 默认驱动:local=本地
         'handler'   => [], // 驱动句柄
-        'namespace' => '\\plugin\\radmin\\app\\common\\library\\upload\\driver\\', // 驱动类的命名空间
+        'namespace' => '\\app\\common\\library\\upload\\driver\\', // 驱动类的命名空间
     ];
 
     /**
@@ -106,7 +106,7 @@ class Upload
 	{
 		// 1. 使用 null 合并运算符提供默认配置
 		$this->config = array_merge(
-			radmin_config('upload', []), // 确保总是返回数组
+			 config('upload', []), // 确保总是返回数组
 			$config
 		);
 		

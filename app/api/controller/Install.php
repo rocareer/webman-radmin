@@ -497,7 +497,7 @@ class Install
         }
 
         // 设置新的Token随机密钥key
-        $oldTokenKey = radmin_config('buildadmin.token.key');
+        $oldTokenKey =  config('buildadmin.token.key');
         $newTokenKey = Random::build('alnum', 32);
         $buildConfigFile = base_path() . '/plugin/radmin/config/' . self::$buildConfigFileName;
         $buildConfigContent = @file_get_contents($buildConfigFile);
@@ -580,7 +580,7 @@ class Install
      */
     private function commandExecutionCheck(): bool
     {
-        $pm = radmin_config('terminal.npm_package_manager');
+        $pm =  config('terminal.npm_package_manager');
         if ($pm == 'none') {
             return false;
         }
