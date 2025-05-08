@@ -27,7 +27,12 @@ return [
         'array' => [
             'driver' => 'array'
         ],
+
+        // Radmin
         'member-cache' => [
+            'driver' => 'array',
+        ],
+        'token-cache' => [
             'driver' => 'array',
         ]
     ]
