@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\token\driver;
+namespace support\token\driver;
 
 use plugin\radmin\support\jwt\Jwt as JwtFacade;
 use plugin\radmin\support\StatusCode;

@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\jwt;
+namespace support\jwt;
 
 use Exception;
 use Firebase\JWT\ExpiredException;

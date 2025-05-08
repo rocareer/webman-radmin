@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\middleware;
+namespace middleware;
 
 use Webman\Http\Request;
 use Webman\Http\Response;

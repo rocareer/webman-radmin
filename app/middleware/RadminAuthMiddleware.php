@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\middleware;
+namespace middleware;
 
 
 use plugin\radmin\service\member\state\State;

@@ -6,7 +6,7 @@
  * Describe  AdminModel.php
  */
 
-namespace plugin\radmin\support\member\user;
+namespace support\member\user;
 
 use plugin\radmin\support\member\Model;
 

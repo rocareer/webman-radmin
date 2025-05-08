@@ -13,7 +13,7 @@
  *
  */
 
-namespace plugin\radmin\extend\ba;
+namespace extend\ba;
 
 use app\admin\library\module\Server;
 use think\Service;

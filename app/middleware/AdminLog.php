@@ -13,7 +13,7 @@
  *
  */
 
-namespace plugin\radmin\middleware;
+namespace middleware;
 
 use Closure;
 use Throwable;

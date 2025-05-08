@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\member;
+namespace support\member;
 
 /**
  * 状态管理器接口

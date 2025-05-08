@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\member\admin;
+namespace support\member\admin;
 
 use plugin\radmin\support\member\State;
 use Rocareer\Radmin\Exception\AuthException;

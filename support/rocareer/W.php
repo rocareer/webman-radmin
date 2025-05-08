@@ -13,7 +13,7 @@
  *
  */
 
-namespace plugin\radmin\support\rocareer;
+namespace support\rocareer;
 
 
 use app\common\library\token\driver;

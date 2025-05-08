@@ -13,7 +13,7 @@
  *
  */
 
-namespace plugin\radmin\extend\ba;
+namespace extend\ba;
 
 use plugin\radmin\support\think\Lang;
 use support\think\Db;
