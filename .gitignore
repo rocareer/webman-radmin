@@ -4,3 +4,7 @@
 /composer.lock
 /.env
 /app/test/
+/plugin/radmin/
+/public/assets/
+/.idea/
+
