@@ -33,15 +33,15 @@ class Index extends Backend
             'siteConfig' => [
                 'siteName'     => get_sys_config('site_name'),
                 'version'      => get_sys_config('version'),
-                'apiUrl'       => radmin_config('buildadmin.api_url'),
+                'apiUrl'       =>  config('buildadmin.api_url'),
                 'upload'       => keys_to_camel_case(get_upload_config(), ['max_size', 'save_name', 'allowed_suffixes', 'allowed_mime_types']),
                 'cdnUrl'       => full_url(),
-                'cdnUrlParams' => radmin_config('buildadmin.cdn_url_params'),
+                'cdnUrlParams' =>  config('buildadmin.cdn_url_params'),
             ],
             'terminal'   => [
                 'phpDevelopmentServer' => str_contains($_SERVER['SERVER_SOFTWARE'], 'Workerman'),
                 // 'phpDevelopmentServer' => $_SERVER['SERVER_SOFTWARE'],
-                'npmPackageManager'    => radmin_config('terminal.npm_package_manager'),
+                'npmPackageManager'    =>  config('terminal.npm_package_manager'),
             ]
         ]);
     }
@@ -61,7 +61,7 @@ class Index extends Backend
         //     ], 303);
         // }
 
-        $captchaSwitch = radmin_config('buildadmin.admin_login_captcha');
+        $captchaSwitch =  config('buildadmin.admin_login_captcha');
 
         // 检查提交
         if ($this->request->isPost()) {

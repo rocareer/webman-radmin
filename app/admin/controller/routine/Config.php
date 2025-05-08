@@ -113,7 +113,7 @@ class Config extends Backend
                         $newBackendEntrance = ltrim($data[$item->name], '/');
 
                         // 设置应用别名映射
-                        $appMap      = radmin_config('app.app_map');
+                        $appMap      =  config('app.app_map');
                         $adminMapKey = array_search('admin', $appMap);
                         if ($adminMapKey !== false) {
                             unset($appMap[$adminMapKey]);

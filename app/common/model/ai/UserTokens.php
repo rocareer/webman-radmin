@@ -59,6 +59,6 @@ class UserTokens extends BaseModel
 
     public function aiUser(): \think\model\relation\BelongsTo
     {
-        return $this->belongsTo(\plugin\radmin\app\common\model\ai\AiUser::class, 'ai_user_id', 'id');
+        return $this->belongsTo(\app\common\model\ai\AiUser::class, 'ai_user_id', 'id');
     }
 }

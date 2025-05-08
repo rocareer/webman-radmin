@@ -47,7 +47,7 @@ class User extends Frontend
      */
     public function checkIn(): Response
     {
-        $openMemberCenter = radmin_config('buildadmin.open_member_center');
+        $openMemberCenter =  config('buildadmin.open_member_center');
         if (!$openMemberCenter) {
             return $this->error(__('Member center disabled'));
         }
@@ -59,7 +59,7 @@ class User extends Frontend
         //     ], $this->Member::LOGIN_RESPONSE_CODE);
         // }
 
-        $userLoginCaptchaSwitch = radmin_config('buildadmin.user_login_captcha');
+        $userLoginCaptchaSwitch =  config('buildadmin.user_login_captcha');
 
         if ($this->request->isPost()) {
             $params = $this->request->only(['tab', 'email', 'mobile', 'username', 'password', 'keep', 'captcha', 'captchaId', 'captchaInfo', 'registerType']);
@@ -83,7 +83,7 @@ class User extends Frontend
                         return $this->error(__('Captcha error'));
                     }
                 }
-                $captchaSwitch = radmin_config('buildadmin.user_login_captcha');
+                $captchaSwitch =  config('buildadmin.user_login_captcha');
                 $credentials = [
                     'username'      => $this->request->post('username'),
                     'password'      => $this->request->post('password'),

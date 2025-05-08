@@ -70,7 +70,7 @@ class KbsContent extends BaseModel
     public function getAiKbsAttr($value, $row): array
     {
         return [
-	        'name' => \plugin\radmin\app\common\model\ai\Kbs::whereIn('id', $row['ai_kbs_ids'])->column('name'),
+	        'name' => \app\common\model\ai\Kbs::whereIn('id', $row['ai_kbs_ids'])->column('name'),
         ];
     }
 

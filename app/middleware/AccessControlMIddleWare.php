@@ -33,7 +33,7 @@ class AccessControlMIddleWare implements MiddlewareInterface
         ];
 
         $origin = $request->header('origin');
-        $corsDomain = explode(',', radmin_config('buildadmin.cors_request_domain'));
+        $corsDomain = explode(',',  config('buildadmin.cors_request_domain'));
         $corsDomain[] = $request->host(true);
 
         if (in_array("*", $corsDomain) || in_array($origin, $corsDomain)) {

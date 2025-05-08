@@ -112,10 +112,10 @@ class Chat
 		    $this->inputs = request()->post();    // 调试日志初始化
 		
 		    
-		    $this->debug  = radmin_config('ai.debug');
+		    $this->debug  =  config('ai.debug');
 		    if($this->debug) {
 			                $fileName      = mb_substr(filter_var($this->inputs['message'], FILTER_SANITIZE_FULL_SPECIAL_CHARS), 0, 40);
-			                $this->logFile = radmin_config('ai.log_dir') . date('Y-m-d') .
+			                $this->logFile =  config('ai.log_dir') . date('Y-m-d') .
 			    	            DIRECTORY_SEPARATOR . $fileName . '.log';
 			    			
 			                if (!is_dir(dirname($this->logFile))) {

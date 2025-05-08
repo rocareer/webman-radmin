@@ -1,2 +1,2 @@
         $pk         = $model->getPk();
-        $model->$pk = \plugin\radmin\app\common\library\SnowFlake::generateParticle();
+        $model->$pk = \app\common\library\SnowFlake::generateParticle();
