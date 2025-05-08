@@ -50,11 +50,11 @@ abstract class Model extends ThinkModel implements InterfaceModel
     protected array $allowFields = [];
 
 
-    protected array $type =[
-        'create_time'=>'integer',
-        'update_time'=>'integer',
-        'last_login_time'=>'integer',
-        'login_failure'=>'integer',
+    protected array $type = [
+        'create_time'     => 'integer',
+        'update_time'     => 'integer',
+        'last_login_time' => 'integer',
+        'login_failure'   => 'integer',
     ];
 
 
@@ -73,7 +73,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function findById(int $id=0, bool $withAllowFields = true): object
+    public function findById(int $id = 0, bool $withAllowFields = true): object
     {
         $this->model = $this->find($id);
         if ($withAllowFields) {
@@ -95,7 +95,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
     public function findByName(string $username, bool $withAllowFields = true): mixed
     {
         var_dump($this);
-        $member =$this->where('username', $username)->find();
+        $member = $this->where('username', $username)->find();
         if (!$member) {
             throw new BusinessException('用户不存在', StatusCode::USER_NOT_FOUND);
         }
@@ -129,8 +129,8 @@ abstract class Model extends ThinkModel implements InterfaceModel
         }
 
         // 检查登录失败次数
-        $maxFailures =  config('auth.max_login_failures', 10);
-        $lockTime    =  config('auth.login_lock_time', 900);
+        $maxFailures = config('auth.max_login_failures', 10);
+        $lockTime    = config('auth.login_lock_time', 900);
 
         if (($this->login_failure ?? 0) >= $maxFailures) {
             $lastLoginTime = $this->last_login_time ?? 0;
@@ -158,7 +158,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
      * @return static
      * @throws BusinessException
      */
-    public  function findAndValidate(string $username, string $password): static
+    public function findAndValidate(string $username, string $password): static
     {
         // 查找用户
         $this->where('username', $username);
@@ -171,7 +171,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
         }
 
         // 确保返回的是BaseUser对象
-         $this->visible($this->allowFields);
+        $this->visible($this->allowFields);
 
         return $this;
     }
@@ -353,7 +353,6 @@ abstract class Model extends ThinkModel implements InterfaceModel
     {
         return in_array($role, $this->getRoles());
     }
-
 
 
 }

@@ -88,7 +88,7 @@ return [
     // 自动写入管理员操作日志
     'auto_write_admin_log'  => true,
     // 缺省头像图片路径
-    'default_avatar'        => '/app/radmin/static/images/avatar.png',
+    'default_avatar'        => '/static/images/avatar.png',
     // 内容分发网络URL，末尾不带`/`
     'cdn_url'               => '',
     // 版本号
