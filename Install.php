@@ -101,11 +101,6 @@ class Install
         echo "Create support/Request.php file" . PHP_EOL;
 
 
-        //删除 event.config
-        if (file_exists(base_path().'/plugin/radmin/config/event.php')) {
-            unlink(base_path().'/plugin/radmin/config/event.php');
-        }
-        echo "Remove event.php file" . PHP_EOL;
 
         // 安装 Env 文件
         copy(__DIR__ . "/.env-example", base_path() . "/.env-example");

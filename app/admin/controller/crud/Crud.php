@@ -2,7 +2,6 @@
 
 namespace app\admin\controller\crud;
 
-use extend\ba\Version;
 use Throwable;
 use exception;
 use extend\ba\Filesystem;
@@ -434,18 +433,18 @@ class Crud extends Backend
         }
 
         // 模型和控制器文件和文件列表
-        $adminModelFiles      = Filesystem::getDirFiles(radmin_app(). DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
-        $commonModelFiles     = Filesystem::getDirFiles(radmin_app() . DIRECTORY_SEPARATOR . 'common' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
+        $adminModelFiles      = Filesystem::getDirFiles(app_path(). DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
+        $commonModelFiles     = Filesystem::getDirFiles(app_path() . DIRECTORY_SEPARATOR . 'common' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
         $adminControllerFiles = get_controller_list();
 
         $modelFileList   = [];
         $controllerFiles = [];
         foreach ($adminModelFiles as $item) {
-            $item                 = Filesystem::fsFit('plugin/radmin/app/admin/model/' . $item);
+            $item                 = Filesystem::fsFit('app/admin/model/' . $item);
             $modelFileList[$item] = $item;
         }
         foreach ($commonModelFiles as $item) {
-            $item                 = Filesystem::fsFit('plugin/radmin/app/common/model/' . $item);
+            $item                 = Filesystem::fsFit('app/common/model/' . $item);
             $modelFileList[$item] = $item;
         }
 
@@ -463,7 +462,7 @@ class Crud extends Backend
             if (in_array($item, $outExcludeController)) {
                 continue;
             }
-            $item                   = Filesystem::fsFit('plugin/radmin/app/admin/controller/' . $item);
+            $item                   = Filesystem::fsFit('app/admin/controller/' . $item);
             $controllerFiles[$item] = $item;
         }
 
@@ -559,7 +558,7 @@ class Crud extends Backend
 
         try {
             $webViewsDir    = Helper::parseWebDirNameData($table, 'views', $webViewsDir);
-            $controllerFile = Helper::parseNameData('plugin/radmin/app/admin', $table, 'controller', $controllerFile)['rootFileName'];
+            $controllerFile = Helper::parseNameData('app/admin', $table, 'controller', $controllerFile)['rootFileName'];
         } catch (Throwable $e) {
          return $this->error($e->getMessage());
         }
@@ -641,7 +640,7 @@ class Crud extends Backend
 
             // 建立关联模型代码文件
             if (!$field['form']['remote-model'] || !file_exists(root_path() . $field['form']['remote-model'])) {
-                $joinModelFile = Helper::parseNameData('plugin/radmin/app/admin', $tableName, 'model', $field['form']['remote-model']);
+                $joinModelFile = Helper::parseNameData('app/admin', $tableName, 'model', $field['form']['remote-model']);
                 if (!file_exists(base_path() . $joinModelFile['rootFileName'])) {
                     $joinModelData['append']             = [];
                     $joinModelData['methods']            = [];
@@ -932,7 +931,7 @@ class Crud extends Backend
 //            $url = count($pathArr) > 1 ? implode('.', $pathArr) : $pathArr[0];
 	        $url=implode('/', $pathArr);
 			$url=str_replace('controller/','',$url);
-			$url=str_replace('plugin/radmin/app/','',$url);
+			$url=str_replace('app/','',$url);
             return  $url . '/index';
         }
         return $field['form']['remote-url'];

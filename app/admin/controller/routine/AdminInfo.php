@@ -4,7 +4,6 @@ namespace app\admin\controller\routine;
 
 use app\admin\model\Admin;
 use app\common\controller\Backend;
-use service\auth\admin\AdminHelper;
 use Throwable;
 
 class AdminInfo extends Backend
@@ -22,12 +21,12 @@ class AdminInfo extends Backend
     public function initialize():void
     {
         parent::initialize();
-        $this->model = AdminHelper::getAdmin();
+        $this->model = new Admin();
     }
 
     public function index()
     {
-        $info =AdminHelper::getInstance($this->request->member->id)->getAdminInfo();
+        $info =$this->request->member;
         return $this->success('', [
             'info' => $info
         ]);

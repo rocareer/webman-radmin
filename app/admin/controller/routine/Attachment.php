@@ -20,7 +20,7 @@ class Attachment extends Backend
 
     protected string|array $defaultSortField = 'last_upload_time,desc';
 
-    public function initialize():void
+    public function initialize(): void
     {
         parent::initialize();
         $this->model = new AttachmentModel();
@@ -48,12 +48,12 @@ class Attachment extends Backend
                 $count += $v->delete();
             }
         } catch (Throwable $e) {
-         return $this->error(__('%d records and files have been deleted', [$count]) . $e->getMessage());
+            return $this->error(__('%d records and files have been deleted', [$count]) . $e->getMessage());
         }
         if ($count) {
-         return $this->success(__('%d records and files have been deleted', [$count]));
+            return $this->success(__('%d records and files have been deleted', [$count]));
         } else {
-         return $this->error(__('No rows were deleted'));
+            return $this->error(__('No rows were deleted'));
         }
     }
 }

@@ -15,6 +15,7 @@
 
 namespace extend\ba;
 
+use exception\BusinessException;
 use Throwable;
 use PhpZip\ZipFile;
 use FilesystemIterator;
@@ -184,7 +185,7 @@ class Filesystem
         try {
             foreach ($files as $v) {
                 if (is_array($v) && isset($v['file']) && isset($v['name'])) {
-                    $zip->addFile(plugin_radmin_path() . str_replace(root_path(), '', Filesystem::fsFit($v['file'])), $v['name']);
+                    $zip->addFile(str_replace(root_path(), '', Filesystem::fsFit($v['file'])), $v['name']);
                 } else {
                     $saveFile = str_replace(root_path(), '', Filesystem::fsFit($v));
                     $zip->addFile(root_path() . $saveFile, $saveFile);
@@ -192,7 +193,7 @@ class Filesystem
             }
             $zip->saveAsFile($fileName);
         } catch (Throwable $e) {
-            throw new Exception('Unable to package zip file', 0, ['msg' => $e->getMessage(), 'file' => $fileName]);
+            throw new BusinessException('Unable to package zip file', 0, ['msg' => $e->getMessage(), 'file' => $fileName]);
         } finally {
             $zip->close();
         }
@@ -224,6 +225,7 @@ class Filesystem
      */
     public static function getDirFiles(string $dir, array $suffix = []): array
     {
+        var_dump($dir);
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($dir), RecursiveIteratorIterator::LEAVES_ONLY
         );

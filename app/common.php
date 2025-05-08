@@ -191,13 +191,13 @@ if(!function_exists('full_url')) {
     /**
      * 获取资源完整url地址；若安装了云存储或配置了CdnUrl，则自动使用对应的CdnUrl
      *
-     * @param string      $relativeUrl 资源相对地址 不传入则获取域名
+     * @param string|null $relativeUrl 资源相对地址 不传入则获取域名
      * @param string|bool $domain      是否携带域名 或者直接传入域名
      * @param string      $default     默认值
      *
      * @return string
      */
-    function full_url(string $relativeUrl = '', string|bool $domain = true, string $default = ''): string
+    function full_url(?string $relativeUrl = null, string|bool $domain = true, string $default = ''): string
     {
         // 存储/上传资料配置
         //		Event::trigger('uploadConfigInit', App::getInstance());

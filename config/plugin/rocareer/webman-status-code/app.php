@@ -21,7 +21,5 @@ return [
 //        base_path() . '/support',
 //        base_path() . '/resource',
 //        base_path() . '/.env',
-//        radmin_base() . '/support',
-//        radmin_base() . '/middleware'
     ])
 ];

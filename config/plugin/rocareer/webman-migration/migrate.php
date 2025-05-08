@@ -7,8 +7,8 @@
  */
 return [
     "paths" => [
-        "migrations" => "plugin/radmin/database/migrations",
-        "seeds"      => "plugin/radmin/database/seeds"
+        "migrations" => "database/migrations",
+        "seeds"      => "database/seeds"
     ],
     "table_prefix" => "ra_",
     "environments" => [

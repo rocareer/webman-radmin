@@ -107,7 +107,7 @@ class Install
             return;
         }
 
-        $newPackageManager = request()->post('manager', config('plugin.radmin.terminal.npm_package_manager'));
+        $newPackageManager = request()->post('manager', config('terminal.npm_package_manager'));
         if (Terminal::changeTerminalConfig()) {
             return $this->success('', [
                 'manager' => $newPackageManager
@@ -167,7 +167,7 @@ class Install
         // 配置文件-end
 
         // public-start
-        $publicIsWritable = Filesystem::pathIsWritable(base_path() . '/plugin/radmin/public');
+        $publicIsWritable = Filesystem::pathIsWritable(base_path() . '/public');
         if (!$publicIsWritable) {
             $publicIsWritableLink = [
                 [
@@ -499,16 +499,16 @@ class Install
         // 设置新的Token随机密钥key
         $oldTokenKey =  config('buildadmin.token.key');
         $newTokenKey = Random::build('alnum', 32);
-        $buildConfigFile = base_path() . '/plugin/radmin/config/' . self::$buildConfigFileName;
+        $buildConfigFile = base_path() . '/config/' . self::$buildConfigFileName;
         $buildConfigContent = @file_get_contents($buildConfigFile);
         $buildConfigContent = preg_replace("/'key'(\s+)=>(\s+)'$oldTokenKey'/", "'key'\$1=>\$2'$newTokenKey'", $buildConfigContent);
         $result = @file_put_contents($buildConfigFile, $buildConfigContent);
         if (!$result) {
-            return $this->error(__('File has no write permission:%s', ['/plugin/radmin/config/' . self::$buildConfigFileName]));
+            return $this->error(__('File has no write permission:%s', ['/config/' . self::$buildConfigFileName]));
         }
 
         // 建立安装锁文件
-        $result = @file_put_contents(base_path().'/plugin/radmin/public/' . self::$lockFileName, date('Y-m-d H:i:s'));
+        $result = @file_put_contents(base_path().'/public/' . self::$lockFileName, date('Y-m-d H:i:s'));
         if (!$result) {
             return $this->error(__('File has no write permission:%s', ['public/' . self::$lockFileName]));
         }
@@ -521,8 +521,8 @@ class Install
 
     protected function isInstallComplete(): bool
     {
-        if (is_file(base_path() .'/plugin/radmin/public/'. self::$lockFileName)) {
-            $contents = @file_get_contents(base_path() .'/plugin/radmin/public/'. self::$lockFileName);
+        if (is_file(base_path() .'/public/'. self::$lockFileName)) {
+            $contents = @file_get_contents(base_path() .'/public/'. self::$lockFileName);
             if ($contents == self::$InstallationCompletionMark) {
                 return true;
             }
