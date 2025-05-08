@@ -3,9 +3,9 @@
 namespace support\member\user;
 
 use app\admin\model\User;
+use exception\AuthException;
+use exception\BusinessException;
 use support\member\Authenticator;
-use Rocareer\Radmin\Exception\AuthException;
-use Rocareer\Radmin\Exception\BusinessException;
 
 class UserAuthenticator extends Authenticator
 {

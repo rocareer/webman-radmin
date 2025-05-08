@@ -4,7 +4,7 @@ namespace support\member\user;
 
 use support\member\State;
 use support\StatusCode;
-use Rocareer\Radmin\Exception\AuthException;
+use exception\AuthException;
 
 class UserState extends State
 {

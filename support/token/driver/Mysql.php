@@ -5,7 +5,7 @@ namespace support\token\driver;
 use extend\ba\Random;
 use support\StatusCode;
 use support\token\TokenInterface;
-use Rocareer\Radmin\Exception\TokenException;
+use exception\TokenException;
 use stdClass;
 use support\think\Db;
 use Throwable;

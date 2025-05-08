@@ -3,7 +3,7 @@
 namespace support\member\admin;
 
 use support\member\State;
-use Rocareer\Radmin\Exception\AuthException;
+use exception\AuthException;
 
 class AdminState extends State
 {

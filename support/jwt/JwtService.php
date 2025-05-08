@@ -2,12 +2,12 @@
 
 namespace support\jwt;
 
-use Exception;
+use exception;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use support\StatusCode;
-use Rocareer\Radmin\Exception\TokenException;
+use exception\TokenException;
 use stdClass;
 use support\Cache;
 
