@@ -30,7 +30,7 @@ if (!function_exists('shouldExclude')) {
     function shouldExclude(?string $path = null): bool
     {
         $path          = $path ?? request()->path();
-        $excludeRoutes = radmin_config('auth.exclude', []);
+        $excludeRoutes =  config('auth.exclude', []);
 
         foreach ($excludeRoutes as $route) {
             if (strpos($route, '*') !== false) {
@@ -58,7 +58,7 @@ if (!function_exists('getEncryptedToken')) {
      */
     function getEncryptedToken(string $token): string
     {
-        $config = radmin_config('token');
+        $config =  config('token');
         return hash_hmac($config['algo'], $token, $config['key']);
     }
 }
@@ -82,7 +82,7 @@ if (!function_exists('getTokenFromRequest')) {
             return get_ba_token($names);
         }
         $request = $request ?? request();
-        $headers = radmin_config("token.headers.{$request->app}");
+        $headers =  config("token.headers.{$request->app}");
         if (empty($headers)) {
             return null;
         }
@@ -138,69 +138,6 @@ if (!function_exists('arrayToObject')) {
     function arrayToObject(array $array): object
     {
         return json_decode(json_encode($array));
-    }
-}
-
-
-if (!function_exists('radmin_app')) {
-    /**
-     * 获取应用目录
-     * By albert  2025/05/06 05:27:40
-     * @param $name
-     * @return string
-     */
-    function radmin_app($name = null): string
-    {
-        if ($name === null) {
-            return base_path('/plugin/radmin/app');
-        }
-        return base_path('/plugin/radmin/app/' . $name);
-    }
-}
-
-if (!function_exists('radmin_public')) {
-
-    function radmin_public($name = null): string
-    {
-        if ($name === null) {
-            return base_path('/plugin/radmin/public');
-        }
-        return base_path('/plugin/radmin/public/' . $name);
-    }
-}
-
-if (!function_exists('radmin_base')) {
-    /**
-     * 获取应用目录
-     * By albert  2025/05/06 18:01:58
-     * @param $name
-     * @return string
-     */
-    function radmin_base($name = null): string
-    {
-        if ($name === null) {
-            return base_path('/plugin/radmin');
-        }
-        return base_path('/plugin/radmin/' . $name);
-
-    }
-}
-
-
-if (!function_exists('radmin_config')) {
-    /**
-     * 获取配置
-     * By albert  2025/05/06 05:26:28
-     * @param mixed      $name
-     * @param mixed|null $default
-     * @return mixed
-     */
-    function radmin_config(mixed $name, mixed $default = null)
-    {
-        if ($name === null) {
-            return config('/plugin/radmin');
-        }
-        return config('plugin.radmin.' . $name, $default);
     }
 }
 

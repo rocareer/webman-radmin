@@ -10,9 +10,9 @@ namespace support;
  */
 class Request extends \Webman\Http\Request
 {
-
-    public object|null $member = null;
     public string|null $token  = null;
+    public object|null $member = null;
     public array|null  $roles  = null;
+    public mixed       $upload = null;
 
 }

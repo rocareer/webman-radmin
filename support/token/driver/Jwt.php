@@ -15,6 +15,7 @@
 namespace support\token\driver;
 
 use support\jwt\Jwt as JwtFacade;
+use support\jwt\JwtService;
 use support\StatusCode;
 use support\token\TokenInterface;
 use exception\TokenException;
@@ -23,22 +24,24 @@ use stdClass;
 
 class Jwt implements TokenInterface
 {
-    protected array $config;
-    protected $jwt;
+    protected array      $config;
+    protected JwtService $jwt;
+    protected mixed      $expire_time      = 7200;
+    protected mixed      $refresh_keep_ttl = 7200;
 
     public function __construct(array $config = [])
     {
         $this->config = array_merge([
             'algo'        => 'HS256',
             'secret'      => getenv('JWT_SECRET_KEY', 'radmin_default_secret'),
-            'public_key'  => env('JWT_PUBLIC_KEY'),
-            'private_key' => env('JWT_PRIVATE_KEY'),
+            'public_key'  => getenv('JWT_PUBLIC_KEY'),
+            'private_key' => getenv('JWT_PRIVATE_KEY'),
             'expire'      => 7200,
         ], $config);
 
         $this->expire_time      = $this->config['expire_time'] ?? $this->config['common_expire_time'];
         $this->refresh_keep_ttl = $this->config['refresh_keep_ttl'] ?? $this->config['common_refresh_keep_ttl'];
-        $this->jwt=JwtFacade::getInstance($config);
+        $this->jwt              = JwtFacade::getInstance($config);
     }
 
     public function encode(array $payload = [], bool $keep = false): string
@@ -69,7 +72,7 @@ class Jwt implements TokenInterface
             $this->config['algo']
         );
         if (!$tokenData) {
-           throw new TokenException('凭证解码失败', StatusCode::TOKEN_DECODE_FAILED);
+            throw new TokenException('凭证解码失败', StatusCode::TOKEN_DECODE_FAILED);
         }
         $tokenData->expire_time = $tokenData->exp;
         return $tokenData;
@@ -80,19 +83,27 @@ class Jwt implements TokenInterface
      * By albert  2025/05/03 09:41:19
      * @param string $token
      * @return bool|stdClass
+     * @throws TokenException
      */
     public function Verify(string $token): stdClass
     {
         $tokenData = $this->jwt->Verify($token);
 
-        if (!$tokenData || !$tokenData instanceof stdClass || $this->expired($token, $tokenData)) {
+        if ($this->expired($token, $tokenData)) {
             throw new TokenException('凭证需续期', StatusCode::TOKEN_EXPIRED, ['type' => 'should refresh']);
         }
         $tokenData->expire_time = $tokenData->exp;
         return $tokenData;
     }
 
-    public function expired(string $token, stdClass $tokenData = null): bool
+    /**
+     * 过期
+     * @param string        $token
+     * @param stdClass|null $tokenData
+     * @return bool
+     * @throws TokenException
+     */
+    public function expired(string $token, ?stdClass $tokenData = null): bool
     {
         $tokenData = $tokenData ?? $this->decode($token);
         if (!$tokenData) {
@@ -104,7 +115,14 @@ class Jwt implements TokenInterface
         return false;
     }
 
-    public function ttl(string $token, stdClass $tokenData = null): mixed
+    /**
+     * ttl
+     * @param string        $token
+     * @param stdClass|null $tokenData
+     * @return mixed
+     * @throws TokenException
+     */
+    public function ttl(string $token, ?stdClass $tokenData = null): mixed
     {
         $tokenData = $tokenData ?? $this->decode($token);
         return $tokenData->exp - time();
