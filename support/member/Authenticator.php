@@ -4,14 +4,15 @@
 namespace support\member;
 
 use support\StatusCode;
-use plugin\radmin\support\token\Token;
-use Rocareer\Radmin\Exception\BusinessException;
-use Rocareer\Radmin\Exception\UnauthorizedHttpException;
+use support\token\Token;
+use exception\BusinessException;
+use exception\UnauthorizedHttpException;
 use support\Log;
 use support\think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use Throwable;
 use Webman\Event\Event;
 
 /**
@@ -37,6 +38,9 @@ abstract class Authenticator implements InterfaceAuthenticator
     protected object|null $memberModel =null;
     //instance
 
+    /**
+     * @throws BusinessException
+     */
     public function __construct()
     {
         $this->config       = radmin_config('auth.login.' . $this->role);
@@ -105,7 +109,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             $this->updateLoginState('false');
             Db::commit();
             throw new UnauthorizedHttpException($e->getMessage(), StatusCode::AUTHENTICATION_FAILED);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Db::rollback();
             $this->updateLoginState('false');
             Db::commit();
@@ -118,6 +122,7 @@ abstract class Authenticator implements InterfaceAuthenticator
      * 验证基本凭证
      * By albert  2025/05/06 01:51:31
      * @return void
+     * @throws UnauthorizedHttpException
      */
     protected function validateCredentials(): void
     {
@@ -212,14 +217,14 @@ abstract class Authenticator implements InterfaceAuthenticator
                     throw new UnauthorizedHttpException('获取凭证失败', StatusCode::TOKEN_CREATE_FAILED);
                 }
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable) {
             throw new UnauthorizedHttpException('获取凭证失败', StatusCode::TOKEN_CREATE_FAILED);
         }
     }
 
     /**
      * 更新登录状态
-     * @param bool $success
+     * @param string $success
      */
     protected function updateLoginState(string $success): void
     {
@@ -228,26 +233,27 @@ abstract class Authenticator implements InterfaceAuthenticator
 
 
     /**
+     * todo
      * 记录操作日志
      * @param array $logData 日志数据
      */
     protected function recordOperationLog(array $logData): void
     {
-        if ($this->stateManager && method_exists($this->stateManager, 'recordOperationLog')) {
-            $this->stateManager->recordOperationLog(
-                $logData['action'] ?? 'operation',
-                $logData['type'] ?? 'common',
-                $logData['description'] ?? '',
-                $logData['data'] ?? []
-            );
-        }
+        // if ($this->stateManager && method_exists($this->stateManager, 'recordOperationLog')) {
+        //     $this->stateManager->recordOperationLog(
+        //         $logData['action'] ?? 'operation',
+        //         $logData['type'] ?? 'common',
+        //         $logData['description'] ?? '',
+        //         $logData['data'] ?? []
+        //     );
+        // }
     }
 
     /**
      * 刷新认证令牌
      * @param string $refreshToken
-     * @return array
-     * @throws UnauthorizedHttpException|BusinessException
+     * @return string
+     * @throws UnauthorizedHttpException
      */
     public function refreshToken(string $refreshToken): string
     {
@@ -273,7 +279,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             Db::commit();
             return $this->memberModel->token;
 
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Db::rollback();
             Log::error('刷新令牌失败', [
                 'error' => $e->getMessage(),
@@ -319,7 +325,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             $this->memberModel->save();
 
             // 清除缓存
-            $this->stateManager->clearCache();
+            // $this->stateManager->clearCache();
 
             // 记录操作日志
             $this->recordOperationLog([
@@ -329,7 +335,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             ]);
 
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Log::error('注销失败', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
@@ -355,8 +361,9 @@ abstract class Authenticator implements InterfaceAuthenticator
             throw new UnauthorizedHttpException('用户不存在', StatusCode::USER_NOT_FOUND);
         }
 
-        $stateManager = new $this->stateManager($user);
-        $result       = $stateManager->forceLogout($userId);
+        //todo
+        // $stateManager = new $this->stateManager($user);
+        // $result       = $stateManager->forceLogout($userId);
 
         // 记录操作日志
         if ($this->memberModel) {
@@ -370,7 +377,8 @@ abstract class Authenticator implements InterfaceAuthenticator
             ]);
         }
 
-        return $result;
+        // return $result;
+        return true;
     }
 
 }

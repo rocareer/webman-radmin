@@ -10,9 +10,9 @@
 
 namespace support\member\admin;
 
-use plugin\radmin\app\admin\model\AdminGroup;
-use plugin\radmin\support\member\Service;
-use plugin\radmin\support\token\Token;
+use app\admin\model\AdminGroup;
+use support\member\Service;
+use support\token\Token;
 use support\think\Db;
 use Throwable;
 
