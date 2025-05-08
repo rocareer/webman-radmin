@@ -1,11 +1,12 @@
 <?php
 
+
 namespace support\member;
 
 
-use exception\BusinessException;
-use support\Log;
 use support\StatusCode;
+use Rocareer\Radmin\Exception\BusinessException;
+use support\Log;
 use support\think\Model as ThinkModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -85,6 +86,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
      */
     public function findByName(string $username, bool $withAllowFields = true): mixed
     {
+        var_dump($this);
         $member =$this->where('username', $username)->find();
         if (!$member) {
             throw new BusinessException('用户不存在', StatusCode::USER_NOT_FOUND);

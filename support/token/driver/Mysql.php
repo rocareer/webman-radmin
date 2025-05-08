@@ -1,11 +1,23 @@
 <?php
+/**
+ *
+ *   +----------------------------------------------------------------------
+ *   | Rocareer [ ROC YOUR CAREER ]
+ *   +----------------------------------------------------------------------
+ *   | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
+ *   +----------------------------------------------------------------------
+ *   | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *   +----------------------------------------------------------------------
+ *   | Author: albert <Albert@rocareer.com>
+ *   +----------------------------------------------------------------------
+ **/
 
 namespace support\token\driver;
 
-use extend\ba\Random;
+use plugin\radmin\extend\ba\Random;
 use support\StatusCode;
-use support\token\TokenInterface;
-use exception\TokenException;
+use plugin\radmin\support\token\TokenInterface;
+use Rocareer\Radmin\Exception\TokenException;
 use stdClass;
 use support\think\Db;
 use Throwable;

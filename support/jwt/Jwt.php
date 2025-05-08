@@ -1,5 +1,6 @@
 <?php
 
+
 namespace support\jwt;
 
 use stdClass;

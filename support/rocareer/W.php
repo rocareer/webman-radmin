@@ -1,22 +1,10 @@
 <?php
-/*
- *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
- */
+
 
 namespace support\rocareer;
 
 
-use app\common\library\token\driver;
+use plugin\radmin\app\common\library\token\driver;
 use think\Facade;
 
 /**

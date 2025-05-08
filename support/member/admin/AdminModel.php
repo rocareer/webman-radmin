@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * File      AdminModel.php
  * Author    albert@rocareer.com
@@ -8,7 +10,11 @@
 
 namespace support\member\admin;
 
-use support\member\Model;
+use plugin\radmin\app\admin\model\Admin;
+use plugin\radmin\app\admin\model\AdminGroup;
+use plugin\radmin\support\member\Model;
+use support\think\Db;
+use think\db\exception\DbException;
 
 class AdminModel extends Model
 {
@@ -44,5 +50,60 @@ class AdminModel extends Model
         'roles'
     ];
 
+
+    /**
+     * @var string 自动写入时间戳
+     */
+    protected $autoWriteTimestamp = true;
+
+    /**
+     * 追加属性
+     */
+    protected $append = [
+        'group_arr',
+        'group_name_arr',
+    ];
+
+    public function getGroupArrAttr($value, $row): array
+    {
+        return Db::name('admin_group_access')
+            ->where('uid', $row['id'])
+            ->column('group_id');
+    }
+
+    public function getGroupNameArrAttr($value, $row): array
+    {
+        $groupAccess = Db::name('admin_group_access')
+            ->where('uid', $row['id'])
+            ->column('group_id');
+        return AdminGroup::whereIn('id', $groupAccess)->column('name');
+    }
+
+    public function getAvatarAttr($value): string
+    {
+        return full_url($value, false, radmin_config('buildadmin.default_avatar'));
+    }
+
+    public function setAvatarAttr($value): string
+    {
+        return $value == full_url('', false, radmin_config('buildadmin.default_avatar')) ? '' : $value;
+    }
+
+    public function getLastLoginTimeAttr($value): string
+    {
+        return $value ? date('Y-m-d H:i:s', $value) : '';
+    }
+
+    /**
+     * 重置用户密码
+     * @param int|string $uid         管理员ID
+     * @param string     $newPassword 新密码
+     * @return int|Admin
+     * @throws DbException
+     */
+    public function resetPassword(int|string $uid, string $newPassword): int|Admin
+    {
+        return $this->where(['id' => $uid])->update(['password' => hash_password($newPassword), 'salt' => '']);
+    }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace support;
 
 /**
@@ -10,6 +11,7 @@ class StatusCode
     const NEED_LOGIN                = 303;           // 未知错误
     const TOKEN_EXPIRED             = 409;           // 未知错误
     const NO_PERMISSION             = 401;
+    const METHOD_NOT_ALLOWED = 433;
     const TOKEN_SHOULD_REFRESH      = 409;           // 未知错误
     const SYSTEM_ERROR              = 500;           // 未知错误
     const MEMBER_ERROR              = 666;           // 未知错误
@@ -54,7 +56,7 @@ class StatusCode
 
 
     // 状态码消息定义
-    const MESSAGES          = [
+    const MESSAGES           = [
         self::NEED_LOGIN                => '未知错误',
         self::TOKEN_EXPIRED             => '未知错误',
         self::TOKEN_SHOULD_REFRESH      => '未知错误',

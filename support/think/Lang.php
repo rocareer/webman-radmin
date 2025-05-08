@@ -1,17 +1,4 @@
-<?php
-/*
- *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
- */
+<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 
 namespace support\think;
@@ -44,8 +31,8 @@ class Lang extends Facade
 	 * @access protected
 	 * @return string
 	 */
-	protected static function getFacadeClass()
-	{
+	protected static function getFacadeClass(): string
+    {
 		return ThinkLang::class;
 	}
 }

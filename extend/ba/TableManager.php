@@ -1,11 +1,14 @@
 <?php
+/** @noinspection PhpUndefinedMethodInspection */
+
+/** @noinspection SqlNoDataSourceInspection */
 
 namespace extend\ba;
 
-use extend\ba\Exception;
+use exception\Exception;
+use Phinx\Db\Table;
 use Throwable;
 use support\think\Db;
-use think\migration\db\Table;
 use Phinx\Db\Adapter\AdapterFactory;
 use Phinx\Db\Adapter\AdapterInterface;
 
@@ -115,6 +118,7 @@ class TableManager
 
     /**
      * 系统是否存在多个数据库连接配置
+     * @noinspection PhpUnused
      */
     public static function isMultiDatabase(): bool
     {

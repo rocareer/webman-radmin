@@ -318,56 +318,55 @@ class Captcha
      * φ：决定波形与X轴位置关系或横向移动距离（左加右减）
      * ω：决定周期（最小正周期T=2π/∣ω∣）
      */
-    private function writeCurve()
+    /**
+     * 画一条由两段随机正弦函数曲线构成的干扰线
+     * 正弦型函数解析式：y = A * sin(ωx + φ) + b
+     */
+    private function writeCurve(): void
     {
         $py = 0;
+
+        // 绘制曲线的公共逻辑封装为一个方法
+        $drawCurve = function ($pxStart, $pxEnd, $A, $b, $f, $T) use (&$py) {
+            $w = (2 * M_PI) / $T; // 计算角频率
+            for ($px = $pxStart; $px <= $pxEnd; $px++) {
+                if ($w != 0) {
+                    $py = $A * sin($w * $px + $f) + $b + $this->imageH / 2; // y = A * sin(ωx + φ) + b
+                    $i  = (int)($this->fontSize / 5);
+                    while ($i > 0) {
+                        imagesetpixel($this->image, $px + $i, $py + $i, (int)$this->color);
+                        $i--;
+                    }
+                }
+            }
+        };
 
         // 曲线前部分
         $A = mt_rand(1, $this->imageH / 2); // 振幅
         $b = mt_rand(-$this->imageH / 4, $this->imageH / 4); // Y轴方向偏移量
         $f = mt_rand(-$this->imageH / 4, $this->imageH / 4); // X轴方向偏移量
         $T = mt_rand($this->imageH, $this->imageW * 2); // 周期
-        $w = (2 * M_PI) / $T;
+        $px1 = 0; // 起始横坐标
+        $px2 = mt_rand($this->imageW / 2, $this->imageW * 0.8); // 结束横坐标
 
-        $px1 = 0; // 曲线横坐标起始位置
-        $px2 = mt_rand($this->imageW / 2, $this->imageW * 0.8); // 曲线横坐标结束位置
-
-        for ($px = $px1; $px <= $px2; $px = $px + 1) {
-            if (0 != $w) {
-                $py = $A * sin($w * $px + $f) + $b + $this->imageH / 2; // y = Asin(ωx+φ) + b
-                $i  = (int)($this->fontSize / 5);
-                while ($i > 0) {
-                    imagesetpixel($this->image, $px + $i, $py + $i, (int)$this->color); // 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
-                    $i--;
-                }
-            }
-        }
+        $drawCurve($px1, $px2, $A, $b, $f, $T);
 
         // 曲线后部分
-        $A   = mt_rand(1, $this->imageH / 2); // 振幅
-        $f   = mt_rand(-$this->imageH / 4, $this->imageH / 4); // X轴方向偏移量
-        $T   = mt_rand($this->imageH, $this->imageW * 2); // 周期
-        $w   = (2 * M_PI) / $T;
-        $b   = $py - $A * sin($w * $px + $f) - $this->imageH / 2;
-        $px1 = $px2;
-        $px2 = $this->imageW;
+        $A = mt_rand(1, $this->imageH / 2); // 振幅
+        $f = mt_rand(-$this->imageH / 4, $this->imageH / 4); // X轴方向偏移量
+        $T = mt_rand($this->imageH, $this->imageW * 2); // 周期
+        $b = $py - $A * sin((2 * M_PI) / $T * $px2 + $f) - $this->imageH / 2; // 动态计算 b，使曲线衔接平滑
+        $px1 = $px2; // 起始横坐标
+        $px2 = $this->imageW; // 结束横坐标
 
-        for ($px = $px1; $px <= $px2; $px = $px + 1) {
-            if (0 != $w) {
-                $py = $A * sin($w * $px + $f) + $b + $this->imageH / 2; // y = Asin(ωx+φ) + b
-                $i  = (int)($this->fontSize / 5);
-                while ($i > 0) {
-                    imagesetpixel($this->image, $px + $i, $py + $i, (int)$this->color);
-                    $i--;
-                }
-            }
-        }
+        $drawCurve($px1, $px2, $A, $b, $f, $T);
     }
+
 
     /**
      * 绘杂点，往图片上写不同颜色的字母或数字
      */
-    private function writeNoise()
+    private function writeNoise(): void
     {
         $codeSet = '2345678abcdefhijkmnpqrstuvwxyz';
         for ($i = 0; $i < 10; $i++) {
@@ -385,7 +384,7 @@ class Captcha
      *
      * 注：如果验证码输出图片比较大，将占用比较多的系统资源
      */
-    private function background()
+    private function background(): void
     {
         $path = Filesystem::fsFit(public_path() . 'static/images/captcha/image/');
         $dir  = dir($path);

@@ -1,17 +1,5 @@
 <?php
-/*
- *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
- */
+
 
 /**
  * File      SpiderService.php
@@ -22,8 +10,8 @@
 
 namespace support\rocareer;
 
-use  app\admin\model\spider\Process;
-use app\admin\model\spider\Spider;
+use  plugin\radmin\app\admin\model\spider\Process;
+use plugin\radmin\app\admin\model\spider\Spider;
 
 class SpiderService
 {
