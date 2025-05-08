@@ -16,7 +16,7 @@
 namespace app\common\library\ai;
 
 use Exception;
-use plugin\radmin\extend\ba\Date;
+use extend\ba\Date;
 use Throwable;
 use DateInterval;
 use support\think\Db;
@@ -24,14 +24,14 @@ use support\Cache;
 use Workerman\Protocols\Http\Chunk;
 use Psr\Http\Message\StreamInterface;
 use Workerman\Protocols\Http\Response;
-use plugin\radmin\app\common\model\ai\AiUser;
+use app\common\model\ai\AiUser;
 use think\db\exception\DataNotFoundException;
-use plugin\radmin\app\common\model\ai\Session;
+use app\common\model\ai\Session;
 use think\db\exception\ModelNotFoundException;
-use plugin\radmin\app\common\model\ai\ChatModel;
-use plugin\radmin\app\common\model\ai\UserTokens;
+use app\common\model\ai\ChatModel;
+use app\common\model\ai\UserTokens;
 
-use plugin\radmin\app\common\model\ai\SessionMessage;
+use app\common\model\ai\SessionMessage;
 
 class Chat
 {

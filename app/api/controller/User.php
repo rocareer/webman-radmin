@@ -15,10 +15,10 @@
 
 namespace app\api\controller;
 
-use plugin\radmin\service\auth\Auth;
+use service\auth\Auth;
 use Throwable;
-use plugin\radmin\extend\ba\Captcha;
-use plugin\radmin\extend\ba\ClickCaptcha;
+use extend\ba\Captcha;
+use extend\ba\ClickCaptcha;
 
 use app\common\controller\Frontend;
 use app\api\validate\User as UserValidate;

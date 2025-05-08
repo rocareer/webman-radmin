@@ -2,8 +2,8 @@
 
 namespace support\member;
 
-use plugin\radmin\service\member\AuthException;
-use plugin\radmin\support\StatusCode;
+use service\member\AuthException;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\BusinessException;
 use support\Log;
 use support\think\Db;

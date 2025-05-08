@@ -3,9 +3,9 @@
 namespace app\admin\controller;
 
 use Throwable;
-use plugin\radmin\extend\ba\Terminal;
+use extend\ba\Terminal;
 use think\Response;
-use plugin\radmin\extend\ba\TableManager;
+use extend\ba\TableManager;
 use support\think\Db;
 use support\think\Cache;
 use think\facade\Event;

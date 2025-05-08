@@ -13,12 +13,12 @@
  *
  */
 
-use plugin\radmin\middleware\AdminLog;
-use plugin\radmin\middleware\AdminRequest;
-use plugin\radmin\middleware\AdminSecurity;
-use plugin\radmin\middleware\AccessControlMIddleWare;
-use plugin\radmin\middleware\RadminAuthMiddleware;
-use plugin\radmin\middleware\RequestMiddleWare;
+use middleware\AdminLog;
+use middleware\AdminRequest;
+use middleware\AdminSecurity;
+use middleware\AccessControlMIddleWare;
+use middleware\RadminAuthMiddleware;
+use middleware\RequestMiddleWare;
 
 return [
     ''      => [

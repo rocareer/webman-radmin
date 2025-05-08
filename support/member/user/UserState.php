@@ -2,8 +2,8 @@
 
 namespace support\member\user;
 
-use plugin\radmin\support\member\State;
-use plugin\radmin\support\StatusCode;
+use support\member\State;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\AuthException;
 
 class UserState extends State

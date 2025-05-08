@@ -1,15 +1,15 @@
 <?php
 namespace support\member;
 
-use plugin\radmin\support\member\admin\AdminAuthenticator;
-use plugin\radmin\support\member\admin\AdminModel;
-use plugin\radmin\support\member\admin\AdminService;
-use plugin\radmin\support\member\admin\AdminState;
-use plugin\radmin\support\member\user\UserAuthenticator;
-use plugin\radmin\support\member\user\UserModel;
-use plugin\radmin\support\member\user\UserService;
-use plugin\radmin\support\member\user\UserState;
-use plugin\radmin\support\StatusCode;
+use support\member\admin\AdminAuthenticator;
+use support\member\admin\AdminModel;
+use support\member\admin\AdminService;
+use support\member\admin\AdminState;
+use support\member\user\UserAuthenticator;
+use support\member\user\UserModel;
+use support\member\user\UserService;
+use support\member\user\UserState;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\BusinessException;
 
 class Factory

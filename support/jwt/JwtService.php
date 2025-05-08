@@ -6,7 +6,7 @@ use Exception;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use plugin\radmin\support\StatusCode;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\TokenException;
 use stdClass;
 use support\think\Cache;

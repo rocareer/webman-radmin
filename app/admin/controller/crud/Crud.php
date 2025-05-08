@@ -2,12 +2,12 @@
 
 namespace app\admin\controller\crud;
 
-use plugin\radmin\extend\ba\Version;
+use extend\ba\Version;
 use Throwable;
 use Exception;
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Filesystem;
 use support\think\Db;
-use plugin\radmin\extend\ba\TableManager;
+use extend\ba\TableManager;
 use app\admin\model\CrudLog;
 use app\common\library\Menu;
 use app\admin\model\AdminLog;

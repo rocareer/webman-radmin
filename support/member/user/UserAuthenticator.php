@@ -3,7 +3,7 @@
 namespace support\member\user;
 
 use app\admin\model\User;
-use plugin\radmin\support\member\Authenticator;
+use support\member\Authenticator;
 use Rocareer\Radmin\Exception\AuthException;
 use Rocareer\Radmin\Exception\BusinessException;
 

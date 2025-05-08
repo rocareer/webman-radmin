@@ -16,9 +16,9 @@
 namespace app\api\controller;
 
 use app\common\controller\Frontend;
-use plugin\radmin\extend\ba\Tree;
-use plugin\radmin\service\auth\admin\AdminHelper;
-use plugin\radmin\support\member\Member;
+use extend\ba\Tree;
+use service\auth\admin\AdminHelper;
+use support\member\Member;
 use support\think\Db;
 use Throwable;
 

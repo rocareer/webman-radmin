@@ -8,7 +8,7 @@
 
 namespace support\member\admin;
 
-use plugin\radmin\support\member\Model;
+use support\member\Model;
 
 class AdminModel extends Model
 {

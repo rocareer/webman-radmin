@@ -4,7 +4,7 @@ namespace app\admin\controller\auth;
 
 use app\admin\model\Admin as AdminModel;
 use app\common\controller\Backend;
-use plugin\radmin\support\member\Member;
+use support\member\Member;
 use support\think\Db;
 use Throwable;
 

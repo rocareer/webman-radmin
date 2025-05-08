@@ -3,10 +3,10 @@
 namespace app\admin\library\module;
 
 use Throwable;
-use plugin\radmin\extend\ba\Version;
-use plugin\radmin\extend\ba\Depends;
+use extend\ba\Version;
+use extend\ba\Depends;
 use Exception;
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Filesystem;
 use FilesystemIterator;
 
 use RecursiveDirectoryIterator;

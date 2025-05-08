@@ -12,7 +12,7 @@
 namespace extend\ba;
 
 use app\admin\library\module\Manage;
-use plugin\radmin\support\member\Member;
+use support\member\Member;
 use think\exception\HttpResponseException;
 use think\Response;
 use Throwable;

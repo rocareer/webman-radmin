@@ -15,7 +15,7 @@
 
 namespace app\common\model\ai;
 
-use plugin\radmin\app\common\model\BaseModel;
+use app\common\model\BaseModel;
 
 /**
  * SessionMessage

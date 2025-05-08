@@ -2,9 +2,9 @@
 
 namespace support\token\driver;
 
-use plugin\radmin\extend\ba\Random;
-use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\TokenInterface;
+use extend\ba\Random;
+use support\StatusCode;
+use support\token\TokenInterface;
 use Rocareer\Radmin\Exception\TokenException;
 use stdClass;
 use support\think\Db;

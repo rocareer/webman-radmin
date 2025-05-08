@@ -3,7 +3,7 @@
 namespace support\member;
 
 
-use plugin\radmin\support\StatusCode;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\BusinessException;
 use support\Log;
 use support\think\Model as ThinkModel;

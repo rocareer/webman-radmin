@@ -2,7 +2,7 @@
 
 namespace app\admin\model;
 
-use plugin\radmin\app\common\model\BaseModel;
+use app\common\model\BaseModel;
 
 /**
  * UserGroup 模型

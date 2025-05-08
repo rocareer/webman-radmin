@@ -3,10 +3,10 @@
 namespace middleware;
 
 
-use plugin\radmin\service\member\state\State;
-use plugin\radmin\support\member\Member;
-use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\Token;
+use service\member\state\State;
+use support\member\Member;
+use support\StatusCode;
+use support\token\Token;
 use Rocareer\Radmin\Exception\BusinessException;
 use Webman\Http\Request;
 use Webman\Http\Response;

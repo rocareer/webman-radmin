@@ -2,8 +2,8 @@
 
 namespace support\member;
 
-use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\Token;
+use support\StatusCode;
+use support\token\Token;
 use Rocareer\Radmin\Exception\BusinessException;
 use Rocareer\Radmin\Exception\UnauthorizedHttpException;
 use support\Log;

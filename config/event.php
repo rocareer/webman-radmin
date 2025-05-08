@@ -1,6 +1,6 @@
 <?php
 
-use plugin\radmin\support\member\State;
+use support\member\State;
 
 return [
     'state.checkStatus' => [

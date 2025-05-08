@@ -27,8 +27,8 @@
 // +----------------------------------------------------------------------
 
 use app\admin\library\module\Server;
-use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\think\Lang;
+use extend\ba\Filesystem;
+use support\think\Lang;
 use support\think\Cache;
 use support\think\Db;
 

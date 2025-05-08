@@ -2,7 +2,7 @@
 
 namespace support\member\admin;
 
-use plugin\radmin\support\member\State;
+use support\member\State;
 use Rocareer\Radmin\Exception\AuthException;
 
 class AdminState extends State
