@@ -8,7 +8,7 @@
 
 namespace support\member\user;
 
-use plugin\radmin\support\member\Model;
+use support\member\Model;
 
 class UserModel extends Model
 {

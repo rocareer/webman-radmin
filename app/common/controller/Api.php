@@ -2,8 +2,8 @@
 
 namespace app\common\controller;
 
-use plugin\radmin\app\controller\BaseController;
-use plugin\radmin\support\think\Lang;
+use app\controller\BaseController;
+use support\think\Lang;
 use support\Response;
 use support\think\Db;
 use think\db\exception\PDOException;

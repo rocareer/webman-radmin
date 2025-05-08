@@ -14,7 +14,7 @@
  *
  */
 
-use plugin\radmin\middleware\RadminAuthMiddleware;
+use middleware\RadminAuthMiddleware;
 use Webman\Route;
 
     

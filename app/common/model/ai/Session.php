@@ -17,7 +17,7 @@ namespace app\common\model\ai;
 
 use support\think\Db;
 use think\model\relation\BelongsTo;
-use plugin\radmin\app\common\model\BaseModel;
+use app\common\model\BaseModel;
 
 /**
  * Session

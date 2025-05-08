@@ -2,9 +2,9 @@
 
 namespace support\token\driver;
 
-use plugin\radmin\support\jwt\Jwt as JwtFacade;
-use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\TokenInterface;
+use support\jwt\Jwt as JwtFacade;
+use support\StatusCode;
+use support\token\TokenInterface;
 use Rocareer\Radmin\Exception\TokenException;
 use Rocareer\Radmin\Exception\TokenExpirationException;
 use stdClass;

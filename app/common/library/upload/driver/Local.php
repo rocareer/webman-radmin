@@ -17,7 +17,7 @@ namespace app\common\library\upload\driver;
 
 use Webman\Http\UploadFile;
 use Webman\Exception\FileException;
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Filesystem;
 use app\common\library\upload\driver;
 
 /**

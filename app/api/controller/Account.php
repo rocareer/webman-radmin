@@ -16,14 +16,14 @@
 namespace app\api\controller;
 
 use Throwable;
-use plugin\radmin\extend\ba\Date;
-use plugin\radmin\extend\ba\Random;
-use plugin\radmin\extend\ba\Captcha;
-use plugin\radmin\app\common\model\User;
-use plugin\radmin\support\lang\Validate;
+use extend\ba\Date;
+use extend\ba\Random;
+use extend\ba\Captcha;
+use app\common\model\User;
+use support\lang\Validate;
 
-use plugin\radmin\app\common\model\UserScoreLog;
-use plugin\radmin\app\common\model\UserMoneyLog;
+use app\common\model\UserScoreLog;
+use app\common\model\UserMoneyLog;
 use app\common\controller\Frontend;
 use app\api\validate\Account as AccountValidate;
 

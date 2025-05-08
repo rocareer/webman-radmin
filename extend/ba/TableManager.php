@@ -2,7 +2,7 @@
 
 namespace extend\ba;
 
-use plugin\radmin\extend\ba\Exception;
+use extend\ba\Exception;
 use Throwable;
 use support\think\Db;
 use think\migration\db\Table;

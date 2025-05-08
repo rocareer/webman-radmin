@@ -1,9 +1,9 @@
 <?php
 
 namespace app\common\controller;
-use plugin\radmin\service\auth\Auth;
-use plugin\radmin\support\member\Member;
-use plugin\radmin\support\StatusCode;
+use service\auth\Auth;
+use support\member\Member;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\UnauthorizedHttpException;
 use think\exception\HttpResponseException;
 use Throwable;

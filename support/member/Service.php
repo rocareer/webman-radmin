@@ -4,9 +4,9 @@ namespace support\member;
 
 use Exception;
 use Firebase\JWT\ExpiredException;
-use plugin\radmin\service\member\TokenException;
-use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\Token;
+use service\member\TokenException;
+use support\StatusCode;
+use support\token\Token;
 use Rocareer\Radmin\Exception\BusinessException;
 use Throwable;
 use Webman\Event\Event;

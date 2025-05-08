@@ -16,10 +16,10 @@
 namespace app\api\controller;
 
 use Throwable;
-use plugin\radmin\extend\ba\Captcha;
-use plugin\radmin\support\lang\Validate;
-use plugin\radmin\app\common\model\User;
-use plugin\radmin\extend\ba\ClickCaptcha;
+use extend\ba\Captcha;
+use support\lang\Validate;
+use app\common\model\User;
+use extend\ba\ClickCaptcha;
 use app\common\library\Email;
 use app\common\controller\Frontend;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;

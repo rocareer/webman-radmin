@@ -2,7 +2,7 @@
 
 namespace {%namespace%};
 
-use plugin\radmin\app\common\model\BaseModel;
+use app\common\model\BaseModel;
 
 /**
  * {%className%}

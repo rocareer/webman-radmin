@@ -4,7 +4,7 @@ namespace app\admin\model;
 
 use support\think\Cache;
 use Throwable;
-use plugin\radmin\app\common\model\BaseModel;
+use app\common\model\BaseModel;
 
 
 /**

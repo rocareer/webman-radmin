@@ -2,7 +2,7 @@
 
 namespace app\common\model;
 
-use plugin\radmin\support\StatusCode;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\AuthException;
 use support\Log;
 use think\db\exception\DataNotFoundException;

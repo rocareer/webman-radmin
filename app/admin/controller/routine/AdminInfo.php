@@ -4,7 +4,7 @@ namespace app\admin\controller\routine;
 
 use app\admin\model\Admin;
 use app\common\controller\Backend;
-use plugin\radmin\service\auth\admin\AdminHelper;
+use service\auth\admin\AdminHelper;
 use Throwable;
 
 class AdminInfo extends Backend

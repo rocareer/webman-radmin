@@ -5,7 +5,7 @@ namespace app\admin\library\module;
 use Throwable;
 use ba\Depends;
 use Exception;
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Filesystem;
 use support\think\Db;
 use FilesystemIterator;
 

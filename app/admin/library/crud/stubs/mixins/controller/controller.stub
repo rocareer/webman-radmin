@@ -2,7 +2,7 @@
 
 namespace {%namespace%};
 {%use%}
-use plugin\radmin\app\common\controller\Backend;
+use app\common\controller\Backend;
 
 /**
  * {%tableComment%}

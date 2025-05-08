@@ -3,7 +3,7 @@
 namespace app\admin\controller\security;
 
 use Throwable;
-use plugin\radmin\extend\ba\TableManager;
+use extend\ba\TableManager;
 use support\think\Db;
 use app\common\controller\Backend;
 use app\admin\model\SensitiveDataLog as SensitiveDataLogModel;

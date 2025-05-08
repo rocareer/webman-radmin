@@ -22,7 +22,7 @@ use support\think\Db;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
-use plugin\radmin\extend\ba\TableManager;
+use extend\ba\TableManager;
 use app\admin\model\DataRecycle;
 use app\admin\model\SensitiveData;
 use app\admin\model\DataRecycleLog;

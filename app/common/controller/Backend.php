@@ -2,8 +2,8 @@
 
 namespace app\common\controller;
 
-use plugin\radmin\support\member\Member;
-use plugin\radmin\support\StatusCode;
+use support\member\Member;
+use support\StatusCode;
 use Rocareer\Radmin\Exception\BusinessException;
 use Rocareer\Radmin\Exception\MemberException;
 use support\think\Model;

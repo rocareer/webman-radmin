@@ -3,9 +3,9 @@
 namespace app\admin\library\crud;
 
 use Throwable;
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Filesystem;
 use think\Exception;
-use plugin\radmin\extend\ba\TableManager;
+use extend\ba\TableManager;
 use support\think\Db;
 use app\common\library\Menu;
 use app\admin\model\AdminRule;

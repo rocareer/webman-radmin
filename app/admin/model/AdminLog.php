@@ -2,7 +2,7 @@
 
 namespace app\admin\model;
 
-use plugin\radmin\app\common\model\BaseModel;
+use app\common\model\BaseModel;
 use support\think\Db;
 use think\model\relation\BelongsTo;
 use Throwable;

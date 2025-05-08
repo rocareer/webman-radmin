@@ -17,16 +17,16 @@
 namespace app\api\controller;
 
 use app\admin\model\Config;
-use plugin\radmin\support\member\admin\AdminModel;
+use support\member\admin\AdminModel;
 use support\Log;
 use support\Response;
 use Throwable;
 use PDOException;
 use support\think\Db;
-use plugin\radmin\extend\ba\Random;
-use plugin\radmin\extend\ba\Version;
-use plugin\radmin\extend\ba\Terminal;
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Random;
+use extend\ba\Version;
+use extend\ba\Terminal;
+use extend\ba\Filesystem;
 use app\admin\model\User as UserModel;
 
 /**

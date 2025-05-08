@@ -3,7 +3,7 @@
 namespace app\admin\controller\routine;
 
 use Throwable;
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Filesystem;
 use app\common\library\Email;
 use PHPMailer\PHPMailer\PHPMailer;
 use app\common\controller\Backend;

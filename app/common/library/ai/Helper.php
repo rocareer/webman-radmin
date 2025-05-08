@@ -15,11 +15,11 @@
 
 namespace app\common\library\ai;
 
-use plugin\radmin\extend\ba\Date;
+use extend\ba\Date;
 use Throwable;
 use GuzzleHttp\Client;
-use plugin\radmin\app\common\model\ai\Config;
-use plugin\radmin\app\common\model\ai\Session;
+use app\common\model\ai\Config;
+use app\common\model\ai\Session;
 
 class Helper
 {
