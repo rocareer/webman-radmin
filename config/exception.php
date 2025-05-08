@@ -3,7 +3,7 @@
  * 异常处理配置
  */
 
-use Rocareer\Radmin\Exception\Handler;
+use exception\Handler;
 
 return [
     ''=> Handler::class,

@@ -18,7 +18,7 @@
  */
 
 
-use plugin\radmin\extend\ba\Filesystem;
+use extend\ba\Filesystem;
 
 /**
  * 检查路径是否需要跳过认证
