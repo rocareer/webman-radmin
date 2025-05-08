@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use app\common\model\BaseModel;
+use Exception;
 use support\think\Db;
 use think\model\relation\BelongsTo;
 use Throwable;
@@ -97,7 +98,7 @@ class AdminLog extends BaseModel
      * 设置需要进行数据脱敏的正则列表
      * @param array|string $regex
      */
-    public function setDesensitizationRegex(array|string $regex = [])
+    public function setDesensitizationRegex(array|string $regex = []): void
     {
         $regex                      = is_array($regex) ? $regex : [$regex];
         $this->desensitizationRegex = array_merge($this->desensitizationRegex, $regex);
@@ -130,11 +131,11 @@ class AdminLog extends BaseModel
 
     /**
      * 写入日志
-     * @param string            $title
-     * @param string|array|null $data
-     * @throws Throwable
+     * @param string     $title
+     * @param mixed|null $data
+     * @throws Exception
      */
-    public function record(string $title = '', string|array $data = null):void
+    public function record(string $title = '', mixed $data = null):void
     {
         $adminId=null;
         $userName=null;
@@ -185,7 +186,7 @@ class AdminLog extends BaseModel
                 'useragent' => substr(request()->header('user-agent'), 0, 255),
                 'create_time'=> time(),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
