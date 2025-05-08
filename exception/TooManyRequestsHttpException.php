@@ -7,7 +7,7 @@
  */
 
 declare(strict_types=1);
-namespace Rocareer\Radmin\Exception;
+namespace exception;
 
 class TooManyRequestsHttpException extends Exception
 {

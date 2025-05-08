@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Rocareer\Radmin\Exception;
+namespace exception;
 
 /**
  * ServerErrorHttpException represents an "Internal Server Error" HTTP exception with status code 500.

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @desc 请求不存在异常类
+ * @desc 路由地址不存在异常类
  *
  * @see https://tools.ietf.org/html/rfc7231#section-6.5.3
  * @author Tinywan(ShaoBo Wan)
@@ -10,17 +11,17 @@
 
 declare(strict_types=1);
 
-namespace Rocareer\Radmin\Exception;
+namespace exception;
 
-class NotFoundHttpException extends Exception
+class RouteNotFoundException extends Exception
 {
     /**
-     * @var int
+     * HTTP 状态码
      */
     public int $statusCode = 404;
 
     /**
-     * @var string
+     * 错误消息.
      */
-    public string $errorMessage = '未找到请求的资源';
+    public string $errorMessage = '路由地址不存在';
 }

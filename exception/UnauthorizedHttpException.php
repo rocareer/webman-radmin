@@ -18,21 +18,21 @@
 
 declare(strict_types=1);
 
-namespace Rocareer\Radmin\Exception;
+namespace exception;
 
-use plugin\radmin\support\StatusCode;
+use support\StatusCode;
 
-class BusinessException extends Exception
+class UnauthorizedHttpException extends Exception
 {
     /**
      * HTTP 状态码
      */
-    public int $statusCode = 200;
+    public int $statusCode = 401;
 
     /**
      * 错误消息.
      */
-    public string $errorMessage = 'BusinessException';
+    public string $errorMessage = 'Unauthorized';
 
 
     public function __construct($errorMessage = null, $code = 0, $needLogin = false, $data = [],$error = '')

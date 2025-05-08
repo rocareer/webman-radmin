@@ -10,13 +10,14 @@
 
 declare(strict_types=1);
 
-namespace Rocareer\Radmin\Exception;
+namespace exception;
+
 
 /**
  * ForbiddenHttpException represents a "Forbidden" HTTP exception with status code 403.
  * Use this exception when a user is not allowed to perform the requested action. Using different credentials might or might not allow performing the requested action. If you do not want to expose authorization information to the user, it is valid to respond with a 404 yii\web\NotFoundHttpException.
  */
-class ForbiddenHttpException extends BaseException
+class ForbiddenHttpException extends Exception
 {
     /**
      * @var int
