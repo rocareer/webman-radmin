@@ -13,12 +13,12 @@
  *
  */
 
-use middleware\AdminLog;
-use middleware\AdminRequest;
-use middleware\AdminSecurity;
-use middleware\AccessControlMIddleWare;
-use middleware\RadminAuthMiddleware;
-use middleware\RequestMiddleWare;
+use app\middleware\AccessControlMIddleWare;
+use app\middleware\AdminLog;
+use app\middleware\AdminRequest;
+use app\middleware\AdminSecurity;
+use app\middleware\RadminAuthMiddleware;
+use app\middleware\RequestMiddleWare;
 
 return [
     ''      => [

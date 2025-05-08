@@ -20,7 +20,7 @@
  * Describe  AccessControl.php
  */
 
-namespace middleware;
+namespace app\middleware;
 
 use Webman\Http\Request;
 use Webman\Http\Response;

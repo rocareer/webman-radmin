@@ -13,14 +13,13 @@
  *
  */
 
-namespace middleware;
+namespace app\middleware;
 
-use Closure;
+use app\admin\model\AdminLog as AdminLogModel;
 use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
-use app\admin\model\AdminLog as AdminLogModel;
 
 class AdminLog implements MiddlewareInterface
 {

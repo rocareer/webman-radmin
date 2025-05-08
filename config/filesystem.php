@@ -28,7 +28,7 @@ return [
         ],
         'public' => [
             'type' => 'local', // 本地存储
-            'root' => radmin_public('storage'), // 存储根目录
+            'root' => public_path('storage'), // 存储根目录
 
             'url'        => '/storage',
             // 可见性
