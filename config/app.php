@@ -1,4 +1,7 @@
 <?php
+/** @noinspection PhpRedundantOptionalArgumentInspection */
+/** @noinspection SpellCheckingInspection */
+
 /**
  * This file is part of webman.
  *
@@ -23,4 +26,16 @@ return [
     'runtime_path' => base_path(false) . DIRECTORY_SEPARATOR . 'runtime',
     'controller_suffix' => 'Controller',
     'controller_reuse' => false,
+
+    // http cache
+    'http_cache'     => getenv('HTTP_CACHE', false),
+    'http_cache_ttl' => getenv('HTTP_CACHE_TTL', 0),
+
+    // request log
+    'request'=>[
+        'log'=>[
+            'enable'=>true,
+            'channel'=>'R-request'
+        ]
+    ]
 ];

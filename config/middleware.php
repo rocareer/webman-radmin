@@ -1,15 +1,45 @@
 <?php
-/**
- * This file is part of webman.
+/*
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the MIT-LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
+ *  * // +----------------------------------------------------------------------
+ *  * // | Rocareer [ ROC YOUR CAREER ]
+ *  * // +----------------------------------------------------------------------
+ *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
+ *  * // +----------------------------------------------------------------------
+ *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  * // +----------------------------------------------------------------------
+ *  * // | Author: albert <Albert@rocareer.com>
+ *  * // +----------------------------------------------------------------------
  *
- * @author    walkor<walkor@workerman.net>
- * @copyright walkor<walkor@workerman.net>
- * @link      http://www.workerman.net/
- * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-return [];
+use plugin\radmin\middleware\AdminLog;
+use plugin\radmin\middleware\AdminRequest;
+use plugin\radmin\middleware\AdminSecurity;
+use plugin\radmin\middleware\AccessControlMIddleWare;
+use plugin\radmin\middleware\RadminAuthMiddleware;
+use plugin\radmin\middleware\RequestMiddleWare;
+
+return [
+    ''      => [
+        // 全局跨域
+        AccessControlMIddleWare::class,
+        // 请求预处理
+        RequestMiddleWare::class
+
+    ],
+    'api'=>[
+        // new RadminAuthMiddleware(['admin','user']),
+    ],
+    'admin' => [
+
+        new RadminAuthMiddleware(['admin']),
+        // 后台请求预处理
+        AdminRequest::class,
+        // 管理员操作日志
+        AdminLog::class,
+        // 数据安全
+        AdminSecurity::class,
+    ],
+
+];
