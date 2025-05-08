@@ -15,7 +15,7 @@
 
 namespace app\common\library\ai;
 
-use Exception;
+use exception;
 use extend\ba\Date;
 use Throwable;
 use DateInterval;

@@ -16,7 +16,7 @@
 namespace middleware;
 
 use Throwable;
-use Exception;
+use exception;
 use support\Log;
 use support\think\Db;
 use Webman\Http\Request;

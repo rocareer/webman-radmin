@@ -16,7 +16,7 @@
 namespace app\common\library\ai;
 
 use Throwable;
-use Exception;
+use exception;
 use app\common\model\ai\KbsContent;
 use function Symfony\Component\String\u;
 

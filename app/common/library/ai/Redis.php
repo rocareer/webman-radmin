@@ -16,7 +16,7 @@
 namespace app\common\library\ai;
 
 use Throwable;
-use Exception;
+use exception;
 use Redis as RedisE;
 
 
