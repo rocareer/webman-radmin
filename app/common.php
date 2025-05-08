@@ -29,7 +29,7 @@
 use app\admin\library\module\Server;
 use extend\ba\Filesystem;
 use support\think\Lang;
-use support\think\Cache;
+use support\Cache;
 use support\think\Db;
 
 

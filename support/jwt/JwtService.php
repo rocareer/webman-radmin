@@ -9,7 +9,7 @@ use Firebase\JWT\Key;
 use support\StatusCode;
 use Rocareer\Radmin\Exception\TokenException;
 use stdClass;
-use support\think\Cache;
+use support\Cache;
 
 /**
  * JWT服务类

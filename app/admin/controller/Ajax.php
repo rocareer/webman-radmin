@@ -4,11 +4,11 @@ namespace app\admin\controller;
 
 use Throwable;
 use extend\ba\Terminal;
-use think\Response;
+use support\Response;
 use extend\ba\TableManager;
 use support\think\Db;
-use support\think\Cache;
-use think\facade\Event;
+use support\Cache;
+use Webman\Event\Event;
 use app\admin\model\AdminLog;
 use app\common\library\upload;
 use app\common\controller\Backend;
@@ -202,7 +202,8 @@ class Ajax extends Backend
         } else {
          return $this->error(__('Parameter error'));
         }
-        Event::trigger('cacheClearAfter', $this->app);
+        //todo
+        // Event::trigger('cacheClearAfter', $this->app);
      return $this->success(__('Cache cleaned~'));
     }
 
