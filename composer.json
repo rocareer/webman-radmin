@@ -25,19 +25,27 @@
   },
   "require": {
     "php": ">=8.1",
+
     "workerman/webman-framework": "^2.1",
-    "monolog/monolog": "^2.0",
-    "rocareer/webman-dev": "dev-master",
-    "ext-gd": "*",
-    "ext-iconv": "*",
-    "nelexa/zip": "^4.0",
-    "firebase/php-jwt": "^6.11",
-    "rocareer/webman-migration": "dev-master",
-    "rocareer/webman-status-code": "dev-master",
-    "webman/think-orm": "^2.1",
     "webman/event": "^1.0",
     "webman/cache": "^2.1",
-    "webman/console": "^2.1"
+    "webman/console": "^2.1",
+    "monolog/monolog": "^2.0",
+
+    "rocareer/webman-dev": "dev-master",
+    "rocareer/webman-migration": "dev-master",
+    "rocareer/webman-status-code": "dev-master",
+    "firebase/php-jwt": "^6.11",
+
+    "nelexa/zip": "^4.0",
+    "webman/think-orm": "^2.1",
+
+    "vlucas/phpdotenv": "^5.6",
+
+    "ext-iconv": "*",
+    "ext-pdo": "*",
+    "ext-gd": "*"
+
   },
   "suggest": {
     "ext-event": "For better performance. "
