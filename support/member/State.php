@@ -3,9 +3,9 @@
 
 namespace support\member;
 
-use plugin\radmin\service\member\AuthException;
+use service\member\AuthException;
 use support\StatusCode;
-use Rocareer\Radmin\Exception\BusinessException;
+use exception\BusinessException;
 use support\Log;
 use support\think\Db;
 use Throwable;

@@ -3,7 +3,7 @@
 
 namespace support\member\user;
 
-use plugin\radmin\support\member\State;
+use support\member\State;
 
 class UserState extends State
 {

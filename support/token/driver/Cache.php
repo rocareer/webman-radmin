@@ -14,10 +14,10 @@
 namespace support\token\driver;
 
 
-use plugin\radmin\extend\ba\Random;
+use extend\ba\Random;
 use support\StatusCode;
-use plugin\radmin\support\token\TokenInterface;
-use Rocareer\Radmin\Exception\TokenException;
+use support\token\TokenInterface;
+use exception\TokenException;
 use stdClass;
 use support\Cache as WebmanCache;
 use Throwable;

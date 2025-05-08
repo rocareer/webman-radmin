@@ -10,7 +10,7 @@
 
 namespace support\rocareer;
 
-use plugin\radmin\app\admin\model\process\Worker;
+use app\admin\model\process\Worker;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 

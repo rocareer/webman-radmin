@@ -4,7 +4,7 @@
 namespace support\rocareer;
 
 
-use plugin\radmin\app\common\library\token\driver;
+use app\common\library\token\driver;
 use think\Facade;
 
 /**

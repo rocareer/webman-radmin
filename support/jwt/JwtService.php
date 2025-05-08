@@ -8,7 +8,7 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use support\StatusCode;
-use Rocareer\Radmin\Exception\TokenException;
+use exception\TokenException;
 use stdClass;
 use support\Cache;
 
@@ -45,6 +45,7 @@ class JwtService
      * @param int|null    $expire
      * @param string|null $algo
      * @return string
+     * @throws TokenException
      */
     public function encode(array $payload, ?string $secret = null, ?int $expire = null, ?string $algo = null): string
     {
@@ -52,7 +53,7 @@ class JwtService
             $payload['iat'] = time();
             $payload['exp'] = time() + ($expire ?? $this->expire);
             return JWT::encode($payload, $secret ?? $this->secret, $algo ?? $this->algo);
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new TokenException('Token编码失败', StatusCode::TOKEN_ENCODE_FAILED);
         }
     }
@@ -70,7 +71,7 @@ class JwtService
     {
         try {
             return JWT::decode($token, new Key($secret ?? $this->secret, $algo ?? $this->algo));
-        } catch (ExpiredException $e) {
+        } catch (ExpiredException) {
             throw new TokenException('Token已过期', StatusCode::TOKEN_EXPIRED);
         } catch (Exception $e) {
             throw new TokenException($e->getMessage(), StatusCode::TOKEN_DECODE_FAILED);
@@ -89,11 +90,7 @@ class JwtService
         if ($this->inBlacklist($token)) {
             throw new TokenException('Token已失效', StatusCode::TOKEN_BLACK);
         }
-        $payload = $this->decode($token);
-        if (!$payload instanceof stdClass) {
-            throw new TokenException('Token验证失败', StatusCode::TOKEN_VERIFY_FAILED);
-        }
-        return $payload;
+        return $this->decode($token);
     }
 
     /**
@@ -106,7 +103,11 @@ class JwtService
     public function refresh(string $token): string
     {
         try {
-            $payload = (array)$this->decode($token);
+            try {
+                $payload = (array)$this->decode($token);
+            } catch (Exception) {
+                throw new TokenException('Token已失效', StatusCode::TOKEN_INVALID);
+            }
             unset($payload['iat'], $payload['exp']);
             return $this->encode($payload);
         } catch (TokenException $e) {
@@ -119,27 +120,12 @@ class JwtService
      */
     public function ttl(string $token): int
     {
-        $payload = $this->decode($token);
-        return max(0, $payload->exp - time());
-    }
-
-    /**
-     * 检查token是否过期
-     */
-    public function isExpired(string $token): bool
-    {
-        return $this->ttl($token) <= 0;
-    }
-
-    /**
-     * 检查token是否即将过期
-     */
-    public function shouldRefresh(string $token, int $threshold = 7130): bool
-    {
-        if ($this->ttl($token) >= 0 && $this->ttl($token) <= $threshold) {
-            return true;
+        try {
+            $payload = $this->decode($token);
+        } catch (Exception) {
+            return -1;
         }
-        return false;
+        return max(0, $payload->exp - time());
     }
 
     /**

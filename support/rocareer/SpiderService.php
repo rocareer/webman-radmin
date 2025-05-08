@@ -11,7 +11,7 @@
 namespace support\rocareer;
 
 use  plugin\radmin\app\admin\model\spider\Process;
-use plugin\radmin\app\admin\model\spider\Spider;
+use app\admin\model\spider\Spider;
 
 class SpiderService
 {
