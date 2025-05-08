@@ -15,7 +15,7 @@
 
 namespace extend\ba;
 
-use Exception as E;
+use exception as E;
 
 /**
  * BuildAdmin通用异常类
