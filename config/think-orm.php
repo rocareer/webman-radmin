@@ -1,5 +1,6 @@
 <?php
 
+
 return [
     'default' => 'mysql',
     'connections' => [
@@ -7,24 +8,24 @@ return [
             // 数据库类型
             'type' => 'mysql',
             // 服务器地址
-            'hostname' => '127.0.0.1',
+            'hostname' => getenv('THINKORM_DEFAULT_HOST', '127.0.0.1'),
             // 数据库名
-            'database' => 'test',
+            'database' => getenv('THINKORM_DEFAULT_DATABASE', 'test'),
             // 数据库用户名
-            'username' => 'root',
+            'username' => getenv('THINKORM_DEFAULT_USERNAME', 'root'),
             // 数据库密码
-            'password' => '123456',
+            'password' => getenv('THINKORM_DEFAULT_PASSWORD', ''),
             // 数据库连接端口
-            'hostport' => '3306',
+            'hostport' => getenv('THINKORM_DEFAULT_PORT', '3306'),
             // 数据库连接参数
             'params' => [
                 // 连接超时3秒
                 \PDO::ATTR_TIMEOUT => 3,
             ],
             // 数据库编码默认采用utf8
-            'charset' => 'utf8',
+            'charset' => getenv('THINKORM_DEFAULT_CHARSET', 'utf8'),
             // 数据库表前缀
-            'prefix' => '',
+            'prefix' => getenv('THINKORM_DEFAULT_PREFIX', ''),
             // 断线重连
             'break_reconnect' => true,
             // 自定义分页类
@@ -37,6 +38,8 @@ return [
                 'idle_timeout' => 60,   // 连接最大空闲时间，超过该时间会被回收
                 'heartbeat_interval' => 50, // 心跳检测间隔，需要小于60秒
             ],
+            'deploy'=>0,
+            'migration_table' => 'migrations'
         ],
     ],
 ];

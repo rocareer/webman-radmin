@@ -62,12 +62,12 @@ return [
             ]
         ],
     ],
-    'R-business' => [
+    'R-request' => [
         'handlers' => [
             [
                 'class' => Monolog\Handler\RotatingFileHandler::class,
                 'constructor' => [
-                    runtime_path() . '/logs/R-business.log',
+                    runtime_path() . '/logs/R-request.log',
                     7, //$maxFiles
                     Monolog\Logger::DEBUG,
                 ],
