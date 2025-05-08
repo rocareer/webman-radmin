@@ -7,14 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Rocareer\Radmin\Exception;
+namespace exception;
 
 use FastRoute\BadRouteException;
 use support\Log;
 use think\db\exception\DbException;
 use think\exception\ValidateException;
 use Throwable;
-
 use Webman\Exception\ExceptionHandler;
 use Webman\Http\Request;
 use Webman\Http\Response;

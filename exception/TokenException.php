@@ -18,9 +18,9 @@
 
 declare(strict_types=1);
 
-namespace Rocareer\Radmin\Exception;
+namespace exception;
 
-use plugin\radmin\support\StatusCode;
+use support\StatusCode;
 
 class TokenException extends Exception
 {

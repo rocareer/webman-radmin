@@ -1,8 +1,8 @@
 <?php
 
-namespace Rocareer\Radmin\Exception;
+namespace exception;
 
-use plugin\radmin\support\StatusCode;
+use support\StatusCode;
 use Throwable;
 
 class TerminalException extends Exception
