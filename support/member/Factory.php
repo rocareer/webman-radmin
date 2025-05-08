@@ -1,6 +1,7 @@
 <?php
 namespace support\member;
 
+use exception\BusinessException;
 use support\member\admin\AdminAuthenticator;
 use support\member\admin\AdminModel;
 use support\member\admin\AdminService;
@@ -10,7 +11,6 @@ use support\member\user\UserModel;
 use support\member\user\UserService;
 use support\member\user\UserState;
 use support\StatusCode;
-use Rocareer\Radmin\Exception\BusinessException;
 
 class Factory
 {

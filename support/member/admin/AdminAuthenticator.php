@@ -4,7 +4,7 @@ namespace support\member\admin;
 
 use support\member\Authenticator;
 use support\member\Member;
-use Rocareer\Radmin\Exception\UnauthorizedHttpException;
+use exception\UnauthorizedHttpException;
 
 class AdminAuthenticator extends Authenticator
 {

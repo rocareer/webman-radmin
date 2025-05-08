@@ -5,8 +5,8 @@ namespace support\token\driver;
 use support\jwt\Jwt as JwtFacade;
 use support\StatusCode;
 use support\token\TokenInterface;
-use Rocareer\Radmin\Exception\TokenException;
-use Rocareer\Radmin\Exception\TokenExpirationException;
+use exception\TokenException;
+use exception\TokenExpirationException;
 use stdClass;
 
 class Jwt implements TokenInterface
