@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpMultipleClassDeclarationsInspection */
 
 
 namespace support\member;
@@ -34,7 +35,7 @@ class Member extends Facade
      * @param string|null $role 角色类型
      * @throws BusinessException
      */
-    public static function setCurrentRole(string $role = null)
+    public static function setCurrentRole(?string $role = null)
     {
         self::$currentRole    = $role ?? 'admin'; // 如果 $role 为 null，默认设置为 'admin'
         self::$currentService = Factory::getInstance(self::$currentRole, 'service'); // 更新当前服务实例
@@ -70,6 +71,7 @@ class Member extends Facade
      * @param string $method 方法名
      * @param array  $params 方法参数
      * @return mixed
+     * @throws BusinessException
      */
     public static function __callStatic($method, $params)
     {

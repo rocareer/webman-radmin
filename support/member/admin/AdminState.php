@@ -4,7 +4,7 @@
 namespace support\member\admin;
 
 use support\member\State;
-use exception\AuthException;
+
 
 class AdminState extends State
 {
@@ -19,7 +19,6 @@ class AdminState extends State
 
     /**
      * 检查扩展状态
-     * @throws AuthException
      */
     protected function checkExtendStatus(): void
     {

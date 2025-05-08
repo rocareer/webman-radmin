@@ -7,13 +7,22 @@ namespace support\member;
 use support\StatusCode;
 use exception\BusinessException;
 use support\Log;
+use support\think\Db;
 use support\think\Model as ThinkModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use Throwable;
 
 /**
  * 用户基础模型
+ * @property mixed  $status
+ * @property int    $login_failure
+ * @property int    $last_login_time
+ * @property string $last_login_ip
+ * @property mixed  $id
+ * @property mixed  $username
+ * @property string $password
  */
 abstract class Model extends ThinkModel implements InterfaceModel
 {
@@ -41,13 +50,12 @@ abstract class Model extends ThinkModel implements InterfaceModel
     protected array $allowFields = [];
 
 
-    protected $type=[
+    protected array $type =[
         'create_time'=>'integer',
         'update_time'=>'integer',
         'last_login_time'=>'integer',
         'login_failure'=>'integer',
     ];
-
 
 
     public function initialize(): void
@@ -82,7 +90,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
      * @return Model
      * @throws DataNotFoundException
      * @throws DbException
-     * @throws ModelNotFoundException
+     * @throws ModelNotFoundException|BusinessException
      */
     public function findByName(string $username, bool $withAllowFields = true): mixed
     {
@@ -141,37 +149,6 @@ abstract class Model extends ThinkModel implements InterfaceModel
             $this->save();
         }
     }
-
-    /**
-     * 更新登录信息
-     * @return bool
-     */
-    public function updateLoginInfo(): bool
-    {
-        try {
-            $this->startTrans();
-
-            $this->last_login_time = time();
-            $this->last_login_ip   = request()->getRealIp();
-            $this->login_failure   = 0;
-            $this->save();
-
-            // 记录登录日志
-            $this->recordLoginLog([
-                'user_id'  => $this->id,
-                'username' => $this->username,
-                'success'  => true
-            ]);
-
-            $this->commit();
-            return true;
-        } catch (\Throwable $e) {
-            $this->rollback();
-            Log::error('更新登录信息失败：' . $e->getMessage());
-            return false;
-        }
-    }
-
 
     /**
      * 查找并验证用户
@@ -252,7 +229,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
 
             $this->commit();
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->rollback();
             Log::error('记录登录失败信息失败：' . $e->getMessage());
             return false;
@@ -289,7 +266,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
         } catch (BusinessException $e) {
             $this->rollback();
             throw $e;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->rollback();
             Log::error('修改密码失败：' . $e->getMessage());
             throw new BusinessException('修改密码失败', StatusCode::PASSWORD_CHANGE_FAILED);
@@ -313,8 +290,8 @@ abstract class Model extends ThinkModel implements InterfaceModel
                 'create_time' => time()
             ];
 
-            \support\think\Db::name($this->getLoginLogTable())->insert($log);
-        } catch (\Throwable $e) {
+            Db::name($this->getLoginLogTable())->insert($log);
+        } catch (Throwable $e) {
             Log::error('记录登录日志失败：' . $e->getMessage());
         }
     }
@@ -333,8 +310,8 @@ abstract class Model extends ThinkModel implements InterfaceModel
                 'create_time' => time()
             ];
 
-            \support\think\Db::name($this->getPasswordLogTable())->insert($log);
-        } catch (\Throwable $e) {
+            Db::name($this->getPasswordLogTable())->insert($log);
+        } catch (Throwable $e) {
             Log::error('记录密码修改日志失败：' . $e->getMessage());
         }
     }
