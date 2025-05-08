@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\member\user;
+namespace support\member\user;
 
 use app\admin\model\User;
 use plugin\radmin\support\member\Authenticator;

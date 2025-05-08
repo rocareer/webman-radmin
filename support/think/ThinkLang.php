@@ -13,7 +13,7 @@
  *
  */
 
-namespace plugin\radmin\support\think;
+namespace support\think;
 
 use support\Request;
 use think\facade\Cookie;

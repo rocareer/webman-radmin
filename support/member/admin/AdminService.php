@@ -6,7 +6,7 @@
  * Describe  AdminService.php
  */
 
-namespace plugin\radmin\support\member\admin;
+namespace support\member\admin;
 
 use app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Service;

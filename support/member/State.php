@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\member;
+namespace support\member;
 
 use plugin\radmin\service\member\AuthException;
 use plugin\radmin\support\StatusCode;

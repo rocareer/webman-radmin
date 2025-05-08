@@ -13,7 +13,7 @@
  *
  */
 
-namespace plugin\radmin\extend\ba;
+namespace extend\ba;
 
 class Random
 {

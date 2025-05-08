@@ -19,7 +19,7 @@
  * Time      2025-04-20 18:14:07
  * Describe  XssClear.php
  */
-namespace plugin\radmin\middleware;
+namespace middleware;
 
 use Webman\Http\Request;
 use voku\helper\AntiXSS;

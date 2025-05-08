@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\middleware;
+namespace middleware;
 
 use Rocareer\Radmin\Exception\TokenException;
 use Rocareer\Radmin\Exception\TokenExpirationException;

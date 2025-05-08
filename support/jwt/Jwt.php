@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\jwt;
+namespace support\jwt;
 
 use stdClass;
 use think\Facade;

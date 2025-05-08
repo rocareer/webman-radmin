@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\token;
+namespace support\token;
 
 use stdClass;
 use think\Facade;

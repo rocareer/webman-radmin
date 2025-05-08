@@ -20,7 +20,7 @@
  * Describe  SpiderService.php
  */
 
-namespace plugin\radmin\support\rocareer;
+namespace support\rocareer;
 
 use  app\admin\model\spider\Process;
 use app\admin\model\spider\Spider;

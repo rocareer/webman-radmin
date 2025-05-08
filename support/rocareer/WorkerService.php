@@ -20,7 +20,7 @@
  * Describe  WorkerService.php
  */
 
-namespace plugin\radmin\support\rocareer;
+namespace support\rocareer;
 
 use app\admin\model\process\Worker;
 use think\db\exception\DataNotFoundException;

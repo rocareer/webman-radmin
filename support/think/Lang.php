@@ -14,7 +14,7 @@
  */
 
 
-namespace plugin\radmin\support\think;
+namespace support\think;
 
 
 

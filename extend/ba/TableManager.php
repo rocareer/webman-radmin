@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\extend\ba;
+namespace extend\ba;
 
 use plugin\radmin\extend\ba\Exception;
 use Throwable;

@@ -1,5 +1,5 @@
 <?php
-namespace plugin\radmin\support\member;
+namespace support\member;
 
 use plugin\radmin\support\member\admin\AdminAuthenticator;
 use plugin\radmin\support\member\admin\AdminModel;
