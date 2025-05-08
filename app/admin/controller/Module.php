@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use Throwable;
-use Exception;
+use exception;
 
 use app\admin\model\AdminLog;
 use app\admin\library\module\Server;

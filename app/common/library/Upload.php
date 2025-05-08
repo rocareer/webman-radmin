@@ -16,7 +16,7 @@
 namespace app\common\library;
 
 use Throwable;
-use Exception;
+use exception;
 use support\Log;
 use Webman\Http\UploadFile;
 use Illuminate\Support\Str;

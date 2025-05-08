@@ -3,7 +3,7 @@
 namespace app\common\model;
 
 use support\StatusCode;
-use Rocareer\Radmin\Exception\AuthException;
+use exception\AuthException;
 use support\Log;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

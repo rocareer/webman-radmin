@@ -5,7 +5,7 @@ namespace app\admin\library\module;
 use Throwable;
 use extend\ba\Version;
 use extend\ba\Depends;
-use Exception;
+use exception;
 use extend\ba\Filesystem;
 use FilesystemIterator;
 

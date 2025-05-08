@@ -4,7 +4,7 @@ namespace app\admin\controller\crud;
 
 use extend\ba\Version;
 use Throwable;
-use Exception;
+use exception;
 use extend\ba\Filesystem;
 use support\think\Db;
 use extend\ba\TableManager;

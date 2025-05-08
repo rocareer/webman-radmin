@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\controller;
 
-use Rocareer\Radmin\Exception\BusinessException;
+use exception\BusinessException;
 use support\Request;
 
 class TestController

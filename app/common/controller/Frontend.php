@@ -4,7 +4,7 @@ namespace app\common\controller;
 use service\auth\Auth;
 use support\member\Member;
 use support\StatusCode;
-use Rocareer\Radmin\Exception\UnauthorizedHttpException;
+use exception\UnauthorizedHttpException;
 use think\exception\HttpResponseException;
 use Throwable;
 

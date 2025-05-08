@@ -2,8 +2,8 @@
 
 namespace middleware;
 
-use Rocareer\Radmin\Exception\TokenException;
-use Rocareer\Radmin\Exception\TokenExpirationException;
+use exception\TokenException;
+use exception\TokenExpirationException;
 use support\Log;
 use Webman\Http\Request;
 use Webman\Http\Response;
