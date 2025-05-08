@@ -2,7 +2,7 @@
 
 namespace app\admin\model;
 
-use support\think\Cache;
+use support\Cache;
 use Throwable;
 use app\common\model\BaseModel;
 
