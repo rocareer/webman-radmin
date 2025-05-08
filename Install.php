@@ -15,7 +15,7 @@
 
 namespace Rocareer\Radmin;
 
-use Exception;
+use exception;
 
 class Install
 {
