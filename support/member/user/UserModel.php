@@ -11,9 +11,7 @@
 namespace support\member\user;
 
 use app\admin\model\Admin;
-use app\admin\model\AdminGroup;
 use support\member\Model;
-use support\think\Db;
 use think\db\exception\DbException;
 
 class UserModel extends Model
@@ -46,6 +44,7 @@ class UserModel extends Model
 
     /**
      * @var string 自动写入时间戳
+     * @noinspection PhpMissingFieldTypeInspection
      */
     protected $autoWriteTimestamp = true;
 

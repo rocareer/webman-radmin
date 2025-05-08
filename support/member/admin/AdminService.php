@@ -29,6 +29,10 @@ class AdminService extends Service
         'auth_group_access' => 'admin_group_access', // 用户-用户组关系表
         'auth_rule'         => 'admin_rule', // 权限规则表
     ];
+    /**
+     * @var array|mixed
+     */
+    private mixed $children;
 
 
     public function initialize(): void
@@ -47,6 +51,11 @@ class AdminService extends Service
         return in_array('*', $this->getRuleIds($id));
     }
 
+    /**
+     * 附加用户信息
+     * @return void
+     * @throws Throwable
+     */
 
     public function extendMemberInfo(): void
     {

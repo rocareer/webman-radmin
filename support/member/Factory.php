@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
 
 
 namespace support\member;

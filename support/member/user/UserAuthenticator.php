@@ -4,7 +4,6 @@
 namespace support\member\user;
 
 use support\member\Authenticator;
-use support\member\Member;
 use exception\UnauthorizedHttpException;
 
 class UserAuthenticator extends Authenticator
