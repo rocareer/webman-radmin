@@ -43,7 +43,7 @@ abstract class Authenticator implements InterfaceAuthenticator
      */
     public function __construct()
     {
-        $this->config       = radmin_config('auth.login.' . $this->role);
+        $this->config       =  config('auth.login.' . $this->role);
         $this->memberModel=Factory::getInstance($this->role,'model');
     }
 

@@ -50,7 +50,7 @@ use Throwable;
         // $this->service   = Container::get($this->role,'service');
         $this->memberModel  = Factory::getInstance($this->role,'model');
         // $this->authenticator = Container::get($this->role,'authenticator');
-        $this->config=radmin_config('auth');
+        $this->config= config('auth');
     }
     public function isLogin(): bool
     {

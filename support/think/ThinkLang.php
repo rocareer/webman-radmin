@@ -191,7 +191,7 @@ class ThinkLang
         }
 
         // 加载扩展语言包
-        $list = radmin_config('lang.extend_list', []);
+        $list =  config('lang.extend_list', []);
         if (isset($list[$langset])) {
             $files = array_merge($files, (array)$list[$langset]);
         }

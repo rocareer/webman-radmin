@@ -23,11 +23,11 @@
 
 namespace support\token;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use RuntimeException;
 use stdClass;
+use think\helper\Arr;
+use think\helper\Str;
 
 class TokenManager
 {
@@ -39,12 +39,12 @@ class TokenManager
      * 驱动类命名空间
      * @var string
      */
-    protected string $namespace = '\\plugin\\radmin\\support\\token\\driver\\';
+    protected string $namespace = '\\support\\token\\driver\\';
     protected mixed  $handler   = null;
 
     public function __construct(array $config = [])
     {
-        $this->configs       = radmin_config('token');
+        $this->configs       =  config('token');
         $this->defaultDriver = $this->configs['default'] ?? $this->defaultDriver;
 
         $this->config                            = array_merge($config, $this->configs['drivers'][$this->defaultDriver]);
@@ -96,7 +96,7 @@ class TokenManager
 
     /**
      * 获取驱动配置
-     * @param string      $store
+     * @param string      $driver
      * @param string|null $name
      * @param null        $default
      * @return array|string
@@ -170,7 +170,7 @@ class TokenManager
         throw new InvalidArgumentException("Driver [$type] not supported.");
     }
 
-    public function driver(string $name = null): TokenInterface
+    public function driver(?string $name = null): TokenInterface
     {
         $name = $name ?: $this->defaultDriver;
 
@@ -193,7 +193,7 @@ class TokenManager
      *
      * By albert  2025/05/03 08:54:23
      * @param string $token
-     * @return bool|stdClass
+     * @return stdClass
      */
     public function verify(string $token):stdClass
     {
