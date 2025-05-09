@@ -1,7 +1,5 @@
-# About Radmin (Preview 1.0.0)
+# About Webman-Radmin (Preview 1.0.3)
 * An efficient and elegant front-end and back-end separation management platform
-
-<img alt="Dashboard Preview" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="Dashboard Preview"/>
 
 ## Project Background
 
@@ -10,8 +8,11 @@ As a representative of high-performance PHP frameworks, the Webman ecosystem has
 - **Webman**: A high-performance PHP back-end framework
 - **Buildadmin**: The best front-end and back-end separation back-end system in the current PHP ecosystem
 
+## Preview
+<img alt="Dashboard Preview" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="Dashboard Preview"/>
+
 ## Version and Release Notes
-- **Current Version**: v1.0.0
+- **Current Version**: v1.0.3 Preview
 - **Release Date**: May 10, 2025
 - **Changelog**: [Changelog](https://gitee.com/rocareer/radmin/blob/master/CHANGELOG.md)
 - **Incompatible Updates**: This is the first version, and subsequent releases will be incompatible until version 2.0 is released.

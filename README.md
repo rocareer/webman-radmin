@@ -1,19 +1,17 @@
-# 关于 Radmin 预览(Preview 1.0.0)
+# 关于 Webman-Radmin 
  * 高效华丽的前后端分离管理平台
-
-<img alt="控制面板预览" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="控制面板预览"/>
-
+ * 
 ## 项目背景
 
 Webman生态作为高性能PHP框架的代表，长期以来缺乏专业的前后端分离解决方案。现有后台管理系统多采用传统模板引擎或简单的Layui前端，难以满足现代化开发需求。为此，我们整合了：
 
 - **Webman**：高性能PHP后端框架
 - **Buildadmin**：目前PHP生态最优秀的前后端分离后台系统
-
-
+## 预览
+<img alt="控制面板预览" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="控制面板预览"/>
 
 ## 版本和版本说明
-- **当前版本**：v1.0.0
+- **当前版本**：v1.0.3 预览
 - **发布时间**：2025年05月10日
 - **更新日志**：[更新日志](https://gitee.com/rocareer/radmin/blob/master/CHANGELOG.md)
 - **不兼容更新**：目前是第一个版本，后续发布的版本将不兼容更新,直到2.0版本发布
