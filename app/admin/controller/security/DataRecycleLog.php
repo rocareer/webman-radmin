@@ -33,7 +33,7 @@ class DataRecycleLog extends Backend
      * 还原
      * @throws Throwable
      */
-    public function restore()
+    public function restore(): \support\Response
     {
         $ids  = $this->request->input('ids', []);
         $data = $this->model->where('id', 'in', $ids)->select();
@@ -68,7 +68,7 @@ class DataRecycleLog extends Backend
      * 详情
      * @throws Throwable
      */
-    public function info()
+    public function info(): \support\Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);

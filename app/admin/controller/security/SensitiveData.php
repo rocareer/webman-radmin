@@ -29,7 +29,7 @@ class SensitiveData extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index()
+    public function index(): ?\support\Response
     {
         if ($this->request->input('select')) {
        return $this->select();
@@ -64,7 +64,7 @@ class SensitiveData extends Backend
      * 添加重写
      * @throws Throwable
      */
-    public function add()
+    public function add(): \support\Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -119,7 +119,7 @@ class SensitiveData extends Backend
      * 编辑重写
      * @throws Throwable
      */
-    public function edit()
+    public function edit(): \support\Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
