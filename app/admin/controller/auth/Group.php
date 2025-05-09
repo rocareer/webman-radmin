@@ -96,7 +96,7 @@ class Group extends Backend
      * 添加
      * @throws Throwable
      */
-    public function add()
+    public function add(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -138,7 +138,7 @@ class Group extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit()
+    public function edit(): Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -211,7 +211,7 @@ class Group extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del()
+    public function del(): Response
     {
         $ids  = $this->request->input('ids', []);
         $data = $this->model->where($this->model->getPk(), 'in', $ids)->select();
@@ -369,13 +369,13 @@ class Group extends Backend
     /**
      * 检查权限
      * @param $groupId
-     * @throws Throwable
+     * @return void
      */
-    private function checkAuth($groupId)
+    private function checkAuth($groupId): void
     {
         $authGroups = Member::getAllAuthGroups($this->authMethod, []);
         if (!Member::hasRole('super') && !in_array($groupId, $authGroups)) {
-            return $this->error(__($this->authMethod == 'allAuth' ? 'You need to have all permissions of this group to operate this group~' : 'You need to have all the permissions of the group and have additional permissions before you can operate the group~'));
+            $this->error(__($this->authMethod == 'allAuth' ? 'You need to have all permissions of this group to operate this group~' : 'You need to have all the permissions of the group and have additional permissions before you can operate the group~'));
         }
     }
 
