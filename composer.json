@@ -32,7 +32,7 @@
     "webman/console": "^2.1",
     "monolog/monolog": "^2.0",
 
-    "rocareer/webman-dev": "dev-master",
+
     "rocareer/webman-migration": "dev-master",
     "rocareer/webman-status-code": "dev-master",
     "firebase/php-jwt": "^6.11",
@@ -45,6 +45,9 @@
     "ext-pdo": "*",
     "ext-gd": "*"
 
+  },
+  "require-dev": {
+    "rocareer/webman-dev": "dev-master"
   },
   "suggest": {
     "ext-event": "For better performance. "
