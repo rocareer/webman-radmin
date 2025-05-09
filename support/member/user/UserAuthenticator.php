@@ -21,11 +21,6 @@ class UserAuthenticator extends Authenticator
         return parent::authenticate($credentials);
     }
 
-    public function extendMemberInfo(): void
-    {
-
-    }
-
 
 }
 

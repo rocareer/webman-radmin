@@ -38,7 +38,7 @@ class UserModel extends Model
 
     protected array $allowFields = ['id', 'username', 'nickname', 'email', 'mobile',
         'avatar', 'gender', 'birthday', 'money', 'score', 'join_time', 'motto', 'last_login_time', 'last_login_ip',
-        'token','refresh_token'];
+        'token','refresh_token','roles','test'];
 
 
 
