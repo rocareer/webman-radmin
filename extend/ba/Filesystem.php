@@ -225,7 +225,7 @@ class Filesystem
      */
     public static function getDirFiles(string $dir, array $suffix = []): array
     {
-        var_dump($dir);
+
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($dir), RecursiveIteratorIterator::LEAVES_ONLY
         );

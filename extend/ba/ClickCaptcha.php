@@ -108,8 +108,8 @@ class ClickCaptcha
      */
     public function creat(string $id): array
     {
-        $imagePath  = Filesystem::fsFit(radmin_public() . "/".$this->bgPaths[mt_rand(0, count($this->bgPaths) - 1)]);
-        $fontPath   = Filesystem::fsFit(radmin_public() . "/".$this->fontPaths[mt_rand(0, count($this->fontPaths) - 1)]);
+        $imagePath  = Filesystem::fsFit(public_path() . "/".$this->bgPaths[mt_rand(0, count($this->bgPaths) - 1)]);
+        $fontPath   = Filesystem::fsFit(public_path() . "/".$this->fontPaths[mt_rand(0, count($this->fontPaths) - 1)]);
         $randPoints = $this->randPoints($this->config['length'] + $this->config['confuse_length']);
 
         $lang = Lang::getLangSet();
@@ -121,7 +121,7 @@ class ClickCaptcha
                 $tmp['icon']   = true;
                 $tmp['name']   = $v;
                 $tmp['text']   = $lang == 'zh-cn' ? "<{$this->iconDict[$v]}>" : "<$v>";
-                $iconInfo      = getimagesize(Filesystem::fsFit(radmin_public() . '/static/images/captcha/click/icons/'.$v.'.png'));
+                $iconInfo      = getimagesize(Filesystem::fsFit(public_path() . '/static/images/captcha/click/icons/'.$v.'.png'));
                 $tmp['width']  = $iconInfo[0];
                 $tmp['height'] = $iconInfo[1];
             } else {
@@ -253,7 +253,7 @@ class ClickCaptcha
      */
     protected function iconCover($bgImg, $iconImgData): void
     {
-        $iconImage      = imagecreatefrompng(Filesystem::fsFit(radmin_public() . '/static/images/captcha/click/icons/' . $iconImgData['name'] . '.png'));
+        $iconImage      = imagecreatefrompng(Filesystem::fsFit(public_path() . '/static/images/captcha/click/icons/' . $iconImgData['name'] . '.png'));
         $trueColorImage = imagecreatetruecolor($iconImgData['width'], $iconImgData['height']);
         imagecopy($trueColorImage, $bgImg, 0, 0, $iconImgData['x'], $iconImgData['y'], $iconImgData['width'], $iconImgData['height']);
         imagecopy($trueColorImage, $iconImage, 0, 0, 0, 0, $iconImgData['width'], $iconImgData['height']);
