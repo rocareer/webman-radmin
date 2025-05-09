@@ -1,10 +1,14 @@
 <?php
+/** @noinspection PhpUnusedParameterInspection */
+
+/** @noinspection PhpUnusedParameterInspection */
 
 namespace app\admin\model;
 
 
 use app\common\model\BaseModel;
 use support\think\Db;
+use think\db\exception\DbException;
 
 /**
  * Admin模型
@@ -30,7 +34,7 @@ class Admin extends BaseModel
     /**
      * 追加属性
      */
-    protected $append = [
+    protected array $append = [
         'group_arr',
         'group_name_arr',
     ];
@@ -70,6 +74,8 @@ class Admin extends BaseModel
      * @param int|string $uid         管理员ID
      * @param string     $newPassword 新密码
      * @return int|Admin
+     * @throws DbException
+     * @throws DbException
      */
     public function resetPassword(int|string $uid, string $newPassword): int|Admin
     {

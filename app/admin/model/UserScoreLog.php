@@ -4,7 +4,6 @@ namespace app\admin\model;
 
 use app\common\model\BaseModel;
 use Throwable;
-use think\model;
 use think\Exception;
 use think\model\relation\BelongsTo;
 
@@ -22,7 +21,7 @@ class UserScoreLog extends BaseModel
      * 入库前
      * @throws Throwable
      */
-    public static function onBeforeInsert($model)
+    public static function onBeforeInsert($model): void
     {
         $user = User::where('id', $model->user_id)->lock(true)->find();
         if (!$user) {

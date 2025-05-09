@@ -6,7 +6,6 @@ use app\common\model\BaseModel;
 use Exception;
 use support\think\Db;
 use think\model\relation\BelongsTo;
-use Throwable;
 
 
 /**
@@ -15,13 +14,15 @@ use Throwable;
 class AdminLog extends BaseModel
 {
     protected $autoWriteTimestamp = true;
-    protected $updateTime         = false;
+    /** @noinspection PhpMissingFieldTypeInspection */
+    protected $updateTime = false;
 
     /**
      * 自定义日志标题
      * @var string
      */
     protected string $title = '';
+    /** @noinspection PhpMissingFieldTypeInspection */
     protected $validate = [];
 
     /**
@@ -48,7 +49,7 @@ class AdminLog extends BaseModel
 
 
     protected $pk='id';
-    public function getTable(bool $alias = false)
+    public function getTable(bool $alias = false): string
     {
         return $this->table;
     }
@@ -67,7 +68,7 @@ class AdminLog extends BaseModel
      * 设置标题
      * @param string $title
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -78,7 +79,7 @@ class AdminLog extends BaseModel
      * @param string $name
      * @param null   $value
      */
-    public function setData(string $name, $value = null)
+    public function setData(string $name, $value = null): void
     {
 
         $this->data = $name;
@@ -88,7 +89,7 @@ class AdminLog extends BaseModel
      * 设置忽略的链接正则列表
      * @param array|string $regex
      */
-    public function setUrlIgnoreRegex(array|string $regex = [])
+    public function setUrlIgnoreRegex(array|string $regex = []): void
     {
         $regex                = is_array($regex) ? $regex : [$regex];
         $this->urlIgnoreRegex = array_merge($this->urlIgnoreRegex, $regex);
@@ -143,52 +144,48 @@ class AdminLog extends BaseModel
             $userID = request()->member->id;
             $userName = request()->member->username;
         }
-        try {
-            $adminId    = $adminId ?? $userID??0 ;
-            $username   = $userName ?? request()->input('username', __('Unknown'));
-            $controller = str_replace('.', '/', request()->controllerName);
-            $action     = request()->action;
-            $path       = $controller . '/' . $action;
-            if ($this->urlIgnoreRegex) {
-                foreach ($this->urlIgnoreRegex as $item) {
-                    if (preg_match($item, $path)) {
-                        return;
-                    }
+        $adminId    = $adminId ?? $userID??0 ;
+        $username   = $userName ?? request()->input('username', __('Unknown'));
+        $controller = str_replace('.', '/', request()->controllerName);
+        $action     = request()->action;
+        $path       = $controller . '/' . $action;
+        if ($this->urlIgnoreRegex) {
+            foreach ($this->urlIgnoreRegex as $item) {
+                if (preg_match($item, $path)) {
+                    return;
                 }
             }
-            $data = $data ?: $this->data;
-            if (empty($data)) {
-                $data = request()->all();
-            }
-            $data  = $this->desensitization($data);
-            $title = $title ?: $this->title;
-            if (!$title) {
-                $controllerTitle = AdminRule::where('name', $controller)->value('title');
-                $title           = AdminRule::where('name', $path)->value('title');
-                $title           = $title ?: __('Unknown') . '(' . $action . ')';
-                $title           = $controllerTitle ? ($controllerTitle . '-' . $title) : $title;
-            }
-            Db::name('admin_log')->insert([
-                'admin_id'  => $adminId,
-                'username'  => $username,
-                'url'       => substr(
-                    str_replace(
-                        '///app/radmin/', '/#/',
-                        str_replace
-                        (
-                            request()->host(), '', request()->url()
-                        )
-                    ), 0, 1500
-                ),
-                'title'     => $title,
-                'data'      => !is_scalar($data) ? json_encode($data) : $data,
-                'ip'        => request()->getRealIp(),
-                'useragent' => substr(request()->header('user-agent'), 0, 255),
-                'create_time'=> time(),
-            ]);
-        } catch (Exception $e) {
-            throw $e;
         }
+        $data = $data ?: $this->data;
+        if (empty($data)) {
+            $data = request()->all();
+        }
+        $data  = $this->desensitization($data);
+        $title = $title ?: $this->title;
+        if (!$title) {
+            $controllerTitle = AdminRule::where('name', $controller)->value('title');
+            $title           = AdminRule::where('name', $path)->value('title');
+            $title           = $title ?: __('Unknown') . '(' . $action . ')';
+            $title           = $controllerTitle ? ($controllerTitle . '-' . $title) : $title;
+        }
+        Db::name('admin_log')->insert([
+            'admin_id'  => $adminId,
+            'username'  => $username,
+            'url'       => substr(
+                str_replace(
+                    '///app/radmin/', '/#/',
+                    str_replace
+                    (
+                        request()->host(), '', request()->url()
+                    )
+                ), 0, 1500
+            ),
+            'title'     => $title,
+            'data'      => !is_scalar($data) ? json_encode($data) : $data,
+            'ip'        => request()->getRealIp(),
+            'useragent' => substr(request()->header('user-agent'), 0, 255),
+            'create_time'=> time(),
+        ]);
     }
 
     public function admin(): BelongsTo

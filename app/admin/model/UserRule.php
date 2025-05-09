@@ -19,7 +19,7 @@ class UserRule extends BaseModel
         'update_time' => 'integer'
     ];
 
-    protected static function onAfterInsert($model)
+    protected static function onAfterInsert($model): void
     {
         $pk = $model->getPk();
         $model->where($pk, $model[$pk])->update(['weigh' => $model[$pk]]);

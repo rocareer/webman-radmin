@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnusedParameterInspection */
 
 namespace app\admin\model;
 
@@ -18,13 +19,13 @@ class Config extends BaseModel
 {
     public static string $cacheTag = 'sys_config';
 
-    protected $append = [
+    protected array $append = [
         'value',
         'content',
         'extend',
         'input_extend',
     ];
-    protected $type = [
+    protected       $type   = [
 
         'create_time' => 'integer',
 
@@ -37,7 +38,7 @@ class Config extends BaseModel
      * 入库前
      * @throws Throwable
      */
-    public static function onBeforeInsert(Config $model)
+    public static function onBeforeInsert(Config $model): void
     {
         if (!in_array($model->getData('type'), $model->needContent)) {
             $model->content = null;
@@ -59,7 +60,7 @@ class Config extends BaseModel
     /**
      * 写入后
      */
-    public static function onAfterWrite()
+    public static function onAfterWrite(): void
     {
         // 清理配置缓存
         Cache::tag(self::$cacheTag)->clear();
