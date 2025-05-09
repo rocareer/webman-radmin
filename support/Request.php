@@ -1,8 +1,5 @@
 <?php
-
-
 namespace support;
-
 /**
  * Class Request
  *
