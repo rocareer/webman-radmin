@@ -92,7 +92,7 @@ class User extends Frontend
                     'captchaSwitch' => $captchaSwitch,
                 ];
 
-                $res = Member::login($credentials, !empty($params['keep']));
+                $res = Member::setCurrentRole('user')->login($credentials, !empty($params['keep']));
 
 
             } elseif ($params['tab'] == 'register') {
