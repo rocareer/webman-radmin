@@ -1,4 +1,4 @@
-# About Radmin
+# About Radmin (Preview 1.0.0)
 * An efficient and elegant front-end and back-end separation management platform
 
 <img alt="Dashboard Preview" src="http://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="Dashboard Preview"/>

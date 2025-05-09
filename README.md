@@ -1,4 +1,4 @@
-# 关于 Radmin
+# 关于 Radmin 预览(Preview 1.0.0)
  * 高效华丽的前后端分离管理平台
 
 <img alt="控制面板预览" src="http://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="控制面板预览"/>
