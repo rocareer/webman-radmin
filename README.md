@@ -13,7 +13,7 @@ Webman生态作为高性能PHP框架的代表，长期以来缺乏专业的前�
 ## 版本和版本说明
 - **当前版本**：v1.0.3 预览
 - **发布时间**：2025年05月10日
-- **更新日志**：[更新日志](https://gitee.com/rocareer/radmin/blob/master/CHANGELOG.md)
+- **更新日志**：[更新日志](https://gitee.com/rocareer/webman-radmin/blob/master/CHANGELOG.md)
 - **不兼容更新**：目前是第一个版本，后续发布的版本将不兼容更新,直到2.0版本发布
 
 ## 技术架构

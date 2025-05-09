@@ -14,7 +14,7 @@ As a representative of high-performance PHP frameworks, the Webman ecosystem has
 ## Version and Release Notes
 - **Current Version**: v1.0.3 Preview
 - **Release Date**: May 10, 2025
-- **Changelog**: [Changelog](https://gitee.com/rocareer/radmin/blob/master/CHANGELOG.md)
+- **Changelog**: [Changelog](https://gitee.com/rocareer/webman-radmin/blob/master/CHANGELOG.md)
 - **Incompatible Updates**: This is the first version, and subsequent releases will be incompatible until version 2.0 is released.
 
 ## Technical Architecture
