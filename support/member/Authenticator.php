@@ -86,6 +86,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             // 9. 附加最终输出信息
             $this->extendMemberInfo();
 
+
             // 9. 缓存用户状态
             // $this->cacheState();
 
@@ -220,6 +221,11 @@ abstract class Authenticator implements InterfaceAuthenticator
         } catch (Throwable) {
             throw new UnauthorizedHttpException('获取凭证失败', StatusCode::TOKEN_CREATE_FAILED);
         }
+    }
+
+    public function extendMemberInfo(): void
+    {
+        $this->memberModel->roles=[$this->role];
     }
 
     /**
