@@ -2,13 +2,13 @@
 
 namespace app\admin\controller;
 
+use exception\Exception;
 use Throwable;
 use extend\ba\Terminal;
 use support\Response;
 use extend\ba\TableManager;
 use support\think\Db;
 use support\Cache;
-use Webman\Event\Event;
 use app\admin\model\AdminLog;
 use app\common\library\upload;
 use app\common\controller\Backend;
@@ -28,7 +28,7 @@ class Ajax extends Backend
         parent::initialize();
     }
 
-    public function upload()
+    public function upload(): Response
     {
         AdminLog::instance()->setTitle(__('upload'));
         $file   = $this->request->file('file');
@@ -55,7 +55,7 @@ class Ajax extends Backend
      * 获取省市区数据
      * @throws Throwable
      */
-    public function area()
+    public function area(): Response
     {
      return $this->success('', get_area());
     }
@@ -72,7 +72,7 @@ class Ajax extends Backend
      * 获取已脱敏的数据库连接配置列表
      * @throws Throwable
      */
-    public function getDatabaseConnectionList()
+    public function getDatabaseConnectionList(): Response
     {
         $quickSearch     = $this->request->input("quickSearch", '');
         $connections     = config('think-orm.connections');
@@ -102,9 +102,11 @@ class Ajax extends Backend
      * 获取表主键字段
      * @param ?string $table
      * @param ?string $connection
+     * @return Response
+     * @throws Exception
      * @throws Throwable
      */
-    public function getTablePk(?string $table = null, ?string $connection = null)
+    public function getTablePk(?string $table = null, ?string $connection = null): Response
     {
         if (!$table) {
          return $this->error(__('Parameter error'));
@@ -125,7 +127,7 @@ class Ajax extends Backend
      * 获取数据表列表
      * @throws Throwable
      */
-    public function getTableList()
+    public function getTableList(): Response
     {
         $quickSearch  = $this->request->input("quickSearch", '');
         $connection   = $this->request->input('connection');// 数据库连接配置标识
@@ -166,7 +168,7 @@ class Ajax extends Backend
      * 获取数据表字段列表
      * @throws Throwable
      */
-    public function getTableFieldList()
+    public function getTableFieldList(): Response
     {
         $table      = $this->request->input('table');
         $clean      = $this->request->input('clean', true);
@@ -183,7 +185,7 @@ class Ajax extends Backend
         ]);
     }
 
-    public function changeTerminalConfig()
+    public function changeTerminalConfig(): Response
     {
         AdminLog::instance()->setTitle(__('Change terminal config'));
         if (Terminal::changeTerminalConfig()) {
@@ -193,7 +195,7 @@ class Ajax extends Backend
         }
     }
 
-    public function clearCache()
+    public function clearCache(): Response
     {
         AdminLog::instance()->setTitle(__('Clear cache'));
         $type = $this->request->post('type');
@@ -211,7 +213,7 @@ class Ajax extends Backend
      * 终端
      * @throws Throwable
      */
-    public function terminal()
+    public function terminal(): void
     {
         (new Terminal())->exec();
     }
