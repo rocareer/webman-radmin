@@ -2,6 +2,7 @@
 
 namespace app\admin\library\crud;
 
+use think\db\exception\DbException;
 use Throwable;
 use extend\ba\Filesystem;
 use think\Exception;
@@ -271,6 +272,8 @@ class Helper
      * 记录CRUD状态
      * @param array $data CRUD记录数据
      * @return int 记录ID
+     * @throws DbException
+     * @throws DbException
      */
     public static function recordCrudStatus(array $data): int
     {
@@ -291,6 +294,7 @@ class Helper
             'connection' => $connection,
             'status'     => $data['status'],
         ]);
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         return $log->id;
     }
 
@@ -434,7 +438,7 @@ class Helper
      
      * @throws Throwable
      */
-    public static function updateFieldOrder(string $tableName, array $fields, array $designChange, ?string $connection = null)
+    public static function updateFieldOrder(string $tableName, array $fields, array $designChange, ?string $connection = null): void
     {
         if ($designChange) {
             $table = TableManager::phinxTable($tableName, [], false, $connection);
@@ -844,7 +848,7 @@ class Helper
     /**
      * 分析字段
      */
-    public static function analyseField(&$field)
+    public static function analyseField(&$field): void
     {
         $field['type']               = self::analyseFieldType($field);
         $field['originalDesignType'] = $field['designType'];
@@ -921,7 +925,7 @@ class Helper
      * 创建菜单
      * @throws Throwable
      */
-    public static function createMenu($webViewsDir, $tableComment)
+    public static function createMenu($webViewsDir, $tableComment): void
     {
         $menuName = self::getMenuName($webViewsDir);
         if (AdminRule::where('name', $menuName)->value('id')) {
@@ -963,7 +967,7 @@ class Helper
         Menu::create([$menus], 0, 'ignore');
     }
 
-    public static function writeWebLangFile($langData, $webLangDir)
+    public static function writeWebLangFile($langData, $webLangDir): void
     {
         foreach ($langData as $lang => $langDatum) {
             $langTsContent = '';
@@ -1009,7 +1013,7 @@ class Helper
         return "\n" . self::tab() . "// 字段类型转换" . "\n" . self::tab() . "protected \$type = [\n" . rtrim($str, "\n") . "\n" . self::tab() . "];\n";
     }
 
-    public static function writeModelFile(string $tablePk, array $fieldsMap, array $modelData, array $modelFile)
+    public static function writeModelFile(string $tablePk, array $fieldsMap, array $modelData, array $modelFile): void
     {
         if ($modelData['connection'] && $modelData['connection'] != config('think-orm.default')) {
             $modelData['connection'] = "\n" . self::tab() . "// 数据库连接配置标识\n" . self::tab() . 'protected $connection = ' . "'{$modelData['connection']}';\n";
@@ -1043,7 +1047,7 @@ class Helper
         self::writeFile($modelFile['parseFile'], $modelFileContent);
     }
 
-    public static function writeControllerFile(array $controllerData, array $controllerFile)
+    public static function writeControllerFile(array $controllerData, array $controllerFile): void
     {
         if (isset($controllerData['relationVisibleFieldList']) && $controllerData['relationVisibleFieldList']) {
             $relationVisibleFields = '$res->visible([';
@@ -1081,7 +1085,7 @@ class Helper
         self::writeFile($controllerFile['parseFile'], $contentFileContent);
     }
 
-    public static function writeFormFile($formVueData, $webViewsDir, $fields, $webTranslate)
+    public static function writeFormFile($formVueData, $webViewsDir, $fields, $webTranslate): void
     {
         $fieldHtml                = "\n";
         $formVueData['bigDialog'] = $formVueData['bigDialog'] ? "\n" . self::tab(2) . 'width="50%"' : '';
@@ -1129,7 +1133,7 @@ class Helper
         return $rulesHtml ? "\n" . $rulesHtml : '';
     }
 
-    public static function writeIndexFile($indexVueData, $webViewsDir, $controllerFile)
+    public static function writeIndexFile($indexVueData, $webViewsDir, $controllerFile): void
     {
         $indexVueData['optButtons']            = self::buildSimpleArray($indexVueData['optButtons']);
         $indexVueData['defaultItems']          = self::getJsonFromArray($indexVueData['defaultItems']);
