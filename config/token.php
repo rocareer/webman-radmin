@@ -2,9 +2,9 @@
 return [
     // 默认驱动
     'default'          => 'jwt',
-    'expire_time'      => 200,
+    'expire_time'      => 3600,
     // 'refresh_keep_ttl' => 3600*24*30, // 刷新token时间(秒)
-    'refresh_keep_ttl' => 3600, // 刷新token时间(秒)
+    'refresh_keep_ttl' => 7200, // 刷新token时间(秒)
 
     // 加密key
     'key'              => 'tcbDgmqLVzuAdNH39o0QnhOisvSCFZ7I',
