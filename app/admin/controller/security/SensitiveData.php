@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\security;
 
+use support\Response;
 use Throwable;
 use app\common\controller\Backend;
 use app\admin\model\SensitiveData as SensitiveDataModel;
@@ -29,7 +30,7 @@ class SensitiveData extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index(): ?\support\Response
+    public function index(): Response
     {
         if ($this->request->input('select')) {
        return $this->select();
@@ -64,7 +65,7 @@ class SensitiveData extends Backend
      * 添加重写
      * @throws Throwable
      */
-    public function add(): \support\Response
+    public function add(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -119,7 +120,7 @@ class SensitiveData extends Backend
      * 编辑重写
      * @throws Throwable
      */
-    public function edit(): \support\Response
+    public function edit(): Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);

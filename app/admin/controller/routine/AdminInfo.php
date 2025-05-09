@@ -37,12 +37,12 @@ class AdminInfo extends Backend
     }
 
     /**
-     * @return Response|null
+     * @return Response
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function edit():Response|null
+    public function edit():Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -94,6 +94,7 @@ class AdminInfo extends Backend
                 return $this->error(__('No rows updated'));
             }
         }
-        return null; // 防止抛出异常
+        return $this->success('');
     }
+
 }

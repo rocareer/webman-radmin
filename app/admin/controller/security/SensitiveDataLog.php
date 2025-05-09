@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\security;
 
+use support\Response;
 use Throwable;
 use extend\ba\TableManager;
 use support\think\Db;
@@ -33,7 +34,7 @@ class SensitiveDataLog extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index(): ?\support\Response
+    public function index(): Response
     {
         if ($this->request->input('select')) {
        return $this->select();
@@ -62,7 +63,7 @@ class SensitiveDataLog extends Backend
      * 详情
      * @throws Throwable
      */
-    public function info(): \support\Response
+    public function info(): Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -83,7 +84,7 @@ class SensitiveDataLog extends Backend
      * 回滚
      * @throws Throwable
      */
-    public function rollback(): \support\Response
+    public function rollback(): Response
     {
         $ids  = $this->request->input('ids', []);
         $data = $this->model->where('id', 'in', $ids)->select();
