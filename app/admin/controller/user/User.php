@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\user;
 
+use support\Response;
 use Throwable;
 use app\common\controller\Backend;
 use app\admin\model\User as UserModel;
@@ -31,7 +32,7 @@ class User extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index()
+    public function index(): Response
     {
         if ($this->request->input('select')) {
             return $this->select();
@@ -57,7 +58,7 @@ class User extends Backend
      * 添加
      * @throws Throwable
      */
-    public function add()
+    public function add(): \support\Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -103,8 +104,9 @@ class User extends Backend
     /**
      * 编辑
      * @throws Throwable
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
-    public function edit()
+    public function edit(): \support\Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);

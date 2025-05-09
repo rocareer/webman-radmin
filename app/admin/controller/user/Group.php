@@ -1,7 +1,9 @@
 <?php
+/** @noinspection PhpDynamicAsStaticMethodCallInspection */
 
 namespace app\admin\controller\user;
 
+use support\Response;
 use Throwable;
 use app\admin\model\UserRule;
 use app\admin\model\UserGroup;
@@ -30,7 +32,7 @@ class Group extends Backend
      * 添加
      * @throws Throwable
      */
-    public function add()
+    public function add(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -72,7 +74,7 @@ class Group extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit()
+    public function edit(): Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -116,7 +118,7 @@ class Group extends Backend
 
         // 读取所有pid，全部从节点数组移除，父级选择状态由子级决定
         $pidArr = UserRule::field('pid')
-            ->distinct(true)
+            ->distinct()
             ->where('id', 'in', $row->rules)
             ->select()
             ->toArray();
