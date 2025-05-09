@@ -3,10 +3,12 @@
 namespace app\middleware;
 
 
-use exception\BusinessException;
+use exception\TokenException;
+use exception\UnauthorizedHttpException;
 use support\member\Member;
 use support\StatusCode;
 use support\token\Token;
+use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -18,22 +20,25 @@ class RadminAuthMiddleware implements MiddlewareInterface
      * 允许访问的角色
      * @var array
      */
-    protected array $allowedRoles = [];
+    protected string|null $allowedRole = null;
 
     /**
      * 构造函数
-     * @param array $allowedRoles 允许访问的角色列表
+     * @param string|null $allowedRole
      */
-    public function __construct(array $allowedRoles = [])
+    public function __construct(?string $allowedRole=null)
     {
-        $this->allowedRoles = $allowedRoles;
+        $this->allowedRole = $allowedRole;
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function process(Request $request, callable $handler): Response
+    public function process(\support\Request|Request $request, callable $handler): Response
     {
+
+        // 0. 获取请求角色
+
 
         // 1. 检查是否跳过认证
         if (shouldExclude($request->path())) {
@@ -44,18 +49,22 @@ class RadminAuthMiddleware implements MiddlewareInterface
         if (empty($request->token)) {
             return $handler($request);
         }
-        // 3. 验证Token有效性
-        $payload = Token::verify($request->token);
-        if (!$payload) {
-            throw new BusinessException('凭证无效:请重新登录', StatusCode::TOKEN_INVALID, ['type' => 'need login']);
+
+        // 3. 验证Token有效性 无效则通知刷新
+        if (!Token::verify($request->token)) {
+            throw new TokenException('', StatusCode::TOKEN_SHOULD_REFRESH);
         }
 
+        // 4. 初始化后 设置 member 信息到请求体
+        $request->member = Member::setCurrentRole($this->allowedRole)->initialization();
 
+        // 5. 验证请求角色
 
-        // 6. 设置 member 信息到请求对象
-        $request->member =Member::initialization();;
-        $request->roles  =$request->member->roles;
-
+        if (!Member::hasRole($this->allowedRole,$request->member->roles)) {
+            throw new UnauthorizedHttpException('', StatusCode::NO_PERMISSION,true);
+        }
+        //6. 通过
+        $request->role=$this->allowedRole;
         return $handler($request);
 
     }
