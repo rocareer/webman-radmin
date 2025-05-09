@@ -1,4 +1,5 @@
 <?php
+/** @noinspection ALL */
 
 namespace app\admin\library\module;
 
@@ -330,7 +331,7 @@ class Server
         return true;
     }
 
-    public static function getClass(string $uid, string $type = 'event', string $class = null): string
+    public static function getClass(string $uid, string $type = 'event', ?string $class = null): string
     {
         $name = parse_name($uid);
         if (!is_null($class) && strpos($class, '.')) {
@@ -347,7 +348,7 @@ class Server
         return class_exists($namespace) ? $namespace : '';
     }
 
-    public static function execEvent(string $uid, string $event, array $params = [])
+    public static function execEvent(string $uid, string $event, array $params = []): void
     {
         $eventClass = self::getClass($uid);
         if (class_exists($eventClass)) {
@@ -401,7 +402,7 @@ class Server
     /**
      * 安装 WebBootstrap
      */
-    public static function installWebBootstrap(string $uid, string $dir)
+    public static function installWebBootstrap(string $uid, string $dir): void
     {
         $mainTsKeys    = ['mainTsImport', 'mainTsStart'];
         $bootstrapCode = self::analysisWebBootstrap($uid, $dir);
@@ -431,7 +432,7 @@ class Server
     /**
      * 卸载 WebBootstrap
      */
-    public static function uninstallWebBootstrap(string $uid)
+    public static function uninstallWebBootstrap(string $uid): void
     {
         $mainTsKeys = ['mainTsImport', 'mainTsStart'];
         $basePath   = root_path() . 'web' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
@@ -516,7 +517,7 @@ class Server
     /**
      * 创建 .runtime
      */
-    public static function createRuntime(string $dir)
+    public static function createRuntime(string $dir): void
     {
         $runtimeFilePath = $dir . '.runtime';
         $files           = new RecursiveIteratorIterator(

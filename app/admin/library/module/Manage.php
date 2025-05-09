@@ -236,7 +236,7 @@ class Manage
      * 更新
      * @throws Throwable
      */
-    public function update(string $token, int $orderId)
+    public function update(string $token, int $orderId): void
     {
         $state = $this->getInstallState();
         if ($state != self::DISABLE) {
@@ -293,7 +293,7 @@ class Manage
      * 卸载
      * @throws Throwable
      */
-    public function uninstall()
+    public function uninstall(): void
     {
         $info = $this->getInfo();
         if ($info['state'] != self::DISABLE) {
@@ -349,7 +349,7 @@ class Manage
      * @param string $trigger 触发启用的标志，比如:install=安装
      * @throws Throwable
      */
-    public function enable(string $trigger)
+    public function enable(string $trigger): void
     {
         // 安装 WebBootstrap
         Server::installWebBootstrap($this->uid, $this->modulesDir);
@@ -611,14 +611,13 @@ class Manage
             $extend = request()->post('extend/a', []);
             if (!$extend) {
                 // 发现冲突->手动处理->转换为方便前端使用的格式
-                $fileConflictTemp = [];
-                foreach ($fileConflict as $key => $item) {
-                    $fileConflictTemp[$key] = [
+                $fileConflictTemp   = array_map(function ($item) {
+                    return [
                         'newFile'  => $this->uid . DIRECTORY_SEPARATOR . $item,
                         'oldFile'  => $item,
                         'solution' => 'cover',
                     ];
-                }
+                }, $fileConflict);
                 $dependConflictTemp = [];
                 foreach ($dependConflict as $env => $item) {
                     $dev = !(stripos($env, 'dev') === false);
@@ -798,7 +797,7 @@ class Manage
      * 依赖升级处理
      * @throws Throwable
      */
-    public function dependUpdateHandle()
+    public function dependUpdateHandle(): void
     {
         $info = $this->getInfo();
         if ($info['state'] == self::DEPENDENT_WAIT_INSTALL) {
@@ -830,7 +829,7 @@ class Manage
      * 依赖安装完成标记
      * @throws Throwable
      */
-    public function dependentInstallComplete(string $type)
+    public function dependentInstallComplete(string $type): void
     {
         $info = $this->getInfo();
         if ($info['state'] == self::DEPENDENT_WAIT_INSTALL) {
