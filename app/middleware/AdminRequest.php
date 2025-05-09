@@ -28,21 +28,15 @@ use Webman\MiddlewareInterface;
 
 class AdminRequest implements MiddlewareInterface
 {
+    /**
+     * @param Request  $request
+     * @param callable $handler
+     * @return Response
+     */
     public function process(Request $request, callable $handler): Response
     {
 
-        $controller              = explode('\\', $request->controller);
-        $controller              = array_slice($controller, -2);
-        $request->controllerName = strtolower(implode('/', $controller));
 
-
-        if ($request->get('initValue') !== null) {
-            $initValue = $request->get('initValue');
-            if (!is_array($initValue)){
-                $initValue = explode(',', $initValue);
-                $request->setGet('initValue', $initValue);
-            }
-        }
 
         return $handler($request);
     }
