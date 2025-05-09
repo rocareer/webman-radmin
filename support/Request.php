@@ -7,6 +7,7 @@ namespace support;
  */
 class Request extends \Webman\Http\Request
 {
+
     /**
      * @var array|mixed|null
      */
