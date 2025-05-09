@@ -25,7 +25,7 @@ class Index extends Frontend
 {
     protected array $noNeedLogin = ['index'];
 
-    public function initialize():void
+    public function initialize(): void
     {
         parent::initialize();
     }
@@ -39,9 +39,10 @@ class Index extends Frontend
     {
         $menus = [];
 
-        if ($this->request->adminIsLogin) {
+        //登录用户
+        if ($this->request->role==='user') {
             $rules     = [];
-            $userMenus = Member::getMenus();
+            $userMenus = Member::setCurrentRole('user')->getMenus($this->request->member->id);
 
             // 首页加载的规则，验权，但过滤掉会员中心菜单
             foreach ($userMenus as $item) {
@@ -52,22 +53,14 @@ class Index extends Frontend
                 }
             }
         } else {
-            // 若是从前台会员中心内发出的请求，要求必须登录，否则会员中心异常
-
-            $userInfo=[];
-            if (Member::isLogin()){
-                $userInfo=Member::getUserInfo($this->request->auth->user->id);
-            }
+            //未登录用户
             $requiredLogin = $this->request->get('requiredLogin', false);
             if ($requiredLogin) {
-
-                // 触发可能的 token 过期异常
-
-                //todo 这里检查 token 是否过期
-
-                //				return $this->error(__('Please login first'), [
-                //					'type' => $this->Member::NEED_LOGIN,
-                //				], $this->Member::LOGIN_RESPONSE_CODE);
+                if ($this->request->role!=='user') {
+                    return $this->error(__('Please login first'), [
+                        'type' => 'need login',
+                    ], 303);
+                }
             }
 
             $rules         = Db::name('user_rule')
@@ -81,6 +74,7 @@ class Index extends Frontend
                 ->order('weigh', 'desc')
                 ->select()
                 ->toArray();
+
             $rules         = Tree::instance()
                 ->assembleChild($rules);
             $data['rules'] = array_values($rules);
@@ -101,7 +95,7 @@ class Index extends Frontend
                 ]),
             ],
             'openMemberCenter' => config('buildadmin.open_member_center'),
-            'userInfo'         => $userInfo,
+            'userInfo'         => $this->request->member,
             'menus'            => $menus,
             'rules'            => array_values($rules),
 
