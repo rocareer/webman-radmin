@@ -33,7 +33,7 @@ class SensitiveDataLog extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index()
+    public function index(): ?\support\Response
     {
         if ($this->request->input('select')) {
        return $this->select();
@@ -62,7 +62,7 @@ class SensitiveDataLog extends Backend
      * 详情
      * @throws Throwable
      */
-    public function info()
+    public function info(): \support\Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -83,7 +83,7 @@ class SensitiveDataLog extends Backend
      * 回滚
      * @throws Throwable
      */
-    public function rollback()
+    public function rollback(): \support\Response
     {
         $ids  = $this->request->input('ids', []);
         $data = $this->model->where('id', 'in', $ids)->select();
