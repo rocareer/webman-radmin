@@ -143,7 +143,7 @@ class Backend extends Api
                 throw new BusinessException('请先登录', StatusCode::NEED_LOGIN);
             }
             if (!action_in_arr($this->noNeedPermission)) {
-                $routePath = ($this->request->controllerPath ?? '') . '/' . $this->request->action;
+                $routePath = ($this->request->controllerName ?? '') . '/' . $this->request->action;
                 if (!Member::check($routePath,$this->request->member->id)) {
                     $this->error(__('You have no permission'), [], 401);
                 }

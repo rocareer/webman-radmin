@@ -24,11 +24,7 @@ class Frontend extends Api
      */
     protected array $noNeedPermission = [];
 
-    /**
-     * 权限类实例
-     * @var Auth
-     */
-    protected Auth $auth;
+    protected mixed $member;
 
     /**
      * 初始化
@@ -39,20 +35,16 @@ class Frontend extends Api
     {
         parent::initialize();
 
+        $this->member=Member::setCurrentRole($this->request->role);
         $needLogin = !action_in_arr($this->noNeedLogin);
 
-
         if ($needLogin) {
-            throw new UnauthorizedHttpException('请先登录' ,StatusCode::NEED_LOGIN,true);
-        }
-
-        if ($needLogin) {
-            if (!Member::isLogin()) {
+            if ($this->request->role!=='user') {
                 throw new UnauthorizedHttpException('请先登录' ,StatusCode::NEED_LOGIN,true);
             }
             if (!action_in_arr($this->noNeedPermission)) {
-                $routePath = ($this->app->request->controllerPath ?? '') . '/' . $this->request->action(true);
-                if (!$this->auth->check($routePath)) {
+                $routePath = ($this->request->controllerName ?? '') . '/' . $this->request->action;
+                if (!$this->member->check($routePath)) {
                     throw new UnauthorizedHttpException('没有权限' ,StatusCode::NO_PERMISSION);
                 }
             }
