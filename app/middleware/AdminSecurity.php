@@ -37,6 +37,9 @@ class AdminSecurity implements MiddlewareInterface
         'delete',
     ];
 
+    /**
+     * @throws exception
+     */
     public function process(Request $request, callable $handler): Response
     {
 
@@ -44,7 +47,6 @@ class AdminSecurity implements MiddlewareInterface
         if (!in_array($action, $this->listenAction)) {
             return $handler($request);
         }
-
 
         if ($action == 'del' || $action == 'delete') {
 
@@ -58,7 +60,10 @@ class AdminSecurity implements MiddlewareInterface
         return $handler($request);
     }
 
-    protected function handleDeleteAction($request)
+    /**
+     * @throws exception
+     */
+    protected function handleDeleteAction($request): void
     {
         try {
             $dataIds = $request->input('ids') ?? $request->input('id');
@@ -113,7 +118,7 @@ class AdminSecurity implements MiddlewareInterface
         }
     }
 
-    protected function handleEditAction($request)
+    protected function handleEditAction($request): void
     {
 
         try {
