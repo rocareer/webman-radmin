@@ -4,6 +4,8 @@ declare (strict_types=1);
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
+use Exception;
+use exception\BusinessException;
 use support\member\Member;
 use support\token\Token;
 use Throwable;
@@ -18,7 +20,7 @@ class Index extends Backend
 
      * @throws Throwable
      */
-    public function index()
+    public function index(): \support\Response
     {
         $userInfo = $this->request->member;
         $menus    = Member::getMenus($userInfo->id);
@@ -51,7 +53,7 @@ class Index extends Backend
 
      * @throws Throwable
      */
-    public function login()
+    public function login(): \support\Response
     {
         // 检查登录态
 
@@ -75,11 +77,11 @@ class Index extends Backend
             ];
 
             try {
-                $res = Member::login($credentials, 'admin', (bool)$this->request->post('keep'));
+                $res = Member::login($credentials, (bool)$this->request->post('keep'));
              return $this->success(__('Login succeeded!'), [
                     'userInfo' => $res
                 ]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $msg = $e->getMessage() ?: __('Incorrect user name or password!');
              return $this->error($msg);
             }
@@ -92,7 +94,7 @@ class Index extends Backend
 
     /**
      * 管理员注销
-
+     *@throws BusinessException
      */
     public function logout()
     {

@@ -1,4 +1,11 @@
 <?php
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace app\admin\controller;
 
@@ -19,7 +26,7 @@ class Module extends Backend
         parent::initialize();
     }
 
-    public function index()
+    public function index(): \support\Response
     {
      return $this->success('', [
             'sysVersion' =>  config('buildadmin.version'),
@@ -27,7 +34,7 @@ class Module extends Backend
         ]);
     }
 
-    public function state()
+    public function state(): \support\Response
     {
         $uid = $this->request->get("uid/s", '');
         if (!$uid) {
@@ -38,7 +45,7 @@ class Module extends Backend
         ]);
     }
 
-    public function install()
+    public function install(): \support\Response
     {
         AdminLog::instance()->setTitle(__('Install module'));
         $uid     = $this->request->get("uid/s", '');
@@ -60,7 +67,7 @@ class Module extends Backend
         ]);
     }
 
-    public function dependentInstallComplete()
+    public function dependentInstallComplete(): \support\Response
     {
         $uid = $this->request->get("uid/s", '');
         if (!$uid) {
@@ -76,7 +83,7 @@ class Module extends Backend
      return $this->success();
     }
 
-    public function changeState()
+    public function changeState(): \support\Response
     {
         AdminLog::instance()->setTitle(__('Change module state'));
         $uid   = $this->request->post("uid/s", '');
@@ -97,7 +104,7 @@ class Module extends Backend
         ]);
     }
 
-    public function uninstall()
+    public function uninstall(): \support\Response
     {
         AdminLog::instance()->setTitle(__('Unload module'));
         $uid = $this->request->get("uid/s", '');
@@ -114,7 +121,7 @@ class Module extends Backend
      return $this->success();
     }
 
-    public function update()
+    public function update(): \support\Response
     {
         AdminLog::instance()->setTitle(__('Update module'));
         $uid     = $this->request->get("uid/s", '');
@@ -133,7 +140,7 @@ class Module extends Backend
      return $this->success();
     }
 
-    public function upload()
+    public function upload(): \support\Response
     {
         AdminLog::instance()->setTitle(__('Upload install module'));
         $file  = $this->request->get("file/s", '');
