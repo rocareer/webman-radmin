@@ -51,10 +51,7 @@
     "phpunit/phpunit": "^9.0"
   },
   "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://gitee.com/rocareer/radmin.git"
-    }
+
   ],
   "suggest": {
     "ext-event": "For better performance. "
