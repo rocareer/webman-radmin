@@ -4,6 +4,10 @@ namespace app\admin\controller\routine;
 
 use app\admin\model\Admin;
 use app\common\controller\Backend;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use Throwable;
 
 class AdminInfo extends Backend
@@ -24,7 +28,7 @@ class AdminInfo extends Backend
         $this->model = new Admin();
     }
 
-    public function index()
+    public function index(): Response
     {
         $info =$this->request->member;
         return $this->success('', [
@@ -32,7 +36,13 @@ class AdminInfo extends Backend
         ]);
     }
 
-    public function edit()
+    /**
+     * @return Response|null
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function edit():Response|null
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -70,7 +80,6 @@ class AdminInfo extends Backend
             }
 
             $data   = $this->excludeFields($data);
-            $result = false;
             $this->model->startTrans();
             try {
                 $result = $row->save($data);
@@ -85,5 +94,6 @@ class AdminInfo extends Backend
                 return $this->error(__('No rows updated'));
             }
         }
+        return null; // 防止抛出异常
     }
 }

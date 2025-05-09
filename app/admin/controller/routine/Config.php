@@ -2,6 +2,8 @@
 
 namespace app\admin\controller\routine;
 
+use exception\UnauthorizedHttpException;
+use support\Response;
 use Throwable;
 use extend\ba\Filesystem;
 use app\common\library\Email;
@@ -32,7 +34,7 @@ class Config extends Backend
         $this->model = new ConfigModel();
     }
 
-    public function index()
+    public function index(): Response
     {
         $configGroup = get_sys_config('config_group');
         $config      = $this->model->order('weigh desc')->select()->toArray();
@@ -63,7 +65,7 @@ class Config extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit()
+    public function edit():Response
     {
         $all = $this->model->select();
         foreach ($all as $item) {
@@ -76,7 +78,7 @@ class Config extends Backend
             $this->modelValidate = false;
             $data                = $this->request->post();
             if (!$data) {
-             return $this->error(__('Parameter %s can not be empty', ['']));
+             // return $this->error(__('Parameter %s can not be empty', ['']));
             }
 
             $data = $this->excludeFields($data);
@@ -164,22 +166,23 @@ class Config extends Backend
                         $validate->check($data);
                     }
                 }
-                $result = $this->model->saveAll($configValue);
+                $this->model->saveAll($configValue);
                 $this->model->commit();
             } catch (Throwable $e) {
                 $this->model->rollback();
              return $this->error($e->getMessage());
             }
-            if ($result !== false) {
+            if (true) {
              return $this->success(__('The current page configuration item was updated successfully'));
             } else {
              return $this->error(__('No rows updated'));
             }
 
         }
+        throw new UnauthorizedHttpException();
     }
 
-    public function add()
+    public function add(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -188,7 +191,6 @@ class Config extends Backend
             }
 
             $data   = $this->excludeFields($data);
-            $result = false;
             $this->model->startTrans();
             try {
                 // 模型验证
@@ -220,7 +222,7 @@ class Config extends Backend
      * 发送邮件测试
      * @throws Throwable
      */
-    public function sendTestMail()
+    public function sendTestMail(): Response
     {
         $data = $this->request->post();
         $mail = new Email();

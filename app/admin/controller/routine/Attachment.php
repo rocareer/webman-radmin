@@ -1,4 +1,5 @@
 <?php
+/** @noinspection DuplicatedCode */
 
 namespace app\admin\controller\routine;
 
@@ -30,7 +31,7 @@ class Attachment extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del()
+    public function del(): \support\Response
     {
         $where             = [];
         $dataLimitAdminIds = $this->getDataLimitAdminIds();
