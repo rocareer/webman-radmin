@@ -165,7 +165,7 @@ abstract class Service implements InterfaceService
     public function memberInitialization(?string $token = null): void
     {
         try {
-            $token = $token ?? $this->token ?? getTokenFromRequest() ?? false;
+            $token = $token ?? request()->token ?? getTokenFromRequest() ?? false;
             if (empty($token)) {
                 throw new BusinessException('没有凭证', StatusCode::TOKEN_NOT_FOUND);
             }
