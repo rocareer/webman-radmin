@@ -30,13 +30,7 @@ class AdminLog implements MiddlewareInterface
 	public function process(Request $request, callable $handler): Response
     {
         $response = $handler($request);
-        if (($request->isPost() || $request->method()=='DELETE') &&  config('buildadmin.auto_write_admin_log')) {
-            try {
-                AdminLogModel::instance()->record();
-            } catch (Throwable $e) {
-                throw $e;
-            }
-        }
+        if (($request->isPost() || $request->method()=='DELETE') &&  config('buildadmin.auto_write_admin_log')) AdminLogModel::instance()->record();
         return $response;
     }
 }
