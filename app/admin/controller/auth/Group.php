@@ -79,7 +79,7 @@ class Group extends Backend
         $this->adminGroups = Db::name('admin_group_access')->where('uid', $this->request->member->id)->column('group_id');
     }
 
-    public function index()
+    public function index():Response
     {
         if ($this->request->input('select')) {
             return $this->select();

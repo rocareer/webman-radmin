@@ -5,6 +5,7 @@ namespace app\admin\controller\auth;
 use app\admin\model\AdminLog as AdminLogModel;
 use app\common\controller\Backend;
 use support\member\Member;
+use support\Response;
 use support\think\Db;
 use Throwable;
 
@@ -33,7 +34,7 @@ class AdminLog extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index(): ?\support\Response
+    public function index(): Response
     {
         if ($this->request->input('select')) {
             return $this->select();
