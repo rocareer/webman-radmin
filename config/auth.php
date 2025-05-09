@@ -57,7 +57,7 @@ return [
 
         // API免认证路径
         '/api/common/refreshToken', // 刷新token
-        '/api/index/index',
+
         '/api/user/checkIn',
 
         // 兼容旧路径

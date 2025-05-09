@@ -22,6 +22,10 @@ return [
         'user'  => [
             'Ba-user-token',
             'ba-user-token'
+        ],
+        'api'  => [
+            'Ba-user-token',
+            'ba-user-token'
         ]
     ],
 

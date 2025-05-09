@@ -1,4 +1,6 @@
 <?php
+/** @noinspection PhpRedundantOptionalArgumentInspection */
+
 /**
  * This file is part of webman.
  *
@@ -19,10 +21,10 @@ use app\process\Http;
 global $argv;
 
 return [
-    'webman' => [
+    getenv('PROCESS_NAME','Radmin') => [
         'handler' => Http::class,
-        'listen' => 'http://0.0.0.0:8787',
-        'count' => 1,
+        'listen' => 'http://0.0.0.0:'.getenv('PROCESS_PORT',8787),
+        'count' => getenv('PROCESS_COUNT',cpu_count()),
         'user' => '',
         'group' => '',
         'reusePort' => false,
