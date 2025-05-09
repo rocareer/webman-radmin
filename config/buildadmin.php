@@ -19,7 +19,7 @@
 
 return [
     // 允许跨域访问的域名
-    'cors_request_domain'   => 'localhost,127.0.0.1',
+    'cors_request_domain'   => 'localhost,127.0.0.1,v10.rocareer.com',
     // 是否开启会员登录验证码
     'user_login_captcha'    => false,
     // 是否开启管理员登录验证码
