@@ -27,7 +27,7 @@ class UnauthorizedHttpException extends Exception
     /**
      * HTTP 状态码
      */
-    public int $statusCode = 401;
+    public int $statusCode = 200;
 
     /**
      * 错误消息.
