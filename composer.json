@@ -32,7 +32,6 @@
     "webman/console": "^2.1",
     "monolog/monolog": "^2.0",
 
-
     "rocareer/webman-migration": "^v1.0.0",
     "rocareer/webman-status-code": "^v1.0.0",
     "firebase/php-jwt": "^6.11",
