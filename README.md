@@ -1,7 +1,7 @@
 # 关于 Radmin
  * 高效华丽的前后端分离管理平台
 
-<img alt="控制面板预览" src="https://gitee.com/rocareer/radmin/blob/master/public/static/images/preview/s_dashboard_1.png" title="控制面板预览"/>
+<img alt="控制面板预览" src="http://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="控制面板预览"/>
 
 ## 项目背景
 
