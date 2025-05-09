@@ -4,6 +4,7 @@
 namespace support\member;
 
 
+use exception\UnauthorizedHttpException;
 use support\StatusCode;
 use exception\BusinessException;
 use support\Log;
@@ -27,7 +28,11 @@ use Throwable;
 abstract class Model extends ThinkModel implements InterfaceModel
 {
 
-    public string $role = 'admin';
+
+    /**
+     * @var string 当前模型角色
+     */
+    public string     $role  = 'admin';
 
     protected        $model;
     protected string $resultSetType = '\support\member\InterfaceModel';
@@ -90,14 +95,13 @@ abstract class Model extends ThinkModel implements InterfaceModel
      * @return Model
      * @throws DataNotFoundException
      * @throws DbException
-     * @throws ModelNotFoundException|BusinessException
+     * @throws ModelNotFoundException
      */
     public function findByName(string $username, bool $withAllowFields = true): mixed
     {
-        var_dump($this);
         $member = $this->where('username', $username)->find();
         if (!$member) {
-            throw new BusinessException('用户不存在', StatusCode::USER_NOT_FOUND);
+            throw new UnauthorizedHttpException('用户不存在', StatusCode::USER_NOT_FOUND);
         }
         if ($withAllowFields) {
             return $member->visible($this->allowFields);
