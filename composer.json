@@ -1,23 +1,23 @@
 {
-  "name": "workerman/webman",
+  "name": "rocareer/radmin",
   "type": "project",
   "keywords": [
     "high performance",
     "http service"
   ],
-  "homepage": "https://www.workerman.net",
-  "license": "MIT",
+  "homepage": "https://www.rocareer.com",
+  "license": "Apache-2.0",
   "description": "High performance HTTP Service Framework.",
   "authors": [
     {
-      "name": "walkor",
-      "email": "walkor@workerman.net",
-      "homepage": "https://www.workerman.net",
+      "name": "albert",
+      "email": "albert@rocareer.com",
+      "homepage": "https://www.rocareer.com",
       "role": "Developer"
     }
   ],
   "support": {
-    "email": "walkor@workerman.net",
+    "email": "albert@rocareer.com",
     "issues": "https://github.com/walkor/webman/issues",
     "forum": "https://wenda.workerman.net/",
     "wiki": "https://workerman.net/doc/webman",
@@ -36,17 +36,15 @@
     "rocareer/webman-migration": "dev-master",
     "rocareer/webman-status-code": "dev-master",
     "firebase/php-jwt": "^6.11",
-
-    "nelexa/zip": "^4.0",
     "webman/think-orm": "^2.1",
-
+    "phpmailer/phpmailer": "^6.10",
     "vlucas/phpdotenv": "^5.6",
-
+    "nelexa/zip": "^4.0",
     "ext-bcmath": "*",
     "ext-iconv": "*",
     "ext-pdo": "*",
-    "ext-gd": "*",
-    "phpmailer/phpmailer": "^6.10"
+    "ext-gd": "*"
+
   },
   "suggest": {
     "ext-event": "For better performance. "
