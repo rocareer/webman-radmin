@@ -1,5 +1,5 @@
 {
-  "name": "rocareer/webman-radmin",
+  "name": "rocareer/rradmin",
   "type": "project",
   "keywords": [
     "high performance",
@@ -23,6 +23,12 @@
     "wiki": "https://workerman.net/doc/webman",
     "source": "https://github.com/walkor/webman"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/igorw/monolog"
+    }
+  ],
   "require": {
     "php": ">=8.1",
     "workerman/webman-framework": "^2.1"
