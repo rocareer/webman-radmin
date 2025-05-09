@@ -33,7 +33,7 @@ class AdminLog extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index()
+    public function index(): ?\support\Response
     {
         if ($this->request->input('select')) {
             return $this->select();

@@ -1,10 +1,14 @@
 <?php
+/** @noinspection DuplicatedCode */
+
+/** @noinspection DuplicatedCode */
 
 namespace app\admin\controller\auth;
 
 use app\admin\model\Admin as AdminModel;
 use app\common\controller\Backend;
 use support\member\Member;
+use support\Response;
 use support\think\Db;
 use Throwable;
 
@@ -38,7 +42,7 @@ class Admin extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index()
+    public function index(): Response
     {
         if ($this->request->input('select')) {
              $this->select();
@@ -64,7 +68,7 @@ class Admin extends Backend
      * 添加
      * @throws Throwable
      */
-    public function add()
+    public function add(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -84,7 +88,6 @@ class Admin extends Backend
 
             $passwd = $data['password']; // 密码将被排除不直接入库
             $data   = $this->excludeFields($data);
-            $result = false;
             if ($data['group_arr']) $this->checkGroupAuth($data['group_arr']);
             $this->model->startTrans();
             try {
@@ -121,8 +124,9 @@ class Admin extends Backend
     /**
      * 编辑
      * @throws Throwable
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
-    public function edit()
+    public function edit(): Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -180,7 +184,7 @@ class Admin extends Backend
                 ->delete();
 
             $data   = $this->excludeFields($data);
-            $result = false;
+
             $this->model->startTrans();
             try {
                 $result = $row->save($data);
@@ -208,7 +212,7 @@ class Admin extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del()
+    public function del(): Response
     {
         $where             = [];
         $dataLimitAdminIds = $this->getDataLimitAdminIds();
