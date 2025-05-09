@@ -2,6 +2,7 @@
 
 namespace app\admin\library\traits;
 
+use support\Response;
 use Throwable;
 
 /**
@@ -35,7 +36,7 @@ trait Backend
      * 查看
      * @throws Throwable
      */
-    public function index()
+    public function index(): Response
     {
 
         if ($this->request->input('select')) {
@@ -62,7 +63,7 @@ trait Backend
     /**
      * 添加
      */
-    public function add()
+    public function add(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -75,7 +76,7 @@ trait Backend
                 $data[$this->dataLimitField] = $this->request->member->id;
             }
 
-            $result = false;
+
             $this->model->startTrans();
             try {
                 // 模型验证
@@ -107,7 +108,7 @@ trait Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit()
+    public function edit(): Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -128,7 +129,7 @@ trait Backend
             }
 
             $data   = $this->excludeFields($data);
-            $result = false;
+
             $this->model->startTrans();
             try {
                 // 模型验证
@@ -163,7 +164,7 @@ trait Backend
      * 删除
      * @throws Throwable
      */
-    public function del()
+    public function del(): Response
     {
         $where             = [];
         $dataLimitAdminIds = $this->getDataLimitAdminIds();
@@ -197,7 +198,7 @@ trait Backend
      * 排序 - 增量重排法
      * @throws Throwable
      */
-    public function sortable()
+    public function sortable(): Response
     {
         $pk        = $this->model->getPk();
         $move      = $this->request->input('move');
@@ -246,7 +247,7 @@ trait Backend
             ->column($pk);
         $weighRowsCount = count($weighRowIds);
 
-        // 单个 SQL 查询中完成大于目标权重行的修改
+        // 单个 SQL 查询中实现大于目标权重行的修改
         $this->model->where($dataLimitWhere)
             ->where($this->weighField, $updateMethod == 'dec' ? '<' : '>', $weigh)
             ->whereNotIn($pk, [$moveRow->$pk])
@@ -255,7 +256,7 @@ trait Backend
             )
             ->save();
 
-        // 遍历与目标行权重相同的行，每出现一行权重值将额外 +1，保证权重相同行的顺序位置不变
+        // 遍历与目标行权重相同地行，每出现一行权重值将额外 +1，保证权重相同行的顺序位置不变
         if ($direction == 'down') {
             $weighRowIds = array_reverse($weighRowIds);
         }
