@@ -47,7 +47,8 @@
 
   },
   "require-dev": {
-    "rocareer/webman-dev": "dev-master"
+    "rocareer/webman-dev": "dev-master",
+    "phpunit/phpunit": "^9.0"
   },
   "suggest": {
     "ext-event": "For better performance. "
