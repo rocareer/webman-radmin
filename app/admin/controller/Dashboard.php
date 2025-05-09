@@ -11,7 +11,7 @@ class Dashboard extends Backend
         parent::initialize();
     }
 
-    public function index()
+    public function index(): \support\Response
     {
      return $this->success('', [
             'remark' => get_route_remark()
