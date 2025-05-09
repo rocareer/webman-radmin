@@ -46,7 +46,7 @@ Route::any('/admin/[{path:.*\..+}]', function () {
 Route::any('/test/auth/[{path:.+}]', function () {
 
 })->middleware(
-    [new RadminAuthMiddleware(['admin'])]
+    [new RadminAuthMiddleware('admin')]
 );
 
 

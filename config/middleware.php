@@ -25,17 +25,17 @@ return [
         // 全局跨域
         AccessControlMIddleWare::class,
         // 请求预处理
-        RequestMiddleWare::class
+        RequestMiddleWare::class,
 
     ],
     'api'=>[
-        // new RadminAuthMiddleware(['admin','user']),
+        new RadminAuthMiddleware('user'),
+
     ],
     'admin' => [
 
-        new RadminAuthMiddleware(['admin']),
-        // 后台请求预处理
-        AdminRequest::class,
+        new RadminAuthMiddleware('admin'),
+
         // 管理员操作日志
         AdminLog::class,
         // 数据安全

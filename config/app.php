@@ -18,24 +18,25 @@
 use support\Request;
 
 return [
-    'debug' => true,
-    'error_reporting' => E_ALL,
-    'default_timezone' => 'Asia/Shanghai',
-    'request_class' => Request::class,
-    'public_path' => base_path() . DIRECTORY_SEPARATOR . 'public',
-    'runtime_path' => base_path(false) . DIRECTORY_SEPARATOR . 'runtime',
+    'debug'             => getenv('APP_DEBUG', true),
+    'error_reporting'   => E_ALL,
+    'default_timezone'  => getenv('DEFAULT_TIMEZONE', 'Asia/Shanghai'),
     'controller_suffix' => '',
-    'controller_reuse' => false,
+    'controller_reuse'  => false,
 
-    // http cache
+    'request_class'  => Request::class,
+    'public_path'    => base_path() . DIRECTORY_SEPARATOR . 'public',
+    'runtime_path'   => base_path(false) . DIRECTORY_SEPARATOR . 'runtime',
+
+    // http cache 实验功能
     'http_cache'     => getenv('HTTP_CACHE', false),
     'http_cache_ttl' => getenv('HTTP_CACHE_TTL', 0),
 
-    // request log
-    'request'=>[
-        'log'=>[
-            'enable'=>true,
-            'channel'=>'R-request'
+    // request log 实验功能
+    'request'        => [
+        'log' => [
+            'enable'  => true,
+            'channel' => 'R-request'
         ]
     ]
 ];
