@@ -3,6 +3,7 @@
 namespace app\admin\controller\user;
 
 use extend\ba\Tree;
+use support\Response;
 use Throwable;
 use app\admin\model\UserRule;
 use app\admin\model\UserGroup;
@@ -62,7 +63,7 @@ class Rule extends Backend
         $this->assembleTree = $isTree && !$this->initValue;
     }
 
-    public function index()
+    public function index():Response
     {
         if ($this->request->input('select')) {
        return $this->select();
@@ -77,7 +78,7 @@ class Rule extends Backend
     /**
      * 添加
      */
-    public function add()
+    public function add(): \support\Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -135,7 +136,7 @@ class Rule extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit()
+    public function edit(): \support\Response
     {
         $id  = $this->request->input($this->model->getPk());
         $row = $this->model->find($id);
@@ -198,7 +199,7 @@ class Rule extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del()
+    public function del(): \support\Response
     {
         $ids = $this->request->input('ids', []);
 

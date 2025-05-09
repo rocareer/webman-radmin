@@ -2,7 +2,10 @@
 
 namespace app\admin\controller\user;
 
-use Throwable;
+use support\Response;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use app\admin\model\User;
 use app\admin\model\UserMoneyLog;
 use app\common\controller\Backend;
@@ -31,9 +34,12 @@ class MoneyLog extends Backend
     /**
      * 添加
      * @param int $userId
-     * @throws Throwable
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function add(int $userId = 0)
+    public function add(int $userId = 0): Response
     {
         if ($this->request->isPost()) {
            return parent::add();
