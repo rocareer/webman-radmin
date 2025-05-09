@@ -33,8 +33,8 @@
     "monolog/monolog": "^2.0",
 
 
-    "rocareer/webman-migration": "dev-master",
-    "rocareer/webman-status-code": "dev-master",
+    "rocareer/webman-migration": "^v1.0.0",
+    "rocareer/webman-status-code": "^v1.0.0",
     "firebase/php-jwt": "^6.11",
     "webman/think-orm": "^2.1",
     "vlucas/phpdotenv": "^5.6",
