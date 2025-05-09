@@ -65,6 +65,7 @@
       "app\\View\\": "./app/view/"
     }
   },
+
   "scripts": {
     "post-package-install": [
       "support\\Plugin::install"
