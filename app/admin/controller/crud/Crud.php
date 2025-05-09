@@ -1,4 +1,7 @@
 <?php
+/** @noinspection PhpDynamicAsStaticMethodCallInspection */
+
+/** @noinspection PhpUnusedParameterInspection */
 
 namespace app\admin\controller\crud;
 
@@ -71,7 +74,7 @@ class Crud extends Backend
      * 开始生成
      * @throws Throwable
      */
-    public function generate()
+    public function generate(): \support\Response
     {
         $type   = $this->request->post('type', '');
         $table  = $this->request->post('table', []);
@@ -303,7 +306,7 @@ class Crud extends Backend
      * 从log开始
      * @throws Throwable
      */
-    public function logStart()
+    public function logStart(): \support\Response
     {
         $id   = $this->request->post('id');
         $type = $this->request->post('type', '');
@@ -371,7 +374,7 @@ class Crud extends Backend
      * 删除CRUD记录和生成的文件
      * @throws Throwable
      */
-    public function delete()
+    public function delete(): \support\Response
     {
         $id   = $this->request->post('id');
         $info = CrudLog::find($id)->toArray();
@@ -414,7 +417,7 @@ class Crud extends Backend
      * 获取文件路径数据
      * @throws Throwable
      */
-    public function getFileData()
+    public function getFileData(): \support\Response
     {
         $table       = $this->request->get('table');
         $commonModel = $this->request->get('commonModel');
@@ -480,7 +483,7 @@ class Crud extends Backend
      * 检查是否已有CRUD记录
      * @throws Throwable
      */
-    public function checkCrudLog()
+    public function checkCrudLog(): \support\Response
     {
         $table      = $this->request->get('table');
         $connection = $this->request->get('connection');
@@ -543,7 +546,7 @@ class Crud extends Backend
      * 生成前检查
      * @throws Throwable
      */
-    public function generateCheck()
+    public function generateCheck(): \support\Response
     {
         $table          = $this->request->post('table');
         $connection     = $this->request->post('connection');
@@ -588,7 +591,7 @@ class Crud extends Backend
      * CRUD 设计记录上传成功标记
      * @throws Throwable
      */
-    public function uploadCompleted()
+    public function uploadCompleted(): \support\Response
     {
         $syncIds      = $this->request->post('syncIds/a', []);
         $cancelSync   = $this->request->post('cancelSync/b', false);
@@ -622,7 +625,7 @@ class Crud extends Backend
      * @param $table
      * @throws Throwable
      */
-    private function parseJoinData($field, $table)
+    private function parseJoinData($field, $table): void
     {
         $dictEn   = [];
         $dictZhCn = [];
@@ -751,7 +754,7 @@ class Crud extends Backend
     /**
      * 解析模型方法（设置器、获取器等）
      */
-    private function parseModelMethods($field, &$modelData)
+    private function parseModelMethods($field, &$modelData): void
     {
         // fieldType
         if ($field['designType'] == 'array') {
@@ -808,7 +811,7 @@ class Crud extends Backend
     /**
      * 控制器/模型等文件的一些杂项属性解析
      */
-    private function parseSundryData($field, $table)
+    private function parseSundryData($field, $table): void
     {
         if ($field['designType'] == 'editor') {
             $this->formVueData['bigDialog']     = 'true'; // form 使用较宽的 Dialog
