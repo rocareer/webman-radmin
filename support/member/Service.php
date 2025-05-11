@@ -57,11 +57,6 @@ abstract class Service implements InterfaceService
         }
 
         try {
-            if ($this->memberModel && $this->isLogin()) {
-                //状态更新
-                $this->stateUpdateLogin('success');
-                return $this->memberModel;
-            }
 
             //用户信息初始化
             $this->memberInitialization();
@@ -178,6 +173,7 @@ abstract class Service implements InterfaceService
                 throw new BusinessException('用户不存在', StatusCode::MEMBER_NOT_FOUND);
             }
 
+            $this->memberModel=$member;
 
         } catch (Throwable $e) {
             throw new BusinessException($e->getMessage(), $e->getCode());

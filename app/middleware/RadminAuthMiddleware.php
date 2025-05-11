@@ -61,7 +61,8 @@ class RadminAuthMiddleware implements MiddlewareInterface
         // 5. 验证请求角色
 
         if (!Member::hasRole($this->allowedRole,$request->member->roles)) {
-            throw new UnauthorizedHttpException('', StatusCode::NO_PERMISSION,true);
+//            throw new UnauthorizedHttpException('', StatusCode::NO_PERMISSION,true);
+            throw new TokenException('', StatusCode::TOKEN_SHOULD_REFRESH);
         }
         //6. 通过
         $request->role=$this->allowedRole;
