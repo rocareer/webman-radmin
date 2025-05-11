@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace exception;
 
+use Throwable;
+
 class Exception extends \Exception
 {
     /**
@@ -48,14 +50,20 @@ class Exception extends \Exception
     public string $error = '';
 
     /**
-     * BaseException constructor.
-     * @param string $errorMessage
-     * @param array $params
-     * @param string $error
+     * Error message.
+     * Exception constructor.
+     * @param string         $errorMessage
+     * @param array          $params
+     * @param Throwable|null $previous
      */
-    public function __construct(string $errorMessage = '', array $params = [], string $error = '')
+    public function __construct(string $errorMessage = '', array $params = [], ?Throwable $previous = null)
     {
-        parent::__construct($errorMessage, $this->statusCode);
+        // 如果没有传递 $previous，尝试获取当前异常
+        if ($previous === null) {
+            $previous = $this->getCurrentException();
+        }
+
+        parent::__construct($errorMessage, $this->statusCode, $previous);
         if (!empty($errorMessage)) {
             $this->errorMessage = $errorMessage;
         }
@@ -77,4 +85,39 @@ class Exception extends \Exception
             }
         }
     }
+
+    /**
+     * 获取当前异常
+     * @return   Exception|null
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 19:43
+     */
+    protected function getCurrentException(): ?Throwable
+    {
+        // 获取当前异常上下文
+        $exception = null;
+
+        if (function_exists('xdebug_get_function_stack')) {
+            // 使用 Xdebug 获取调用堆栈
+            $stack = xdebug_get_function_stack();
+            foreach ($stack as $frame) {
+                if (isset($frame['exception']) && $frame['exception'] instanceof Throwable) {
+                    $exception = $frame['exception'];
+                    break;
+                }
+            }
+        } else {
+            // 使用 debug_backtrace 获取调用堆栈
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            foreach ($trace as $frame) {
+                if (isset($frame['args'][0]) && $frame['args'][0] instanceof Throwable) {
+                    $exception = $frame['args'][0];
+                    break;
+                }
+            }
+        }
+
+        return $exception;
+    }
+
 }

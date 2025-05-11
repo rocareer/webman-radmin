@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace exception;
 
 use support\StatusCode;
+use Throwable;
 
 class BusinessException extends Exception
 {
@@ -35,16 +36,16 @@ class BusinessException extends Exception
     public string $errorMessage = 'BusinessException';
 
 
-    public function __construct($errorMessage = null, $code = 0, $needLogin = false, $data = [],$error = '')
+    public function __construct($errorMessage = null, $code = 0,$needLogin = false,$data = [], ?Throwable $previous = null)
     {
 
         $params['errorCode'] = $code;
-        $params['data']      = $data;
+        $params['data'] = $data;
         if ($needLogin) {
             $params['data']['type'] = 'need login';
             $params['errorCode']    = StatusCode::NEED_LOGIN;
         }
-        parent::__construct($errorMessage, $params, $error);
+        parent::__construct($errorMessage, $params, $previous);
 
     }
 }

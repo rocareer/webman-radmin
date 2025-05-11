@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace exception;
 
 use support\StatusCode;
+use Throwable;
 
 class TokenException extends Exception
 {
@@ -35,16 +36,10 @@ class TokenException extends Exception
     public string $errorMessage = 'TokenException';
 
 
-    public function __construct($errorMessage = null, $code = 0, $shouldRefresh = false, $data = [],$error = '')
+    public function __construct($errorMessage = null, $code = 0,array $data = [], ?Throwable $previous = null)
     {
-
+        $params['data'] = $data;
         $params['errorCode'] = $code;
-        $params['data']      = $data;
-        if ($shouldRefresh) {
-            $params['data']['type'] = 'should refresh';
-            $params['errorCode']    = StatusCode::TOKEN_SHOULD_REFRESH;
-        }
-        parent::__construct($errorMessage, $params, $error);
-
+        parent::__construct($errorMessage, $params, $previous);
     }
 }
