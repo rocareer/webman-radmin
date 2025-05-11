@@ -47,7 +47,8 @@
     "ext-iconv": "*",
     "ext-pdo": "*",
     "ext-gd": "*",
-    "phpmailer/phpmailer": "^v6.8.1"
+    "phpmailer/phpmailer": "^v6.8.1",
+    "webman/think-cache": "^2.1"
 
   },
   "require-dev": {
@@ -59,6 +60,7 @@
   },
   "autoload": {
     "psr-4": {
+      "Rocareer\\WebmanCache\\" : "vendor/rocareer/webman-cache/src",
       "": "./",
       "app\\": "./app",
       "App\\": "./app",

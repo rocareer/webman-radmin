@@ -3,8 +3,6 @@
 
 namespace support\think;
 
-use support\Cache;
-use support\think\Db;
 use think\Container;
 use think\Paginator;
 use Webman\Bootstrap;
