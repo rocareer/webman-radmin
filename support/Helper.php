@@ -1,24 +1,47 @@
 <?php
-/*
- *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
- */
 
 /**
- * Here is your custom functions.
+ * File:        Helper.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/11 13:31
+ * Description:
+ *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
+
 
 
 use extend\ba\Filesystem;
+
+
+
+if (!function_exists('arrayStrictFilter')) {
+    /**
+     * 过滤数组
+     * @param array $input
+     * @param array $allowedKeys
+     * @return   array
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 20:48
+     */
+    function arrayStrictFilter(array $input, array $allowedKeys): array
+    {
+        // 检查字段数量是否一致
+        if (count($input) !== count($allowedKeys)) {
+            throw new InvalidArgumentException('输入数组的字段数量与允许的字段数量不一致');
+        }
+
+        // 检查字段名称是否完全匹配
+        $inputKeys = array_keys($input);
+        if ($inputKeys !== $allowedKeys) {
+            throw new InvalidArgumentException('输入数组的字段名称与允许的字段名称不匹配');
+        }
+
+        // 返回过滤后的数组
+        return array_intersect_key($input, array_flip($allowedKeys));
+    }
+}
 
 /**
  * 检查路径是否需要跳过认证
@@ -30,7 +53,7 @@ if (!function_exists('shouldExclude')) {
     function shouldExclude(?string $path = null): bool
     {
         $path          = $path ?? request()->path();
-        $excludeRoutes =  config('auth.exclude', []);
+        $excludeRoutes = config('auth.exclude', []);
 
         foreach ($excludeRoutes as $route) {
             if (strpos($route, '*') !== false) {
@@ -56,10 +79,9 @@ if (!function_exists('getEncryptedToken')) {
      * @param string $token
      * @return string
      */
-    function getEncryptedToken(string $token): string
+    function getEncryptedToken(string $token, $algo = 'sha256', $key = 'rocareer'): string
     {
-        $config =  config('token');
-        return hash_hmac($config['algo'], $token, $config['key']);
+        return hash_hmac($algo, $token, $key);
     }
 }
 
@@ -78,27 +100,43 @@ if (!function_exists('getTokenFromRequest')) {
     function getTokenFromRequest($request = null, array $names = []): ?string
     {
         if (!empty($names)) {
-
             return get_ba_token($names);
         }
+
         $request = $request ?? request();
-        $headers =  config("token.headers.{$request->app}");
-        if (empty($headers)) {
-            return null;
+
+        // 从 Authorization 头获取 Bearer Token
+        $token = $request->header('Authorization');
+        if (!empty($token) && str_starts_with($token, 'Bearer ')) {
+            return extractBearerToken($token);
         }
+
+        // 从配置的 headers 中获取 Token
+        $headers = config("token.headers.{$request->app}", []);
         foreach ($headers as $header) {
             $token = $request->header($header);
             if (!empty($token)) {
-                if (str_starts_with($token, 'Bearer ')) {
-                    return trim(str_replace('Bearer ', '', $token));
-                }
                 return $token;
             }
         }
-        // 从query参数或body获取
-        return $token ?? $request->input('batoken') ?? null;
+
+        // 从 query 参数或 body 获取 Token
+        return $request->input('batoken');
+    }
+
+    /**
+     * 从 Authorization 头中提取 Bearer Token
+     * @param string $token
+     * @return   string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 13:30
+     */
+    function extractBearerToken(string $token): string
+    {
+        return trim(str_replace('Bearer ', '', $token));
     }
 }
+
 
 if (!function_exists('get_ba_token')) {
     /**
@@ -256,7 +294,7 @@ if (!function_exists('get_controller_list')) {
      */
     function get_controller_list(string $app = 'admin'): array
     {
-        $controllerDir = app_path()  . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
+        $controllerDir = app_path() . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
         return Filesystem::getDirFiles($controllerDir);
     }
 }

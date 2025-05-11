@@ -111,11 +111,14 @@ abstract class Service implements InterfaceService
      */
     public function login(array $credentials, bool $keep = false): array
     {
-        $credentials['keep'] = $keep;
-        $this->memberModel = $this->authenticator->authenticate($credentials);
-        //设置用户信息
-        $this->setMember($this->memberModel);
-        return $this->memberModel->toArray();
+       try {
+            $credentials['keep'] = $keep;
+            $this->memberModel   = $this->authenticator->authenticate($credentials);//设置用户信息
+            $this->setMember($this->memberModel);
+            return $this->memberModel->toArray();
+        } catch (Throwable $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -168,13 +171,11 @@ abstract class Service implements InterfaceService
             if (empty($tokenData)) {
                 throw new BusinessException('凭证无效', StatusCode::TOKEN_INVALID);
             }
-            $member = $this->memberModel->findById($tokenData->user_id);
+            $member = $this->memberModel->findById($tokenData->sub);
             if (empty($member)) {
                 throw new BusinessException('用户不存在', StatusCode::MEMBER_NOT_FOUND);
             }
-
             $this->memberModel=$member;
-
         } catch (Throwable $e) {
             throw new BusinessException($e->getMessage(), $e->getCode());
         }

@@ -35,7 +35,7 @@ abstract class Authenticator implements InterfaceAuthenticator
      */
     protected array $config = [];
 
-    protected object|null $memberModel =null;
+    protected object|null $memberModel = null;
     //instance
 
     /**
@@ -43,8 +43,8 @@ abstract class Authenticator implements InterfaceAuthenticator
      */
     public function __construct()
     {
-        $this->config       =  config('auth.login.' . $this->role);
-        $this->memberModel=Factory::getInstance($this->role,'model');
+        $this->config      = config('auth.login.' . $this->role);
+        $this->memberModel = Factory::getInstance($this->role, 'model');
     }
 
     /**
@@ -115,7 +115,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             $this->updateLoginState('false');
             Db::commit();
             Log::error('认证异常：' . $e->getMessage());
-            throw new UnauthorizedHttpException($e->getMessage(), StatusCode::AUTHENTICATION_FAILED);
+            throw new UnauthorizedHttpException($e->getMessage(), StatusCode::AUTHENTICATION_FAILED,false,[],$e);
         }
     }
 
@@ -173,7 +173,7 @@ abstract class Authenticator implements InterfaceAuthenticator
      */
     protected function checkMemberStatus(): void
     {
-        Event::dispatch('state.checkStatus',$this->memberModel);
+        Event::dispatch('state.checkStatus', $this->memberModel);
     }
 
     /**
@@ -195,37 +195,26 @@ abstract class Authenticator implements InterfaceAuthenticator
      * 生成令牌
      * By albert  2025/05/06 02:06:25
      * @return void
-     * @throws UnauthorizedHttpException
+     * @throws
      */
     protected function generateTokens(): void
     {
-
-        try {
-
-            $tokenData                = [
-                'user_id'  => $this->memberModel->id,
-                'username' => $this->memberModel->username,
-                'type'     => $this->role
-            ];
-            $this->memberModel->token = Token::encode($tokenData);
-
-            if (empty($this->memberModel->token)) {
-                throw new UnauthorizedHttpException('获取凭证失败', StatusCode::TOKEN_CREATE_FAILED);
-            }// 获取刷新秘钥
-            if ($this->credentials['keep']) {
-                $this->memberModel->refresh_token = Token::encode($tokenData, true);
-                if (empty($this->memberModel->refresh_token)) {
-                    throw new UnauthorizedHttpException('获取凭证失败', StatusCode::TOKEN_CREATE_FAILED);
-                }
-            }
-        } catch (Throwable) {
-            throw new UnauthorizedHttpException('获取凭证失败', StatusCode::TOKEN_CREATE_FAILED);
+        $tokenData                = [
+            'sub'  => $this->memberModel->id,
+            'type' => 'access',
+            'keep'=>false,
+            'role' => $this->role
+        ];
+        $this->memberModel->token = Token::encode($tokenData);
+        if ($this->credentials['keep']) {
+            $tokenData['keep']=true;
+            $this->memberModel->refresh_token = Token::encode($tokenData);
         }
     }
 
     public function extendMemberInfo(): void
     {
-        $this->memberModel->roles=[$this->role];
+        $this->memberModel->roles = [$this->role];
     }
 
     /**
@@ -234,7 +223,7 @@ abstract class Authenticator implements InterfaceAuthenticator
      */
     protected function updateLoginState(string $success): void
     {
-        Event::emit("state.updateLogin.$success",$this->memberModel);
+        Event::emit("state.updateLogin.$success", $this->memberModel);
     }
 
 
