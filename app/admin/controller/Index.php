@@ -17,7 +17,6 @@ class Index extends Backend
 
     /**
      * 后台初始化请求
-
      * @throws Throwable
      */
     public function index(): \support\Response
@@ -27,30 +26,29 @@ class Index extends Backend
 
 
         if (!$menus) {
-         return $this->error(__('No background menu, please contact super administrator!'));
+            return $this->error(__('No background menu, please contact super administrator!'));
         }
-     return $this->success('', [
+        return $this->success('', [
             'adminInfo'  => $userInfo,
             'menus'      => $menus,
             'siteConfig' => [
                 'siteName'     => get_sys_config('site_name'),
                 'version'      => get_sys_config('version'),
-                'apiUrl'       =>  config('buildadmin.api_url'),
+                'apiUrl'       => config('buildadmin.api_url'),
                 'upload'       => keys_to_camel_case(get_upload_config(), ['max_size', 'save_name', 'allowed_suffixes', 'allowed_mime_types']),
                 'cdnUrl'       => full_url(),
-                'cdnUrlParams' =>  config('buildadmin.cdn_url_params'),
+                'cdnUrlParams' => config('buildadmin.cdn_url_params'),
             ],
             'terminal'   => [
                 'phpDevelopmentServer' => str_contains($_SERVER['SERVER_SOFTWARE'], 'Workerman'),
                 // 'phpDevelopmentServer' => $_SERVER['SERVER_SOFTWARE'],
-                'npmPackageManager'    =>  config('terminal.npm_package_manager'),
+                'npmPackageManager'    => config('terminal.npm_package_manager'),
             ]
         ]);
     }
 
     /**
      * 管理员登录
-
      * @throws Throwable
      */
     public function login(): \support\Response
@@ -63,7 +61,7 @@ class Index extends Backend
         //     ], 303);
         // }
 
-        $captchaSwitch =  config('buildadmin.admin_login_captcha');
+        $captchaSwitch = config('buildadmin.admin_login_captcha');
 
         // 检查提交
         if ($this->request->isPost()) {
@@ -76,25 +74,25 @@ class Index extends Backend
                 'captchaSwitch' => $captchaSwitch,
             ];
 
-            try {
+
                 $res = Member::login($credentials, (bool)$this->request->post('keep'));
-             return $this->success(__('Login succeeded!'), [
+                return $this->success(__('Login succeeded!'), [
                     'userInfo' => $res
                 ]);
-            } catch (Exception $e) {
+
                 $msg = $e->getMessage() ?: __('Incorrect user name or password!');
-             return $this->error($msg);
-            }
+                throw new BusinessException($e->getMessage(),0,$e);
+
         }
 
-     return $this->success('', [
+        return $this->success('', [
             'captcha' => $captchaSwitch
         ]);
     }
 
     /**
      * 管理员注销
-     *@throws BusinessException
+     * @throws BusinessException
      */
     public function logout()
     {
@@ -102,7 +100,7 @@ class Index extends Backend
             $refreshToken = $this->request->post('refreshToken', '');
             if ($refreshToken) Token::destroy((string)$refreshToken);
             Member::logout();
-         return $this->success();
+            return $this->success();
         }
     }
 }

@@ -16,6 +16,7 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
+use Exception;
 use exception\BusinessException;
 use extend\ba\Captcha;
 use extend\ba\ClickCaptcha;
@@ -50,7 +51,7 @@ class Common extends Api
     /**
      * 点选验证码
      */
-    public function clickCaptcha()
+    public function clickCaptcha(): Response
     {
         $id      = $this->request->input('id');
         $captcha = new ClickCaptcha();
@@ -61,7 +62,7 @@ class Common extends Api
      * 点选验证码检查
      * @throws Throwable
      */
-    public function checkClickCaptcha()
+    public function checkClickCaptcha(): Response
     {
         $id      = $this->request->post('id');
         $info    = $this->request->post('info');
@@ -71,21 +72,23 @@ class Common extends Api
         return $this->error();
     }
 
-    public function refreshToken()
+    /**
+     * @throws BusinessException
+     */
+    public function refreshToken(): Response
     {
         $refreshToken = $this->request->post('refreshToken');
-        if (empty($refreshToken)){
-            throw new BusinessException('凭证已失效:请重新登录 ',StatusCode::NEED_LOGIN, true);
+        if (empty($refreshToken)) {
+            throw new BusinessException('登录已超时:请重新登录 ', StatusCode::NEED_LOGIN, true);
         }
         try {
-            $payload = Token::verify($refreshToken);
-        } catch (\Exception $e) {
-            throw new BusinessException('凭证已失效:请重新登录 ', StatusCode::NEED_LOGIN, true);
+            $payload  = Token::verify($refreshToken);
+            $newToken = Token::refresh($refreshToken);
+        } catch (Exception) {
+            throw new BusinessException('登录已超时:请重新登录 ', StatusCode::NEED_LOGIN, true);
         }
-
-        $newToken= Token::refresh($refreshToken);
         return $this->success('', [
-            'type'  => $payload->type,
+            'type'  => $payload->role.'-refresh',
             'token' => $newToken
         ]);
     }

@@ -77,7 +77,7 @@ class Api extends BaseController
         }
         else {
             // 默认加载中文公共语言文件
-            $commonLangFile = app_path('lang').$langSet.'/zh-cn.php';
+            $commonLangFile = app_path('admin/lang').$langSet.'/zh-cn.php';
             if(is_file($commonLangFile)) {
                 Lang::load($commonLangFile);
             }
