@@ -90,9 +90,10 @@ function createAxios<Data = any, T = ApiPromise<Data>>(axiosConfig: AxiosRequest
             // 自动携带token
             if (config.headers) {
                 const token = adminInfo.getToken()
-                if (token) (config.headers as anyObj).batoken = token
-                const userToken = options.anotherToken || userInfo.getToken()
-                if (userToken) (config.headers as anyObj)['ba-user-token'] = userToken
+                if (token) (config.headers as anyObj).Authorization = 'Bearer '+token
+                // if (token) (config.headers as anyObj).batoken = token
+                // const userToken = options.anotherToken || userInfo.getToken()
+                // if (userToken) (config.headers as anyObj)['ba-user-token'] = userToken
             }
 
             return config
@@ -134,7 +135,7 @@ function createAxios<Data = any, T = ApiPromise<Data>>(axiosConfig: AxiosRequest
                                             router.push({ name: 'adminLogin' })
                                             return Promise.reject(err)
                                         } else {
-                                            response.headers.batoken = ''
+                                            response.headers.Authorization = ''
                                             window.requests.forEach((cb) => cb('', 'admin-refresh'))
                                             window.requests = []
                                             return Axios(response.config)
@@ -159,11 +160,12 @@ function createAxios<Data = any, T = ApiPromise<Data>>(axiosConfig: AxiosRequest
                             return new Promise((resolve) => {
                                 // 用函数形式将 resolve 存入，等待刷新后再执行
                                 window.requests.push((token: string, type: string) => {
-                                    if (type == 'admin-refresh') {
-                                        response.headers.batoken = `${token}`
-                                    } else {
-                                        response.headers['ba-user-token'] = `${token}`
-                                    }
+                                    response.headers.Authorization = `${token}`
+                                    // if (type == 'admin-refresh') {
+                                    //     response.headers.batoken = `${token}`
+                                    // } else {
+                                    //     response.headers['ba-user-token'] = `${token}`
+                                    // }
                                     resolve(Axios(response.config))
                                 })
                             })
