@@ -12,7 +12,10 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use support\think\ThinkOrm;
+
 return [
-    support\bootstrap\Session::class,
-    Webman\ThinkOrm\ThinkOrm::class,
+//    support\bootstrap\Session::class,
+//    Webman\ThinkOrm\ThinkOrm::class,
+    ThinkOrm::class
 ];

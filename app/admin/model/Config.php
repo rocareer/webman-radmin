@@ -3,7 +3,8 @@
 
 namespace app\admin\model;
 
-use support\Cache;
+use exception\BusinessException;
+use support\think\Cache;
 use Throwable;
 use app\common\model\BaseModel;
 
@@ -19,17 +20,15 @@ class Config extends BaseModel
 {
     public static string $cacheTag = 'sys_config';
 
+    protected $autoWriteTimestamp=false;
+
     protected array $append = [
         'value',
         'content',
         'extend',
         'input_extend',
     ];
-    protected       $type   = [
 
-        'create_time' => 'integer',
-
-    ];
 
     protected array $jsonDecodeType = ['checkbox', 'array', 'selects'];
     protected array $needContent    = ['radio', 'checkbox', 'select', 'selects'];
@@ -40,21 +39,26 @@ class Config extends BaseModel
      */
     public static function onBeforeInsert(Config $model): void
     {
-        if (!in_array($model->getData('type'), $model->needContent)) {
-            $model->content = null;
-        } else {
-            $model->content = json_encode(str_attr_to_array($model->getData('content')));
+       try {
+            if (!in_array($model->getData('type'), $model->needContent)) {
+                $model->content = null;
+            } else {
+                $model->content = json_encode(str_attr_to_array($model->getData('content')));
+            }
+
+            if (is_array($model->rule)) {
+                $model->rule = implode(',', $model->rule);
+            }
+            if ($model->getData('extend') || $model->getData('inputExtend')) {
+                $extend      = str_attr_to_array($model->getData('extend'));
+                $inputExtend = str_attr_to_array($model->getData('inputExtend'));
+                if ($inputExtend) $extend['baInputExtend'] = $inputExtend;
+                if ($extend) $model->extend = json_encode($extend);
+            }
+            $model->allow_del = 1;
+        } catch (\Exception $e) {
+            throw new BusinessException($e->getMessage());
         }
-        if (is_array($model->rule)) {
-            $model->rule = implode(',', $model->rule);
-        }
-        if ($model->getData('extend') || $model->getData('inputExtend')) {
-            $extend      = str_attr_to_array($model->getData('extend'));
-            $inputExtend = str_attr_to_array($model->getData('inputExtend'));
-            if ($inputExtend) $extend['baInputExtend'] = $inputExtend;
-            if ($extend) $model->extend = json_encode($extend);
-        }
-        $model->allow_del = 1;
     }
 
     /**
@@ -85,23 +89,25 @@ class Config extends BaseModel
     }
 
     public function setValueAttr(mixed $value, $row): mixed
-    {
-        if (in_array($row['type'], $this->jsonDecodeType)) {
-            return $value ? json_encode($value) : '';
-        } elseif ($row['type'] == 'switch') {
-            return $value ? '1' : '0';
-        } elseif ($row['type'] == 'time') {
-            return $value ? date('H:i:s', strtotime($value)) : '';
-        } elseif ($row['type'] == 'city') {
-            if ($value && is_array($value)) {
+    {try {
+            if (in_array($row['type'], $this->jsonDecodeType)) {
+                return $value ? json_encode($value) : '';
+            } elseif ($row['type'] == 'switch') {
+                return $value ? '1' : '0';
+            } elseif ($row['type'] == 'time') {
+                return $value ? date('H:i:s', strtotime($value)) : '';
+            } elseif ($row['type'] == 'city') {
+                if ($value && is_array($value)) {
+                    return implode(',', $value);
+                }
+                return $value ?: '';
+            } elseif (is_array($value)) {
                 return implode(',', $value);
             }
-            return $value ?: '';
-        } elseif (is_array($value)) {
-            return implode(',', $value);
+            return $value;
+        } catch (\Exception $e) {
+            throw new BusinessException($e->getMessage());
         }
-
-        return $value;
     }
 
     public function getContentAttr($value, $row)
@@ -129,12 +135,16 @@ class Config extends BaseModel
 
     public function getInputExtendAttr($value, $row)
     {
-        if ($row && $row['extend']) {
-            $arr = json_decode($row['extend'], true);
-            if ($arr && isset($arr['baInputExtend'])) {
-                return $arr['baInputExtend'];
+        try {
+            if ($row && $row['extend']) {
+                $arr = json_decode($row['extend'], true);
+                if ($arr && isset($arr['baInputExtend'])) {
+                    return $arr['baInputExtend'];
+                }
             }
+            return [];
+        } catch (\Exception $e) {
+            throw new BusinessException($e->getMessage());
         }
-        return [];
     }
 }

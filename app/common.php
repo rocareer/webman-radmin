@@ -1,16 +1,12 @@
 <?php
-/*
+/**
+ * File:        common.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/10 23:15
+ * Description:
  *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
 // +----------------------------------------------------------------------
@@ -29,8 +25,8 @@
 use app\admin\library\module\Server;
 use extend\ba\Filesystem;
 use support\think\Lang;
-use support\Cache;
 use support\think\Db;
+use app\admin\model\Config as configModel;
 
 
 if(!function_exists('__')) {
@@ -91,48 +87,38 @@ if(!function_exists('htmlspecialchars_decode_improve')) {
 }
 
 
-if(!function_exists('get_sys_config')) {
+if (!function_exists('get_sys_config')) {
+
     /**
-     * 获取系统配置（支持名称精确查询/分组过滤/简洁模式）
-     *
-     * @param string $name      配置项名称（支持点号语法）
-     * @param string $group     配置分组名称
-     * @param bool   $isConcise 是否返回键值对格式
-     *
-     * @return array|string|null
+     * 获取站点的系统配置，不传递参数则获取所有配置项
+     * @param string $name    变量名
+     * @param string $group   变量分组，传递此参数来获取某个分组的所有配置项
+     * @param bool   $concise 是否开启简洁模式，简洁模式下，获取多项配置时只返回配置的键值对
+     * @return mixed
      * @throws Throwable
      */
-    function get_sys_config(string $name = '', string $group = '', bool $isConcise = true): array|string|null
+    function get_sys_config(string $name = '', string $group = '', bool $concise = true): mixed
     {
-        // 从缓存或数据库获取配置
-        $configs = Cache::get('sys_config');
-        if($configs === null) {
-            $configs = Db::name('config')
-                ->order('weigh', 'desc')
-                ->select()
-                ->toArray()
-            ;
-            Cache::set('sys_config', $configs, 3600);
-        }else {
-            $configs = jsonToArray($configs);
-        }
-
-        // 按名称查询
-        if($name !== '') {
-            $nameMap = array_column($configs, 'value', 'name');
-            $keys    = explode('.', $name);
-            $value   = $nameMap;
-            foreach($keys as $key) {
-                $value = $value[$key] ?? null;
+        if ($name) {
+            // 直接使用->value('value')不能使用到模型的类型格式化
+            $config = configModel::cache($name, null, configModel::$cacheTag)->where('name', $name)->find();
+            if ($config) $config = $config['value'];
+        } else {
+            if ($group) {
+                $temp = configModel::cache('group' . $group, null, configModel::$cacheTag)->where('group', $group)->select()->toArray();
+            } else {
+                $temp = configModel::cache('sys_config_all', null, configModel::$cacheTag)->order('weigh desc')->select()->toArray();
             }
-            return $value;
+            if ($concise) {
+                $config = [];
+                foreach ($temp as $item) {
+                    $config[$item['name']] = $item['value'];
+                }
+            } else {
+                $config = $temp;
+            }
         }
-
-        // 按分组过滤
-        $filteredConfigs = $group !== '' ? array_filter($configs, fn($v) => $v['group'] === $group) : $configs;
-
-        // 返回格式处理
-        return $isConcise ? array_column($filteredConfigs, 'value', 'name') : $filteredConfigs;
+        return $config;
     }
 }
 
@@ -148,7 +134,7 @@ if(!function_exists('get_route_remark')) {
         $controllerName = request()->controller;
         $actionName     = request()->action;
         $path           = str_replace('.', '/', $controllerName);
-        $path           = str_replace('plugin\radmin\app\admin\controller\\', '', $path);
+        $path           = str_replace('app\admin\controller\\', '', $path);
         $remark         = Db::name('admin_rule')
             ->where('name', $path)
             ->whereOr('name', $path.'/'.$actionName)
@@ -199,7 +185,7 @@ if(!function_exists('full_url')) {
      */
     function full_url(?string $relativeUrl = null, string|bool $domain = true, string $default = ''): string
     {
-        // 存储/上传资料配置
+        // 存储/上传资料配置 todo
         //		Event::trigger('uploadConfigInit', App::getInstance());
 
         $cdnUrl =  config('buildadmin.cdn_url');

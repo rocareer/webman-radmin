@@ -13,7 +13,8 @@
                     :key="state.formKey"
                 >
                     <el-tabs v-model="state.activeTab" type="border-card" :before-leave="onBeforeLeave">
-                        <el-tab-pane class="config-tab-pane" v-for="(group, key) in state.config" :key="key" :name="key" :label="group.title">
+                        <el-tab-pane class="config-tab-pane" v-for="(group, key) in state.config" :key="key" :name="key"
+                                     :label="group.title">
                             <div class="config-form-item" v-for="(item, idx) in group.list" :key="idx">
                                 <template v-if="item.group == state.activeTab">
                                     <FormItem
@@ -57,6 +58,53 @@
                                         :key="'textarea-' + item.id"
                                     />
                                     <FormItem
+                                        v-else-if="item.name=='jwt_algo'"
+                                        :label="item.title"
+                                        :type="item.type"
+                                        v-show="state.jwt_show"
+                                        v-model="state.form[item.name]"
+                                        :attr="{ prop: item.name, ...item.extend }"
+                                        :input-attr="!isEmpty(item.content) ? { content: item.content, ...item.input_extend } : item.input_extend"
+                                        :tip="item.tip"
+                                        :key="'algo-' + item.id"
+                                    />
+                                    <FormItem
+                                        v-else-if="item.name=='jwt_secret'"
+                                        :label="item.title"
+                                        :type="item.type"
+                                        v-show="state.jwt_show"
+                                        v-model="state.form[item.name]"
+                                        :attr="{ prop: item.name, ...item.extend }"
+                                        :input-attr="{type: isPasswordVisible ? 'text' : 'password', ...(isEmpty(item.content) ? {} : { content: item.content }),...item.input_extend}"
+                                        :tip="item.tip"
+                                        :key="'jwt_secret-' + item.id"
+                                    />
+                                    <FormItem
+                                        v-else-if="item.name=='secret'"
+                                        :label="item.title"
+                                        :type="item.type"
+                                        v-model="state.form[item.name]"
+                                        :attr="{ prop: item.name, ...item.extend }"
+                                        :input-attr="{type: isPasswordVisible ? 'text' : 'password', ...(isEmpty(item.content) ? {} : { content: item.content }),...item.input_extend}"
+                                        :tip="item.tip"
+                                        :key="'secret-' + item.id"
+                                    />
+
+
+                                        <array
+                                        v-else-if="item.name=='config_group'"
+                                        :label="item.title"
+                                        :type="item.type"
+                                        v-model="state.form[item.name]"
+                                        :attr="{ prop: item.name, ...item.extend }"
+                                        :input-attr="{type: isPasswordVisible ? 'text' : 'password', ...(isEmpty(item.content) ? {} : { content: item.content }),...item.input_extend}"
+                                        :tip="item.tip"
+                                        :key="'group-' + item.id"
+                                        span=20
+                                        class="config_array"
+                                        />
+
+                                    <FormItem
                                         v-else
                                         :label="item.title"
                                         :type="item.type"
@@ -75,16 +123,26 @@
                                             :title="t('routine.config.Are you sure to delete the configuration item?')"
                                         >
                                             <template #reference>
-                                                <Icon class="close-icon" size="15" name="el-icon-Close" />
+                                                <Icon class="close-icon" size="15" name="el-icon-Close"/>
                                             </template>
                                         </el-popconfirm>
                                     </div>
                                 </template>
                             </div>
                             <div v-if="group.name == 'mail'" class="send-test-mail">
-                                <el-button @click="onTestSendMail()">{{ t('routine.config.Test mail sending') }}</el-button>
+                                <el-button @click="onTestSendMail()">{{
+                                        t('routine.config.Test mail sending')
+                                    }}
+                                </el-button>
                             </div>
+
                             <el-button type="primary" @click="onSubmit()">{{ t('Save') }}</el-button>
+                            <el-button v-if="group.name == 'authentication'" @click="generateRandomString()"
+                                       type="success">生成随机256位密钥串
+                            </el-button>
+                            <el-button v-if="group.name == 'authentication'" @click="togglePasswordVisibility" type="warning">
+                                {{ isPasswordVisible ? '隐藏密钥字串' : '显示密钥字串' }}密码
+                            </el-button>
                         </el-tab-pane>
                         <el-tab-pane
                             name="add_config"
@@ -103,32 +161,33 @@
             </el-col>
         </el-row>
 
-        <AddFrom v-if="!state.loading" v-model="state.showAddForm" :config-group="state.configGroup" />
+        <AddFrom v-if="!state.loading" v-model="state.showAddForm" :config-group="state.configGroup"/>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { FormInstance, FormItemRule } from 'element-plus'
-import { ElMessageBox, ElNotification } from 'element-plus'
-import { isEmpty } from 'lodash-es'
-import { onActivated, onDeactivated, onMounted, onUnmounted, reactive, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
+import type {FormInstance, FormItemRule} from 'element-plus'
+import {ElMessageBox, ElNotification} from 'element-plus'
+import {isEmpty} from 'lodash-es'
+import {onActivated, onDeactivated, onMounted, onUnmounted, reactive, ref, watch} from 'vue'
+import {useI18n} from 'vue-i18n'
 import AddFrom from './add.vue'
-import { del, index, postData, postSendTestMail } from '/@/api/backend/routine/config'
+import {del, index, postData, postSendTestMail} from '/@/api/backend/routine/config'
 import FormItem from '/@/components/formItem/index.vue'
-import { adminBaseRoutePath } from '/@/router/static/adminBase'
-import type { SiteConfig } from '/@/stores/interface'
-import { useSiteConfig } from '/@/stores/siteConfig'
-import { uuid } from '/@/utils/random'
-import { routePush } from '/@/utils/router'
-import { buildValidatorData, type buildValidatorParams } from '/@/utils/validate'
-import { closeHotUpdate, openHotUpdate } from '/@/utils/vite'
+import {adminBaseRoutePath} from '/@/router/static/adminBase'
+import type {SiteConfig} from '/@/stores/interface'
+import {useSiteConfig} from '/@/stores/siteConfig'
+import {uuid} from '/@/utils/random'
+import {routePush} from '/@/utils/router'
+import {buildValidatorData, type buildValidatorParams} from '/@/utils/validate'
+import {closeHotUpdate, openHotUpdate} from '/@/utils/vite'
+import Array from "/@/views/backend/routine/config/array.vue";
 
 defineOptions({
     name: 'routine/config',
 })
 
-const { t } = useI18n()
+const {t} = useI18n()
 const siteConfig = useSiteConfig()
 
 const formRef = ref<FormInstance>()
@@ -144,6 +203,7 @@ const state: {
     form: anyObj
     quickEntrance: anyObj
     formKey: string
+    jwt_show: boolean
 } = reactive({
     loading: true,
     config: [],
@@ -155,7 +215,39 @@ const state: {
     form: {},
     quickEntrance: {},
     formKey: uuid(),
+    jwt_show: false,
 })
+const isPasswordVisible = ref(false); // 控制密码显示状态
+
+const togglePasswordVisibility = () => {
+    isPasswordVisible.value = !isPasswordVisible.value; // 切换密码显示状态
+};
+const generateRandomString = () => {
+    const length = 256;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    state.form.jwt_secret = result; // 将生成的字符串赋值给 jwt_algo
+    result = '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    state.form.secret = result; // 将生成的字符串赋值给 jwt_algo
+}
+
+watch(
+    () => state.form.driver,
+    (newDriver) => {
+        // 找到 jwt_algo 对应的 FormItem 元素
+        if (newDriver === 'jwt') {
+            state.jwt_show = true
+        } else {
+            state.jwt_show = false
+        }
+    }
+)
 
 const getIndex = () => {
     index()
@@ -178,7 +270,10 @@ const getIndex = () => {
                         let ruleArr: anyObj = []
                         ruleStr.forEach((item: string) => {
                             ruleArr.push(
-                                buildValidatorData({ name: item as buildValidatorParams['name'], title: state.config[key].list[lKey].title })
+                                buildValidatorData({
+                                    name: item as buildValidatorParams['name'],
+                                    title: state.config[key].list[lKey].title
+                                })
                             )
                         })
                         rules = Object.assign(rules, {
@@ -295,24 +390,29 @@ onUnmounted(() => {
 .send-test-mail {
     padding-bottom: 20px;
 }
+
 .el-tabs--border-card {
     border: none;
     box-shadow: var(--el-box-shadow-light);
     border-radius: var(--el-border-radius-base);
 }
+
 .el-tabs--border-card :deep(.el-tabs__header) {
     background-color: var(--ba-bg-color);
     border-bottom: none;
     border-top-left-radius: var(--el-border-radius-base);
     border-top-right-radius: var(--el-border-radius-base);
 }
+
 .el-tabs--border-card :deep(.el-tabs__item.is-active) {
     border: 1px solid transparent;
 }
+
 .el-tabs--border-card :deep(.el-tabs__nav-wrap) {
     border-top-left-radius: var(--el-border-radius-base);
     border-top-right-radius: var(--el-border-radius-base);
 }
+
 .el-card :deep(.el-card__header) {
     height: 40px;
     padding: 0;
@@ -321,18 +421,23 @@ onUnmounted(() => {
     padding-left: 20px;
     background-color: var(--ba-bg-color);
 }
+
 .config-tab-pane {
     padding: 5px;
 }
+
 .config-tab-pane-add {
     width: 80%;
 }
+
 .config-form-item {
     display: flex;
     align-items: center;
+
     .el-form-item {
         flex: 13;
     }
+
     .config-form-item-name {
         opacity: 0;
         flex: 3;
@@ -340,31 +445,41 @@ onUnmounted(() => {
         color: var(--el-text-color-disabled);
         padding-left: 20px;
     }
+
     .del-config-form-item {
         cursor: pointer;
         flex: 1;
         padding-left: 10px;
     }
+
     .close-icon {
         display: none;
     }
+
     &:hover {
         .config-form-item-name {
             opacity: 1;
         }
+
         .close-icon {
             display: block;
             color: var(--el-text-color-disabled) !important;
         }
     }
 }
+
 .config_quick_entrance {
     margin-left: 10px;
     margin-bottom: 10px;
 }
+
 @media screen and (max-width: 768px) {
     .xs-mb-20 {
         margin-bottom: 20px;
     }
+}
+
+.config_array{
+    width: 75%;
 }
 </style>

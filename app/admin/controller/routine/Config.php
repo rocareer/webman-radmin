@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\routine;
 
+use exception\BusinessException;
 use exception\UnauthorizedHttpException;
 use support\Response;
 use Throwable;
@@ -202,6 +203,10 @@ class Config extends Backend
                         $validate->check($data);
                     }
                 }
+                if (is_array($data['rule'])) {
+                    $data['rule'] = implode(',', $data['rule']);
+                }
+
                 $result = $this->model->save($data);
                 $this->model->commit();
             } catch (Throwable $e) {
