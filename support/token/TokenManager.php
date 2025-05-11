@@ -1,24 +1,12 @@
 <?php
-/*
- * *
- *  * +----------------------------------------------------------------------
- *  * | ${PROJECT_NAME} [ ${PROJECT_DESCRIPTION} ]
- *  * +----------------------------------------------------------------------
- *  * | File: ${FILE_NAME}
- *  * +----------------------------------------------------------------------
- *  * | Description: ${DESCRIPTION}
- *  * +----------------------------------------------------------------------
- *  * | Author: ${USER} <${USER_EMAIL}>
- *  * +----------------------------------------------------------------------
- *  * | Time: ${DATE} ${TIME}
- *  * +----------------------------------------------------------------------
- *  * | Version: ${VERSION}
- *  * +----------------------------------------------------------------------
- *  * | Copyright (c) ${YEAR} ${ORGANIZATION_NAME} All rights reserved.
- *  * +----------------------------------------------------------------------
- *  * | Licensed ( ${LICENSE_URL} )
- *  * +----------------------------------------------------------------------
+/**
+ * File:        TokenManager.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/11 11:20
+ * Description:
  *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
 namespace support\token;
@@ -31,80 +19,81 @@ use think\helper\Str;
 
 class TokenManager
 {
-    protected array $drivers       = [];
-    public string   $defaultDriver = 'cache';
-    protected array $config        = [];
-    protected array $configs       = [];
-    /**
-     * 驱动类命名空间
-     * @var string
-     */
-    protected string $namespace = '\\support\\token\\driver\\';
-    protected mixed  $handler   = null;
+    protected array  $drivers       = [];
+    protected string $defaultDriver = 'jwt';
+    protected array  $config        = [];
+    protected string $namespace     = '\\support\\token\\driver\\';
+    protected mixed  $handler       = null;
 
+    /**
+     * @throws \Throwable
+     */
     public function __construct(array $config = [])
     {
-        $this->configs       =  config('token');
-        $this->defaultDriver = $this->configs['default'] ?? $this->defaultDriver;
-
-        $this->config                            = array_merge($config, $this->configs['drivers'][$this->defaultDriver]);
-        $this->config['common_expire_time']      = $this->configs['expire_time'];
-        $this->config['common_refresh_keep_ttl'] = $this->configs['refresh_keep_ttl'];
+        $tokenConfig         = get_sys_config('', 'authentication');
+        $this->defaultDriver = $tokenConfig['driver'] ?? $this->defaultDriver;
+        $this->config        = array_merge($config, $tokenConfig);
     }
 
+    /**
+     * 获取实例
+     * @param array|null $config
+     * @return   self
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:21
+     */
     public static function getInstance(?array $config = []): self
     {
         return new self($config);
     }
 
     /**
-     * 获取驱动句柄
+     * 获取驱动
      * @param string|null $name
      * @return object
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:21
      */
     public function getDriver(?string $name = null): object
     {
-        if (!is_null($this->handler)) {
+        if ($this->handler !== null) {
             return $this->handler;
         }
+
         $name = $name ?: $this->defaultDriver;
 
-
-        if (is_null($name)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Unable to resolve NULL driver for [%s].',
-                    static::class
-                )
-            );
+        if ($name === null) {
+            throw new InvalidArgumentException(sprintf('Unable to resolve NULL driver for [%s].', static::class));
         }
 
         return $this->createDriver($name);
     }
 
     /**
-     * 获取驱动配置参数
-     * @param $name
-     * @return array
+     * 解析参数
+     * @param string $name
+     * @return   array[]|string[]
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:21
      */
-    protected function resolveParams($name): array
+    protected function resolveParams(string $name): array
     {
         $config = $this->getDriverConfig($name);
         return [$config];
     }
 
-
     /**
      * 获取驱动配置
      * @param string      $driver
      * @param string|null $name
-     * @param null        $default
-     * @return array|string
+     * @param             $default
+     * @return   array|string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:21
      */
     protected function getDriverConfig(string $driver, ?string $name = null, $default = null): array|string
     {
         if ($config = $this->config) {
-
             return Arr::get($config, $name, $default);
         }
 
@@ -112,26 +101,28 @@ class TokenManager
     }
 
     /**
-     * 获取驱动类型
+     * 通过类型获取驱动
      * @param string $name
-     * @return string
+     * @return   string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:22
      */
     protected function resolveType(string $name): string
     {
-        return $this->getDriverConfig($name, 'type', 'Mysql');
+        return $this->getDriverConfig($name, 'type', 'jwt');
     }
 
     /**
-     * 创建驱动句柄
+     * 创建驱动
      * @param string $name
      * @return object
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:22
      */
     protected function createDriver(string $name): object
     {
-        $type = $this->resolveType($name);
-
+        $type   = $this->resolveType($name);
         $method = 'create' . Str::studly($type) . 'Driver';
-
         $params = $this->resolveParams($name);
 
         if (method_exists($this, $method)) {
@@ -139,24 +130,16 @@ class TokenManager
         }
 
         $class = $this->resolveClass($type);
-
-        if (isset($this->instance[$type])) {
-            return $this->instance[$type];
-        }
-
         return new $class(...$params);
     }
 
-
     /**
-     * 默认驱动
-     * @return string
+     * 解析类名
+     * @param string $type
+     * @return   string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:22
      */
-    protected function getDefaultDriver(): string
-    {
-        return $this->config['default'];
-    }
-
     protected function resolveClass(string $type): string
     {
         if ($this->namespace || str_contains($type, '\\')) {
@@ -170,6 +153,13 @@ class TokenManager
         throw new InvalidArgumentException("Driver [$type] not supported.");
     }
 
+    /**
+     * 通过类型创建驱动
+     * @param string|null $name
+     * @return   TokenInterface
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:23
+     */
     public function driver(?string $name = null): TokenInterface
     {
         $name = $name ?: $this->defaultDriver;
@@ -179,53 +169,89 @@ class TokenManager
         }
 
         $config = $this->config['drivers'][$name] ?? [];
-
         return $this->drivers[$name]($config);
     }
 
-
-    public function encode(array $payload = [], bool $keep = false):string
+    /**
+     * 编码
+     * @param array $payload
+     * @param bool  $keep
+     * @return   string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:23
+     */
+    public function encode(array $payload = []): string
     {
-        return $this->getDriver()->encode($payload, $keep);
+        return $this->getDriver()->encode($payload);
     }
 
     /**
-     *
-     * By albert  2025/05/03 08:54:23
+     * 验证
      * @param string $token
-     * @return stdClass
+     * @return   stdClass
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:23
      */
-    public function verify(string $token):stdClass
+    public function verify(string $token): stdClass
     {
         return $this->getDriver()->verify($token);
     }
 
-    public function decode(string $token):stdClass
+    /**
+     * 解码
+     * @param string $token
+     * @return   stdClass
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:24
+     */
+    public function decode(string $token): stdClass
     {
         return $this->getDriver()->decode($token);
     }
 
     /**
-     *
-     * By albert  2025/05/03 08:54:04
+     * 废弃
      * @param string $token
-     * @return bool
+     * @return   bool
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:24
      */
     public function destroy(string $token): bool
     {
         return $this->getDriver()->destroy($token);
     }
 
-
+    /**
+     * 刷新
+     * @param string $token
+     * @return   string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:24
+     */
     public function refresh(string $token): string
     {
         return $this->getDriver()->refresh($token);
     }
 
+    /**
+     * 判断过期
+     * @param string $token
+     * @return   bool
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 11:24
+     */
     public function expired(string $token): bool
     {
         return $this->getDriver()->expired($token);
     }
 
-
+    /**
+     * 获取加密 Token
+     *
+     * @return string
+     */
+    public function getEncryptedToken(): string
+    {
+        return getEncryptedToken(uniqid($this->config['iss'], true), $this->config['algo'], $this->config['secret']);
+    }
 }

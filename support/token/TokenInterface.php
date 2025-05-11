@@ -32,7 +32,7 @@ interface TokenInterface
      * @param array $payload 附加数据
      * @return string
      */
-   public function encode(array $payload = [],bool $keep=false): string;
+   public function encode(array $payload = []): string;
 
     /**
      * 获取Token数据

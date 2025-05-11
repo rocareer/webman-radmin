@@ -1,34 +1,45 @@
 <?php
 
+/**
+ * File:        JwtService.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/11 22:02
+ * Description:
+ *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
 
 namespace support\jwt;
 
 use Exception;
+use exception\TokenExpiredException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Psr\SimpleCache\InvalidArgumentException;
+use ReflectionException;
 use support\StatusCode;
 use exception\TokenException;
 use stdClass;
-use support\Cache;
+use support\think\Cache;
+use Throwable;
 
 /**
  * JWT服务类
  */
 class JwtService
 {
-    private string $secret;
-    private int    $expire;
-    private string $algo;
+    private string $jwtSecret;
+    private string $jwtAlgo;
 
     protected array $config = [];
 
     public function __construct(?array $config = [])
     {
-        $this->config = $config;
-        $this->secret = $config['secret'] ?? '';
-        $this->expire = $config['expire'] ?? 3600;
-        $this->algo   = $config['algo'] ?? 'HS256';
+        $this->config     = $config;
+        $this->jwtSecret = $config['jwt_secret'] ?? '';
+        $this->jwtAlgo   = $config['jwt_algo'] ?? 'HS256';
         // JWT::$leeway = 5; // 允许5秒误差
     }
 
@@ -38,113 +49,119 @@ class JwtService
     }
 
     /**
+     * 编码JWT
      *
-     * By albert  2025/05/03 16:57:32
      * @param array       $payload
-     * @param string|null $secret
-     * @param int|null    $expire
-     * @param string|null $algo
+     * @param string|null $jwtSecret
+     * @param string|null $jwtAlgo
      * @return string
      * @throws TokenException
      */
-    public function encode(array $payload, ?string $secret = null, ?int $expire = null, ?string $algo = null): string
+    public function encode(array $payload, ?string $jwtSecret = null, ?string $jwtAlgo = null): string
     {
         try {
-            $payload['iat'] = time();
-            $payload['exp'] = time() + ($expire ?? $this->expire);
-            return JWT::encode($payload, $secret ?? $this->secret, $algo ?? $this->algo);
-        } catch (Exception) {
-            throw new TokenException('Token编码失败', StatusCode::TOKEN_ENCODE_FAILED);
+            return JWT::encode($payload, $jwtSecret ?? $this->jwtSecret, $jwtAlgo ?? $this->jwtAlgo);
+        } catch (Throwable $e) {
+            throw new TokenException($e->getMessage(), StatusCode::TOKEN_ENCODE_FAILED);
         }
     }
 
     /**
-     *  验证并解码JWT token
-     * By albert  2025/05/03 16:57:10
+     * 解码JWT
+     *
      * @param string      $token
-     * @param string|null $secret
-     * @param string|null $algo
+     * @param string|null $jwtSecret
+     * @param string|null $jwtAlgo
      * @return stdClass
-     * @throws Exception
+     * @throws TokenException|TokenExpiredException
      */
-    public function decode(string $token, ?string $secret = null, ?string $algo = null): stdClass
+    public function decode(string $token, ?string $jwtSecret = null, ?string $jwtAlgo = null): stdClass
     {
         try {
-            return JWT::decode($token, new Key($secret ?? $this->secret, $algo ?? $this->algo));
-        } catch (ExpiredException) {
-            throw new TokenException('Token已过期', StatusCode::TOKEN_EXPIRED);
-        } catch (Exception $e) {
-            throw new TokenException($e->getMessage(), StatusCode::TOKEN_DECODE_FAILED);
+            return JWT::decode($token, new Key($jwtSecret ?? $this->jwtSecret, $jwtAlgo ?? $this->jwtAlgo));
+        } catch (ExpiredException $e) {
+            throw new TokenExpiredException('Token已过期', [], $e);
+        } catch (Throwable $e) {
+            throw new TokenException($e->getMessage(), StatusCode::TOKEN_DECODE_FAILED, [], $e);
         }
     }
 
     /**
-     * 验证token
-     * By albert  2025/05/03 20:39:26
+     * 验证Token
+     *
      * @param string $token
      * @return stdClass
      * @throws TokenException|Exception
+     * @throws InvalidArgumentException
      */
     public function verify(string $token): stdClass
     {
-        if ($this->inBlacklist($token)) {
-            throw new TokenException('Token已失效', StatusCode::TOKEN_BLACK);
+        $payload = $this->decode($token);
+        if ($this->inBlacklist($payload->jti)) {
+            throw new TokenException('凭证已被废止', StatusCode::TOKEN_BLACK);
         }
-        return $this->decode($token);
+        return $payload;
     }
 
     /**
+     * 刷新Token
      *
-     * By albert  2025/05/03 16:57:21
      * @param string $token
      * @return string
-     * @throws TokenException
+     * @throws TokenException|TokenExpiredException
      */
     public function refresh(string $token): string
     {
-        try {
-            try {
-                $payload = (array)$this->decode($token);
-            } catch (Exception) {
-                throw new TokenException('Token已失效', StatusCode::TOKEN_INVALID);
-            }
-            unset($payload['iat'], $payload['exp']);
-            return $this->encode($payload);
-        } catch (TokenException $e) {
-            throw new TokenException($e->getMessage(), StatusCode::TOKEN_REFRESH_FAILED);
+        $payload = $this->decode($token);
+        if ($payload->type !== 'refresh') {
+            throw new TokenException('Token 不能刷新', StatusCode::TOKEN_REFRESH_FAILED);
         }
+        return $this->encode(['type' => 'access']);
     }
 
     /**
-     * 获取token剩余有效期（秒）
+     * 获取Token剩余时间
+     *
+     * @param string $token
+     * @return int
+     * @throws Exception
      */
     public function ttl(string $token): int
     {
-        try {
-            $payload = $this->decode($token);
-        } catch (Exception) {
-            return -1;
-        }
+        $payload = $this->decode($token);
         return max(0, $payload->exp - time());
     }
 
     /**
-     * 设置token到黑名单
+     * 将Token加入黑名单
+     *
+     * @param string $token
+     * @return bool
+     * @throws Exception|InvalidArgumentException
+     * @noinspection PhpDynamicAsStaticMethodCallInspection
      */
-    public function setBlackList(string $token, int $expire = 3600 * 24 * 30): bool
+    public function setBlackList(string $token): bool
     {
-        if ($this->inBlackList($token)) {
+        $payload = $this->decode($token);
+        if ($this->inBlackList($payload->jti)) {
             return true;
         }
-        Cache::set('Jwt-blacklist-' . $token, 1, $expire);
+
+        $type = str_starts_with($payload->jti, 'refresh-') ? 'Black-refresh-' : 'Black-access-';
+        Cache::tag($type)->set($payload->jti, 1);
         return true;
     }
 
     /**
-     * 检查token是否在黑名单中
+     * 检查Token是否在黑名单中
+     *
+     * @param string $jti
+     * @return bool
+     * @throws InvalidArgumentException|ReflectionException
+     * @noinspection PhpDynamicAsStaticMethodCallInspection
      */
-    public function inBlackList(string $token): bool
+    public function inBlackList(string $jti): bool
     {
-        return Cache::has('Jwt-blacklist-' . $token);
+        return Cache::has($jti);
     }
 }

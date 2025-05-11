@@ -11,11 +11,11 @@ use think\Facade;
  *
  * @method static stdClass Verify(string $token) 验证JWT Token
  * @method static string refresh(string $token) 刷新JWT Token
- * @method static string encode(array $payload, string $secret = null, int $expire = 3600, string $algo = 'HS256') 生成JWT Token
+ * @method static string encode(array $payload, string $secret = null, string $algo = 'HS256') 生成JWT Token
  * @method static stdClass decode(string $token, string|null $secret = null, string|null $algo = null) 解析JWT Token
  * @method static int ttl(string $token) 获取Token剩余有效时间（秒）
  * @method static bool isExpired(string $token) 判断Token是否过期
- * @method static bool setBlacklist(string $token) 设置黑名单
+ * @method static bool setBlacklist(string $token,string $type) 设置黑名单
  * @method static bool inBlacklist(string $token) 判断Token是否在黑名单中
  * @method static bool shouldRefresh(string $token) 判断Token是否需要刷新
  */

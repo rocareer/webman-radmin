@@ -1,156 +1,157 @@
 <?php
 /**
+ * File:        Jwt.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/11 11:36
+ * Description: JWT 驱动实现类
  *
- *   +----------------------------------------------------------------------
- *   | Rocareer [ ROC YOUR CAREER ]
- *   +----------------------------------------------------------------------
- *   | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *   +----------------------------------------------------------------------
- *   | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *   +----------------------------------------------------------------------
- *   | Author: albert <Albert@rocareer.com>
- *   +----------------------------------------------------------------------
- **/
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
 
 namespace support\token\driver;
 
+use Exception;
 use support\jwt\Jwt as JwtFacade;
 use support\jwt\JwtService;
 use support\StatusCode;
+use support\token\Token;
 use support\token\TokenInterface;
 use exception\TokenException;
-use exception\TokenExpirationException;
 use stdClass;
 
 class Jwt implements TokenInterface
 {
     protected array      $config;
     protected JwtService $jwt;
-    protected mixed      $expire_time      = 7200;
-    protected mixed      $refresh_keep_ttl = 7200;
+    protected int        $expire_time = 7200;
+    protected int        $keep_time   = 7200;
 
     public function __construct(array $config = [])
     {
-        $this->config = array_merge([
-            'algo'        => 'HS256',
-            'secret'      => getenv('JWT_SECRET_KEY', 'radmin_default_secret'),
-            'public_key'  => getenv('JWT_PUBLIC_KEY'),
-            'private_key' => getenv('JWT_PRIVATE_KEY'),
-            'expire'      => 7200,
-        ], $config);
+        $this->config = $config;
 
-        $this->expire_time      = $this->config['expire_time'] ?? $this->config['common_expire_time'];
-        $this->refresh_keep_ttl = $this->config['refresh_keep_ttl'] ?? $this->config['common_refresh_keep_ttl'];
-        $this->jwt              = JwtFacade::getInstance($config);
-    }
+        // 设置过期时间和保持时间
+        $this->expire_time = $this->config['expire_time'] ?? $this->expire_time;
+        $this->keep_time   = $this->config['keep_time'] ?? $this->keep_time;
 
-    public function encode(array $payload = [], bool $keep = false): string
-    {
-
-        $payload['expire_time'] = (isset($payload['expire_time']) && $payload['expire_time'] > 0)
-            ? $payload['expire_time']
-            : $this->expire_time;
-
-        if ($keep) {
-            $payload['expire_time'] = $this->refresh_keep_ttl;
-            $payload['type']        = $payload['type'] . '-refresh';
-        }
-        $expire = $payload['expire_time'];
-        unset($payload['expire_time']);
-        unset($payload['create_time']);
-
-
-        $token = $this->jwt->encode($payload, $this->getSigningKey(), $expire, $this->config['algo']);
-        return $token;
-    }
-
-    public function decode(string $token): stdClass
-    {
-        $tokenData = $this->jwt->decode(
-            $token,
-            $this->getSigningKey(),
-            $this->config['algo']
-        );
-        if (!$tokenData) {
-            throw new TokenException('凭证解码失败', StatusCode::TOKEN_DECODE_FAILED);
-        }
-        $tokenData->expire_time = $tokenData->exp;
-        return $tokenData;
+        // 初始化 JWT 服务
+        $this->jwt = JwtFacade::getInstance($config);
     }
 
     /**
-     * 验证
-     * By albert  2025/05/03 09:41:19
-     * @param string $token
-     * @return bool|stdClass
+     * 生成 JWT Token
+     * @param array $payload
+     * @return   string
+     * @throws TokenException
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 21:30
+     */
+    public function encode(array $payload = []): string
+    {
+        // 默认载荷数据
+        $payloadData = [
+            'iss'   => $this->config['iss'],
+            'sub'   => $payload['sub'] ?? '',
+            'iat'   => time(),
+            'jti'   => $payload['type'] ?? 'access' . '-' . Token::getEncryptedToken(),
+            'exp'   => $payload['exp'] ?? $this->expire_time + time(),
+            'roles' => $payload['roles'] ?? [],
+            'role'  => $payload['role'] ?? '',
+            'type'  => $payload['type'] ?? 'access',
+        ];
+
+        // 如果是刷新 Token，设置过期时间和类型
+        if ($payload['keep'] ?? false) {
+            $payloadData['exp']  = $this->keep_time + time();
+            $payloadData['type'] = 'refresh';
+        }
+
+        // 生成 Token
+        return $this->jwt->encode($payloadData, $this->config['jwt_secret'], $this->config['jwt_algo']);
+    }
+
+    /**
+     * 解码 JWT Token
+     *
+     * @param string $token Token 字符串
+     * @return stdClass
+     * @throws Exception
+     */
+    public function decode(string $token): stdClass
+    {
+        return $this->jwt->decode($token, $this->config['jwt_secret'], $this->config['jwt_algo']);
+    }
+
+    /**
+     * 验证 JWT Token
+     *
+     * @param string $token Token 字符串
+     * @return stdClass
      * @throws TokenException
      */
     public function Verify(string $token): stdClass
     {
-        $tokenData = $this->jwt->Verify($token);
-
-        if ($this->expired($token, $tokenData)) {
-            throw new TokenException('凭证需续期', StatusCode::TOKEN_EXPIRED, ['type' => 'should refresh']);
-        }
-        $tokenData->expire_time = $tokenData->exp;
-        return $tokenData;
+        return $this->jwt->Verify($token);
     }
 
     /**
-     * 过期
-     * @param string        $token
-     * @param stdClass|null $tokenData
+     * 检查 Token 是否过期
+     *
+     * @param string        $token     Token 字符串
+     * @param stdClass|null $tokenData 解码后的 Token 数据
      * @return bool
-     * @throws TokenException
+     * @throws Exception
      */
     public function expired(string $token, ?stdClass $tokenData = null): bool
     {
         $tokenData = $tokenData ?? $this->decode($token);
-        if (!$tokenData) {
-            return true;
-        }
-        if ($this->ttl($token, $tokenData) <= 0) {
-            return true;
-        }
-        return false;
+        return $this->ttl($token, $tokenData) <= 0;
     }
 
     /**
-     * ttl
-     * @param string        $token
-     * @param stdClass|null $tokenData
-     * @return mixed
-     * @throws TokenException
+     * 获取 Token 的剩余有效时间
+     *
+     * @param string        $token     Token 字符串
+     * @param stdClass|null $tokenData 解码后的 Token 数据
+     * @return int
+     * @throws Exception
      */
-    public function ttl(string $token, ?stdClass $tokenData = null): mixed
+    public function ttl(string $token, ?stdClass $tokenData = null): int
     {
         $tokenData = $tokenData ?? $this->decode($token);
         return $tokenData->exp - time();
     }
 
     /**
-     * 销毁
-     * By albert  2025/05/03 09:43:09
-     * @param string $token
+     * 销毁 Token
+     *
+     * @param string $token Token 字符串
      * @return bool
      */
     public function destroy(string $token): bool
     {
-        // JWT是无状态的，无法单独删除
+        // JWT 是无状态的，无法单独删除，通常通过黑名单实现
         return $this->jwt->setBlacklist($token);
     }
 
-
+    /**
+     * 刷新 Token
+     *
+     * @param string $token 刷新凭证
+     * @return string
+     */
     public function refresh(string $token): string
     {
-        $payload               = $this->decode($token);
-        $newPayload['user_id'] = $payload->user_id;
-        $newPayload['type']    = str_replace('-refresh', '', $payload->type);
-        $newToken              = $this->encode($newPayload);
-        return $newToken;
+        return JwtFacade::refresh($token);
     }
 
 
+    /**
+     * 获取签名密钥
+     *
+     * @return string
+     */
     protected function getSigningKey(): string
     {
         return in_array($this->config['algo'], ['RS256', 'RS384', 'RS512'])
