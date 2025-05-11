@@ -919,8 +919,10 @@ class Crud extends Backend
     {
         if ($field['form']['remote-source-config-type'] == 'crud' && $field['form']['remote-controller']) {
             $pathArr      = [];
-            $controller   = explode(DIRECTORY_SEPARATOR, $field['form']['remote-controller']);
-            $controller   = str_replace('.php', '', $controller);
+            $controller   = str_replace('.php', '', $field['form']['remote-controller']);
+            $controller   = explode(DIRECTORY_SEPARATOR,$controller);
+
+
             $redundantDir = [
                 'app'        => 0,
                 'admin'      => 1,
@@ -935,7 +937,7 @@ class Crud extends Backend
 	        $url=implode('/', $pathArr);
 			$url=str_replace('controller/','',$url);
 			$url=str_replace('app/','',$url);
-            return  $url . '/index';
+            return '/admin/' . $url . '/index';
         }
         return $field['form']['remote-url'];
     }
