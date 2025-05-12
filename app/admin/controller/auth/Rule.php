@@ -7,6 +7,7 @@ use app\admin\model\AdminRule;
 use app\common\controller\Backend;
 use extend\ba\Tree;
 use support\member\Member;
+use support\Response;
 use Throwable;
 
 class Rule extends Backend
@@ -44,7 +45,7 @@ class Rule extends Backend
      * 是否组装Tree
      * @var bool
      */
-    protected bool $assembleTree;
+    protected bool $assembleTree=true;
 
     /**
      * 开启模型验证
@@ -60,6 +61,7 @@ class Rule extends Backend
 
         $isTree          = $this->request->input('isTree', true);
         $this->initValue = $this->request->input('initValue', []);
+        var_dump($this->initValue);
         $this->initValue = array_filter($this->initValue);
         $this->keyword   = $this->request->input('quickSearch', '');
 
@@ -67,10 +69,10 @@ class Rule extends Backend
         $this->assembleTree = $isTree && !$this->initValue;
     }
 
-    public function index(): \support\Response
+    public function index(): Response
     {
         if ($this->request->input('select')) {
-             $this->select();
+             return $this->select();
         }
 
         return $this->success('', [
@@ -82,7 +84,7 @@ class Rule extends Backend
     /**
      * 添加
      */
-    public function add(): \support\Response
+    public function add(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -141,7 +143,7 @@ class Rule extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit(): \support\Response
+    public function edit(): Response
     {
         $id  = $this->request->input($this->model->getPk());
         $row = $this->model->find($id);
@@ -203,7 +205,7 @@ class Rule extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del(): \support\Response
+    public function del(): Response
     {
         $ids = $this->request->input('ids', []);
 

@@ -38,7 +38,7 @@ trait Backend
     {
 
         if ($this->request->input('select')) {
-             $this->select();
+            return $this->select();
         }
 
         list($where, $alias, $limit, $order) = $this->queryBuilder();
