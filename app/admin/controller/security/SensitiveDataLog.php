@@ -34,7 +34,7 @@ class SensitiveDataLog extends Backend
      * 查看
      * @throws Throwable
      */
-    public function index(): Response
+    public function index(): ?Response
     {
         if ($this->request->input('select')) {
        return $this->select();

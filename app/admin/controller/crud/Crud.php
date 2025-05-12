@@ -643,8 +643,8 @@ class Crud extends Backend
 
             // 建立关联模型代码文件
             if (!$field['form']['remote-model'] || !file_exists(root_path() . $field['form']['remote-model'])) {
-                $joinModelFile = Helper::parseNameData('app/admin', $tableName, 'model', $field['form']['remote-model']);
-                if (!file_exists(base_path() . $joinModelFile['rootFileName'])) {
+                $joinModelFile = Helper::parseNameData('admin', $tableName, 'model', $field['form']['remote-model']);
+                if (!file_exists(root_path() . $joinModelFile['rootFileName'])) {
                     $joinModelData['append']             = [];
                     $joinModelData['methods']            = [];
                     $joinModelData['fieldType']          = [];
@@ -917,6 +917,7 @@ class Crud extends Backend
 
     private function getRemoteSelectUrl($field): string
     {
+        var_dump($field);
         if ($field['form']['remote-source-config-type'] == 'crud' && $field['form']['remote-controller']) {
             $pathArr      = [];
             $controller   = str_replace('.php', '', $field['form']['remote-controller']);
