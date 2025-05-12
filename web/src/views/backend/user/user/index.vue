@@ -43,7 +43,7 @@ const baTable = new baTableClass(
             { label: t('user.user.nickname'), prop: 'nickname', align: 'center', operator: 'LIKE', operatorPlaceholder: t('Fuzzy query') },
             {
                 label: t('user.user.group'),
-                prop: 'userGroup.name',
+                prop: 'user_group.name',
                 align: 'center',
                 operator: 'LIKE',
                 operatorPlaceholder: t('Fuzzy query'),
