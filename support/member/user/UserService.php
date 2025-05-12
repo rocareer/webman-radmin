@@ -28,7 +28,7 @@ class UserService extends Service
      */
     public function extendMemberInfo(): void
     {
-
+        parent::extendMemberInfo();
     }
 
 }
