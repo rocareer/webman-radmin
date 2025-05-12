@@ -40,6 +40,7 @@ class RadminAuthMiddleware implements MiddlewareInterface
     public function process(\support\Request|Request $request, callable $handler): Response
     {
 
+
         // 1. 检查是否跳过认证
         if (shouldExclude($request->path())) {
             return $handler($request);
@@ -59,6 +60,7 @@ class RadminAuthMiddleware implements MiddlewareInterface
             throw new TokenException('', StatusCode::TOKEN_SHOULD_REFRESH);
         }//6. 通过
         $request->role = $this->allowedRole;
+
         return $handler($request);
 
     }

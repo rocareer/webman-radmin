@@ -26,7 +26,7 @@ class AccessControlMIddleWare implements MiddlewareInterface
     protected function addCorsHeaders(Response $response, Request $request): Response
     {
         $header = [
-            'Access-Control-Allow-Credentials' => 'true',
+            // 'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Allow-Origin' => $request->header('origin', '*'),
             'Access-Control-Allow-Methods' => $request->header('access-control-request-method', '*'),
             'Access-Control-Allow-Headers' => $request->header('access-control-request-headers', '*'),
