@@ -54,7 +54,7 @@ class Jwt implements TokenInterface
             'iss'   => $this->config['iss'],
             'sub'   => $payload['sub'] ?? '',
             'iat'   => time(),
-            'jti'   => $payload['type'] ?? 'access' . '-' . Token::getEncryptedToken(),
+            'jti'   => ($payload['type'] ?? 'access') . '-' . Token::getEncryptedToken(),
             'exp'   => $payload['exp'] ?? $this->expire_time + time(),
             'roles' => $payload['roles'] ?? [],
             'role'  => $payload['role'] ?? '',
@@ -140,10 +140,18 @@ class Jwt implements TokenInterface
      *
      * @param string $token 刷新凭证
      * @return string
+     * @throws TokenException
+     * @throws Exception
      */
     public function refresh(string $token): string
     {
-        return JwtFacade::refresh($token);
+        $payload = $this->decode($token);
+        if ($payload->type !== 'refresh') {
+            throw new TokenException('Token 不能刷新', StatusCode::TOKEN_REFRESH_FAILED);
+        }
+        $payload=(array)$payload;
+        unset($payload['exp'],$payload['jti'],$payload['type'],$payload['iat']);
+        return $this->encode($payload);
     }
 
 

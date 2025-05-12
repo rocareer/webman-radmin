@@ -246,6 +246,17 @@ class TokenManager
     }
 
     /**
+     * @param string $token
+     * @return   mixed
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/11 22:30
+     */
+    public function ttl(string $token)
+    {
+        return $this->getDriver()->ttl($token);
+    }
+
+    /**
      * 获取加密 Token
      *
      * @return string
