@@ -1,21 +1,16 @@
 <?php
-/*
+/**
+ * File:        middleware.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/12 02:37
+ * Description:
  *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
 use app\middleware\AccessControlMIddleWare;
 use app\middleware\AdminLog;
-use app\middleware\AdminRequest;
 use app\middleware\AdminSecurity;
 use app\middleware\RadminAuthMiddleware;
 use app\middleware\RequestMiddleWare;
@@ -28,9 +23,8 @@ return [
         RequestMiddleWare::class,
 
     ],
-    'api'=>[
+    'api'   => [
         new RadminAuthMiddleware('user'),
-
     ],
     'admin' => [
 
@@ -40,6 +34,9 @@ return [
         AdminLog::class,
         // 数据安全
         AdminSecurity::class,
+    ],
+    'user'  => [
+        new RadminAuthMiddleware('user'),
     ],
 
 ];

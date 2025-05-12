@@ -1,20 +1,16 @@
 <?php
-/*
+/**
+ * File:        route.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/12 02:35
+ * Description:
  *
- *  * Copyright (c) 2024 - 2026 Albert@Rocareer.com
- *  *
- *  * This program is a derivative work migrated from BuildAdmin & Webman
- *  * Licensed under MIT License with additional conditions:
- *  * - Free to copy, modify and distribute
- *  * - **Commercial use is strictly prohibited**
- *  * - Must retain original copyright and this license notice
- *  * - Provided "AS IS" without warranty
- *  *
- *  * Full license: https://opensource.org/licenses/MIT
- *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-use app\middleware\RadminAuthMiddleware;
+use app\user\controller\Account;
+use app\user\controller\Index;
 use Webman\Route;
 
 
@@ -23,31 +19,23 @@ use Webman\Route;
 
 
 /**
- * 配置测试
- * 自定义管理后台路由
- * Path: /admin/[{path:.*\..+}] 匹配包含点的路径（如controller. action格式）
- *
+ * Api 路由组 将原buildadmin 前台api路由改为单独user应用 方便后续扩展
  */
-Route::any('/admin/[{path:.*\..+}]', function () {
-    $request = request();
-    // 获取请求路径并移除固定前缀
-    $path    = $request->path();
-    $newPath = str_replace('.', '/', $path);
-    if ($request->queryString()) {
-        $queryString = '?' . $request->queryString();
-    } else {
-        $queryString = '';
-    }
-    $newUrl = $newPath . $queryString;
-    return redirect($newUrl, 308);
+Route::group('/api', function () {
+
+    Route::group('/user', function () {
+        Route::any('/checkIn', [Index::class, 'login']);
+        Route::any('/logout', [Index::class, 'logout']);
+    });
+
+    Route::group('/account', function () {
+        Route::any('/balance', [Account::class, 'balance']);
+        Route::any('/profile', [Account::class, 'profile']);
+        Route::any('/overview', [Account::class, 'overview']);
+        Route::any('/integral', [Account::class, 'integral']);
+        Route::any('/changePassword', [Account::class, 'changePassword']);
+    });
 });
-
-// test
-Route::any('/test/auth/[{path:.+}]', function () {
-
-})->middleware(
-    [new RadminAuthMiddleware('admin')]
-);
 
 
 

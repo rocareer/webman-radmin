@@ -52,16 +52,25 @@ return [
     // 免认证路径配置
     'exclude' => [
         // 管理后台免认证路径
-        '/admin/login',
-        '/admin/captcha',
 
         // API免认证路径
-        '/api/common/refreshToken', // 刷新token
+        '/api/common/checkClickCaptcha',    // 验证码
+        '/api/common/refreshToken',         // 刷新token
+        // '/api/index/index',                 // 刷新token
 
-        '/api/user/checkIn',
+        '/api/user/checkIn',                // 用户中心登录
+        '/api/user/logout',                 // 用户中心注销
+
+        '/api/common/checkClickCaptcha',    // 验证码
+
+
+        //新user应用
+        '/user/index/login',
+        '/user/index/logout',
 
         // 兼容旧路径
         '/admin/Index/login',
+        '/admin/Index/logout',
 
         // 测试路由
         // '/test/auth/index',

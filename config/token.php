@@ -34,7 +34,6 @@ return [
         'think-cache'    => [
             'type'   => 'cache',
             'story'  => 'token',
-
         ],
 
         // 数据库驱动示例

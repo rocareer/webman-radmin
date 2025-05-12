@@ -6,6 +6,10 @@
  * Describe  command.php
  */
 
+use Rocareer\WebmanMigration\command\MigrateCreate;
+use Rocareer\WebmanMigration\command\MigrateRun;
+
 return[
-    Rocareer\WebmanMigration\command\MigrateRun::class,
+    MigrateRun::class,
+    MigrateCreate::class
 ];
