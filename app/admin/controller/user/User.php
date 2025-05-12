@@ -15,7 +15,7 @@ class User extends Backend
      */
     protected object $model;
 
-    protected array $withJoinTable = ['userGroup'];
+    protected array $withJoinTable = ['user_group'];
 
     // 排除字段
     protected string|array $preExcludeFields = ['last_login_time', 'login_failure', 'password', 'salt'];
@@ -58,7 +58,7 @@ class User extends Backend
      * 添加
      * @throws Throwable
      */
-    public function add(): \support\Response
+    public function add(): ?Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -106,7 +106,7 @@ class User extends Backend
      * @throws Throwable
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
-    public function edit(): \support\Response
+    public function edit(): ?Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
