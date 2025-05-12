@@ -39,6 +39,7 @@ class UnauthorizedHttpException extends Exception
     public function __construct(?string $errorMessage = null, $code = 0,$needLogin = false,array $data = [], ?Throwable $previous = null)
     {
 
+        $errorMessage=$errorMessage??$this->errorMessage;
         $params['errorCode'] = $code;
         $params['data'] = $data;
         if ($needLogin) {
