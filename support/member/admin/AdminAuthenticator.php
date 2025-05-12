@@ -12,13 +12,6 @@ class AdminAuthenticator extends Authenticator
     protected string $role = 'admin';
 
 
-    // public function __construct()
-    // {
-    //     $this->memberModel=new AdminModel();
-    //     parent:: __construct();
-    // }
-
-
     /**
      * 认证用户
      * @param array $credentials 用户凭证
