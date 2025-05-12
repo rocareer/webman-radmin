@@ -1,4 +1,17 @@
 ## v1.0.4更新内容
+
+* refactor: 优化中间件逻辑和配置检查
+* feat(member): 新增密码校验方法并优化异常处理
+* chore(support/member/user): 完善 UserService 和 UserState 文件
+* feat(Jwt): 优化 JWT 刷新逻辑并添加 TTL 方法
+* feat: 为Request类添加admin路由适配功能
+* chore(config): 更新迁移配置和路由等配置文件
+* fix(exception): 修正未授权异常错误消息赋值问题
+* chore(多模块): 重命名并迁移账户模块代码
+* refactor(控制器): 统一响应类型为Response并调整返回值
+* refactor(controller): 修改用户组关联命名及响应类型
+* fix(routine/config): 修复配置编辑时的错误处理和语法问题
+* fix(controller): 修复远程控制器路径处理逻辑
 * refactor: 修改 axios 请求头 token 设置方式 改为标准的 Authentication 头
 * fix(admin,api,middleware): 修复后台菜单提示、登录验证及中间件异常处理
 * chore(member): 优化认证逻辑与辅助函数
