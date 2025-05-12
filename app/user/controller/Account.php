@@ -13,19 +13,21 @@
  *
  */
 
-namespace app\api\controller;
+namespace app\user\controller;
 
-use Throwable;
+use app\api\validate\Account as AccountValidate;
+use app\common\controller\Frontend;
+use app\common\model\User;
+use app\common\model\UserMoneyLog;
+use app\common\model\UserScoreLog;
+use extend\ba\Captcha;
 use extend\ba\Date;
 use extend\ba\Random;
-use extend\ba\Captcha;
-use app\common\model\User;
-use support\lang\Validate;
-
-use app\common\model\UserScoreLog;
-use app\common\model\UserMoneyLog;
-use app\common\controller\Frontend;
-use app\api\validate\Account as AccountValidate;
+use support\member\Member;
+use support\Response;
+use support\token\Token;
+use think\facade\Validate;
+use Throwable;
 
 class Account extends Frontend
 {
@@ -38,7 +40,7 @@ class Account extends Frontend
         parent::initialize();
     }
 
-    public function overview()
+    public function overview(): Response
     {
         $sevenDays = Date::unixTime('day', -6);
         $score     = $money = $days = [];
@@ -67,7 +69,7 @@ class Account extends Frontend
      * 会员资料
      * @throws Throwable
      */
-    public function profile()
+    public function profile(): Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->only(['id', 'avatar', 'username', 'nickname', 'gender', 'birthday', 'motto']);
@@ -80,7 +82,7 @@ class Account extends Frontend
                 return $this->error($e->getMessage());
             }
 
-            $model = $this->auth->getUser();
+            $model = User::find($this->request->member->id);
             $model->startTrans();
             try {
                 $model->save($data);
@@ -105,7 +107,7 @@ class Account extends Frontend
      * 在 changBind 方法中，通过 pass Token来确定用户已经通过了账户验证（用户未绑定邮箱/手机时通过账户密码验证）
      * @throws Throwable
      */
-    public function verification()
+    public function verification(): Response
     {
         $captcha = new Captcha();
         $params  = $this->request->only(['type', 'captcha']);
@@ -125,7 +127,7 @@ class Account extends Frontend
      * 通过 pass Token来确定用户已经通过了账户验证，也就是以上的 verification 方法，同时用户未绑定邮箱/手机时通过账户密码验证
      * @throws Throwable
      */
-    public function changeBind()
+    public function changeBind(): Response
     {
         $captcha = new Captcha();
         $params  = $this->request->only(['type', 'captcha', 'email', 'mobile', 'accountVerificationToken', 'password']);
@@ -174,11 +176,11 @@ class Account extends Frontend
         if ($this->request->isPost()) {
             $params = $this->request->only(['oldPassword', 'newPassword']);
 
-            if (!$this->auth->checkPassword($params['oldPassword'])) {
+            if (!Member::checkPassword($params['oldPassword'])) {
                 return $this->error(__('Old password error'));
             }
 
-            $model = $this->auth->getUser();
+            $model = $this->request->member;
             $model->startTrans();
             try {
                 $validate = new AccountValidate();
@@ -190,7 +192,7 @@ class Account extends Frontend
                 return $this->error($e->getMessage());
             }
 
-            $this->auth->logout();
+            Member::logout();
             return $this->success(__('Password has been changed, please login again~'));
         }
     }

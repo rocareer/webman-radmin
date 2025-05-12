@@ -1,38 +1,34 @@
 <?php
+/**
+ * File:        Index.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/12 02:34
+ * Description:
+ *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
+
 /** @noinspection PhpDynamicAsStaticMethodCallInspection */
 /** @noinspection PhpUndefinedVariableInspection */
 
-/*
- *
- *  * // +----------------------------------------------------------------------
- *  * // | Rocareer [ ROC YOUR CAREER ]
- *  * // +----------------------------------------------------------------------
- *  * // | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *  * // +----------------------------------------------------------------------
- *  * // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *  * // +----------------------------------------------------------------------
- *  * // | Author: albert <Albert@rocareer.com>
- *  * // +----------------------------------------------------------------------
- *
- */
 
-namespace app\api\controller;
+namespace app\user\controller;
 
+use app\api\validate\User as UserValidate;
+use app\common\controller\Frontend;
 use exception\UnauthorizedHttpException;
+use extend\ba\Captcha;
+use extend\ba\ClickCaptcha;
 use support\member\Member;
 use support\Response;
 use support\StatusCode;
 use support\token\Token;
 use Throwable;
-use extend\ba\Captcha;
-use extend\ba\ClickCaptcha;
 
-use app\common\controller\Frontend;
-use app\api\validate\User as UserValidate;
-
-class User extends Frontend
+class Index extends Frontend
 {
-    protected array $noNeedLogin = ['checkIn', 'logout'];
+    protected array $noNeedLogin = ['login', 'logout'];
 
     protected array $noNeedPermission = ['index'];
 
@@ -45,7 +41,7 @@ class User extends Frontend
      * 会员签入(登录和注册)
      * @throws Throwable
      */
-    public function checkIn(): Response
+    public function login(): Response
     {
         $openMemberCenter =  config('buildadmin.open_member_center');
         if (!$openMemberCenter) {
@@ -129,7 +125,7 @@ class User extends Frontend
         if ($this->request->isPost()) {
             $refreshToken = $this->request->post('refreshToken', '');
             if ($refreshToken) Token::destroy((string)$refreshToken);
-            $this->auth->logout();
+            Member::logout();
             return $this->success();
         }
         throw new UnauthorizedHttpException('Unauthorized', __('Unauthorized'),StatusCode::UNAUTHORIZED);
