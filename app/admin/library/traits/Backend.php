@@ -22,8 +22,6 @@ trait Backend
         if (!is_array($this->preExcludeFields)) {
             $this->preExcludeFields = explode(',', (string)$this->preExcludeFields);
         }
-
-
         foreach ($this->preExcludeFields as $field) {
             if (array_key_exists($field, $params)) {
                 unset($params[$field]);
@@ -36,7 +34,7 @@ trait Backend
      * 查看
      * @throws Throwable
      */
-    public function index(): Response
+    public function index(): ?Response
     {
 
         if ($this->request->input('select')) {
@@ -63,7 +61,7 @@ trait Backend
     /**
      * 添加
      */
-    public function add(): Response
+    public function add(): ?Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -108,7 +106,7 @@ trait Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit(): Response
+    public function edit(): ?Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
@@ -164,7 +162,7 @@ trait Backend
      * 删除
      * @throws Throwable
      */
-    public function del(): Response
+    public function del(): ?Response
     {
         $where             = [];
         $dataLimitAdminIds = $this->getDataLimitAdminIds();
@@ -198,7 +196,7 @@ trait Backend
      * 排序 - 增量重排法
      * @throws Throwable
      */
-    public function sortable(): Response
+    public function sortable(): ?Response
     {
         $pk        = $this->model->getPk();
         $move      = $this->request->input('move');

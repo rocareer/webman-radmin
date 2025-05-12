@@ -15,9 +15,9 @@
 
 namespace app\api\controller;
 
+use think\facade\Validate;
 use Throwable;
 use extend\ba\Captcha;
-use support\lang\Validate;
 use app\common\model\User;
 use extend\ba\ClickCaptcha;
 use app\common\library\Email;

@@ -168,7 +168,7 @@ class Backend extends Api
         $limit        = $this->request->input("limit", 10);
         $search       = $this->request->input("search", []);
         $initKey      = $this->request->input("initKey", $pk);
-        $initValue    = $this->request->input("initValue", '');
+        $initValue    = $this->request->input("initValue", []);
         $initOperator = $this->request->input("initOperator", 'in');
 
         $where              = [];

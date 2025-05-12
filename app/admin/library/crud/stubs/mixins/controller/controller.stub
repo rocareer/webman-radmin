@@ -3,6 +3,7 @@
 namespace {%namespace%};
 {%use%}
 use app\common\controller\Backend;
+use support\Response;
 
 /**
  * {%tableComment%}
