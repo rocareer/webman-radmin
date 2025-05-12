@@ -1,4 +1,4 @@
-# About Webman-Radmin (Preview 1.0.3)
+# About Webman-Radmin (Preview 1.0.4)
 * An efficient and elegant front-end and back-end separation management platform
 
 ## Project Background
@@ -12,10 +12,10 @@ As a representative of high-performance PHP frameworks, the Webman ecosystem has
 <img alt="Dashboard Preview" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="Dashboard Preview"/>
 
 ## Version and Release Notes
-- **Current Version**: v1.0.3 Preview
-- **Release Date**: May 10, 2025
+- **Current Version**: v1.0.4 Preview
+- **Release Date**: May 11, 2025
 - **Changelog**: [Changelog](https://gitee.com/rocareer/webman-radmin/blob/master/CHANGELOG.md)
-- **Incompatible Updates**: This is the first version, and subsequent releases will be incompatible until version 2.0 is released.
+- **Incompatible Updates**: This is the start version, and subsequent releases will be incompatible until version 2.0 is released.
 
 ## Technical Architecture
 
@@ -108,6 +108,31 @@ composer create-project rocareer/radmin "YourProjectName" --stability=dev
 - **Testing Tools**:
   - Vitest
   - Cypress component testing
+- **Package**:
+```json
+{
+  "dependencies": {
+    "@element-plus/icons-vue": "2.3.1",
+    "@vueuse/core": "12.0.0",
+    "axios": "1.7.9",
+    "echarts": "5.5.1",
+    "element-plus": "2.9.1",
+    "font-awesome": "4.7.0",
+    "lodash-es": "4.17.21",
+    "mitt": "3.0.1",
+    "nprogress": "0.2.0",
+    "pinia": "2.3.0",
+    "pinia-plugin-persistedstate": "4.2.0",
+    "qrcode.vue": "3.6.0",
+    "screenfull": "6.0.2",
+    "sortablejs": "1.15.6",
+    "v-code-diff": "1.13.1",
+    "vue": "3.5.13",
+    "vue-i18n": "11.1.3",
+    "vue-router": "4.5.0"
+  }
+}
+```
 
 ### Back-end Tech Stack
 - **Core Framework**: Webman 2.1+
@@ -129,6 +154,31 @@ composer create-project rocareer/radmin "YourProjectName" --stability=dev
   - CORS Middleware
   - CSRF Protection (in development)
   - Request Rate Limiting (in development)
+- **Composer**
+```json
+{
+  "require": {
+    "php": ">=8.1",
+    "workerman/webman-framework": "^2.1",
+    "webman/event": "^1.0",
+    "webman/cache": "^2.1",
+    "webman/console": "^2.1",
+    "monolog/monolog": "^2.0",
+    "rocareer/webman-migration": "^v1.0.0",
+    "rocareer/webman-status-code": "^v1.0.0",
+    "firebase/php-jwt": "^6.11",
+    "webman/think-orm": "^2.1",
+    "vlucas/phpdotenv": "^5.6",
+    "nelexa/zip": "^4.0",
+    "ext-bcmath": "*",
+    "ext-iconv": "*",
+    "ext-pdo": "*",
+    "ext-gd": "*",
+    "phpmailer/phpmailer": "^v6.8.1",
+    "webman/think-cache": "^2.1"
+  }
+}
+```
 
 ## Development Toolchain
 - **Recommended IDE**: PHPStorm or VSCode & WebStorm

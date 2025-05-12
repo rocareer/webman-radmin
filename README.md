@@ -11,10 +11,10 @@ Webman生态作为高性能PHP框架的代表，长期以来缺乏专业的前�
 <img alt="控制面板预览" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="控制面板预览"/>
 
 ## 版本和版本说明
-- **当前版本**：v1.0.3 预览
+- **当前版本**：v1.0.4 预览
 - **发布时间**：2025年05月10日
 - **更新日志**：[更新日志](https://gitee.com/rocareer/webman-radmin/blob/master/CHANGELOG.md)
-- **不兼容更新**：目前是第一个版本，后续发布的版本将不兼容更新,直到2.0版本发布
+- **不兼容更新**：目前是早期版本，后续发布的版本将不兼容更新,直到2.0版本发布
 
 ## 技术架构
 
@@ -110,6 +110,31 @@ npm run dev
 - **测试工具**:
     - Vitest
     - Cypress组件测试
+- **Package**:
+```json
+{
+  "dependencies": {
+    "@element-plus/icons-vue": "2.3.1",
+    "@vueuse/core": "12.0.0",
+    "axios": "1.7.9",
+    "echarts": "5.5.1",
+    "element-plus": "2.9.1",
+    "font-awesome": "4.7.0",
+    "lodash-es": "4.17.21",
+    "mitt": "3.0.1",
+    "nprogress": "0.2.0",
+    "pinia": "2.3.0",
+    "pinia-plugin-persistedstate": "4.2.0",
+    "qrcode.vue": "3.6.0",
+    "screenfull": "6.0.2",
+    "sortablejs": "1.15.6",
+    "v-code-diff": "1.13.1",
+    "vue": "3.5.13",
+    "vue-i18n": "11.1.3",
+    "vue-router": "4.5.0"
+  }
+}
+```
 
 ### 后端技术栈
 - **核心框架**: Webman 2.1+
@@ -131,6 +156,31 @@ npm run dev
     - CORS中间件
     - CSRF防护 (开发中)
     - 请求速率限制 (开发中)
+- **Composer**
+```json
+{
+  "require": {
+    "php": ">=8.1",
+    "workerman/webman-framework": "^2.1",
+    "webman/event": "^1.0",
+    "webman/cache": "^2.1",
+    "webman/console": "^2.1",
+    "monolog/monolog": "^2.0",
+    "rocareer/webman-migration": "^v1.0.0",
+    "rocareer/webman-status-code": "^v1.0.0",
+    "firebase/php-jwt": "^6.11",
+    "webman/think-orm": "^2.1",
+    "vlucas/phpdotenv": "^5.6",
+    "nelexa/zip": "^4.0",
+    "ext-bcmath": "*",
+    "ext-iconv": "*",
+    "ext-pdo": "*",
+    "ext-gd": "*",
+    "phpmailer/phpmailer": "^v6.8.1",
+    "webman/think-cache": "^2.1"
+  }
+}
+```
 
 ## 开发工具链
 - **IDE推荐**: PHPStorm or VSCode & WebStorm
