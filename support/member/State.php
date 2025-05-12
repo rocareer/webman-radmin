@@ -52,20 +52,18 @@ use Throwable;
         // $this->authenticator = Container::get($this->role,'authenticator');
         $this->config= config('auth');
     }
-    public function isLogin(): bool
-    {
-        return $this->login;
-    }
 
-    /**
-     * 检查用户状态
-     * By albert  2025/05/06 01:41:07
-     */
+
+     /**
+      * 检查用户状态
+      * By albert  2025/05/06 01:41:07
+      * @throws BusinessException
+      */
     public function checkStatus($member): bool
     {
         $this->memberModel=$member;
         if ($this->memberModel->status !== 'enable') {
-            throw new BusinessException('账号已被禁用', StatusCode::USER_DISABLED);
+            throw new BusinessException('账号已被禁用', StatusCode::USER_DISABLED,true);
         }
         // 检查登录失败次数
         $this->checkLoginFailures();
@@ -89,7 +87,7 @@ use Throwable;
             if (time() < $unlockTime) {
                 throw new BusinessException(
                     "账号已锁定，请在" . ($unlockTime - time()) . "秒后重试",
-                    StatusCode::LOGIN_ACCOUNT_LOCKED
+                    StatusCode::LOGIN_ACCOUNT_LOCKED,true
                 );
             }
             $this->memberModel->login_failure = 0;
@@ -98,15 +96,15 @@ use Throwable;
         return true;
     }
 
-    /**
-     * 更新登录信息
-     * By albert  2025/05/06 02:50:25
-     * @param bool $success
-     * @return bool
-     */
+     /**
+      * 更新登录信息
+      * By albert  2025/05/06 02:50:25
+      * @param        $member
+      * @param string $success
+      * @return bool
+      */
     public function updateLoginState($member,string $success): bool
     {
-
         try {
             $this->memberModel=$member;
             $this->memberModel->startTrans();
@@ -116,7 +114,6 @@ use Throwable;
             } else {
                 $this->memberModel->login_failure++;
             }
-
 
             $this->memberModel->last_login_time =time();
             $this->memberModel->last_login_ip   = request()->getRealIp();

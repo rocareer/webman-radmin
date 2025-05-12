@@ -60,8 +60,9 @@ abstract class Service implements InterfaceService
 
             //用户信息初始化
             $this->memberInitialization();
-            //附加用户信息
+
             $this->extendMemberInfo();
+
             //用户状态检查
             $this->stateCheckStatus();
             //缓存用户信息
@@ -74,7 +75,7 @@ abstract class Service implements InterfaceService
             //清除状态
             //状态更新
             $this->stateUpdateLogin('false');
-            throw new BusinessException($e->getMessage(), $e->getCode());
+            throw new BusinessException($e->getMessage(), $e->getCode(),false,[],$e);
         }
     }
 
@@ -154,6 +155,11 @@ abstract class Service implements InterfaceService
 
     }
 
+    public function checkPassword($password): bool
+    {
+        return verify_password($password, $this->memberModel->password, ['salt' => $this->memberModel->salt]);
+    }
+
     /**
      * 用户:用户信息初始化
      * By albert  2025/05/06 17:35:46
@@ -175,6 +181,7 @@ abstract class Service implements InterfaceService
             if (empty($member)) {
                 throw new BusinessException('用户不存在', StatusCode::MEMBER_NOT_FOUND);
             }
+            $this->setMember($member);
             $this->memberModel=$member;
         } catch (Throwable $e) {
             throw new BusinessException($e->getMessage(), $e->getCode());
@@ -450,6 +457,7 @@ abstract class Service implements InterfaceService
         if ('or' == $relation && !empty($list)) {
             return true;
         }
+
         $diff = array_diff($name, $list);
         if ('and' == $relation && empty($diff)) {
             return true;
