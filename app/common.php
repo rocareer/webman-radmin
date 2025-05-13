@@ -29,7 +29,7 @@ use support\think\Db;
 use app\admin\model\Config as configModel;
 
 
-if(!function_exists('__')) {
+if (!function_exists('__')) {
     /**
      * 语言翻译
      *
@@ -42,7 +42,7 @@ if(!function_exists('__')) {
      */
     function __(string $name, array $vars = [], string $lang = ''): mixed
     {
-        if(is_numeric($name) || !$name) {
+        if (is_numeric($name) || !$name) {
             return $name;
         }
 
@@ -50,7 +50,7 @@ if(!function_exists('__')) {
     }
 }
 
-if(!function_exists('filter')) {
+if (!function_exists('filter')) {
     /**
      * 输入过滤
      * 富文本反XSS请使用 clean_xss，也就不需要及不能再 filter 了
@@ -69,7 +69,7 @@ if(!function_exists('filter')) {
 }
 
 
-if(!function_exists('htmlspecialchars_decode_improve')) {
+if (!function_exists('htmlspecialchars_decode_improve')) {
     /**
      * html解码增强
      * 被 filter函数 内的 htmlspecialchars 编码的字符串，需要用此函数才能完全解码
@@ -122,7 +122,7 @@ if (!function_exists('get_sys_config')) {
     }
 }
 
-if(!function_exists('get_route_remark')) {
+if (!function_exists('get_route_remark')) {
     /**
      * 获取当前路由后台菜单规则的备注信息
      *
@@ -137,14 +137,13 @@ if(!function_exists('get_route_remark')) {
         $path           = str_replace('app\admin\controller\\', '', $path);
         $remark         = Db::name('admin_rule')
             ->where('name', $path)
-            ->whereOr('name', $path.'/'.$actionName)
-            ->value('remark')
-        ;
+            ->whereOr('name', $path . '/' . $actionName)
+            ->value('remark');
         return __((string)$remark);
     }
 }
 
-if(!function_exists('getProtocol')) {
+if (!function_exists('getProtocol')) {
     // 适用于需要自定义处理的场景
     /**
      * 获取当前请求的协议
@@ -157,7 +156,7 @@ if(!function_exists('getProtocol')) {
     function getProtocol($request): string
     {
         // 优先级 1：处理反向代理转发 (如 Nginx)
-        if($request->header('x-forwarded-proto')) {
+        if ($request->header('x-forwarded-proto')) {
             return strtolower($request->header('x-forwarded-proto'));
         }
 
@@ -173,10 +172,11 @@ if(!function_exists('getProtocol')) {
 }
 
 
-if(!function_exists('full_url')) {
+if (!function_exists('full_url')) {
     /**
      * 获取资源完整url地址；若安装了云存储或配置了CdnUrl，则自动使用对应的CdnUrl
      *
+     * 命令行可用
      * @param string|null $relativeUrl 资源相对地址 不传入则获取域名
      * @param string|bool $domain      是否携带域名 或者直接传入域名
      * @param string      $default     默认值
@@ -188,32 +188,36 @@ if(!function_exists('full_url')) {
         // 存储/上传资料配置 todo
         //		Event::trigger('uploadConfigInit', App::getInstance());
 
-        $cdnUrl =  config('buildadmin.cdn_url');
-        if(!$cdnUrl) {
-            $cdnUrl = request()->upload['cdn'] ?? '//'.request()->host();
+        $cdnUrl = config('buildadmin.cdn_url');
+        if (!$cdnUrl) {
+            if (request()) {
+                $cdnUrl = request()->upload['cdn'] ?? '//' . request()->host();
+            } else {
+                $cdnUrl = get_sys_config('host');
+            }
+
         }
 
-        if($domain === true) {
+        if ($domain === true) {
             $domain = $cdnUrl;
-        }
-        elseif($domain === false) {
+        } elseif ($domain === false) {
             $domain = '';
         }
 
         $relativeUrl = $relativeUrl ?: $default;
-        if(!$relativeUrl)
+        if (!$relativeUrl)
             return $domain;
 
         $regex = "/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i";
-        if(preg_match('/^http(s)?:\/\//', $relativeUrl) || preg_match($regex, $relativeUrl) || $domain === false) {
+        if (preg_match('/^http(s)?:\/\//', $relativeUrl) || preg_match($regex, $relativeUrl) || $domain === false) {
             return $relativeUrl;
         }
 
-        $url          = $domain.$relativeUrl;
-        $cdnUrlParams =  config('buildadmin.cdn_url_params');
-        if($domain === $cdnUrl && $cdnUrlParams) {
+        $url          = $domain . $relativeUrl;
+        $cdnUrlParams = config('buildadmin.cdn_url_params');
+        if ($domain === $cdnUrl && $cdnUrlParams) {
             $separator = str_contains($url, '?') ? '&' : '?';
-            $url       .= $separator.$cdnUrlParams;
+            $url       .= $separator . $cdnUrlParams;
         }
 
         return $url;
@@ -221,7 +225,7 @@ if(!function_exists('full_url')) {
 }
 
 
-if(!function_exists('set_timezone')) {
+if (!function_exists('set_timezone')) {
     /**
      * 设置时区
      *
@@ -231,10 +235,10 @@ if(!function_exists('set_timezone')) {
     function set_timezone($timezone = null): void
     {
 
-        $defaultTimezone =  config('radmin.default_timezone');
+        $defaultTimezone = config('radmin.default_timezone');
 
         $timezone = is_null($timezone) ? get_sys_config('time_zone') : $timezone;
-        if($timezone && $defaultTimezone != $timezone) {
+        if ($timezone && $defaultTimezone != $timezone) {
             date_default_timezone_set($timezone);
         }
     }
@@ -244,10 +248,10 @@ function get_upload_config(): array
 {
     //	Event::dispatch('uploadConfigInit', []);
 
-    $uploadConfig =  config('upload', []);
+    $uploadConfig = config('upload', []);
 
     // 确保有默认配置
-    if(empty($uploadConfig)) {
+    if (empty($uploadConfig)) {
         $uploadConfig = [
             'max_size' => '10M',
             // 默认10MB
@@ -257,14 +261,14 @@ function get_upload_config(): array
     }
 
     // 确保max_size存在
-    if(!isset($uploadConfig['max_size'])) {
+    if (!isset($uploadConfig['max_size'])) {
         $uploadConfig['max_size'] = '10M';
     }
 
     $uploadConfig['max_size'] = Filesystem::fileUnitToByte($uploadConfig['max_size']);
 
     $upload = request()->upload;
-    if(!$upload) {
+    if (!$upload) {
         $uploadConfig['mode'] = 'local';
         return $uploadConfig;
     }
@@ -273,7 +277,7 @@ function get_upload_config(): array
 }
 
 
-if(!function_exists('str_attr_to_array')) {
+if (!function_exists('str_attr_to_array')) {
     /**
      * 将字符串属性列表转为数组
      *
@@ -284,23 +288,22 @@ if(!function_exists('str_attr_to_array')) {
      */
     function str_attr_to_array(string $attr): array
     {
-        if(!$attr)
+        if (!$attr)
             return [];
         $attr     = explode("\n", trim(str_replace("\r\n", "\n", $attr)));
         $attrTemp = [];
-        foreach($attr as $item) {
+        foreach ($attr as $item) {
             $item = explode('=', $item);
-            if(isset($item[0]) && isset($item[1])) {
+            if (isset($item[0]) && isset($item[1])) {
                 $attrVal = $item[1];
-                if($item[1] === 'false' || $item[1] === 'true') {
+                if ($item[1] === 'false' || $item[1] === 'true') {
                     $attrVal = !($item[1] === 'false');
-                }
-                elseif(is_numeric($item[1])) {
+                } elseif (is_numeric($item[1])) {
                     $attrVal = (float)$item[1];
                 }
-                if(strpos($item[0], '.')) {
+                if (strpos($item[0], '.')) {
                     $attrKey = explode('.', $item[0]);
-                    if(isset($attrKey[0]) && isset($attrKey[1])) {
+                    if (isset($attrKey[0]) && isset($attrKey[1])) {
                         $attrTemp[$attrKey[0]][$attrKey[1]] = $attrVal;
                         continue;
                     }
@@ -312,7 +315,7 @@ if(!function_exists('str_attr_to_array')) {
     }
 }
 
-if(!function_exists('action_in_arr')) {
+if (!function_exists('action_in_arr')) {
     /**
      * 检测一个方法是否在传递的数组内
      *
@@ -324,19 +327,19 @@ if(!function_exists('action_in_arr')) {
     function action_in_arr(array $arr = []): bool
     {
         $arr = is_array($arr) ? $arr : explode(',', $arr);
-        if(!$arr) {
+        if (!$arr) {
             return false;
         }
         $arr           = array_map('strtolower', $arr);
         $currentAction = request()->action ?? '';
-        if(in_array(strtolower($currentAction), $arr) || in_array('*', $arr)) {
+        if (in_array(strtolower($currentAction), $arr) || in_array('*', $arr)) {
             return true;
         }
         return false;
     }
 }
 
-if(!function_exists('build_suffix_svg')) {
+if (!function_exists('build_suffix_svg')) {
     /**
      * 构建文件后缀的svg图片
      *
@@ -365,14 +368,14 @@ if(!function_exists('build_suffix_svg')) {
             <path style="fill:#E2E5E7;" d="M128,0c-17.6,0-32,14.4-32,32v448c0,17.6,14.4,32,32,32h320c17.6,0,32-14.4,32-32V128L352,0H128z"/>
             <path style="fill:#B0B7BD;" d="M384,128h96L352,0v96C352,113.6,366.4,128,384,128z"/>
             <polygon style="fill:#CAD1D8;" points="480,224 384,128 480,128 "/>
-            <path style="fill:'.$background.';" d="M416,416c0,8.8-7.2,16-16,16H48c-8.8,0-16-7.2-16-16V256c0-8.8,7.2-16,16-16h352c8.8,0,16,7.2,16,16 V416z"/>
+            <path style="fill:' . $background . ';" d="M416,416c0,8.8-7.2,16-16,16H48c-8.8,0-16-7.2-16-16V256c0-8.8,7.2-16,16-16h352c8.8,0,16,7.2,16,16 V416z"/>
             <path style="fill:#CAD1D8;" d="M400,432H96v16h304c8.8,0,16-7.2,16-16v-16C416,424.8,408.8,432,400,432z"/>
-            <g><text><tspan x="220" y="380" font-size="124" font-family="Verdana, Helvetica, Arial, sans-serif" fill="white" text-anchor="middle">'.$suffix.'</tspan></text></g>
+            <g><text><tspan x="220" y="380" font-size="124" font-family="Verdana, Helvetica, Arial, sans-serif" fill="white" text-anchor="middle">' . $suffix . '</tspan></text></g>
         </svg>';
     }
 }
 
-if(!function_exists('get_area')) {
+if (!function_exists('get_area')) {
     /**
      * 获取省份地区数据
      *
@@ -390,28 +393,27 @@ if(!function_exists('get_area')) {
             'pid'   => 0,
             'level' => 1,
         ];
-        if($province !== '') {
+        if ($province !== '') {
             $where['pid']   = $province;
             $where['level'] = 2;
-            if($city !== '') {
+            if ($city !== '') {
                 $where['pid']   = $city;
                 $where['level'] = 3;
             }
         }
 
-        $cacheKey = 'area_data_'.md5(serialize($where));
+        $cacheKey = 'area_data_' . md5(serialize($where));
 
         return Db::name('area')
             ->cache($cacheKey, $cacheTime)
             ->where($where)
             ->field('id as value,name as label')
             ->select()
-            ->toArray()
-            ;
+            ->toArray();
     }
 }
 
-if(!function_exists('hsv2rgb')) {
+if (!function_exists('hsv2rgb')) {
     /**
      * HSV转RGB
      *
@@ -432,7 +434,7 @@ if(!function_exists('hsv2rgb')) {
         $q = $v * (1 - $f * $s);
         $t = $v * (1 - (1 - $f) * $s);
 
-        switch($i % 6) {
+        switch ($i % 6) {
             case 0:
                 $r = $v;
                 $g = $t;
@@ -473,7 +475,7 @@ if(!function_exists('hsv2rgb')) {
     }
 }
 
-if(!function_exists('ip_check')) {
+if (!function_exists('ip_check')) {
     /**
      * IP检查
      *
@@ -486,14 +488,14 @@ if(!function_exists('ip_check')) {
         $no_access_ip = is_array($no_access_ip) ? $no_access_ip : [];
 
         $ip = request()->getRealIp();
-        if(in_array($ip, $no_access_ip)) {
+        if (in_array($ip, $no_access_ip)) {
             throw new Exception('IP not allowed');
         }
     }
 }
 
 
-if(!function_exists('keys_to_camel_case')) {
+if (!function_exists('keys_to_camel_case')) {
     /**
      * 将数组key转换为小写驼峰
      *
@@ -598,7 +600,6 @@ if (!function_exists('verify_password')) {
             return encrypt_password($password, $extend['salt'] ?? '') === $hash;
         }
     }
-
 
 }
 if (!function_exists('get_ba_client')) {
