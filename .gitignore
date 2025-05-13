@@ -1,8 +1,11 @@
 # Object file
+/.env
+/.env-example
+
 /vendor/
 /web/node_modules/
 /composer.lock
-/.env
+
 /app/test/
 /plugin/radmin/
 /public/assets/
@@ -13,3 +16,4 @@
 /temp/
 /config/plugin/
 /plugin/admin/
+
