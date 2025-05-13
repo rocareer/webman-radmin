@@ -29,6 +29,25 @@ class Group extends Backend
     }
 
 
+    public function index(): ?Response
+    {
+
+        list($where, $alias, $limit, $order) = $this->queryBuilder();
+
+        $res = $this->model
+            ->field($this->indexField)
+            ->withJoin($this->withJoinTable, $this->withJoinType)
+            ->alias($alias)
+            ->where($where)
+            ->order($order)
+            ->paginate($limit);
+
+        return $this->success('', [
+            'list'   => $res->items(),
+            'total'  => $res->total(),
+            'remark' => get_route_remark(),
+        ]);
+    }
     /**
      * 添加
      * @throws Throwable
@@ -164,4 +183,5 @@ class Group extends Backend
         }
         return $data;
     }
+
 }
