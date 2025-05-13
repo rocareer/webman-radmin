@@ -1,6 +1,6 @@
 <?php
 
-namespace exception;
+namespace plugin\radmin\exception;
 
 use plugin\radmin\support\StatusCode;
 use Throwable;

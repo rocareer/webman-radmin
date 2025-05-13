@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace exception;
+namespace plugin\radmin\exception;
 
 class RouteNotFoundException extends Exception
 {

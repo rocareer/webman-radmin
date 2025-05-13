@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace exception;
+namespace plugin\radmin\exception;
 
 use Throwable;
 
