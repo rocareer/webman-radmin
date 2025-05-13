@@ -1,6 +1,6 @@
 {
   "name": "rocareer/webman-radmin",
-  "type": "project",
+  "type": "library",
   "keywords": [
     "high performance",
     "Webman",
@@ -63,25 +63,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Rocareer\\Radmin\\" : "vendor/rocareer/radmin/src",
-      "Rocareer\\WebmanCache\\" : "vendor/rocareer/webman-cache/src",
-      "": "./",
-      "app\\": "./app",
-      "App\\": "./app",
-      "app\\View\\": "./app/view/"
+      "Rocareer\\WebmanRadmin\\" : "src"
     }
-  },
-
-  "scripts": {
-    "post-package-install": [
-      "support\\Plugin::install"
-    ],
-    "post-package-update": [
-      "support\\Plugin::install"
-    ],
-    "pre-package-uninstall": [
-      "support\\Plugin::uninstall"
-    ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true
