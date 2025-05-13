@@ -13,7 +13,7 @@
  *
  */
 
-namespace extend\ba;
+namespace plugin\radmin\extend\ba;
 
 /**
  * 树

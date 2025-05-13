@@ -7,7 +7,7 @@ use Throwable;
 use ba\Depends;
 use exception;
 use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use FilesystemIterator;
 
 use RecursiveIteratorIterator;

@@ -6,7 +6,7 @@ namespace plugin\radmin\support\member;
 use Exception;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use plugin\radmin\support\token\Token;
 use plugin\radmin\exception\BusinessException;
 use Throwable;

@@ -9,7 +9,7 @@
 // | Author: 妙码生花 <hi@buildadmin.com>
 // +----------------------------------------------------------------------
 
-namespace extend\ba;
+namespace plugin\radmin\extend\ba;
 
 use plugin\radmin\app\admin\library\module\Manage;
 use plugin\radmin\support\member\Member;

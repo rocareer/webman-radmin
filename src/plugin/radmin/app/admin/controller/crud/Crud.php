@@ -8,7 +8,7 @@ namespace app\admin\controller\crud;
 use Throwable;
 use exception;
 use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\app\admin\model\CrudLog;
 use plugin\radmin\app\common\library\Menu;

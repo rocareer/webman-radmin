@@ -13,7 +13,7 @@ namespace plugin\radmin\support\member\admin;
 use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Service;
 use plugin\radmin\support\token\Token;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

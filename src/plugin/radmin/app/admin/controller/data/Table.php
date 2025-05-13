@@ -4,7 +4,7 @@ namespace app\admin\controller\data;
 
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Throwable;
 
 /**

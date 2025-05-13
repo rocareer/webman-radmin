@@ -8,7 +8,7 @@ use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Throwable;
 
 class Group extends Backend

@@ -8,7 +8,7 @@ use plugin\radmin\support\token\Token;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use support\Log;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

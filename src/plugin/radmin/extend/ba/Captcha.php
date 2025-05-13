@@ -13,12 +13,12 @@
  *
  */
 
-namespace extend\ba;
+namespace plugin\radmin\extend\ba;
 
 use GdImage;
 use Throwable;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 
 /**
  * 验证码类（图形验证码、继续流程验证码）

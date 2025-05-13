@@ -7,7 +7,7 @@ use Exception;
 use plugin\radmin\exception\ServerErrorHttpException;
 use plugin\radmin\support\think\Lang;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Throwable;
 
 /**

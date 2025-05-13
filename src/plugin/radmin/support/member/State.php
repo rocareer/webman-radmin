@@ -6,7 +6,7 @@ namespace plugin\radmin\support\member;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\BusinessException;
 use support\Log;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Throwable;
 
 /**

@@ -13,7 +13,7 @@ namespace plugin\radmin\support\member\admin;
 use plugin\radmin\app\admin\model\Admin;
 use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Model;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use think\db\exception\DbException;
 
 class AdminModel extends Model

@@ -15,7 +15,7 @@
 
 namespace app\common\model\ai;
 
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use think\model\relation\BelongsTo;
 use plugin\radmin\app\common\model\BaseModel;
 

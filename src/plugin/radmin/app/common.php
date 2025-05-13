@@ -25,7 +25,7 @@
 use plugin\radmin\app\admin\library\module\Server;
 use plugin\radmin\extend\ba\Filesystem;
 use plugin\radmin\support\think\Lang;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use plugin\radmin\app\admin\model\Config as configModel;
 
 

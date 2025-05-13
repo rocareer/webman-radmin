@@ -13,10 +13,10 @@
  *
  */
 
-namespace extend\ba;
+namespace plugin\radmin\extend\ba;
 
 use plugin\radmin\support\think\Lang;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Throwable;
 
 

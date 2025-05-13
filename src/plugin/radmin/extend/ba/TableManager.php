@@ -3,12 +3,12 @@
 
 /** @noinspection SqlNoDataSourceInspection */
 
-namespace extend\ba;
+namespace plugin\radmin\extend\ba;
 
 use plugin\radmin\exception\Exception;
 use Phinx\Db\Table;
 use Throwable;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Phinx\Db\Adapter\AdapterFactory;
 use Phinx\Db\Adapter\AdapterInterface;
 

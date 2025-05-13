@@ -22,7 +22,7 @@ use plugin\radmin\app\admin\model\SensitiveDataLog;
 use exception;
 use plugin\radmin\extend\ba\TableManager;
 use support\Log;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;

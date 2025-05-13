@@ -22,7 +22,7 @@ use support\Log;
 use plugin\radmin\support\Response;
 use Throwable;
 use PDOException;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use plugin\radmin\extend\ba\Random;
 use plugin\radmin\extend\ba\Version;
 use plugin\radmin\extend\ba\Terminal;

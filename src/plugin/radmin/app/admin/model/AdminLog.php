@@ -4,7 +4,7 @@ namespace app\admin\model;
 
 use plugin\radmin\app\common\model\BaseModel;
 use Exception;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use think\model\relation\BelongsTo;
 
 

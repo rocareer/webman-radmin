@@ -4,7 +4,7 @@ namespace app\admin\controller\security;
 
 use Throwable;
 use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\admin\model\DataRecycleLog as DataRecycleLogModel;
 

@@ -5,7 +5,7 @@ namespace app\command;
 use plugin\radmin\app\admin\model\data\Backup;
 use plugin\radmin\app\admin\model\data\Table;
 use Symfony\Component\Console\Input\InputOption;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;

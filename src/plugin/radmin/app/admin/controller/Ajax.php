@@ -7,7 +7,7 @@ use Throwable;
 use plugin\radmin\extend\ba\Terminal;
 use plugin\radmin\support\Response;
 use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use plugin\radmin\support\Cache;
 use plugin\radmin\app\admin\model\AdminLog;
 use plugin\radmin\app\common\library\upload;

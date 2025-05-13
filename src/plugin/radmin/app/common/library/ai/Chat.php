@@ -19,7 +19,7 @@ use exception;
 use plugin\radmin\extend\ba\Date;
 use Throwable;
 use DateInterval;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use plugin\radmin\support\Cache;
 use Workerman\Protocols\Http\Chunk;
 use Psr\Http\Message\StreamInterface;

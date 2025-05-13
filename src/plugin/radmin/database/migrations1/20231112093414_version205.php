@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 use plugin\radmin\app\admin\model\Config;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 
 class Version205 extends AbstractMigration
 {

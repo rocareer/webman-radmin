@@ -19,7 +19,7 @@ use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\TokenInterface;
 use plugin\radmin\exception\TokenException;
 use stdClass;
-use plugin\radmin\support\think\Db;
+use upport\think\Db;
 use Throwable;
 
 class Mysql implements TokenInterface

@@ -15,7 +15,7 @@
  *
  */
 
-namespace extend\ba;
+namespace plugin\radmin\extend\ba;
 
 use think\Service;
 
