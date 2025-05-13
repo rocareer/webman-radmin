@@ -1,0 +1,13 @@
+# Object file
+/vendor/
+/web/node_modules/
+/composer.lock
+/.env
+/app/test/
+/plugin/radmin/
+/public/assets/
+/.idea/
+
+/Writerside/
+/.env.production
+/temp/
