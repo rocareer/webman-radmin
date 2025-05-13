@@ -174,6 +174,10 @@ export interface Terminal {
     npmRegistry: string
     // composer 源
     composerRegistry: string
+    // 显示设置栏
+    configShow:boolean,
+    // 显示日志详情
+    messageShow:boolean
 }
 
 export interface SiteConfig {

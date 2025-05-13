@@ -1,6 +1,7 @@
 <template>
     <div>
-        <el-dialog v-model="terminal.state.show" :title="t('terminal.Terminal')" class="ba-terminal-dialog main-dialog">
+<!--        <el-dialog  v-model="terminal.state.show" :title="t('terminal.Terminal')" class="ba-terminal-dialog main-dialog">-->
+        <el-dialog  v-model="terminal.state.show" :title="t('terminal.Terminal')" class="" draggable>
             <el-scrollbar ref="terminalScrollbarRef" :max-height="500" class="terminal-scrollbar">
                 <el-alert
                     class="terminal-warning-alert"
@@ -69,8 +70,10 @@
                                     <span>{{ t('terminal.Command run log') }}</span>
                                     <Icon :name="item.showMessage ? 'el-icon-ArrowUp' : 'el-icon-ArrowDown'" size="16" color="#909399" />
                                 </div>
+<!--                                加入日志详情控制功能 messageShow-->
                                 <div
                                     v-if="
+                                        // terminal.state.messageShow||
                                         item.status == taskStatus.Connecting ||
                                         item.status == taskStatus.Executing ||
                                         (item.status > taskStatus.Executing && item.showMessage)
@@ -87,7 +90,8 @@
                 <el-empty v-else :image-size="80" :description="t('terminal.No mission yet')" />
             </el-scrollbar>
 
-            <div class="terminal-buttons">
+<!--            加入操作面板显示控制功能 configShow-->
+            <div class="terminal-buttons" v-if="terminal.state.configShow">
                 <el-button class="terminal-menu-item" icon="el-icon-MagicStick" v-blur @click="addTerminalTask('test', true, false)">
                     {{ t('terminal.Test command') }}
                 </el-button>

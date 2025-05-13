@@ -12,4 +12,5 @@ type tableRenderer =
     | 'tag'
     | 'tags'
     | 'url'
+    | 'urlBackup'
     | 'slot'

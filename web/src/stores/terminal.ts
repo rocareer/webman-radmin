@@ -23,6 +23,8 @@ export const useTerminal = defineStore(
             phpDevelopmentServer: false,
             npmRegistry: 'unknown',
             composerRegistry: 'unknown',
+            configShow:true,
+            messageShow:true,
         })
 
         function init() {
@@ -33,6 +35,24 @@ export const useTerminal = defineStore(
             }
         }
 
+        /**
+         * 加入日志详情显示功能
+         * @param val
+         */
+        function messageShow(val = !state.messageShow) {
+            state.messageShow = val
+        }
+
+        /**
+         * 加入面板显示控制功能
+         * @param val
+         */
+        function configShow(val = !state.configShow) {
+            state.configShow = val
+            if (val) {
+                toggleDot(true)
+            }
+        }
         function toggle(val = !state.show) {
             state.show = val
             if (val) {
@@ -280,6 +300,8 @@ export const useTerminal = defineStore(
             changePackageManager,
             changePHPDevelopmentServer,
             changeAutomaticCleanupTask,
+            configShow,
+            messageShow,
         }
     },
     {
