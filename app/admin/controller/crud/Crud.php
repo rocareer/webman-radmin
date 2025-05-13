@@ -917,7 +917,6 @@ class Crud extends Backend
 
     private function getRemoteSelectUrl($field): string
     {
-        var_dump($field);
         if ($field['form']['remote-source-config-type'] == 'crud' && $field['form']['remote-controller']) {
             $pathArr      = [];
             $controller   = str_replace('.php', '', $field['form']['remote-controller']);
