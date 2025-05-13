@@ -17,7 +17,7 @@ namespace app\common\library;
 
 use Throwable;
 use exception;
-use plugin\radmin\support\Log;
+use support\Log;
 use Webman\Http\UploadFile;
 use think\helper\Str;
 use plugin\radmin\extend\ba\Random;

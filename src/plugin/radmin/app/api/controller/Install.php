@@ -18,7 +18,7 @@ namespace app\api\controller;
 
 use app\admin\model\Config;
 use plugin\radmin\support\member\admin\AdminModel;
-use plugin\radmin\support\Log;
+use support\Log;
 use plugin\radmin\support\Response;
 use Throwable;
 use PDOException;

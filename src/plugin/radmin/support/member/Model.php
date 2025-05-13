@@ -7,7 +7,7 @@ namespace plugin\radmin\support\member;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\BusinessException;
-use plugin\radmin\support\Log;
+use support\Log;
 use plugin\radmin\support\think\Db;
 use plugin\radmin\support\think\Model as ThinkModel;
 use think\db\exception\DataNotFoundException;

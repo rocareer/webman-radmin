@@ -21,7 +21,7 @@ use app\admin\model\SensitiveData;
 use app\admin\model\SensitiveDataLog;
 use exception;
 use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\Log;
+use support\Log;
 use plugin\radmin\support\think\Db;
 use Throwable;
 use Webman\Http\Request;
