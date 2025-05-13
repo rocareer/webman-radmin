@@ -4,7 +4,7 @@
 namespace app\admin\model;
 
 use plugin\radmin\exception\BusinessException;
-use plugin\radmin\support\think\Cache;
+use support\Think\Cache;
 use Throwable;
 use app\common\model\BaseModel;
 

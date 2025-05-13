@@ -22,7 +22,7 @@ use ReflectionException;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\TokenException;
 use stdClass;
-use plugin\radmin\support\think\Cache;
+use support\Think\Cache;
 use Throwable;
 
 /**

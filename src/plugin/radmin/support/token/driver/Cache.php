@@ -17,7 +17,7 @@ use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\TokenInterface;
 use plugin\radmin\exception\TokenException;
 use stdClass;
-use plugin\radmin\support\Think\Cache as WebmanCache;
+use support\Think\Cache as WebmanCache;
 use Throwable;
 
 class Cache implements TokenInterface
