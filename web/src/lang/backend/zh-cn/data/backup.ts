@@ -1,0 +1,18 @@
+export default {
+    id: 'ID',
+    table_name: '远程下拉',
+    data_table__name: '表名',
+    file: '备份文件',
+    remark: '备注',
+    status: '状态',
+    'status 0': '未开始',
+    'status 1': '成功',
+    'status 2': '失败',
+    runnow: '立即开始',
+    'runnow 0': '否',
+    'runnow 1': '是',
+    run_time: '执行时间',
+    version: '版本',
+    create_time: '创建时间',
+    'quick Search Fields': 'ID',
+}

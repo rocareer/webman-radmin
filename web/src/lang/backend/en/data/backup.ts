@@ -1,0 +1,18 @@
+export default {
+    id: 'id',
+    table_name: 'table_name',
+    data_table__name: 'name',
+    file: 'file',
+    remark: 'remark',
+    status: 'status',
+    'status 0': 'status 0',
+    'status 1': 'status 1',
+    'status 2': 'status 2',
+    runnow: 'runnow',
+    'runnow 0': 'runnow 0',
+    'runnow 1': 'runnow 1',
+    version: 'version',
+    run_time: 'run_time',
+    create_time: 'create_time',
+    'quick Search Fields': 'id',
+}
