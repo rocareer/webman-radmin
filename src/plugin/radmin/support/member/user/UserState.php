@@ -9,7 +9,7 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-namespace support\member\user;
+namespace plugin\radmin\support\member\user;
 
 use plugin\radmin\support\member\State;
 

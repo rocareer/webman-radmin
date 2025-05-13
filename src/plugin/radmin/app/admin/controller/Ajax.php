@@ -9,9 +9,9 @@ use plugin\radmin\support\Response;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\support\think\Db;
 use plugin\radmin\support\Cache;
-use app\admin\model\AdminLog;
-use app\common\library\upload;
-use app\common\controller\Backend;
+use plugin\radmin\app\admin\model\AdminLog;
+use plugin\radmin\app\common\library\upload;
+use plugin\radmin\app\common\controller\Backend;
 
 class Ajax extends Backend
 {

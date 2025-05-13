@@ -18,10 +18,10 @@ namespace app\api\controller;
 use think\facade\Validate;
 use Throwable;
 use plugin\radmin\extend\ba\Captcha;
-use app\common\model\User;
+use plugin\radmin\app\common\model\User;
 use plugin\radmin\extend\ba\ClickCaptcha;
-use app\common\library\Email;
-use app\common\controller\Frontend;
+use plugin\radmin\app\common\library\Email;
+use plugin\radmin\app\common\controller\Frontend;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class Ems extends Frontend

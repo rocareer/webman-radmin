@@ -9,8 +9,8 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-use app\user\controller\Account;
-use app\user\controller\Index;
+use plugin\radmin\app\user\controller\Account;
+use plugin\radmin\app\user\controller\Index;
 use Webman\Route;
 
 

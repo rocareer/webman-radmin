@@ -24,14 +24,14 @@ use plugin\radmin\support\Cache;
 use Workerman\Protocols\Http\Chunk;
 use Psr\Http\Message\StreamInterface;
 use Workerman\Protocols\Http\Response;
-use app\common\model\ai\AiUser;
+use plugin\radmin\app\common\model\ai\AiUser;
 use think\db\exception\DataNotFoundException;
-use app\common\model\ai\Session;
+use plugin\radmin\app\common\model\ai\Session;
 use think\db\exception\ModelNotFoundException;
-use app\common\model\ai\ChatModel;
-use app\common\model\ai\UserTokens;
+use plugin\radmin\app\common\model\ai\ChatModel;
+use plugin\radmin\app\common\model\ai\UserTokens;
 
-use app\common\model\ai\SessionMessage;
+use plugin\radmin\app\common\model\ai\SessionMessage;
 
 class Chat
 {

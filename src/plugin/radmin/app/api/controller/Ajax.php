@@ -17,8 +17,8 @@ namespace app\api\controller;
 
 use Throwable;
 use plugin\radmin\support\Response;
-use app\common\library\upload;
-use app\common\controller\Frontend;
+use plugin\radmin\app\common\library\upload;
+use plugin\radmin\app\common\controller\Frontend;
 
 class Ajax extends Frontend
 {

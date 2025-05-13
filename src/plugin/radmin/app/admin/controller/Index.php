@@ -3,7 +3,7 @@ declare (strict_types=1);
 
 namespace app\admin\controller;
 
-use app\common\controller\Backend;
+use plugin\radmin\app\common\controller\Backend;
 use Exception;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;

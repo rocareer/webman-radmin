@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use app\admin\model\Config;
+use plugin\radmin\app\admin\model\Config;
 use plugin\radmin\support\think\Db;
 
 class Version205 extends AbstractMigration

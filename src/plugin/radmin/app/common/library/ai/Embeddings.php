@@ -17,7 +17,7 @@ namespace app\common\library\ai;
 
 use Throwable;
 use exception;
-use app\common\model\ai\KbsContent;
+use plugin\radmin\app\common\model\ai\KbsContent;
 use function Symfony\Component\String\u;
 
 class Embeddings

@@ -8,9 +8,9 @@
  * Describe  AdminService.php
  */
 
-namespace support\member\admin;
+namespace plugin\radmin\support\member\admin;
 
-use app\admin\model\AdminGroup;
+use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Service;
 use plugin\radmin\support\token\Token;
 use plugin\radmin\support\think\Db;

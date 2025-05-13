@@ -2,8 +2,8 @@
 
 namespace app\admin\controller\auth;
 
-use app\admin\model\AdminLog as AdminLogModel;
-use app\common\controller\Backend;
+use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
+use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\Response;
 use plugin\radmin\support\think\Db;

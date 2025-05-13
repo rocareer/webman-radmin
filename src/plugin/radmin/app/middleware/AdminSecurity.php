@@ -15,10 +15,10 @@
 
 namespace app\middleware;
 
-use app\admin\model\DataRecycle;
-use app\admin\model\DataRecycleLog;
-use app\admin\model\SensitiveData;
-use app\admin\model\SensitiveDataLog;
+use plugin\radmin\app\admin\model\DataRecycle;
+use plugin\radmin\app\admin\model\DataRecycleLog;
+use plugin\radmin\app\admin\model\SensitiveData;
+use plugin\radmin\app\admin\model\SensitiveDataLog;
 use exception;
 use plugin\radmin\extend\ba\TableManager;
 use support\Log;

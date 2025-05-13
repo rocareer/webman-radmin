@@ -16,7 +16,7 @@
 namespace app\common\model;
 
 use Throwable;
-use app\admin\model\Config as adminConfigModel;
+use plugin\radmin\app\admin\model\Config as adminConfigModel;
 
 class Config extends BaseModel
 {

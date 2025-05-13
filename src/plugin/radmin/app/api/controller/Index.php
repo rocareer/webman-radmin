@@ -15,7 +15,7 @@
 
 namespace app\api\controller;
 
-use app\common\controller\Frontend;
+use plugin\radmin\app\common\controller\Frontend;
 use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\think\Db;

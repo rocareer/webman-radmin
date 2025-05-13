@@ -9,9 +9,9 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-namespace support\backup;
+namespace plugin\radmin\support\backup;
 
-use app\admin\model\security\backup\Log;
+use plugin\radmin\app\admin\model\security\backup\Log;
 use stdClass;
 
 class BackupEvent

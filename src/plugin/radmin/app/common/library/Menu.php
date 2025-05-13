@@ -16,8 +16,8 @@
 namespace app\common\library;
 
 use Throwable;
-use app\admin\model\UserRule;
-use app\admin\model\AdminRule;
+use plugin\radmin\app\admin\model\UserRule;
+use plugin\radmin\app\admin\model\AdminRule;
 
 
 /**

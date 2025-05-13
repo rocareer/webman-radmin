@@ -4,8 +4,8 @@
 namespace app\admin\controller\routine;
 
 use Throwable;
-use app\common\controller\Backend;
-use app\common\model\Attachment as AttachmentModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\common\model\Attachment as AttachmentModel;
 
 class Attachment extends Backend
 {

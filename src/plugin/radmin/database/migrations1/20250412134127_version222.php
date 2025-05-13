@@ -1,7 +1,7 @@
 <?php
 
 use plugin\radmin\support\think\Db;
-use app\admin\model\CrudLog;
+use plugin\radmin\app\admin\model\CrudLog;
 use Phinx\Migration\AbstractMigration;
 
 class Version222 extends AbstractMigration

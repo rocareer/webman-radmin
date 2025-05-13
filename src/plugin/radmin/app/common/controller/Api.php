@@ -2,7 +2,7 @@
 
 namespace app\common\controller;
 
-use app\controller\BaseController;
+use plugin\radmin\app\controller\BaseController;
 use Exception;
 use plugin\radmin\exception\ServerErrorHttpException;
 use plugin\radmin\support\think\Lang;

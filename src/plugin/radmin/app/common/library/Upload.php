@@ -24,8 +24,8 @@ use plugin\radmin\extend\ba\Random;
 use plugin\radmin\extend\ba\Filesystem;
 
 use InvalidArgumentException;
-use app\common\model\Attachment;
-use app\common\library\upload\driver;
+use plugin\radmin\app\common\model\Attachment;
+use plugin\radmin\app\common\library\upload\driver;
 
 /**
  * 上传

@@ -15,11 +15,11 @@
 
 namespace app\user\controller;
 
-use app\api\validate\Account as AccountValidate;
-use app\common\controller\Frontend;
-use app\common\model\User;
-use app\common\model\UserMoneyLog;
-use app\common\model\UserScoreLog;
+use plugin\radmin\app\api\validate\Account as AccountValidate;
+use plugin\radmin\app\common\controller\Frontend;
+use plugin\radmin\app\common\model\User;
+use plugin\radmin\app\common\model\UserMoneyLog;
+use plugin\radmin\app\common\model\UserScoreLog;
 use plugin\radmin\extend\ba\Captcha;
 use plugin\radmin\extend\ba\Date;
 use plugin\radmin\extend\ba\Random;

@@ -8,7 +8,7 @@
  * Describe  UserService.php
  */
 
-namespace support\member\user;
+namespace plugin\radmin\support\member\user;
 
 use plugin\radmin\support\member\Service;
 

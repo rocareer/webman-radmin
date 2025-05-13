@@ -6,7 +6,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use Throwable;
-use app\common\controller\Backend;
+use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
 
 /**

@@ -10,12 +10,12 @@ use exception;
 use plugin\radmin\extend\ba\Filesystem;
 use plugin\radmin\support\think\Db;
 use plugin\radmin\extend\ba\TableManager;
-use app\admin\model\CrudLog;
-use app\common\library\Menu;
-use app\admin\model\AdminLog;
-use app\admin\model\AdminRule;
-use app\common\controller\Backend;
-use app\admin\library\crud\Helper;
+use plugin\radmin\app\admin\model\CrudLog;
+use plugin\radmin\app\common\library\Menu;
+use plugin\radmin\app\admin\model\AdminLog;
+use plugin\radmin\app\admin\model\AdminRule;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\admin\library\crud\Helper;
 
 class Crud extends Backend
 {

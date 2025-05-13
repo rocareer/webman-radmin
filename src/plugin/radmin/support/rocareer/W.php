@@ -1,10 +1,10 @@
 <?php
 
 
-namespace support\rocareer;
+namespace plugin\radmin\support\rocareer;
 
 
-use app\common\library\token\driver;
+use plugin\radmin\app\common\library\token\driver;
 use think\Facade;
 
 /**

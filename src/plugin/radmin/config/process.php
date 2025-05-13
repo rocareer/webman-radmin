@@ -16,7 +16,7 @@
 
 use support\Log;
 use plugin\radmin\support\Request;
-use app\process\Http;
+use plugin\radmin\app\process\Http;
 
 global $argv;
 

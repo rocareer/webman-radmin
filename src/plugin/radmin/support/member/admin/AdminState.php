@@ -1,7 +1,7 @@
 <?php
 
 
-namespace support\member\admin;
+namespace plugin\radmin\support\member\admin;
 
 use plugin\radmin\support\member\State;
 

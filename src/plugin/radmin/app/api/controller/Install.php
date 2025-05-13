@@ -16,7 +16,7 @@
 
 namespace app\api\controller;
 
-use app\admin\model\Config;
+use plugin\radmin\app\admin\model\Config;
 use plugin\radmin\support\member\admin\AdminModel;
 use support\Log;
 use plugin\radmin\support\Response;
@@ -27,7 +27,7 @@ use plugin\radmin\extend\ba\Random;
 use plugin\radmin\extend\ba\Version;
 use plugin\radmin\extend\ba\Terminal;
 use plugin\radmin\extend\ba\Filesystem;
-use app\admin\model\User as UserModel;
+use plugin\radmin\app\admin\model\User as UserModel;
 
 /**
  * 安装控制器

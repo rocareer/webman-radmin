@@ -2,7 +2,7 @@
 
 namespace app\admin\model\data;
 
-use app\common\model\BaseModel;
+use plugin\radmin\app\common\model\BaseModel;
 
 /**
  * Backup

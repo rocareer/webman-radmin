@@ -4,8 +4,8 @@ namespace app\admin\controller\user;
 
 use plugin\radmin\support\Response;
 use Throwable;
-use app\common\controller\Backend;
-use app\admin\model\User as UserModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\admin\model\User as UserModel;
 
 class User extends Backend
 {

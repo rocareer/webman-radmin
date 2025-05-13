@@ -9,11 +9,11 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-use app\middleware\AccessControlMIddleWare;
-use app\middleware\AdminLog;
-use app\middleware\AdminSecurity;
-use app\middleware\RadminAuthMiddleware;
-use app\middleware\RequestMiddleWare;
+use plugin\radmin\app\middleware\AccessControlMIddleWare;
+use plugin\radmin\app\middleware\AdminLog;
+use plugin\radmin\app\middleware\AdminSecurity;
+use plugin\radmin\app\middleware\RadminAuthMiddleware;
+use plugin\radmin\app\middleware\RequestMiddleWare;
 
 return [
     ''      => [

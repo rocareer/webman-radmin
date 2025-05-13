@@ -8,10 +8,10 @@
  * Describe  SpiderService.php
  */
 
-namespace support\rocareer;
+namespace plugin\radmin\support\rocareer;
 
 use  app\admin\model\spider\Process;
-use app\admin\model\spider\Spider;
+use plugin\radmin\app\admin\model\spider\Spider;
 
 class SpiderService
 {

@@ -1,7 +1,7 @@
 <?php /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 
-namespace support\jwt;
+namespace plugin\radmin\support\jwt;
 
 use stdClass;
 use think\Facade;

@@ -8,9 +8,9 @@
  * Describe  AdminModel.php
  */
 
-namespace support\member\user;
+namespace plugin\radmin\support\member\user;
 
-use app\admin\model\Admin;
+use plugin\radmin\app\admin\model\Admin;
 use plugin\radmin\support\member\Model;
 use think\db\exception\DbException;
 

@@ -7,10 +7,10 @@ use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\Response;
 use Throwable;
 use plugin\radmin\extend\ba\Filesystem;
-use app\common\library\Email;
+use plugin\radmin\app\common\library\Email;
 use PHPMailer\PHPMailer\PHPMailer;
-use app\common\controller\Backend;
-use app\admin\model\Config as ConfigModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\admin\model\Config as ConfigModel;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class Config extends Backend

@@ -2,7 +2,7 @@
 
 namespace app\admin\controller\log\login;
 
-use app\common\controller\Backend;
+use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
 
 /**

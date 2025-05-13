@@ -15,7 +15,7 @@
 
 namespace app\middleware;
 
-use app\admin\model\AdminLog as AdminLogModel;
+use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
 use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;

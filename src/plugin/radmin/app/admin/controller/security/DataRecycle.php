@@ -3,8 +3,8 @@
 namespace app\admin\controller\security;
 
 use Throwable;
-use app\common\controller\Backend;
-use app\admin\model\DataRecycle as DataRecycleModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\admin\model\DataRecycle as DataRecycleModel;
 
 class DataRecycle extends Backend
 {

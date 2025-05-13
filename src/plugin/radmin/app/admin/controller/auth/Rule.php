@@ -2,9 +2,9 @@
 
 namespace app\admin\controller\auth;
 
-use app\admin\model\AdminGroup;
-use app\admin\model\AdminRule;
-use app\common\controller\Backend;
+use plugin\radmin\app\admin\model\AdminGroup;
+use plugin\radmin\app\admin\model\AdminRule;
+use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\Response;

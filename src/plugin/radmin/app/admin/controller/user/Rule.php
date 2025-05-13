@@ -5,9 +5,9 @@ namespace app\admin\controller\user;
 use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\Response;
 use Throwable;
-use app\admin\model\UserRule;
-use app\admin\model\UserGroup;
-use app\common\controller\Backend;
+use plugin\radmin\app\admin\model\UserRule;
+use plugin\radmin\app\admin\model\UserGroup;
+use plugin\radmin\app\common\controller\Backend;
 
 class Rule extends Backend
 {

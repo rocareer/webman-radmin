@@ -1,7 +1,7 @@
 <?php
 
 
-namespace support\member\user;
+namespace plugin\radmin\support\member\user;
 
 use plugin\radmin\support\member\Authenticator;
 use plugin\radmin\exception\UnauthorizedHttpException;

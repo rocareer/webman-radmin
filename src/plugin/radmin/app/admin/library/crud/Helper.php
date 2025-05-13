@@ -8,9 +8,9 @@ use plugin\radmin\extend\ba\Filesystem;
 use think\Exception;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\support\think\Db;
-use app\common\library\Menu;
-use app\admin\model\AdminRule;
-use app\admin\model\CrudLog;
+use plugin\radmin\app\common\library\Menu;
+use plugin\radmin\app\admin\model\AdminRule;
+use plugin\radmin\app\admin\model\CrudLog;
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Db\Adapter\AdapterInterface;
 

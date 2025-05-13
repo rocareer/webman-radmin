@@ -6,8 +6,8 @@ use plugin\radmin\support\Response;
 use Throwable;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\support\think\Db;
-use app\common\controller\Backend;
-use app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
 
 class SensitiveDataLog extends Backend
 {

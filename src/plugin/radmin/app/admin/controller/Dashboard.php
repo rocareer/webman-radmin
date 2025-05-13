@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\common\controller\Backend;
+use plugin\radmin\app\common\controller\Backend;
 
 class Dashboard extends Backend
 {

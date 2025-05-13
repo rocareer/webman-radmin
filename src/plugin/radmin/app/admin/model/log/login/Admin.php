@@ -2,7 +2,7 @@
 
 namespace app\admin\model\log\login;
 
-use app\common\model\BaseModel;
+use plugin\radmin\app\common\model\BaseModel;
 
 /**
  * Admin

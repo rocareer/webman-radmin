@@ -8,10 +8,10 @@
  * Describe  AdminModel.php
  */
 
-namespace support\member\admin;
+namespace plugin\radmin\support\member\admin;
 
-use app\admin\model\Admin;
-use app\admin\model\AdminGroup;
+use plugin\radmin\app\admin\model\Admin;
+use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Model;
 use plugin\radmin\support\think\Db;
 use think\db\exception\DbException;

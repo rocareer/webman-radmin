@@ -2,7 +2,7 @@
 
 
 
-namespace support\rocareer;
+namespace plugin\radmin\support\rocareer;
 
 
 

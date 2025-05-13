@@ -4,8 +4,8 @@ namespace app\admin\controller\security;
 
 use plugin\radmin\support\Response;
 use Throwable;
-use app\common\controller\Backend;
-use app\admin\model\SensitiveData as SensitiveDataModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\admin\model\SensitiveData as SensitiveDataModel;
 
 class SensitiveData extends Backend
 {

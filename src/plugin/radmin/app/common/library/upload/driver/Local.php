@@ -18,7 +18,7 @@ namespace app\common\library\upload\driver;
 use Webman\Http\UploadFile;
 use Webman\Exception\FileException;
 use plugin\radmin\extend\ba\Filesystem;
-use app\common\library\upload\driver;
+use plugin\radmin\app\common\library\upload\driver;
 
 /**
  * 上传到本地磁盘的驱动

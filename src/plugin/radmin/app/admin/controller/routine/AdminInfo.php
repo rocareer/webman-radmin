@@ -2,8 +2,8 @@
 
 namespace app\admin\controller\routine;
 
-use app\admin\model\Admin;
-use app\common\controller\Backend;
+use plugin\radmin\app\admin\model\Admin;
+use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

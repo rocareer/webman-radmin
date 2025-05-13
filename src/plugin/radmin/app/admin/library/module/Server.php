@@ -13,7 +13,7 @@ use FilesystemIterator;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use think\db\exception\PDOException;
-use app\admin\library\crud\Helper;
+use plugin\radmin\app\admin\library\crud\Helper;
 use GuzzleHttp\Exception\TransferException;
 
 /**

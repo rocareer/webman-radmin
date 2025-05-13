@@ -15,8 +15,8 @@
 
 namespace app\common\model\ai;
 
-use app\common\model\BaseModel;
-use app\common\library\ai\Helper;
+use plugin\radmin\app\common\model\BaseModel;
+use plugin\radmin\app\common\library\ai\Helper;
 
 /**
  * KbsContent

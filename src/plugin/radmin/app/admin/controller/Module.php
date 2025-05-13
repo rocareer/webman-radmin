@@ -12,10 +12,10 @@ namespace app\admin\controller;
 use Throwable;
 use exception;
 
-use app\admin\model\AdminLog;
-use app\admin\library\module\Server;
-use app\admin\library\module\Manage;
-use app\common\controller\Backend;
+use plugin\radmin\app\admin\model\AdminLog;
+use plugin\radmin\app\admin\library\module\Server;
+use plugin\radmin\app\admin\library\module\Manage;
+use plugin\radmin\app\common\controller\Backend;
 
 class Module extends Backend
 {

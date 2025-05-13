@@ -15,7 +15,7 @@
 
 namespace app\api\controller;
 
-use app\common\controller\Api;
+use plugin\radmin\app\common\controller\Api;
 use Exception;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\extend\ba\Captcha;

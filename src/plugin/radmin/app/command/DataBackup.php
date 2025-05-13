@@ -2,8 +2,8 @@
 
 namespace app\command;
 
-use app\admin\model\data\Backup;
-use app\admin\model\data\Table;
+use plugin\radmin\app\admin\model\data\Backup;
+use plugin\radmin\app\admin\model\data\Table;
 use Symfony\Component\Console\Input\InputOption;
 use plugin\radmin\support\think\Db;
 use Symfony\Component\Console\Command\Command;

@@ -17,8 +17,8 @@ namespace app\common\model;
 
 use Throwable;
 use think\model\relation\BelongsTo;
-use app\admin\model\Admin;
-use app\common\library\upload;
+use plugin\radmin\app\admin\model\Admin;
+use plugin\radmin\app\common\library\upload;
 
 /**
  * Attachment模型

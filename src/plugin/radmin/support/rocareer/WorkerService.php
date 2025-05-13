@@ -8,9 +8,9 @@
  * Describe  WorkerService.php
  */
 
-namespace support\rocareer;
+namespace plugin\radmin\support\rocareer;
 
-use app\admin\model\process\Worker;
+use plugin\radmin\app\admin\model\process\Worker;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 

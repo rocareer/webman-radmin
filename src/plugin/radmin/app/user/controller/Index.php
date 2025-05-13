@@ -15,8 +15,8 @@
 
 namespace app\user\controller;
 
-use app\api\validate\User as UserValidate;
-use app\common\controller\Frontend;
+use plugin\radmin\app\api\validate\User as UserValidate;
+use plugin\radmin\app\common\controller\Frontend;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\extend\ba\Captcha;
 use plugin\radmin\extend\ba\ClickCaptcha;
