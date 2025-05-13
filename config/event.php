@@ -8,6 +8,8 @@
  * Copyright [2014-2026] [https://rocareer.com]
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
+
+use support\backup\BackupEvent;
 use support\member\State;
 
 
@@ -18,7 +20,7 @@ return [
     'state.updateLogin.*' => [
         [State::class, 'updateLoginState'],
     ],
-    // 'member.logout' => [
-    //     [\plugin\radmin\service\member\state\StateManagerInterface::class, 'logout'],
-    // ]
+    'backup.log.*' => [
+        [BackupEvent::class, 'log'],
+    ],
 ];
