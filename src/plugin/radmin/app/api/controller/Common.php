@@ -18,11 +18,11 @@ namespace app\api\controller;
 use app\common\controller\Api;
 use Exception;
 use exception\BusinessException;
-use extend\ba\Captcha;
-use extend\ba\ClickCaptcha;
-use support\Response;
-use support\StatusCode;
-use support\token\Token;
+use plugin\radmin\extend\ba\Captcha;
+use plugin\radmin\extend\ba\ClickCaptcha;
+use plugin\radmin\support\Response;
+use plugin\radmin\support\StatusCode;
+use plugin\radmin\support\token\Token;
 use Throwable;
 
 

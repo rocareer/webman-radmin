@@ -1,11 +1,11 @@
 <?php /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 
-namespace support\think;
+namespace plugin\radmin\support\think;
 
 
 
-use support\Request;
+use plugin\radmin\support\Request;
 use think\Facade;
 use think\facade\Cookie;
 

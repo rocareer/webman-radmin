@@ -1,9 +1,9 @@
 <?php
 
 
-namespace support\think;
+namespace plugin\radmin\support\think;
 
-use support\Request;
+use plugin\radmin\support\Request;
 use think\facade\Cookie;
 
 

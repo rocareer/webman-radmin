@@ -8,7 +8,8 @@
  * Copyright [2014-2026] [https://rocareer.com]
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
-namespace Rocareer\Radmin;
+
+namespace Rocareer\WebmanRadmin;
 
 class Install
 {
@@ -18,8 +19,10 @@ class Install
      * @var array
      */
     protected static $pathRelation = array(
-        'config/plugin/rocareer/radmin' => 'config/plugin/rocareer/radmin',
-        '.env-example'                  => '.env-example',
+        'plugin/radmin' => 'plugin/radmin',
+        'web' => 'web',
+
+        '.env-example'  => '.env-example',
     );
 
     /**
@@ -50,6 +53,7 @@ class Install
      */
     public static function installByRelation(): void
     {
+        $backup_path=base_path()."/plugin/radmin/temp/backup";
         foreach (static::$pathRelation as $source => $dest) {
             if ($pos = strrpos($dest, '/')) {
                 $parent_dir = base_path() . '/' . substr($dest, 0, $pos);
@@ -76,6 +80,13 @@ class Install
         // 处理 .env-example 文件，复制并重命名为 .env
         $sourceEnvFile = __DIR__ . '/.env-example';
         $destEnvFile   = base_path() . '/.env';
+        if (file_exists($destEnvFile)) {
+            if (copy($destEnvFile, $backup_path.str_replace(base_path(),'',$destEnvFile))) {
+                echo "backup .env\n";
+            } else {
+                echo "Failed to backup .env\n";
+            }
+        }
         if (file_exists($sourceEnvFile)) {
             if (copy($sourceEnvFile, $destEnvFile)) {
                 echo "Copied .env-example to .env\n";

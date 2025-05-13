@@ -6,7 +6,7 @@ namespace support\rocareer;
 
 
 
-use support\think\ThinkLang;
+use plugin\radmin\support\think\ThinkLang;
 use think\Facade;
 
 /**

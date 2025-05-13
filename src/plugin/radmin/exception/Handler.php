@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace exception;
 
 use FastRoute\BadRouteException;
-use support\Log;
+use plugin\radmin\support\Log;
 use think\db\exception\DbException;
 use think\exception\ValidateException;
 use Throwable;

@@ -16,11 +16,11 @@
 namespace app\common\library\ai;
 
 use exception;
-use extend\ba\Date;
+use plugin\radmin\extend\ba\Date;
 use Throwable;
 use DateInterval;
-use support\think\Db;
-use support\Cache;
+use plugin\radmin\support\think\Db;
+use plugin\radmin\support\Cache;
 use Workerman\Protocols\Http\Chunk;
 use Psr\Http\Message\StreamInterface;
 use Workerman\Protocols\Http\Response;

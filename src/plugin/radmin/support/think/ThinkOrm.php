@@ -1,7 +1,7 @@
 <?php
 
 
-namespace support\think;
+namespace plugin\radmin\support\think;
 
 use think\Container;
 use think\Paginator;

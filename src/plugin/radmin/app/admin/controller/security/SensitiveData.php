@@ -2,7 +2,7 @@
 
 namespace app\admin\controller\security;
 
-use support\Response;
+use plugin\radmin\support\Response;
 use Throwable;
 use app\common\controller\Backend;
 use app\admin\model\SensitiveData as SensitiveDataModel;

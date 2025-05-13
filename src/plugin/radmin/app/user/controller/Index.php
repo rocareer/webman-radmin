@@ -18,12 +18,12 @@ namespace app\user\controller;
 use app\api\validate\User as UserValidate;
 use app\common\controller\Frontend;
 use exception\UnauthorizedHttpException;
-use extend\ba\Captcha;
-use extend\ba\ClickCaptcha;
-use support\member\Member;
-use support\Response;
-use support\StatusCode;
-use support\token\Token;
+use plugin\radmin\extend\ba\Captcha;
+use plugin\radmin\extend\ba\ClickCaptcha;
+use plugin\radmin\support\member\Member;
+use plugin\radmin\support\Response;
+use plugin\radmin\support\StatusCode;
+use plugin\radmin\support\token\Token;
 use Throwable;
 
 class Index extends Frontend

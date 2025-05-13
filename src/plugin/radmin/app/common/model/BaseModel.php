@@ -18,8 +18,8 @@ namespace app\common\model;
 use DateInterval;
 use DateTime;
 use DateTimeInterface;
-use support\cache\Cache;
-use support\think\Model as ThinkModel;
+use plugin\radmin\support\cache\Cache;
+use plugin\radmin\support\think\Model as ThinkModel;
 use function PHPUnit\Framework\isEmpty;
 
 class BaseModel extends ThinkModel

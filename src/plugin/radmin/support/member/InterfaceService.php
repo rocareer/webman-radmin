@@ -1,7 +1,7 @@
 <?php
 
 
-namespace support\member;
+namespace plugin\radmin\support\member;
 
 /**
  * 服务管理器接口

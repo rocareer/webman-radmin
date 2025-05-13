@@ -15,7 +15,7 @@
 
 namespace app\common\model;
 
-use extend\ba\Random;
+use plugin\radmin\extend\ba\Random;
 
 
 /**

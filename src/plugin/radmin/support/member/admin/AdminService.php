@@ -11,9 +11,9 @@
 namespace support\member\admin;
 
 use app\admin\model\AdminGroup;
-use support\member\Service;
-use support\token\Token;
-use support\think\Db;
+use plugin\radmin\support\member\Service;
+use plugin\radmin\support\token\Token;
+use plugin\radmin\support\think\Db;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

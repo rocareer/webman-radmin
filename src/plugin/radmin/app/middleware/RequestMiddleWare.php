@@ -6,7 +6,7 @@
 namespace app\middleware;
 
 use Exception;
-use support\Log;
+use plugin\radmin\support\Log;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;

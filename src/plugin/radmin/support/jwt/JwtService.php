@@ -19,10 +19,10 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\SimpleCache\InvalidArgumentException;
 use ReflectionException;
-use support\StatusCode;
+use plugin\radmin\support\StatusCode;
 use exception\TokenException;
 use stdClass;
-use support\think\Cache;
+use plugin\radmin\support\think\Cache;
 use Throwable;
 
 /**

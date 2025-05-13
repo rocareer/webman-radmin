@@ -17,8 +17,8 @@ namespace extend\ba;
 
 use GdImage;
 use Throwable;
-use support\Response;
-use support\think\Db;
+use plugin\radmin\support\Response;
+use plugin\radmin\support\think\Db;
 
 /**
  * 验证码类（图形验证码、继续流程验证码）

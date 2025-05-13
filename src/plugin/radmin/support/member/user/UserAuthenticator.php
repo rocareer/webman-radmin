@@ -3,7 +3,7 @@
 
 namespace support\member\user;
 
-use support\member\Authenticator;
+use plugin\radmin\support\member\Authenticator;
 use exception\UnauthorizedHttpException;
 
 class UserAuthenticator extends Authenticator

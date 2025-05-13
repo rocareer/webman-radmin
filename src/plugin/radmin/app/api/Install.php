@@ -16,7 +16,7 @@
 namespace app\api;
 
 use Throwable;
-use support\Db;
+use plugin\radmin\support\Db;
 use plugin\admin\api\Menu;
 
 class Install

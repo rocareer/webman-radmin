@@ -10,7 +10,7 @@
 
 namespace support\member\user;
 
-use support\member\Service;
+use plugin\radmin\support\member\Service;
 
 class UserService extends Service
 {

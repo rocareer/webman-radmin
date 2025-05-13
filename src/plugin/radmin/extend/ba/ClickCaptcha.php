@@ -15,8 +15,8 @@
 
 namespace extend\ba;
 
-use support\think\Lang;
-use support\think\Db;
+use plugin\radmin\support\think\Lang;
+use plugin\radmin\support\think\Db;
 use Throwable;
 
 

@@ -9,14 +9,14 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-namespace support\token\driver;
+namespace plugin\radmin\support\token\driver;
 
 use Exception;
-use support\jwt\Jwt as JwtFacade;
-use support\jwt\JwtService;
-use support\StatusCode;
-use support\token\Token;
-use support\token\TokenInterface;
+use plugin\radmin\support\jwt\Jwt as JwtFacade;
+use plugin\radmin\support\jwt\JwtService;
+use plugin\radmin\support\StatusCode;
+use plugin\radmin\support\token\Token;
+use plugin\radmin\support\token\TokenInterface;
 use exception\TokenException;
 use stdClass;
 

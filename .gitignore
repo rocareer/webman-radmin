@@ -17,3 +17,5 @@
 /config/plugin/
 /plugin/admin/
 
+/src/plugin/radmin/temp/
+/src/plugin/radmin/Writerside/

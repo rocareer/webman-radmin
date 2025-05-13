@@ -1,13 +1,13 @@
 <?php
 
 
-namespace support\member;
+namespace plugin\radmin\support\member;
 
 use Exception;
 use exception\UnauthorizedHttpException;
-use support\StatusCode;
-use support\think\Db;
-use support\token\Token;
+use plugin\radmin\support\StatusCode;
+use plugin\radmin\support\think\Db;
+use plugin\radmin\support\token\Token;
 use exception\BusinessException;
 use Throwable;
 use Webman\Event\Event;

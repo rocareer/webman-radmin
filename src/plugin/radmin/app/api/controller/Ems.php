@@ -17,9 +17,9 @@ namespace app\api\controller;
 
 use think\facade\Validate;
 use Throwable;
-use extend\ba\Captcha;
+use plugin\radmin\extend\ba\Captcha;
 use app\common\model\User;
-use extend\ba\ClickCaptcha;
+use plugin\radmin\extend\ba\ClickCaptcha;
 use app\common\library\Email;
 use app\common\controller\Frontend;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;

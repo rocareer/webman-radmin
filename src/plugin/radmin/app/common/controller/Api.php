@@ -5,9 +5,9 @@ namespace app\common\controller;
 use app\controller\BaseController;
 use Exception;
 use exception\ServerErrorHttpException;
-use support\think\Lang;
-use support\Response;
-use support\think\Db;
+use plugin\radmin\support\think\Lang;
+use plugin\radmin\support\Response;
+use plugin\radmin\support\think\Db;
 use Throwable;
 
 /**

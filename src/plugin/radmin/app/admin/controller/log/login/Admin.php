@@ -3,7 +3,7 @@
 namespace app\admin\controller\log\login;
 
 use app\common\controller\Backend;
-use support\Response;
+use plugin\radmin\support\Response;
 
 /**
  * 管理员登录

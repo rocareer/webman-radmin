@@ -1,6 +1,6 @@
 <?php
 
-use support\think\Db;
+use plugin\radmin\support\think\Db;
 use app\admin\model\CrudLog;
 use Phinx\Migration\AbstractMigration;
 

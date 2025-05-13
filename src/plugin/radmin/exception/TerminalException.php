@@ -2,7 +2,7 @@
 
 namespace exception;
 
-use support\StatusCode;
+use plugin\radmin\support\StatusCode;
 use Throwable;
 
 class TerminalException extends Exception

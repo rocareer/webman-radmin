@@ -2,10 +2,10 @@
 
 namespace app\admin\controller\security;
 
-use support\Response;
+use plugin\radmin\support\Response;
 use Throwable;
-use extend\ba\TableManager;
-use support\think\Db;
+use plugin\radmin\extend\ba\TableManager;
+use plugin\radmin\support\think\Db;
 use app\common\controller\Backend;
 use app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
 

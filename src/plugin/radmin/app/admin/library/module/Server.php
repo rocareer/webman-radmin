@@ -6,8 +6,8 @@ namespace app\admin\library\module;
 use Throwable;
 use ba\Depends;
 use exception;
-use extend\ba\Filesystem;
-use support\think\Db;
+use plugin\radmin\extend\ba\Filesystem;
+use plugin\radmin\support\think\Db;
 use FilesystemIterator;
 
 use RecursiveIteratorIterator;

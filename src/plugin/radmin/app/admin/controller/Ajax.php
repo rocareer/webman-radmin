@@ -4,11 +4,11 @@ namespace app\admin\controller;
 
 use exception\Exception;
 use Throwable;
-use extend\ba\Terminal;
-use support\Response;
-use extend\ba\TableManager;
-use support\think\Db;
-use support\Cache;
+use plugin\radmin\extend\ba\Terminal;
+use plugin\radmin\support\Response;
+use plugin\radmin\extend\ba\TableManager;
+use plugin\radmin\support\think\Db;
+use plugin\radmin\support\Cache;
 use app\admin\model\AdminLog;
 use app\common\library\upload;
 use app\common\controller\Backend;

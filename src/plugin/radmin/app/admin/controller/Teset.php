@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
-use support\Response;
+use plugin\radmin\support\Response;
 
 /**
  * 搜索

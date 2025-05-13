@@ -16,7 +16,7 @@
 namespace app\api\controller;
 
 use Throwable;
-use support\Response;
+use plugin\radmin\support\Response;
 use app\common\library\upload;
 use app\common\controller\Frontend;
 

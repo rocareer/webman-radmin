@@ -11,7 +11,7 @@
  */
 
 
-use extend\ba\Filesystem;
+use plugin\radmin\extend\ba\Filesystem;
 
 
 if (!function_exists('arrayStrictFilter')) {

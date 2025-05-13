@@ -11,7 +11,7 @@
 namespace support\member\user;
 
 use app\admin\model\Admin;
-use support\member\Model;
+use plugin\radmin\support\member\Model;
 use think\db\exception\DbException;
 
 class UserModel extends Model

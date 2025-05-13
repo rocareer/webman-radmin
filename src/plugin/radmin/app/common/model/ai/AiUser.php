@@ -18,7 +18,7 @@ namespace app\common\model\ai;
 use Throwable;
 use exception;
 use app\common\model\BaseModel;
-use support\think\Db;
+use plugin\radmin\support\think\Db;
 use app\common\library\ai\Helper;
 
 /**

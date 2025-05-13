@@ -5,10 +5,10 @@ namespace app\admin\controller\auth;
 use app\admin\model\AdminGroup;
 use app\admin\model\AdminRule;
 use app\common\controller\Backend;
-use extend\ba\Tree;
-use support\member\Member;
-use support\Response;
-use support\think\Db;
+use plugin\radmin\extend\ba\Tree;
+use plugin\radmin\support\member\Member;
+use plugin\radmin\support\Response;
+use plugin\radmin\support\think\Db;
 use Throwable;
 
 class Group extends Backend

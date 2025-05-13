@@ -1,7 +1,7 @@
 <?php /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
 
 
-namespace support\member;
+namespace plugin\radmin\support\member;
 
 use exception\BusinessException;
 

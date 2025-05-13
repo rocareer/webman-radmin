@@ -15,7 +15,7 @@
 
 namespace app\common\library\ai;
 
-use extend\ba\Date;
+use plugin\radmin\extend\ba\Date;
 use Throwable;
 use GuzzleHttp\Client;
 use app\common\model\ai\Config;

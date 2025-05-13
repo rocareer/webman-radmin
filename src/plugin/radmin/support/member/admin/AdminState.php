@@ -3,7 +3,7 @@
 
 namespace support\member\admin;
 
-use support\member\State;
+use plugin\radmin\support\member\State;
 
 
 class AdminState extends State

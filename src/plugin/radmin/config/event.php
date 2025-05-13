@@ -9,8 +9,8 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-use support\backup\BackupEvent;
-use support\member\State;
+use plugin\radmin\support\backup\BackupEvent;
+use plugin\radmin\support\member\State;
 
 
 return [

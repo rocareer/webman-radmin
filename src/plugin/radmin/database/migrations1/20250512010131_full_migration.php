@@ -3,7 +3,7 @@
 
 namespace database\migrations;
 
-use support\think\Db;
+use plugin\radmin\support\think\Db;
 
 class FullMigration
 {

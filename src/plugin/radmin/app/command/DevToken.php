@@ -2,7 +2,7 @@
 
 namespace app\command;
 
-use support\token\Token;
+use plugin\radmin\support\token\Token;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;

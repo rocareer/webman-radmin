@@ -1,13 +1,13 @@
 <?php
 
 
-namespace support\member;
+namespace plugin\radmin\support\member;
 
 use service\member\AuthException;
-use support\StatusCode;
+use plugin\radmin\support\StatusCode;
 use exception\BusinessException;
-use support\Log;
-use support\think\Db;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\think\Db;
 use Throwable;
 
 /**

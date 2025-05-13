@@ -16,9 +16,9 @@
 namespace app\api\controller;
 
 use app\common\controller\Frontend;
-use extend\ba\Tree;
-use support\member\Member;
-use support\think\Db;
+use plugin\radmin\extend\ba\Tree;
+use plugin\radmin\support\member\Member;
+use plugin\radmin\support\think\Db;
 use Throwable;
 
 class Index extends Frontend

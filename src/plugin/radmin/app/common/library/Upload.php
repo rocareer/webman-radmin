@@ -17,11 +17,11 @@ namespace app\common\library;
 
 use Throwable;
 use exception;
-use support\Log;
+use plugin\radmin\support\Log;
 use Webman\Http\UploadFile;
 use think\helper\Str;
-use extend\ba\Random;
-use extend\ba\Filesystem;
+use plugin\radmin\extend\ba\Random;
+use plugin\radmin\extend\ba\Filesystem;
 
 use InvalidArgumentException;
 use app\common\model\Attachment;

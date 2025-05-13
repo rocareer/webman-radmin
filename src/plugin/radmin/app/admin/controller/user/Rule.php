@@ -2,8 +2,8 @@
 
 namespace app\admin\controller\user;
 
-use extend\ba\Tree;
-use support\Response;
+use plugin\radmin\extend\ba\Tree;
+use plugin\radmin\support\Response;
 use Throwable;
 use app\admin\model\UserRule;
 use app\admin\model\UserGroup;

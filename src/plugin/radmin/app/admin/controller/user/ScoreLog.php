@@ -2,7 +2,7 @@
 
 namespace app\admin\controller\user;
 
-use support\Response;
+use plugin\radmin\support\Response;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

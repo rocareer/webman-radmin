@@ -1,25 +1,23 @@
 <?php
 /**
- *   +----------------------------------------------------------------------
- *   | Rocareer [ ROC YOUR CAREER ]
- *   +----------------------------------------------------------------------
- *   | Copyright (c) 2014~2025 Albert@rocareer.com All rights reserved.
- *   +----------------------------------------------------------------------
- *   | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
- *   +----------------------------------------------------------------------
- *   | Author: albert <Albert@rocareer.com>
- *   +----------------------------------------------------------------------
- **/
+ * File:        Cache.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/14 05:34
+ * Description:
+ *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
 
-namespace support\token\driver;
+namespace plugin\radmin\support\token\driver;
 
 
-use extend\ba\Random;
-use support\StatusCode;
-use support\token\TokenInterface;
+use plugin\radmin\extend\ba\Random;
+use plugin\radmin\support\StatusCode;
+use plugin\radmin\support\token\TokenInterface;
 use exception\TokenException;
 use stdClass;
-use support\Cache as WebmanCache;
+use plugin\radmin\support\Think\Cache as WebmanCache;
 use Throwable;
 
 class Cache implements TokenInterface

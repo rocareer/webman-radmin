@@ -7,9 +7,9 @@ namespace app\admin\controller\auth;
 
 use app\admin\model\Admin as AdminModel;
 use app\common\controller\Backend;
-use support\member\Member;
-use support\Response;
-use support\think\Db;
+use plugin\radmin\support\member\Member;
+use plugin\radmin\support\Response;
+use plugin\radmin\support\think\Db;
 use Throwable;
 
 class Admin extends Backend

@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use support\think\Db;
+use plugin\radmin\support\think\Db;
 use Phinx\Db\Adapter\MysqlAdapter;
 
 class Version200 extends AbstractMigration

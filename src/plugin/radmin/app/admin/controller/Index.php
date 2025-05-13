@@ -6,8 +6,8 @@ namespace app\admin\controller;
 use app\common\controller\Backend;
 use Exception;
 use exception\BusinessException;
-use support\member\Member;
-use support\token\Token;
+use plugin\radmin\support\member\Member;
+use plugin\radmin\support\token\Token;
 use Throwable;
 
 class Index extends Backend

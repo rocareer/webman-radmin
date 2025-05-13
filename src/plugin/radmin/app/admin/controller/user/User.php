@@ -2,7 +2,7 @@
 
 namespace app\admin\controller\user;
 
-use support\Response;
+use plugin\radmin\support\Response;
 use Throwable;
 use app\common\controller\Backend;
 use app\admin\model\User as UserModel;

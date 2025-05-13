@@ -5,8 +5,8 @@ namespace app\admin\controller\crud;
 use app\admin\model\CrudLog;
 use app\common\controller\Backend;
 use exception\BusinessException;
-use support\member\Member;
-use support\StatusCode;
+use plugin\radmin\support\member\Member;
+use plugin\radmin\support\StatusCode;
 
 /**
  * crud记录

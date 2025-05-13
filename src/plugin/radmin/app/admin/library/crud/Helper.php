@@ -4,10 +4,10 @@ namespace app\admin\library\crud;
 
 use think\db\exception\DbException;
 use Throwable;
-use extend\ba\Filesystem;
+use plugin\radmin\extend\ba\Filesystem;
 use think\Exception;
-use extend\ba\TableManager;
-use support\think\Db;
+use plugin\radmin\extend\ba\TableManager;
+use plugin\radmin\support\think\Db;
 use app\common\library\Menu;
 use app\admin\model\AdminRule;
 use app\admin\model\CrudLog;

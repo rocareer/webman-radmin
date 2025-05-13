@@ -3,7 +3,7 @@
 
 namespace app\admin\controller\user;
 
-use support\Response;
+use plugin\radmin\support\Response;
 use Throwable;
 use app\admin\model\UserRule;
 use app\admin\model\UserGroup;

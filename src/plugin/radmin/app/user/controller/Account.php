@@ -20,12 +20,12 @@ use app\common\controller\Frontend;
 use app\common\model\User;
 use app\common\model\UserMoneyLog;
 use app\common\model\UserScoreLog;
-use extend\ba\Captcha;
-use extend\ba\Date;
-use extend\ba\Random;
-use support\member\Member;
-use support\Response;
-use support\token\Token;
+use plugin\radmin\extend\ba\Captcha;
+use plugin\radmin\extend\ba\Date;
+use plugin\radmin\extend\ba\Random;
+use plugin\radmin\support\member\Member;
+use plugin\radmin\support\Response;
+use plugin\radmin\support\token\Token;
 use think\facade\Validate;
 use Throwable;
 

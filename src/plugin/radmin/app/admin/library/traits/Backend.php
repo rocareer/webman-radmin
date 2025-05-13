@@ -2,7 +2,7 @@
 
 namespace app\admin\library\traits;
 
-use support\Response;
+use plugin\radmin\support\Response;
 use Throwable;
 
 /**

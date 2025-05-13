@@ -40621,11 +40621,11 @@ var nue = _$((go, bo) => {
         })
     }
 
-    const na = "", $le = na + "/api/install/envBaseCheck",
-        Ole = na + "/api/install/envNpmCheck", Nle = na + "/api/install/testDatabase",
-        v$ = na + "/api/install/baseConfig", Ile = na + "/api/install/commandExecComplete",
-        Mle = na + "/api/install/mvDist", Ale = na + "/api/install/manualInstall",
-        Ple = na + "/api/install/terminal", Rle = na + "/api/install/changePackageManager",
+    const na = "", $le = na + "/app/radmin/api/install/envBaseCheck",
+        Ole = na + "/app/radmin/api/install/envNpmCheck", Nle = na + "/app/radmin/api/install/testDatabase",
+        v$ = na + "/app/radmin/api/install/baseConfig", Ile = na + "/app/radmin/api/install/commandExecComplete",
+        Mle = na + "/app/radmin/api/install/mvDist", Ale = na + "/app/radmin/api/install/manualInstall",
+        Ple = na + "/app/radmin/api/install/terminal", Rle = na + "/app/radmin/api/install/changePackageManager",
         Lle = () => Rr.get($le), xle = () => {
             const e = ii();
             return Rr.post(Ole, {manager: e.state.packageManager})
@@ -41003,7 +41003,7 @@ var nue = _$((go, bo) => {
             const n = e.__vccOpts || e;
             for (const [o, r] of t) n[o] = r;
             return n
-        }, Gle = ui(Yle, [["__scopeId", "data-v-c55edab5"]]), g$ = "/install/assets/logo.png",
+        }, Gle = ui(Yle, [["__scopeId", "data-v-c55edab5"]]), g$ = "/app/radmin/install/assets/logo.png",
         Xle = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAgMAAADQNkYNAAAACVBMVEUAAADc3eTc3+YFvQraAAAAAnRSTlMA9btEy6sAAAGFSURBVGje7dixbcNAEERR24EBuwSX4CpYimNVoRJYggIF1lTpAr6xPxgo2wkpHMEnUXe7+7LZbDabzWazeVo+/rv4My75Pnjt9XdckpPX3jOteMudF79yHZZ85sGLl9wmSnKAkkyYJCcpyURJ7qQk14GSPEhJbhMlOUCZMEmSk5RkoiR3UAbMa0LMJXxafmy34UOcpPA14ue8i2L4rIbhTQyjFGKUQoxTiFEKMUohRinEOIUYpxDjFGJIUQwphiFFMaQoBhTHkOIYUBwDimNAcQwpjgHFMaA4BhTHgOIYUBwDimNAcQwoggHFMaQ4hhTHkOIYUhxDimNIcczRL+kfzPn9l+w/Zf/C+GvZv/z+F+v/yL5d9JuSb339Bttv435Y9EeSH3z98eqHeF8qeEHSlz1eXPUlnBeKRTnaF71eWvcFvLcJfTPiLU/VWPXtmzeJfSvqDW/fVnvz3o8IfBBRjDv6oYqPbvoBkY+h+mGXj9T6wZ2PB/shpI86N5vNZrPZbDbPyh8nhMFbtczXEQAAAABJRU5ErkJggg==",
         Jle = Object.freeze(Object.defineProperty({
             __proto__: null,
@@ -41023,8 +41023,8 @@ var nue = _$((go, bo) => {
         nse = Object.freeze(Object.defineProperty({
             __proto__: null,
             default: tse
-        }, Symbol.toStringTag, {value: "Module"})), ose = "/install/assets/loading.gif",
-        rse = "/install/assets/lang.svg", ase = e => (Xd("data-v-631c568f"), e = e(), Jd(), e),
+        }, Symbol.toStringTag, {value: "Module"})), ose = "/app/radmin/install/assets/loading.gif",
+        rse = "/app/radmin/install/assets/lang.svg", ase = e => (Xd("data-v-631c568f"), e = e(), Jd(), e),
         lse = {class: "lang"}, sse = ["src"], ise = {class: "lang-list"},
         use = ase(() => F("span", {class: "lang-list-arrow"}, null, -1)),
         cse = {class: "logo-box"}, dse = ["src"], fse = {class: "title"}, pse = Y({
@@ -41671,8 +41671,8 @@ var nue = _$((go, bo) => {
                 const {t} = Bl(), n = window.location.protocol + "//" + window.location.host,
                     o = Et({
                         hideIndexUrl: "https://doc.buildadmin.com/guide/install/hideIndex.html",
-                        indexUrl: n + "/index.html#/",
-                        adminUrl: n + "/index.html#/admin"
+                        indexUrl: n + "/app/radmin/index.html#/",
+                        adminUrl: n + "/app/radmin/index.html#/admin"
                     }), r = l => {
                         window.open(l)
                     }, a = () => {

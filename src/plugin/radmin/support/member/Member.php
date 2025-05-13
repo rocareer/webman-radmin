@@ -2,7 +2,7 @@
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 
-namespace support\member;
+namespace plugin\radmin\support\member;
 
 use exception\BusinessException;
 use think\Facade;

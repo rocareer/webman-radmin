@@ -12,8 +12,8 @@ namespace support\member\admin;
 
 use app\admin\model\Admin;
 use app\admin\model\AdminGroup;
-use support\member\Model;
-use support\think\Db;
+use plugin\radmin\support\member\Model;
+use plugin\radmin\support\think\Db;
 use think\db\exception\DbException;
 
 class AdminModel extends Model

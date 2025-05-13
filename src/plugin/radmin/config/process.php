@@ -14,8 +14,8 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use support\Log;
-use support\Request;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\Request;
 use app\process\Http;
 
 global $argv;

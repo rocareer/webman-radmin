@@ -1,15 +1,15 @@
 <?php
 
 
-namespace support\member;
+namespace plugin\radmin\support\member;
 
 
 use exception\UnauthorizedHttpException;
-use support\StatusCode;
+use plugin\radmin\support\StatusCode;
 use exception\BusinessException;
-use support\Log;
-use support\think\Db;
-use support\think\Model as ThinkModel;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\think\Db;
+use plugin\radmin\support\think\Model as ThinkModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
