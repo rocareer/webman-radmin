@@ -13,7 +13,7 @@
 /** @noinspection PhpUndefinedVariableInspection */
 
 
-namespace app\user\controller;
+namespace plugin\radmin\app\user\controller;
 
 use plugin\radmin\app\api\validate\User as UserValidate;
 use plugin\radmin\app\common\controller\Frontend;

@@ -12,7 +12,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace app\process;
+namespace plugin\radmin\app\process;
 
 use FilesystemIterator;
 use RecursiveDirectoryIterator;

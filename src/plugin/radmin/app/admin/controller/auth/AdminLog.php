@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\auth;
+namespace plugin\radmin\app\admin\controller\auth;
 
 use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
 use plugin\radmin\app\common\controller\Backend;

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\command;
+namespace plugin\radmin\app\command;
 
 use think\facade\Db;
 use Symfony\Component\Console\Command\Command;

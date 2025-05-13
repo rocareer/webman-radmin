@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller;
+namespace plugin\radmin\app\admin\controller;
 
 use plugin\radmin\exception\Exception;
 use Throwable;

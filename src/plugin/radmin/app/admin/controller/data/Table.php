@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\data;
+namespace plugin\radmin\app\admin\controller\data;
 
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;

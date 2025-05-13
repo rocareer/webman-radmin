@@ -1,6 +1,6 @@
 <?php
 
-namespace app\common\controller;
+namespace plugin\radmin\app\common\controller;
 
 use plugin\radmin\app\controller\BaseController;
 use Exception;

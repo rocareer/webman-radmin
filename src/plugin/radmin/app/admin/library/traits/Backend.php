@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\library\traits;
+namespace plugin\radmin\app\admin\library\traits;
 
 use plugin\radmin\support\Response;
 use Throwable;

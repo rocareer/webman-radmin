@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\library\module;
+namespace plugin\radmin\app\admin\library\module;
 
 use Throwable;
 use plugin\radmin\extend\ba\Version;

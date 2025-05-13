@@ -6,7 +6,7 @@
  * Describe  CacheTest.php
  */
 
-namespace app\test\controller;
+namespace plugin\radmin\app\test\controller;
 
 
 

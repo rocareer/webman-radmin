@@ -3,7 +3,7 @@
 
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
-namespace app\middleware;
+namespace plugin\radmin\app\middleware;
 
 use Exception;
 use support\Log;

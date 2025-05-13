@@ -1,6 +1,6 @@
 <?php
 
-namespace app\process;
+namespace plugin\radmin\app\process;
 
 use Webman\App;
 

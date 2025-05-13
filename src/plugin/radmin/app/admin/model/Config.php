@@ -1,7 +1,7 @@
 <?php
 /** @noinspection PhpUnusedParameterInspection */
 
-namespace app\admin\model;
+namespace plugin\radmin\app\admin\model;
 
 use plugin\radmin\exception\BusinessException;
 use support\Think\Cache;

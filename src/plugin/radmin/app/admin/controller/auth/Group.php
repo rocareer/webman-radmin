@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\auth;
+namespace plugin\radmin\app\admin\controller\auth;
 
 use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\app\admin\model\AdminRule;

@@ -13,7 +13,7 @@
 
 
 
-namespace app\common\model;
+namespace plugin\radmin\app\common\model;
 
 use DateInterval;
 use DateTime;

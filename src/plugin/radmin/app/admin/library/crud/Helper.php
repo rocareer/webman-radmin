@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\library\crud;
+namespace plugin\radmin\app\admin\library\crud;
 
 use think\db\exception\DbException;
 use Throwable;

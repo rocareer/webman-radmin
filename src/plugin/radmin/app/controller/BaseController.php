@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace app\controller;
+namespace plugin\radmin\app\controller;
 
 use plugin\radmin\support\Request;
 use think\Validate;

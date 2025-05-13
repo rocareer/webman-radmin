@@ -1,6 +1,6 @@
 <?php
 
-namespace app\command;
+namespace plugin\radmin\app\command;
 
 use plugin\radmin\support\token\Token;
 use Symfony\Component\Console\Command\Command;

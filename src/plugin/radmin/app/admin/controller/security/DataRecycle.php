@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\security;
+namespace plugin\radmin\app\admin\controller\security;
 
 use Throwable;
 use plugin\radmin\app\common\controller\Backend;

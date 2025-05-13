@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\data;
+namespace plugin\radmin\app\admin\controller\data;
 
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\crud;
+namespace plugin\radmin\app\admin\controller\crud;
 
 use plugin\radmin\app\admin\model\CrudLog;
 use plugin\radmin\app\common\controller\Backend;

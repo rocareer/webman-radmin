@@ -7,7 +7,7 @@
 
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
-namespace app\admin\controller;
+namespace plugin\radmin\app\admin\controller;
 
 use Throwable;
 use exception;

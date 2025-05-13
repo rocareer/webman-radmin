@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\model\data;
+namespace plugin\radmin\app\admin\model\data;
 
 use plugin\radmin\app\common\model\BaseModel;
 

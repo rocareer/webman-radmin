@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\model\log\login;
+namespace plugin\radmin\app\admin\model\log\login;
 
 use plugin\radmin\app\common\model\BaseModel;
 

@@ -3,7 +3,7 @@
 
 /** @noinspection DuplicatedCode */
 
-namespace app\admin\controller\auth;
+namespace plugin\radmin\app\admin\controller\auth;
 
 use plugin\radmin\app\admin\model\Admin as AdminModel;
 use plugin\radmin\app\common\controller\Backend;

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\middleware;
+namespace plugin\radmin\app\middleware;
 
 
 use plugin\radmin\exception\BusinessException;

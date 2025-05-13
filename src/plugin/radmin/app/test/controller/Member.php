@@ -6,7 +6,7 @@
  * Describe  Member.php
  */
 
-namespace app\test\controller;
+namespace plugin\radmin\app\test\controller;
 
 use plugin\radmin\support\member\Factory;
 use plugin\radmin\support\member\Member as M;

@@ -1,7 +1,7 @@
 <?php
 /** @noinspection DuplicatedCode */
 
-namespace app\admin\controller\routine;
+namespace plugin\radmin\app\admin\controller\routine;
 
 use Throwable;
 use plugin\radmin\app\common\controller\Backend;

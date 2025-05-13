@@ -6,7 +6,7 @@
  * Describe  Index.php
  */
 
-namespace app\test\controller;
+namespace plugin\radmin\app\test\controller;
 
 use plugin\radmin\support\jwt\Jwt;
 use plugin\radmin\support\member\Factory;

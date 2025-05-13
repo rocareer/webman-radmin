@@ -1,7 +1,7 @@
 <?php
 /** @noinspection ALL */
 
-namespace app\admin\library\module;
+namespace plugin\radmin\app\admin\library\module;
 
 use Throwable;
 use ba\Depends;

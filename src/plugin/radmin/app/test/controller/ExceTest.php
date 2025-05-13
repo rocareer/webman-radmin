@@ -6,7 +6,7 @@
  * Describe  ExceTest.php
  */
 
-namespace app\test\controller;
+namespace plugin\radmin\app\test\controller;
 
 use plugin\radmin\exception\Exception;
 use plugin\radmin\exception\UnauthorizedHttpException;

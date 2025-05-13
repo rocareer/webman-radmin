@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\routine;
+namespace plugin\radmin\app\admin\controller\routine;
 
 use plugin\radmin\app\admin\model\Admin;
 use plugin\radmin\app\common\controller\Backend;

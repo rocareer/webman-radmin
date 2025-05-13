@@ -3,7 +3,7 @@
 
 /** @noinspection PhpUnusedParameterInspection */
 
-namespace app\admin\controller\crud;
+namespace plugin\radmin\app\admin\controller\crud;
 
 use Throwable;
 use exception;

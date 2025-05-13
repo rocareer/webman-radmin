@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\log\login;
+namespace plugin\radmin\app\admin\controller\log\login;
 
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;

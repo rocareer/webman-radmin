@@ -1,6 +1,6 @@
 <?php
 
-namespace app\command;
+namespace plugin\radmin\app\command;
 
 use plugin\radmin\app\admin\model\data\Backup;
 use plugin\radmin\app\admin\model\data\Table;

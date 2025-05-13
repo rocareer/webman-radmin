@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\validate;
+namespace plugin\radmin\app\admin\validate;
 
 use think\Validate;
 

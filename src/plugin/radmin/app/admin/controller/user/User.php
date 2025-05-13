@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\user;
+namespace plugin\radmin\app\admin\controller\user;
 
 use plugin\radmin\support\Response;
 use Throwable;
