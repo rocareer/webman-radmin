@@ -2,6 +2,6 @@
 return [
     'enable' => true,
     'path' => 'database/migrations/',
-    'table' => 'migrations',
+    'table' => 'ra_migrations',
     'prefix' => 'ra_'
 ];
