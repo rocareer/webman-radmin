@@ -1,5 +1,5 @@
 <?php
-namespace Rocareer\WebmanRadmin\support;
+namespace plugin\radmin\support;
 
 /**
  * File:        Request.php

@@ -8,7 +8,7 @@
  * Describe  AccessControl.php
  */
 
-namespace plugin\radmin\app\middleware;
+namespace plugin\radmin\middleware;
 
 use Webman\Http\Request;
 use Webman\Http\Response;

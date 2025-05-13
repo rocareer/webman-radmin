@@ -1,7 +1,7 @@
 <?php
 
 
-namespace support;
+namespace plugin\radmin\support;
 
 /**
  * 系统状态码定义

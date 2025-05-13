@@ -3,10 +3,12 @@
 
 namespace plugin\radmin\support\think;
 
+use support\think\Db;
 use think\Container;
 use think\Paginator;
 use Webman\Bootstrap;
 use Webman\ThinkOrm\DbManager;
+use support\think\Cache;
 
 class ThinkOrm implements Bootstrap
 {

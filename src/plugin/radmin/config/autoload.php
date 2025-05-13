@@ -14,10 +14,10 @@
 
 return [
     'files' => [
-        base_path() . '/support/Helper.php',
-        base_path() . '/app/functions.php',
-        base_path() . '/app/common.php',
-        base_path() . '/support/Request.php',
-        base_path() . '/support/Response.php',
+        base_path() . '/plugin/radmin/support/Helper.php',
+        base_path() . '/plugin/radmin/app/functions.php',
+        base_path() . '/plugin/radmin/app/common.php',
+        base_path() . '/plugin/radmin/support/Request.php',
+        base_path() . '/plugin/radmin/support/Response.php',
     ]
 ];

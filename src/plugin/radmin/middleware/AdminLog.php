@@ -1,7 +1,7 @@
 <?php
 
 
-namespace plugin\radmin\app\middleware;
+namespace plugin\radmin\middleware;
 
 use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
 use Throwable;

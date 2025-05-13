@@ -12,7 +12,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace plugin\radmin\app\middleware;
+namespace plugin\radmin\middleware;
 
 use Webman\Http\Request;
 use Webman\Http\Response;
