@@ -121,7 +121,7 @@ class Terminal
         $this->extend = request()->input('extend', '');
 
         // 初始化日志文件
-        $outputDir        = base_path() . 'runtime' . DIRECTORY_SEPARATOR . 'terminal';
+        $outputDir        = runtime_path() . DIRECTORY_SEPARATOR . 'terminal';
         $this->outputFile = $outputDir . DIRECTORY_SEPARATOR . 'exec.log';
         if (!is_dir($outputDir)) {
             mkdir($outputDir, 0755, true);
@@ -146,7 +146,14 @@ class Terminal
             return false;
         }
 
+
         $commands =  config('terminal.commands');
+        $customCommands=get_sys_config('','terminal');
+        foreach ($customCommands as $k=>$customCommand){
+            foreach ($customCommand as $comd){
+                $commands[$k][$comd['key']]=$comd['value'];
+            }
+        }
         if (stripos($key, '.')) {
             $key = explode('.', $key);
             if (!array_key_exists($key[0], $commands) || !is_array($commands[$key[0]]) || !array_key_exists($key[1], $commands[$key[0]])) {
@@ -195,7 +202,6 @@ class Terminal
         if (!ob_get_level()) ob_start();
 
         $this->commandKey = request()->input('command');
-
         $command = self::getCommand($this->commandKey);
         if (!$command) {
             $this->execError('The command was not allowed to be executed', true);
