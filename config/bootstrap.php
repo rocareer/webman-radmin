@@ -15,7 +15,5 @@
 use support\think\ThinkOrm;
 
 return [
-//    support\bootstrap\Session::class,
-//    Webman\ThinkOrm\ThinkOrm::class,
-//     ThinkOrm::class,
+    ThinkOrm::class,
 ];

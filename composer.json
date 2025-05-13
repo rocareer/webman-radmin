@@ -63,6 +63,7 @@
   },
   "autoload": {
     "psr-4": {
+      "Rocareer\\Radmin\\" : "vendor/rocareer/radmin/src",
       "Rocareer\\WebmanCache\\" : "vendor/rocareer/webman-cache/src",
       "": "./",
       "app\\": "./app",
