@@ -1,3 +1,15 @@
+## v1.0.5更新内容
+* feat(backend/data/backup): 新增数据备份管理模块
+* feat: 新增缓存配置和数据库配置文件
+* feat: 新增数据备份和恢复命令
+* chore(deps): 更新 composer 依赖并调整配置
+* feat(数据备份&终端组件): 新增数据备份API、备份下载组件及终端组件功能改进
+* feat(Terminal): 支持从系统配置加载自定义终端命令
+* chore(config): 移除缓存配置并添加备份事件监听
+* refactor(admin): 优化代码结构和功能
+* chore: 更新CHANGELOG.md记录变更
+
+**完整的更新日志**: https://gitee.com/rocareer/webman-radmin/compare/v1.0.4...v1.0.5
 ## v1.0.4更新内容
 
 * refactor: 优化中间件逻辑和配置检查
