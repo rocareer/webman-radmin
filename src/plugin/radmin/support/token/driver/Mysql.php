@@ -17,7 +17,7 @@ namespace plugin\radmin\support\token\driver;
 use plugin\radmin\extend\ba\Random;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\TokenInterface;
-use exception\TokenException;
+use plugin\radmin\exception\TokenException;
 use stdClass;
 use plugin\radmin\support\think\Db;
 use Throwable;

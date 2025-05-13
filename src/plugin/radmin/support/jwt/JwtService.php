@@ -13,14 +13,14 @@
 namespace support\jwt;
 
 use Exception;
-use exception\TokenExpiredException;
+use plugin\radmin\exception\TokenExpiredException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\SimpleCache\InvalidArgumentException;
 use ReflectionException;
 use plugin\radmin\support\StatusCode;
-use exception\TokenException;
+use plugin\radmin\exception\TokenException;
 use stdClass;
 use plugin\radmin\support\think\Cache;
 use Throwable;

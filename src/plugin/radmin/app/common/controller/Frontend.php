@@ -4,7 +4,7 @@ namespace app\common\controller;
 use service\auth\Auth;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
-use exception\UnauthorizedHttpException;
+use plugin\radmin\exception\UnauthorizedHttpException;
 use think\exception\HttpResponseException;
 use Throwable;
 

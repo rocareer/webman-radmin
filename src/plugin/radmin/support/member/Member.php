@@ -4,7 +4,7 @@
 
 namespace plugin\radmin\support\member;
 
-use exception\BusinessException;
+use plugin\radmin\exception\BusinessException;
 use think\Facade;
 
 /**

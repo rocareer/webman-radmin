@@ -4,7 +4,7 @@ namespace app\admin\controller\crud;
 
 use app\admin\model\CrudLog;
 use app\common\controller\Backend;
-use exception\BusinessException;
+use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
 

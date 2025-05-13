@@ -3,7 +3,7 @@
  * 异常处理配置
  */
 
-use exception\Handler;
+use plugin\radmin\exception\Handler;
 
 return [
     ''=> Handler::class,

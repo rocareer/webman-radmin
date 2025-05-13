@@ -4,7 +4,7 @@ namespace app\common\controller;
 
 use app\controller\BaseController;
 use Exception;
-use exception\ServerErrorHttpException;
+use plugin\radmin\exception\ServerErrorHttpException;
 use plugin\radmin\support\think\Lang;
 use plugin\radmin\support\Response;
 use plugin\radmin\support\think\Db;

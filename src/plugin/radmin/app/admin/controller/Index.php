@@ -5,7 +5,7 @@ namespace app\admin\controller;
 
 use app\common\controller\Backend;
 use Exception;
-use exception\BusinessException;
+use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\token\Token;
 use Throwable;

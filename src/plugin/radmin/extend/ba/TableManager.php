@@ -5,7 +5,7 @@
 
 namespace extend\ba;
 
-use exception\Exception;
+use plugin\radmin\exception\Exception;
 use Phinx\Db\Table;
 use Throwable;
 use plugin\radmin\support\think\Db;

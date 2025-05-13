@@ -5,8 +5,8 @@ namespace plugin\radmin\support\member;
 
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\Token;
-use exception\BusinessException;
-use exception\UnauthorizedHttpException;
+use plugin\radmin\exception\BusinessException;
+use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\think\Db;
 use think\db\exception\DataNotFoundException;

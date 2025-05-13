@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use exception\Exception;
+use plugin\radmin\exception\Exception;
 use Throwable;
 use plugin\radmin\extend\ba\Terminal;
 use plugin\radmin\support\Response;

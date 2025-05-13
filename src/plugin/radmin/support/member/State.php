@@ -5,7 +5,7 @@ namespace plugin\radmin\support\member;
 
 use service\member\AuthException;
 use plugin\radmin\support\StatusCode;
-use exception\BusinessException;
+use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\think\Db;
 use Throwable;

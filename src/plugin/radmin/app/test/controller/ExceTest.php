@@ -8,8 +8,8 @@
 
 namespace app\test\controller;
 
-use exception\Exception;
-use exception\UnauthorizedHttpException;
+use plugin\radmin\exception\Exception;
+use plugin\radmin\exception\UnauthorizedHttpException;
 use Throwable;
 
 class ExceTest

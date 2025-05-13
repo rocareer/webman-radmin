@@ -2,7 +2,7 @@
 
 namespace app\common\controller;
 
-use exception\BusinessException;
+use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\think\Model;

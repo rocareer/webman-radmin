@@ -4,11 +4,11 @@
 namespace plugin\radmin\support\member;
 
 use Exception;
-use exception\UnauthorizedHttpException;
+use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\think\Db;
 use plugin\radmin\support\token\Token;
-use exception\BusinessException;
+use plugin\radmin\exception\BusinessException;
 use Throwable;
 use Webman\Event\Event;
 

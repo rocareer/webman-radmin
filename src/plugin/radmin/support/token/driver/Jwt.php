@@ -17,7 +17,7 @@ use plugin\radmin\support\jwt\JwtService;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\Token;
 use plugin\radmin\support\token\TokenInterface;
-use exception\TokenException;
+use plugin\radmin\exception\TokenException;
 use stdClass;
 
 class Jwt implements TokenInterface
