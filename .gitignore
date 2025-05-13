@@ -12,3 +12,4 @@
 /.env.production
 /temp/
 /config/plugin/
+/plugin/admin/
