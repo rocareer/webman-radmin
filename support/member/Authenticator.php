@@ -77,14 +77,16 @@ abstract class Authenticator implements InterfaceAuthenticator
             // 6. 验证密码
             $this->verifyPassword();
 
+            // 9. 附加最终输出信息
+            $this->extendMemberInfo();
+
             // 7. 生成令牌
             $this->generateTokens();
 
             // 8. 更新登录状态
             $this->updateLoginState('success');
 
-            // 9. 附加最终输出信息
-            $this->extendMemberInfo();
+
 
 
             // 9. 缓存用户状态
@@ -203,7 +205,8 @@ abstract class Authenticator implements InterfaceAuthenticator
             'sub'  => $this->memberModel->id,
             'type' => 'access',
             'keep'=>false,
-            'role' => $this->role
+            'role' => $this->role,
+            'roles' => $this->memberModel->roles
         ];
         $this->memberModel->token = Token::encode($tokenData);
         if ($this->credentials['keep']) {

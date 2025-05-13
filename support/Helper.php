@@ -11,9 +11,7 @@
  */
 
 
-
 use extend\ba\Filesystem;
-
 
 
 if (!function_exists('arrayStrictFilter')) {
@@ -91,6 +89,7 @@ if (!function_exists('getEncryptedToken')) {
 if (!function_exists('getTokenFromRequest')) {
     /**
      * 从请求中获取token
+     * 新增 api-token 为前端下载等用
      * By albert  2025/05/06 17:30:58
      * @param null  $request
      * @param array $names
@@ -120,8 +119,13 @@ if (!function_exists('getTokenFromRequest')) {
             }
         }
 
-        // 从 query 参数或 body 获取 Token
-        return $request->input('batoken');
+
+        /**
+         * api-token 给前端 下载等用
+         * 从 query 参数或 body 获取 Token
+         */
+
+        return $request->input('api-token') ??$request->input('batoken');
     }
 
     /**

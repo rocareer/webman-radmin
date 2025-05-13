@@ -24,6 +24,7 @@ use think\Facade;
  * @method static void getGroupChildGroups(int $groupId, array &$children)
  * @method static array getGroupAdmins(array $groups)
  * @method static bool isSuperAdmin(?int $id = null)
+ * @method static bool terminal(string $token) 终端鉴权
  **/
 class Member extends Facade
 {

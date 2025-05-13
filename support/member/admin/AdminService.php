@@ -167,15 +167,15 @@ class AdminService extends Service
     /**
      * 终端鉴权
      * By albert  2025/05/04 00:16:27
-     * @param $token
+     * @param string $token
      * @return bool
      */
-    public function terminal($token)
+    public function terminal(string $token): bool
     {
-        $valid = Token::verify($token);
-        if ($valid) {
-            if ($this->isSuperAdmin($valid->user_id))
-                return true;
+        $payload=Token::verify($token);
+        var_dump($payload);
+        if ($payload&&$this->hasRole('super',$payload->roles)){
+            return true;
         }
         return false;
     }

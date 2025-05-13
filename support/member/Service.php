@@ -492,4 +492,13 @@ abstract class Service implements InterfaceService
         return array_unique($rules);
     }
 
+    /**
+     * 终端鉴权
+     * @param string $token
+     * @return   bool
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/13 00:39
+     */
+
+
 }
