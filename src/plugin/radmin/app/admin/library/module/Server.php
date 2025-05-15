@@ -7,7 +7,7 @@ use Throwable;
 use ba\Depends;
 use exception;
 use plugin\radmin\extend\ba\Filesystem;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use FilesystemIterator;
 
 use RecursiveIteratorIterator;
@@ -241,10 +241,10 @@ class Server
 
                 $tempLine .= $line;
                 if (str_ends_with(trim($line), ';')) {
-                    $tempLine = str_ireplace('__PREFIX__',  config('database.connections.mysql.prefix'), $tempLine);
+                    $tempLine = str_ireplace('__PREFIX__',  config('plugin.radmin.database.connections.mysql.prefix'), $tempLine);
                     $tempLine = str_ireplace('INSERT INTO ', 'INSERT IGNORE INTO ', $tempLine);
                     try {
-                        Db::execute($tempLine);
+                        Rdb::execute($tempLine);
                     } catch (PDOException) {
                         // $e->getMessage();
                     }
@@ -538,7 +538,7 @@ class Server
 
         file_put_contents($runtimeFilePath, json_encode([
             'files' => $filePaths,
-            'pure'  =>  config('buildadmin.module_pure_install'),
+            'pure'  =>  config('plugin.radmin.buildadmin.module_pure_install'),
         ]));
     }
 

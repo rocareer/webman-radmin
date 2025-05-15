@@ -18,7 +18,7 @@ class Local extends Driver
 	
 	public function __construct(array $options = [])
 	{
-		$this->options =  config('filesystem.disks.public');
+		$this->options =  config('plugin.radmin.filesystem.disks.public');
 		if (!empty($options)) {
 			$this->options = array_merge($this->options, $options);
 		}

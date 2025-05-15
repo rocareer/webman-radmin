@@ -9,7 +9,7 @@ use plugin\radmin\app\admin\model\Admin as AdminModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\Response;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 class Admin extends Backend
@@ -100,7 +100,7 @@ class Admin extends Backend
                             'group_id' => $datum,
                         ];
                     }
-                    Db::name('admin_group_access')->insertAll($groupAccess);
+                    Rdb::name('admin_group_access')->insertAll($groupAccess);
                 }
                 $this->model->commit();
 
@@ -179,7 +179,7 @@ class Admin extends Backend
                 $this->checkGroupAuth($checkGroups);
             }
 
-            Db::name('admin_group_access')
+            Rdb::name('admin_group_access')
                 ->where('uid', $id)
                 ->delete();
 
@@ -188,7 +188,7 @@ class Admin extends Backend
             $this->model->startTrans();
             try {
                 $result = $row->save($data);
-                if ($groupAccess) Db::name('admin_group_access')->insertAll($groupAccess);
+                if ($groupAccess) Rdb::name('admin_group_access')->insertAll($groupAccess);
                 $this->model->commit();
             } catch (Throwable $e) {
                 $this->model->rollback();
@@ -230,7 +230,7 @@ class Admin extends Backend
             foreach ($data as $v) {
                 if ($v->id != $this->request->member->id) {
                     $count += $v->delete();
-                    Db::name('admin_group_access')
+                    Rdb::name('admin_group_access')
                         ->where('uid', $v['id'])
                         ->delete();
                 }

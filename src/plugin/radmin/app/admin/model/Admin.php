@@ -7,7 +7,7 @@ namespace plugin\radmin\app\admin\model;
 
 
 use plugin\radmin\app\common\model\BaseModel;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use think\db\exception\DbException;
 
 /**
@@ -41,14 +41,14 @@ class Admin extends BaseModel
 
     public function getGroupArrAttr($value, $row): array
     {
-        return Db::name('admin_group_access')
+        return Rdb::name('admin_group_access')
             ->where('uid', $row['id'])
             ->column('group_id');
     }
 
     public function getGroupNameArrAttr($value, $row): array
     {
-        $groupAccess = Db::name('admin_group_access')
+        $groupAccess = Rdb::name('admin_group_access')
             ->where('uid', $row['id'])
             ->column('group_id');
         return AdminGroup::whereIn('id', $groupAccess)->column('name');
@@ -56,12 +56,12 @@ class Admin extends BaseModel
 
     public function getAvatarAttr($value): string
     {
-        return full_url($value, false,  config('buildadmin.default_avatar'));
+        return full_url($value, false,  config('plugin.radmin.buildadmin.default_avatar'));
     }
 
     public function setAvatarAttr($value): string
     {
-        return $value == full_url('', false,  config('buildadmin.default_avatar')) ? '' : $value;
+        return $value == full_url('', false,  config('plugin.radmin.buildadmin.default_avatar')) ? '' : $value;
     }
 
     public function getLastLoginTimeAttr($value): string

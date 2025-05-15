@@ -5,7 +5,7 @@ namespace plugin\radmin\app\command;
 use plugin\radmin\app\admin\model\data\Backup;
 use plugin\radmin\app\admin\model\data\Table;
 use Symfony\Component\Console\Input\InputOption;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -131,11 +131,11 @@ class DataBackup extends Command
             ->toArray();
         
         foreach ($lastBackupRecords as $record) {
-            $lastBackupCounts[$record['table_name']] = Db::table($record['table_name'])->count();
+            $lastBackupCounts[$record['table_name']] = Rdb::table($record['table_name'])->count();
         }
 
         $filteredTables = array_filter($tables, function($table) use ($lastBackup, $output, $lastBackupCounts) {
-            $currentCount = Db::table($table)->count();
+            $currentCount = Rdb::table($table)->count();
             $lastBackupCount = $lastBackupCounts[$table] ?? $currentCount;
             
             $needBackup = $this->shouldBackupTable($table, strtotime($lastBackup->create_time), $lastBackupCount);
@@ -175,7 +175,7 @@ class DataBackup extends Command
     private function createSqlBackupFile(string $table, string $tableBackupDir, string $versionTimestamp, array $data): string
     {
         $backupFile = $tableBackupDir . "{$versionTimestamp}.sql";
-        $createTable = Db::query("SHOW CREATE TABLE `{$table}`")[0]['Create Table'];
+        $createTable = Rdb::query("SHOW CREATE TABLE `{$table}`")[0]['Create Table'];
 
         $content = "-- Table structure for {$table}\n";
         $content .= $createTable . ";\n\n";
@@ -319,7 +319,7 @@ class DataBackup extends Command
     private function backupTable(string $table, InputInterface $input, OutputInterface $output, string $baseBackupDir, string $versionTimestamp): void
     {
         try {
-            $data = Db::table($table)->select()->toArray();
+            $data = Rdb::table($table)->select()->toArray();
             $this->recordCount += count($data);
 
             $output->writeln($this->formatOutput("Backing up table: {$table}", count($data) . " 条", 100));
@@ -409,8 +409,8 @@ class DataBackup extends Command
     {
         try {
             // 获取表状态和记录数
-            $status = Db::query("SHOW TABLE STATUS LIKE '{$table}'")[0] ?? [];
-            $recordCount = Db::table($table)->count();
+            $status = Rdb::query("SHOW TABLE STATUS LIKE '{$table}'")[0] ?? [];
+            $recordCount = Rdb::table($table)->count();
             
             return [
                 'lastModified' => isset($status['Update_time']) 
@@ -491,8 +491,8 @@ class DataBackup extends Command
      */
     private function generateTableSql(string $table): string
     {
-        $createTable = Db::query("SHOW CREATE TABLE `{$table}`")[0]['Create Table'];
-        $data = Db::table($table)->select()->toArray();
+        $createTable = Rdb::query("SHOW CREATE TABLE `{$table}`")[0]['Create Table'];
+        $data = Rdb::table($table)->select()->toArray();
 
         $content = "-- Table structure for {$table}\n";
         $content .= $createTable . ";\n\n";

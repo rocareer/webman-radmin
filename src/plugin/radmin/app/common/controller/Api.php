@@ -7,7 +7,7 @@ use Exception;
 use plugin\radmin\exception\ServerErrorHttpException;
 use plugin\radmin\support\think\Lang;
 use plugin\radmin\support\Response;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 /**
@@ -43,7 +43,7 @@ class Api extends BaseController
         if ($this->useSystemSettings) {
             // 检查数据库连接
             try {
-                Db::execute("SELECT 1");
+                Rdb::execute("SELECT 1");
             } catch (Exception) {
                 throw new ServerErrorHttpException('数据库连接失败');
             }
@@ -93,7 +93,7 @@ class Api extends BaseController
      * @param array       $header 发送的 header 信息
      * @return Response
      */
-    protected function success(string $msg = '', mixed $data = null, int $code = 1, ?string $type = null, array $header = []): Response
+    protected function success(string $msg = '', mixed $data = null, int $code = 1, ?string $type = null, array $header = []): ?Response
     {
        return $this->result($msg, $data, $code, $type, $header);
     }
@@ -105,9 +105,9 @@ class Api extends BaseController
      * @param int         $code   错误码
      * @param string|null $type   输出类型
      * @param array       $header 发送的 header 信息
-     * @return Response
+     * @return Response|null
      */
-    protected function error(string $msg = '', mixed $data = null, int $code = 0, ?string $type = null, array $header = []): Response
+    protected function error(string $msg = '', mixed $data = null, int $code = 0, ?string $type = null, array $header = []):?Response
     {
       return  $this->result($msg, $data, $code, $type, $header);
     }
@@ -119,10 +119,9 @@ class Api extends BaseController
      * @param int         $code 错误码
      * @param string|null $contentType
      * @param array       $headers
-     * @return Response
-     * @noinspection DuplicatedCode
+     * @return Response|null
      */
-    public function result(string $msg, mixed $data = null, int $code = 0, ?string $contentType = null, array $headers = []): Response
+    public function result(string $msg, mixed $data = null, int $code = 0, ?string $contentType = null, array $headers = []):?Response
     {
         // $start = microtime(true);
 
@@ -145,14 +144,14 @@ class Api extends BaseController
 
         //		 性能日志记录阈值可配置化
         //		$elapsed = microtime(true) - $start;
-        //		if($elapsed > config('slow_request_threshold', 0.7)) {
+        //		if($elapsed > config('plugin.radmin.slow_request_threshold', 0.7)) {
         //			Log::debug('Slow response: '.round($elapsed, 3).'s', [
         //				'uri'  => $this->request->uri(),
         //				'data' => $data,
         //			]);
         //		}
 
-        return json($responseData)->withHeaders($headers);
+        return $response->withHeaders($headers);
     }
 
 }

@@ -2,6 +2,6 @@
     public function get{%field%}Attr($value, $row): string
     {
         if ($row['{%originalFieldName%}'] === '' || $row['{%originalFieldName%}'] === null) return '';
-        $cityNames = \think\facade\Db::name('area')->whereIn('id', $row['{%originalFieldName%}'])->column('name');
+        $cityNames = \think\facade\Rdb::name('area')->whereIn('id', $row['{%originalFieldName%}'])->column('name');
         return $cityNames ? implode(',', $cityNames) : '';
     }

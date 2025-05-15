@@ -7,7 +7,7 @@ use exception;
 use plugin\radmin\extend\ba\Date;
 use Throwable;
 use DateInterval;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\support\Cache;
 use Workerman\Protocols\Http\Chunk;
 use Psr\Http\Message\StreamInterface;
@@ -100,10 +100,10 @@ class Chat
 		    $this->inputs = request()->post();    // 调试日志初始化
 		
 		    
-		    $this->debug  =  config('ai.debug');
+		    $this->debug  =  config('plugin.radmin.ai.debug');
 		    if($this->debug) {
 			                $fileName      = mb_substr(filter_var($this->inputs['message'], FILTER_SANITIZE_FULL_SPECIAL_CHARS), 0, 40);
-			                $this->logFile =  config('ai.log_dir') . date('Y-m-d') .
+			                $this->logFile =  config('plugin.radmin.ai.log_dir') . date('Y-m-d') .
 			    	            DIRECTORY_SEPARATOR . $fileName . '.log';
 			    			
 			                if (!is_dir(dirname($this->logFile))) {
@@ -654,16 +654,16 @@ class Chat
 
             // 扣取
             if ($amount) {
-                Db::startTrans();
+                Rdb::startTrans();
                 try {
                     UserTokens::create([
                         'ai_user_id' => $this->aiUserId,
                         'tokens'     => intval($amount) * (-1),
                         'memo'       => 'AI知识库：' . $this->tempData['messageTitle'],
                     ]);
-                    Db::commit();
+                    Rdb::commit();
                 } catch (Throwable $e) {
-                    Db::rollback();
+                    Rdb::rollback();
                     throw $e;
                 }
             }

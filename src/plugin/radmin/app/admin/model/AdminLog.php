@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\model;
 
 use plugin\radmin\app\common\model\BaseModel;
 use Exception;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use think\model\relation\BelongsTo;
 
 
@@ -168,7 +168,7 @@ class AdminLog extends BaseModel
             $title           = $title ?: __('Unknown') . '(' . $action . ')';
             $title           = $controllerTitle ? ($controllerTitle . '-' . $title) : $title;
         }
-        Db::name('admin_log')->insert([
+        Rdb::name('admin_log')->insert([
             'admin_id'  => $adminId,
             'username'  => $username,
             'url'       => substr(

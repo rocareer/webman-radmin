@@ -5,7 +5,7 @@ namespace plugin\radmin\app\common\controller;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\think\Model;
+use plugin\radmin\support\think\orm\Model;
 use Throwable;
 
 
@@ -122,7 +122,7 @@ class Backend extends Api
      * 引入traits
      * traits内实现了index、add、edit等方法
      */
-    use \app\admin\library\traits\Backend;
+    use \plugin\radmin\app\admin\library\traits\Backend;
 
     /**
      * 初始化

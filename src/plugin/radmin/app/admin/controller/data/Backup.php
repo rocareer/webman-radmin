@@ -17,7 +17,6 @@ class Backup extends Backend
     /**
      * Backup模型对象
      * @var object
-     * @phpstan-var \app\admin\model\data\Backup
      */
     protected object $model;
 
@@ -32,7 +31,7 @@ class Backup extends Backend
     public function initialize():void
     {
         parent::initialize();
-        $this->model = new \app\admin\model\data\Backup();
+        $this->model = new \plugin\radmin\app\admin\model\data\Backup();
         $this->backupPath=get_sys_config('backup_path');
     }
 

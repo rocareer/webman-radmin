@@ -15,12 +15,7 @@
 
 namespace plugin\radmin\app\common\model;
 
-use DateInterval;
-use DateTime;
-use DateTimeInterface;
-use plugin\radmin\support\cache\Cache;
-use plugin\radmin\support\think\Model as ThinkModel;
-use function PHPUnit\Framework\isEmpty;
+use plugin\radmin\support\think\orm\Model as ThinkModel;
 
 class BaseModel extends ThinkModel
 {

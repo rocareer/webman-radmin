@@ -30,7 +30,7 @@ class DataRestore extends Command
         $sql = file_get_contents($file);
         $queries = $this->splitSql($sql);
 
-        Db::startTrans();
+        Rdb::startTrans();
         try {
             $total = count($queries);
             $output->writeln("Starting restore from {$file}");
@@ -38,15 +38,15 @@ class DataRestore extends Command
 
             foreach ($queries as $i => $query) {
                 $output->writeln("Executing statement ".($i+1)."/{$total}");
-                Db::execute($query);
+                Rdb::execute($query);
             }
 
-            Db::commit();
+            Rdb::commit();
             $output->writeln("<info>Restore completed successfully</info>");
             return self::SUCCESS;
 
         } catch (\Exception $e) {
-            Db::rollback();
+            Rdb::rollback();
             $output->writeln("<error>Restore failed: ".$e->getMessage()."</error>");
             return self::FAILURE;
         }

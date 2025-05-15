@@ -7,7 +7,7 @@ use Throwable;
 use plugin\radmin\extend\ba\Terminal;
 use plugin\radmin\support\Response;
 use plugin\radmin\extend\ba\TableManager;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\support\Cache;
 use plugin\radmin\app\admin\model\AdminLog;
 use plugin\radmin\app\common\library\upload;
@@ -75,7 +75,7 @@ class Ajax extends Backend
     public function getDatabaseConnectionList(): Response
     {
         $quickSearch     = $this->request->input("quickSearch", '');
-        $connections     = config('think-orm.connections');
+        $connections     = config('plugin.radmin.think-orm.connections');
         $desensitization = [];
         foreach ($connections as $key => $connection) {
             $connection        = TableManager::getConnectionConfig($key);
@@ -117,7 +117,7 @@ class Ajax extends Backend
          return $this->error(__('Data table does not exist'));
         }
 
-        $tablePk = Db::connect(TableManager::getConnection($connection))
+        $tablePk = Rdb::connect(TableManager::getConnection($connection))
             ->table($table)
             ->getPk();
      return $this->success('', ['pk' => $tablePk]);
@@ -178,7 +178,7 @@ class Ajax extends Backend
         }
 
         $connection = TableManager::getConnection($connection);
-        $tablePk    = Db::connect($connection)->name($table)->getPk();
+        $tablePk    = Rdb::connect($connection)->name($table)->getPk();
      return $this->success('', [
             'pk'        => $tablePk,
             'fieldList' => TableManager::getTableColumns($table, $clean, $connection),

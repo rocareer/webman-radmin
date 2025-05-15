@@ -7,7 +7,7 @@ use Throwable;
 use plugin\radmin\extend\ba\Filesystem;
 use think\Exception;
 use plugin\radmin\extend\ba\TableManager;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\common\library\Menu;
 use plugin\radmin\app\admin\model\AdminRule;
 use plugin\radmin\app\admin\model\CrudLog;
@@ -285,7 +285,7 @@ class Helper
             return $data['id'];
         }
 
-        $connection = $data['table']['databaseConnection'] ?: config('think-orm.default');
+        $connection = $data['table']['databaseConnection'] ?: config('plugin.radmin.think-orm.default');
         $log        = CrudLog::create([
             'table_name' => $data['table']['name'],
             'comment'    => $data['table']['comment'],
@@ -748,7 +748,7 @@ class Helper
             . 'ORDER BY ORDINAL_POSITION';
 
         $columns     = [];
-        $tableColumn = Db::connect($connection)->query($sql, [$connectionConfig['database'], TableManager::tableName($table, true, $connection)]);
+        $tableColumn = Rdb::connect($connection)->query($sql, [$connectionConfig['database'], TableManager::tableName($table, true, $connection)]);
 
         foreach ($tableColumn as $item) {
             $isNullAble = $item['IS_NULLABLE'] == 'YES';
@@ -1012,7 +1012,7 @@ class Helper
 
     public static function writeModelFile(string $tablePk, array $fieldsMap, array $modelData, array $modelFile): void
     {
-        if ($modelData['connection'] && $modelData['connection'] != config('think-orm.default')) {
+        if ($modelData['connection'] && $modelData['connection'] != config('plugin.radmin.think-orm.default')) {
             $modelData['connection'] = "\n" . self::tab() . "// 数据库连接配置标识\n" . self::tab() . 'protected $connection = ' . "'{$modelData['connection']}';\n";
         } else {
             $modelData['connection'] = '';

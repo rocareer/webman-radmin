@@ -7,6 +7,7 @@ use plugin\radmin\app\common\controller\Backend;
 use Exception;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
+use plugin\radmin\support\Response;
 use plugin\radmin\support\token\Token;
 use Throwable;
 
@@ -19,7 +20,7 @@ class Index extends Backend
      * 后台初始化请求
      * @throws Throwable
      */
-    public function index(): \support\Response
+    public function index(): Response
     {
         $userInfo = $this->request->member;
         $menus    = Member::getMenus($userInfo->id);
@@ -34,15 +35,15 @@ class Index extends Backend
             'siteConfig' => [
                 'siteName'     => get_sys_config('site_name'),
                 'version'      => get_sys_config('version'),
-                'apiUrl'       => config('buildadmin.api_url'),
+                'apiUrl'       => config('plugin.radmin.buildadmin.api_url'),
                 'upload'       => keys_to_camel_case(get_upload_config(), ['max_size', 'save_name', 'allowed_suffixes', 'allowed_mime_types']),
                 'cdnUrl'       => full_url(),
-                'cdnUrlParams' => config('buildadmin.cdn_url_params'),
+                'cdnUrlParams' => config('plugin.radmin.buildadmin.cdn_url_params'),
             ],
             'terminal'   => [
                 'phpDevelopmentServer' => str_contains($_SERVER['SERVER_SOFTWARE'], 'Workerman'),
                 // 'phpDevelopmentServer' => $_SERVER['SERVER_SOFTWARE'],
-                'npmPackageManager'    => config('terminal.npm_package_manager'),
+                'npmPackageManager'    => config('plugin.radmin.terminal.npm_package_manager'),
             ]
         ]);
     }
@@ -51,7 +52,7 @@ class Index extends Backend
      * 管理员登录
      * @throws Throwable
      */
-    public function login(): \support\Response
+    public function login(): \plugin\radmin\support\Response
     {
         // 检查登录态
 
@@ -61,7 +62,7 @@ class Index extends Backend
         //     ], 303);
         // }
 
-        $captchaSwitch = config('buildadmin.admin_login_captcha');
+        $captchaSwitch = config('plugin.radmin.buildadmin.admin_login_captcha');
 
         // 检查提交
         if ($this->request->isPost()) {

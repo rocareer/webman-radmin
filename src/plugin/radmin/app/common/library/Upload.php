@@ -5,7 +5,7 @@ namespace plugin\radmin\app\common\library;
 
 use Throwable;
 use exception;
-use support\Log;
+use plugin\radmin\support\Log;
 use Webman\Http\UploadFile;
 use think\helper\Str;
 use plugin\radmin\extend\ba\Random;
@@ -94,7 +94,7 @@ class Upload
 	{
 		// 1. 使用 null 合并运算符提供默认配置
 		$this->config = array_merge(
-			 config('upload', []), // 确保总是返回数组
+			 config('plugin.radmin.upload', []), // 确保总是返回数组
 			$config
 		);
 		

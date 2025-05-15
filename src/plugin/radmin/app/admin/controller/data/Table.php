@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\controller\data;
 
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 /**
@@ -26,7 +26,7 @@ class Table extends Backend
     public function initialize(): void
     {
         parent::initialize();
-        $this->model = new \app\admin\model\data\Table();
+        $this->model = new plugin\radmin\app\admin\model\data\Table();
     }
 
 
@@ -60,12 +60,12 @@ class Table extends Backend
     public function sync(): Response
     {
         try {
-            $connection = Db::connect();
+            $connection = Rdb::connect();
             $dbTables     = $connection->getTables();
             $sysTables= $this->model->select()->toArray();
 
             var_dump($dbTables);
-            Db::startTrans();
+            Rdb::startTrans();
             try {
                 // 从数据库同步
                 foreach ($dbTables as $table) {
@@ -110,14 +110,14 @@ class Table extends Backend
                     }
                 }
 
-                Db::commit();
+                Rdb::commit();
                 return $this->success('同步成功', []);
             } catch (\Exception $e) {
-                Db::rollback();
+                Rdb::rollback();
                 return $this->error('同步失败');
             }
         } catch (\Exception $e) {
-            Db::rollback();
+            Rdb::rollback();
             return $this->error('同步失败');
         }
     }

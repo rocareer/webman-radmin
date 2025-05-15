@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\controller\security;
 
 use Throwable;
 use plugin\radmin\extend\ba\TableManager;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\admin\model\DataRecycleLog as DataRecycleLogModel;
 
@@ -33,7 +33,7 @@ class DataRecycleLog extends Backend
      * 还原
      * @throws Throwable
      */
-    public function restore(): \support\Response
+    public function restore(): \plugin\radmin\support\Response
     {
         $ids  = $this->request->input('ids', []);
         $data = $this->model->where('id', 'in', $ids)->select();
@@ -46,7 +46,7 @@ class DataRecycleLog extends Backend
         try {
             foreach ($data as $row) {
                 $recycleData = json_decode($row['data'], true);
-                if (is_array($recycleData) && Db::connect(TableManager::getConnection($row->connection))->name($row->data_table)->insert($recycleData)) {
+                if (is_array($recycleData) && Rdb::connect(TableManager::getConnection($row->connection))->name($row->data_table)->insert($recycleData)) {
                     $row->delete();
                     $count++;
                 }
@@ -68,7 +68,7 @@ class DataRecycleLog extends Backend
      * 详情
      * @throws Throwable
      */
-    public function info(): \support\Response
+    public function info(): \plugin\radmin\support\Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);

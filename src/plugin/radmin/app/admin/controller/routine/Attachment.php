@@ -31,7 +31,7 @@ class Attachment extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del(): \support\Response
+    public function del(): \plugin\radmin\support\Response
     {
         $where             = [];
         $dataLimitAdminIds = $this->getDataLimitAdminIds();

@@ -5,7 +5,7 @@ namespace plugin\radmin\app\admin\controller\security;
 use plugin\radmin\support\Response;
 use Throwable;
 use plugin\radmin\extend\ba\TableManager;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
 
@@ -96,7 +96,7 @@ class SensitiveDataLog extends Backend
         $this->model->startTrans();
         try {
             foreach ($data as $row) {
-                if (Db::connect(TableManager::getConnection($row->connection))->name($row->data_table)->where($row->primary_key, $row->id_value)->update([
+                if (Rdb::connect(TableManager::getConnection($row->connection))->name($row->data_table)->where($row->primary_key, $row->id_value)->update([
                     $row->data_field => $row->before
                 ])) {
                     $row->delete();

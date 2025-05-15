@@ -29,7 +29,7 @@ class DataRecycle extends Backend
      * 添加
      * @throws Throwable
      */
-    public function add(): \support\Response
+    public function add(): \plugin\radmin\support\Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -76,7 +76,7 @@ class DataRecycle extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit(): \support\Response
+    public function edit(): \plugin\radmin\support\Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);

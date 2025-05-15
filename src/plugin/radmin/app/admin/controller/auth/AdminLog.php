@@ -6,7 +6,7 @@ use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\Response;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 class AdminLog extends Backend
@@ -44,7 +44,7 @@ class AdminLog extends Backend
         if (!Member::hasRole('super')) {
             $where[] = ['admin_id', '=', $this->request->member->id];
         }
-        $res = Db::name('admin_log')->
+        $res = Rdb::name('admin_log')->
         withJoin($this->withJoinTable, $this->withJoinType)
             ->alias($alias)
             ->where($where)

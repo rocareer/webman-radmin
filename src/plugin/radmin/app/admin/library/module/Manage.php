@@ -109,7 +109,7 @@ class Manage
         }
         // 下载 - 系统版本号要求、已安装模块的互斥和依赖检测
         $zipFile = Server::download($this->uid, $this->installDir, [
-            'sysVersion'    =>  config('buildadmin.version'),
+            'sysVersion'    =>  config('plugin.radmin.buildadmin.version'),
             'nuxtVersion'   => Server::getNuxtVersion(),
             'ba-user-token' => $token,
             'order_id'      => $orderId,
@@ -173,7 +173,7 @@ class Manage
         try {
             Server::installPreCheck([
                 'uid'           => $info['uid'],
-                'sysVersion'    =>  config('buildadmin.version'),
+                'sysVersion'    =>  config('plugin.radmin.buildadmin.version'),
                 'nuxtVersion'   => Server::getNuxtVersion(),
                 'moduleVersion' => $info['version'],
                 'ba-user-token' => $token,
@@ -786,7 +786,7 @@ class Manage
                 }
             }
             // 纯净模式
-            if ( config('buildadmin.module_pure_install')) {
+            if ( config('plugin.radmin.buildadmin.module_pure_install')) {
                 Filesystem::delDir($baseDir);
             }
         }

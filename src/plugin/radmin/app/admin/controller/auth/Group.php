@@ -8,7 +8,7 @@ use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\Response;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 class Group extends Backend
@@ -76,7 +76,7 @@ class Group extends Backend
         // 有初始化值时不组装树状（初始化出来的值更好看）
         $this->assembleTree = $isTree && !$this->initValue;
 
-        $this->adminGroups = Db::name('admin_group_access')->where('uid', $this->request->member->id)->column('group_id');
+        $this->adminGroups = Rdb::name('admin_group_access')->where('uid', $this->request->member->id)->column('group_id');
     }
 
     public function index():Response
@@ -155,7 +155,7 @@ class Group extends Backend
                 return $this->error(__('Parameter %s can not be empty', ['']));
             }
 
-            $adminGroup = Db::name('admin_group_access')->where('uid', $this->request->member->id)->column('group_id');
+            $adminGroup = Rdb::name('admin_group_access')->where('uid', $this->request->member->id)->column('group_id');
             if (in_array($data['id'], $adminGroup)) {
                 return $this->error(__('You cannot modify your own management group!'));
             }
@@ -225,7 +225,7 @@ class Group extends Backend
             }
         }
 
-        $adminGroup = Db::name('admin_group_access')->where('uid', $this->request->member->id)->column('group_id');
+        $adminGroup = Rdb::name('admin_group_access')->where('uid', $this->request->member->id)->column('group_id');
         $count      = 0;
         $this->model->startTrans();
         try {

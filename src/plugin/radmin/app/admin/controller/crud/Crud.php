@@ -8,7 +8,7 @@ namespace plugin\radmin\app\admin\controller\crud;
 use Throwable;
 use exception;
 use plugin\radmin\extend\ba\Filesystem;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\app\admin\model\CrudLog;
 use plugin\radmin\app\common\library\Menu;
@@ -74,7 +74,7 @@ class Crud extends Backend
      * 开始生成
      * @throws Throwable
      */
-    public function generate(): \support\Response
+    public function generate(): \plugin\radmin\support\Response
     {
         $type   = $this->request->post('type', '');
         $table  = $this->request->post('table', []);
@@ -293,7 +293,7 @@ class Crud extends Backend
                 'id'     => $crudLogId ?? 0,
                 'status' => 'error',
             ]);
-            if (config('app_debug', false)) throw $e;
+            if (config('plugin.radmin.app_debug', false)) throw $e;
          return $this->error($e->getMessage());
         }
 
@@ -306,7 +306,7 @@ class Crud extends Backend
      * 从log开始
      * @throws Throwable
      */
-    public function logStart(): \support\Response
+    public function logStart(): \plugin\radmin\support\Response
     {
         $id   = $this->request->post('id');
         $type = $this->request->post('type', '');
@@ -352,7 +352,7 @@ class Crud extends Backend
         $tableName  = TableManager::tableName($info['table']['name'], false, $connection);
         $adapter    = TableManager::phinxAdapter(true, $connection);
         if ($adapter->hasTable($tableName)) {
-            $info['table']['empty'] = Db::connect($connection)
+            $info['table']['empty'] = Rdb::connect($connection)
                 ->name($tableName)
                 ->limit(1)
                 ->select()
@@ -374,7 +374,7 @@ class Crud extends Backend
      * 删除CRUD记录和生成的文件
      * @throws Throwable
      */
-    public function delete(): \support\Response
+    public function delete(): \plugin\radmin\support\Response
     {
         $id   = $this->request->post('id');
         $info = CrudLog::find($id)->toArray();
@@ -417,7 +417,7 @@ class Crud extends Backend
      * 获取文件路径数据
      * @throws Throwable
      */
-    public function getFileData(): \support\Response
+    public function getFileData(): \plugin\radmin\support\Response
     {
         $table       = $this->request->get('table');
         $commonModel = $this->request->get('commonModel');
@@ -483,13 +483,13 @@ class Crud extends Backend
      * 检查是否已有CRUD记录
      * @throws Throwable
      */
-    public function checkCrudLog(): \support\Response
+    public function checkCrudLog(): \plugin\radmin\support\Response
     {
         $table      = $this->request->get('table');
         $connection = $this->request->get('connection');
-        $connection = $connection ?: config('think-orm.default');
+        $connection = $connection ?: config('plugin.radmin.think-orm.default');
 
-        $crudLog = Db::name('crud_log')
+        $crudLog = Rdb::name('crud_log')
             ->where('table_name', $table)
             ->where('connection', $connection)
             ->order('create_time desc')
@@ -517,7 +517,7 @@ class Crud extends Backend
         if ($type == 'db') {
             $sql       = 'SELECT * FROM `information_schema`.`tables` '
                 . 'WHERE TABLE_SCHEMA = ? AND table_name = ?';
-            $tableInfo = Db::connect($connection)->query($sql, [$connectionConfig['database'], $table]);
+            $tableInfo = Rdb::connect($connection)->query($sql, [$connectionConfig['database'], $table]);
             if (!$tableInfo) {
              return $this->error(__('Record not found'));
             }
@@ -525,7 +525,7 @@ class Crud extends Backend
             // 数据表是否有数据
             $adapter = TableManager::phinxAdapter(false, $connection);
             if ($adapter->hasTable($table)) {
-                $empty = Db::connect($connection)
+                $empty = Rdb::connect($connection)
                     ->table($table)
                     ->limit(1)
                     ->select()
@@ -546,7 +546,7 @@ class Crud extends Backend
      * 生成前检查
      * @throws Throwable
      */
-    public function generateCheck(): \support\Response
+    public function generateCheck(): \plugin\radmin\support\Response
     {
         $table          = $this->request->post('table');
         $connection     = $this->request->post('connection');
@@ -591,7 +591,7 @@ class Crud extends Backend
      * CRUD 设计记录上传成功标记
      * @throws Throwable
      */
-    public function uploadCompleted(): \support\Response
+    public function uploadCompleted(): \plugin\radmin\support\Response
     {
         $syncIds      = $this->request->post('syncIds/a', []);
         $cancelSync   = $this->request->post('cancelSync/b', false);

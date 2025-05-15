@@ -9,7 +9,7 @@ class Index
 	public function index()
 	{
         try {
-            if (!is_file(public_path() . '/install.lock') && is_file(radmin_app() . '/view/install' . DIRECTORY_SEPARATOR . 'index.html')) {
+            if (!is_file(public_path() . '/install.lock') && is_file(base_path() . '/plugin/radmin/app/view/install' . DIRECTORY_SEPARATOR . 'index.html')) {
                 return redirect('/app/radmin/install');
             }
             return view('index/index');

@@ -6,7 +6,7 @@ namespace plugin\radmin\app\common\model\ai;
 use Throwable;
 use exception;
 use plugin\radmin\app\common\model\BaseModel;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\common\library\ai\Helper;
 
 /**
@@ -72,9 +72,9 @@ class AiUser extends BaseModel
         if (!$row['user_id']) return '-';
 
         if ($row['user_type'] == 'user') {
-            return Db::name('user')->where('id', $row['user_id'])->value('nickname');
+            return Rdb::name('user')->where('id', $row['user_id'])->value('nickname');
         } elseif ($row['user_type'] == 'admin') {
-            return Db::name('admin')->where('id', $row['user_id'])->value('nickname');
+            return Rdb::name('admin')->where('id', $row['user_id'])->value('nickname');
         }
         return '';
     }
