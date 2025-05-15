@@ -11,8 +11,8 @@ Webman生态作为高性能PHP框架的代表，长期以来缺乏专业的前�
 <img alt="控制面板预览" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="控制面板预览"/>
 
 ## 版本和版本说明
-- **当前版本**：v1.0.4 预览
-- **发布时间**：2025年05月10日
+- **当前版本**：v1.0.6 预览
+- **发布时间**：2025年05月16日
 - **更新日志**：[更新日志](https://gitee.com/rocareer/webman-radmin/blob/master/CHANGELOG.md)
 - **不兼容更新**：目前是早期版本，后续发布的版本将不兼容更新,直到2.0版本发布
 
@@ -86,8 +86,10 @@ npm run dev
 
 ### 后端配置
 ```php
-  composer create-project rocareer/radmin "YourProjectName" --stability=dev
-  //注意 目前只发布了dev版本
+  // 安装 Webman
+  composer create-project workerman/webman "YourProjectName" 
+  // 安装 Radmin 插件
+  composer require rocareer/webman-radmin
 
 ```
 

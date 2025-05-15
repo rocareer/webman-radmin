@@ -1,4 +1,4 @@
-# About Webman-Radmin (Preview 1.0.4)
+# About Webman-Radmin (Preview 1.0.6)
 * An efficient and elegant front-end and back-end separation management platform
 
 ## Project Background
@@ -12,8 +12,8 @@ As a representative of high-performance PHP frameworks, the Webman ecosystem has
 <img alt="Dashboard Preview" src="https://v10.rocareer.com/static/images/preview/s_dashboard_1.png" title="Dashboard Preview"/>
 
 ## Version and Release Notes
-- **Current Version**: v1.0.4 Preview
-- **Release Date**: May 11, 2025
+- **Current Version**: v1.0.6 Preview
+- **Release Date**: May 16, 2025
 - **Changelog**: [Changelog](https://gitee.com/rocareer/webman-radmin/blob/master/CHANGELOG.md)
 - **Incompatible Updates**: This is the start version, and subsequent releases will be incompatible until version 2.0 is released.
 
@@ -86,8 +86,11 @@ npm run dev
 
 ### Back-end Configuration
 ```php
-composer create-project rocareer/radmin "YourProjectName" --stability=dev
-// Note: Currently, only the dev version has been released
+  // Create-project Webman
+  composer create-project workerman/webman "YourProjectName" 
+  // Install Radmin 
+  composer require rocareer/webman-radmin
+
 ```
 
 ## Tech Stack (Continuously Updated)
