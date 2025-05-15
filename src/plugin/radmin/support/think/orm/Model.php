@@ -5,6 +5,7 @@ namespace plugin\radmin\support\think\orm;
 use think\db\Query;
 use think\db\BaseQuery;
 use think\model\Collection;
+use WeakMap;
 
 /**
  * @method static Rdb name(string $name) 指定当前数据表名（不含前缀）
@@ -46,7 +47,7 @@ use think\model\Collection;
  * @method static Query limit(mixed $offset, integer $length = null) 查询LIMIT
  * @method static Query order(mixed $field, string $order = null) 查询ORDER
  * @method static Query orderRaw(string $field, array $bind = []) 查询ORDER
- * @method static Query cache(mixed $key = null, integer $expire = null) 设置查询缓存
+ * @method static Query cache(mixed $key = null, ?integer $expire = null,?string $tag=null) 设置查询缓存
  * @method mixed value(string $field) 获取某个字段的值
  * @method array column(string $field, string $key = '') 获取某个列的值
  * @method Model find(mixed $data = null) 查询单个记录 不存在返回Null
@@ -57,4 +58,11 @@ use think\model\Collection;
 class Model extends \think\Model
 {
 
+    public function __construct(array | object $data = [])
+    {
+        // 初始化数据
+        if (radminOrmInstalled()||request()->action=='testDatabase'){
+            parent::__construct($data);
+        }
+    }
 }

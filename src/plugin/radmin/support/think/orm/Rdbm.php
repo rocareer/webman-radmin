@@ -41,7 +41,6 @@ class Rdbm extends DbManager
             $name = $this->getConfig('default', 'mysql');
         }
         $key = "plugin.radmin.think-orm.connections.$name";
-        var_dump($key);
         $connection = Context::get($key);
         if (!$connection) {
             if (!isset(static::$pools[$name])) {
