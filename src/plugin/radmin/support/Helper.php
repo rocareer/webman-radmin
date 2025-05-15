@@ -41,6 +41,18 @@ if (!function_exists('arrayStrictFilter')) {
     }
 }
 
+if (!function_exists('radminInstalled')) {
+
+    function radminInstalled(): bool
+    {
+        $lockedFile=base_path().'/plugin/radmin/public/install.lock';
+        if (file_exists($lockedFile)) {
+            return true;
+        }
+        return false;
+    }
+}
+
 /**
  * 检查路径是否需要跳过认证
  * @param string|null $path
@@ -51,7 +63,8 @@ if (!function_exists('shouldExclude')) {
     function shouldExclude(?string $path = null): bool
     {
         $path          = $path ?? request()->path();
-        $excludeRoutes = config('auth.exclude', []);
+        var_dump($path);
+        $excludeRoutes = config('plugin.radmin.auth.exclude', []);
 
         foreach ($excludeRoutes as $route) {
             if (strpos($route, '*') !== false) {
