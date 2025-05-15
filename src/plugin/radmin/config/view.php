@@ -12,11 +12,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use plugin\radmin\support\view\Raw;
-use plugin\radmin\support\view\Twig;
-use plugin\radmin\support\view\Blade;
-use plugin\radmin\support\view\ThinkPHP;
-
+use support\view\Raw;
 return [
     'handler' => Raw::class
 ];

@@ -37,23 +37,23 @@ return [
         // 测试命令
         'test'                  => [
             'npm'  => [
-                'cwd'     => 'public/npm-install-test',
+                'cwd'     => 'plugin/radmin/public/npm-install-test',
                 'command' => 'npm install',
             ],
             'cnpm' => [
-                'cwd'     => 'public/npm-install-test',
+                'cwd'     => 'plugin/radmin/public/npm-install-test',
                 'command' => 'cnpm install',
             ],
             'yarn' => [
-                'cwd'     => 'public/npm-install-test',
+                'cwd'     => 'plugin/radmin/public/npm-install-test',
                 'command' => 'yarn install',
             ],
             'pnpm' => [
-                'cwd'     => 'public/npm-install-test',
+                'cwd'     => 'plugin/radmin/public/npm-install-test',
                 'command' => 'pnpm install',
             ],
             'ni'   => [
-                'cwd'     => 'public/npm-install-test',
+                'cwd'     => 'plugin/radmin/public/npm-install-test',
                 'command' => 'ni install',
             ],
         ],
@@ -162,6 +162,10 @@ return [
         'ping'                  => [
             'baidu'     => 'ping baidu.com',
             'localhost' => 'ping 127.0.0.1 -n 6',
+        ],
+        'worker'=>[
+            'reload'=>'php start.php reload',
+            'restart'=>'php start.php restart',
         ]
     ],
 ];

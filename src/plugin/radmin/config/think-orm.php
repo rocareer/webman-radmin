@@ -8,13 +8,13 @@ return [
             // 数据库类型
             'type' => 'mysql',
             // 服务器地址
-            'hostname' => getenv('THINKORM_DEFAULT_HOST', '127.0.0.1'),
+            'hostname' => getenv('THINKORM_DEFAULT_HOSTNAME', '127.0.0.1'),
             // 数据库名
-            'database' => getenv('THINKORM_DEFAULT_DATABASE', 'test'),
+            'database' => getenv('THINKORM_DEFAULT_DATABASE', 'dev'),
             // 数据库用户名
             'username' => getenv('THINKORM_DEFAULT_USERNAME', 'root'),
             // 数据库密码
-            'password' => getenv('THINKORM_DEFAULT_PASSWORD', ''),
+            'password' => getenv('THINKORM_DEFAULT_PASSWORD', '123456'),
             // 数据库连接端口
             'hostport' => getenv('THINKORM_DEFAULT_PORT', '3306'),
             // 数据库连接参数
@@ -25,7 +25,7 @@ return [
             // 数据库编码默认采用utf8
             'charset' => getenv('THINKORM_DEFAULT_CHARSET', 'utf8'),
             // 数据库表前缀
-            'prefix' => getenv('THINKORM_DEFAULT_PREFIX', ''),
+            'prefix' => getenv('THINKORM_DEFAULT_PREFIX', 'ra_'),
             // 断线重连
             'break_reconnect' => true,
             // 自定义分页类
