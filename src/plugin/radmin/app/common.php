@@ -191,6 +191,7 @@ if (!function_exists('full_url')) {
         // 存储/上传资料配置 todo
         //		Event::trigger('uploadConfigInit', App::getInstance());
 
+
         $cdnUrl = config('plugin.radmin.buildadmin.cdn_url');
         if (!$cdnUrl) {
             if (request()) {
@@ -208,6 +209,7 @@ if (!function_exists('full_url')) {
         }
 
         $relativeUrl = $relativeUrl ?: $default;
+
         if (!$relativeUrl)
             return $domain;
 
