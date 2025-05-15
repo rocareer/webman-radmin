@@ -22,7 +22,7 @@ class TokenManager
     protected array  $drivers       = [];
     protected string $defaultDriver = 'jwt';
     protected array  $config        = [];
-    protected string $namespace     = '\\support\\token\\driver\\';
+    protected string $namespace     = '\\plugin\\radmin\\support\\token\\driver\\';
     protected mixed  $handler       = null;
 
     /**
