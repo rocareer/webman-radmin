@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Rocareer\WebmanRadmin\support;
+namespace plugin\radmin\support;
 
 /**
  * Class Response
