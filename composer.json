@@ -37,20 +37,13 @@
     "php-di/php-di": "^7.0",
     "rocareer/webman-migration": "^v1.0.0",
     "rocareer/webman-status-code": "^v1.0.0",
-    "monolog/monolog": "^2.0",
     "firebase/php-jwt": "^6.11",
     "webman/think-orm": "^2.1",
     "webman/think-cache": "^2.1",
     "phpmailer/phpmailer": "^v6.8.1",
     "vlucas/phpdotenv": "^5.6",
     "doctrine/annotations": "^2.0",
-    "psr/container": "^2.0",
-    "nelexa/zip": "^4.0",
-    "ext-bcmath": "*",
-    "ext-zip": "*",
-    "ext-iconv": "*",
-    "ext-pdo": "*",
-    "ext-gd": "*"
+    "psr/container": "^2.0"
   },
   "require-dev": {
     "rocareer/webman-dev": "dev-master",
