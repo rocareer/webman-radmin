@@ -1,3 +1,45 @@
+
+## v1.0.6更新内容
+
+* plugin(radmin): 替换数据库连接类并优化安装流程
+* chore: 替换 Db 类为统一 ORM 封装类 Rdb
+* refactor: 统一配置路径至插件命名空间
+* chore(database): 迁移文件命名调整及数据库操作类替换
+* feat: 添加容器配置及相关依赖注入
+* chore(radmin-config): 调整终端配置、数据库配置及视图组件
+* chore(radmin): 清理无用配置并调整部分参数
+* refactor: 调整radmin插件配置及依赖
+* chore(plugin/radmin): 更新异常处理配置路径及静态资源引用
+* chore(radmin-middleware): 清理无用中间件并调整配置引用
+* chore: 移除401、404等错误页面及相关组件
+* feat(radmin): 新增日志和响应支持类
+* chore(radmin): 修改语言包和ORM配置来源
+* feat(radmin-orm): 新增ThinkORM支持插件
+* refactor: 重构会员系统架构与依赖管理
+* chore(plugin-radmin): 替换数据库操作类及添加上下文管理器
+* fix(plugin/radmin): 修正头像配置路径引用
+* refactor: 重构AdminModel及服务类数据库操作
+* chore(plugin/radmin): 新增 backup 目录 .gitignore 文件
+* chore(.env-example): 调整环境变量格式并修正字段名
+* feat(安装模块): 新增文件安装并添加备份机制
+* chore(composer): 更新依赖及项目元信息
+* chore(plugin): 新增 webman-radmin 插件配置及相关中间件命名空间调整
+* chore(namespace): 统一命名空间为 plugin\radmin\app\admin
+* chore(radmin): 修正异常类的命名空间
+* refactor: 将控制层和模型层的依赖从app/common迁移至plugin/radmin
+* refactor: 更新缓存组件引用路径
+* refactor: 替换 Log 引用路径统一使用 support\Log
+* refactor: 统一异常类引入路径 为新 plugin 路径
+* chore(plugin/radmin): 更新控制器和服务支持路径
+* chore(src): 改为 webman plugin 方式
+* chore(env): 移除环境变量示例文件
+* refactor: 移除admin插件
+* chore: 删除 rocareer 插件相关配置文件
+* chore: 移除 radmin 插件配置及相关文件，调整自动加载和引导文件
+* config: 新增环境变量示例配置文件
+
+**完整的更新日志**: https://gitee.com/rocareer/webman-radmin/compare/v1.0.5...v1.0.6
+
 ## v1.0.5更新内容
 * feat(backend/data/backup): 新增数据备份管理模块
 * feat: 新增缓存配置和数据库配置文件
