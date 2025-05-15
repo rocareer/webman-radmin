@@ -39,7 +39,7 @@ class TestCon extends Command
         // \support\Container::get('test1');
 
         $admin=AdminModel::select();
-        var_dump($admin);
+
 
         return self::SUCCESS;
     }
