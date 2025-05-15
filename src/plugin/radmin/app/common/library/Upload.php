@@ -76,7 +76,7 @@ class Upload
     protected array $driver = [
         'name'      => 'local', // 默认驱动:local=本地
         'handler'   => [], // 驱动句柄
-        'namespace' => '\\app\\common\\library\\upload\\driver\\', // 驱动类的命名空间
+        'namespace' => '\\plugin\\radmin\\app\\common\\library\\upload\\driver\\', // 驱动类的命名空间
     ];
 
     /**
