@@ -169,7 +169,7 @@ class Install
         foreach (explode(';', file_get_contents($mysqlDumpFile)) as $sql) {
             if ($sql = trim($sql)) {
                 try {
-                    Db::connection(static::$connection)->statement($sql);
+                    Rdb::connection(static::$connection)->statement($sql);
                 } catch (Throwable $e) {}
             }
         }

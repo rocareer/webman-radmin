@@ -6,7 +6,7 @@ namespace plugin\radmin\app\api\controller;
 use plugin\radmin\app\common\controller\Frontend;
 use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\member\Member;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 class Index extends Frontend
@@ -51,7 +51,7 @@ class Index extends Frontend
                 }
             }
 
-            $rules         = Db::name('user_rule')
+            $rules         = Rdb::name('user_rule')
                 ->where('status', '1')
                 ->where('no_login_valid', 1)
                 ->where('type', 'in', [
@@ -82,7 +82,7 @@ class Index extends Frontend
                     'allowed_mime_types',
                 ]),
             ],
-            'openMemberCenter' => config('buildadmin.open_member_center'),
+            'openMemberCenter' => config('plugin.radmin.buildadmin.open_member_center'),
             'userInfo'         => $this->request->member,
             'menus'            => $menus,
             'rules'            => array_values($rules),

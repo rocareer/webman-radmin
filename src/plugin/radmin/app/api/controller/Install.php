@@ -1,16 +1,28 @@
 <?php
-
+/**
+ * File:        Install.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/14 10:17
+ * Description:
+ *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
 
 
 namespace plugin\radmin\app\api\controller;
 
+
+use Exception;
 use plugin\radmin\app\admin\model\Config;
+use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\admin\AdminModel;
-use support\Log;
 use plugin\radmin\support\Response;
+use support\think\Db;
+use think\db\exception\DbException;
 use Throwable;
 use PDOException;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\extend\ba\Random;
 use plugin\radmin\extend\ba\Version;
 use plugin\radmin\extend\ba\Terminal;
@@ -22,6 +34,7 @@ use plugin\radmin\app\admin\model\User as UserModel;
  */
 class Install
 {
+    //todo
     protected bool $useSystemSettings = false;
 
     /**
@@ -39,7 +52,7 @@ class Install
     /**
      * 配置文件
      */
-//    static string $dbConfigFileName    = 'database.php';
+    //    static string $dbConfigFileName    = 'database.php';
     static string $dbConfigFileName = 'think-orm.php';
     static string $buildConfigFileName = 'buildadmin.php';
 
@@ -95,13 +108,13 @@ class Install
             return;
         }
 
-        $newPackageManager = request()->post('manager', config('terminal.npm_package_manager'));
+        $newPackageManager = request()->post('manager', config('plugin.radmin.terminal.npm_package_manager'));
         if (Terminal::changeTerminalConfig()) {
             return $this->success('', [
                 'manager' => $newPackageManager
             ]);
         } else {
-            return $this->error(__('Failed to switch package manager. Please modify the configuration file manually:%s', ['根目录/config/buildadmin.php']));
+            return $this->error(__('Failed to switch package manager. Please modify the configuration file manually:%s', ['plugin/radmin/config/buildadmin.php']));
         }
     }
 
@@ -111,11 +124,11 @@ class Install
     public function envBaseCheck()
     {
         if ($this->isInstallComplete()) {
-            return $this->error(__('The system has completed installation. If you need to reinstall, please delete the %s file first', ['public/' . self::$lockFileName]), []);
+            return $this->error(__('The system has completed installation. If you need to reinstall, please delete the %s file first', ['plugin/radmin/public/' . self::$lockFileName]), []);
         }
-//        if (getenv('THINKORM_DEFAULT_TYPE')) {
-//            return $this->error(__('检测到带有数据库配置的 .env 文件。请清理后再试一次!'));
-//        }
+        //        if (getenv('THINKORM_DEFAULT_TYPE')) {
+        //            return $this->error(__('检测到带有数据库配置的 .env 文件。请清理后再试一次!'));
+        //        }
 
         // php版本-start
         $phpVersion = phpversion();
@@ -139,8 +152,8 @@ class Install
         // php版本-end
 
         // 配置文件-start
-        $dbConfigFile = base_path() . '/config/' . self::$dbConfigFileName;
-        $configIsWritable = Filesystem::pathIsWritable(base_path() . '/config') && Filesystem::pathIsWritable($dbConfigFile);
+        $dbConfigFile = base_path() . '/plugin/radmin/config/' . self::$dbConfigFileName;
+        $configIsWritable = Filesystem::pathIsWritable(base_path() . '/plugin/radmin/config') && Filesystem::pathIsWritable($dbConfigFile);
         if (!$configIsWritable) {
             $configIsWritableLink = [
                 [
@@ -155,7 +168,7 @@ class Install
         // 配置文件-end
 
         // public-start
-        $publicIsWritable = Filesystem::pathIsWritable(base_path() . '/public');
+        $publicIsWritable = Filesystem::pathIsWritable(base_path() . '/plugin/radmin/public');
         if (!$publicIsWritable) {
             $publicIsWritableLink = [
                 [
@@ -415,6 +428,7 @@ class Install
             return $this->error(__('The system has completed installation. If you need to reinstall, please delete the %s file first', ['public/' . self::$lockFileName]));
         }
 
+
         $envOk = $this->commandExecutionCheck();
         $rootPath = str_replace('\\', '/', base_path());
         if (request()->isGet()) {
@@ -428,10 +442,12 @@ class Install
 
         // 数据库配置测试
         $connectData['database'] = '';
+
         $connect = $this->connectDb($connectData, true);
         if ($connect['code'] == 0) {
             return $this->error($connect['msg']);
         }
+
 
         // 建立数据库
         if (!in_array($databaseParam['database'], $connect['databases'])) {
@@ -440,66 +456,112 @@ class Install
         }
 
         // 写入数据库配置文件
-        $dbConfigFile = base_path() . '/config/' . self::$dbConfigFileName;
+        $dbConfigFile = base_path() . '/plugin/radmin/config/' . self::$dbConfigFileName;
 
-        Log::info($dbConfigFile);
-        $dbConfigContent = @file_get_contents($dbConfigFile);
-        $callback = function ($matches) use ($databaseParam) {
-            $value = $databaseParam[$matches[1]] ?? '';
-            return "'$matches[1]'$matches[2]=>$matches[3]getenv('$matches[1]', '$value'),";
-        };
-        $dbConfigText = preg_replace_callback("/'(hostname|database|username|password|hostport|prefix)'(\s+)=>(\s+)getenv\('\.(.*)',\s+'(.*)'\),/", $callback, $dbConfigContent);
-        $result = @file_put_contents($dbConfigFile, $dbConfigText);
-        if (!$result) {
-            return $this->error(__('File has no write permission:%s', ['config/' . self::$dbConfigFileName]));
+
+        try {
+            $dbConfigContent = @file_get_contents($dbConfigFile);
+            if (!$dbConfigContent) {
+                return $this->error(__('File not found: %s', ['config/' . self::$dbConfigFileName]));
+            }
+
+            $callback = function ($matches) use ($databaseParam) {
+                // 从 $databaseParam 中获取对应的值
+                $key = $matches[1];
+                $value = $databaseParam[$key] ?? $matches[4]; // 如果 $databaseParam 中没有值，则保留原来的默认值
+                
+                // 特殊处理 hostport，因为环境变量名称是 THINKORM_DEFAULT_PORT
+                $envKey = ($key == 'hostport') ? 'PORT' : strtoupper($key);
+                
+                return "'{$key}' => getenv('THINKORM_DEFAULT_{$envKey}', '{$value}'),";
+            };
+
+            $dbConfigText = preg_replace_callback(
+                "/'(hostname|database|username|password|hostport|prefix)'(\s+)=>(\s+)getenv\('.*?',\s*'(.*?)'\),/",
+                $callback,
+                $dbConfigContent
+            );
+
+            $result = @file_put_contents($dbConfigFile, $dbConfigText);
+
+            if (!$result) {
+                return $this->error(__('File has no write permission: %s', ['config/' . self::$dbConfigFileName]));
+            }
+
+
+
+
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
 
-        // 写入.env-example文件
-        $envFile = base_path() . '/.env-example';
-        $env = base_path() . '/.env';
-        $envFileContent = @file_get_contents($envFile);
-        Log::info('install dev '.$envFile);
-        Log::info($envFileContent);
-        if ($envFileContent) {
+        // 写入环境变量配置文件
+        try {
+            $envFile = base_path() . '/.env-example';
+            $env = base_path() . '/.env';
+            
+            // 读取现有的环境变量文件内容
+            $envFileContent = is_file($envFile) ? file_get_contents($envFile) : '';
+            if ($envFileContent === false) {
+                throw new \Exception(__('Failed to read file:%s', ['/.env-example']));
+            }
+            
+            // 清理已有的数据库配置
             $databasePos = stripos($envFileContent, '#THINKORM');
             if ($databasePos !== false) {
-                // 清理已有数据库配置
                 $envFileContent = substr($envFileContent, 0, $databasePos);
             }
-            $envFileContent .= "\n" . '#THINKORM' . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_TYPE=mysql' . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_HOST=' . $databaseParam['hostname'] . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_DATABASE=' . $databaseParam['database'] . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_USERNAME=' . $databaseParam['username'] . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_PASSWORD=' . $databaseParam['password'] . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_PORT=' . $databaseParam['hostport'] . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_PREFIX=' . $databaseParam['prefix'] . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_CHARSET=utf8mb4' . "\n";
-            $envFileContent .= 'THINKORM_DEFAULT_DEBUG=true' . "\n";
-            $result = @file_put_contents($envFile, $envFileContent);
-            $result = @file_put_contents($env, $envFileContent);
-			
-            if (!$result) {
-                return $this->error(__('File has no write permission:%s', ['/' . $env]));
+            
+            // 准备新的数据库配置
+            $envConfig = [
+                '#THINKORM',
+                'THINKORM_DEFAULT_TYPE=mysql',
+                'THINKORM_DEFAULT_HOSTNAME=' . $databaseParam['hostname'],
+                'THINKORM_DEFAULT_DATABASE=' . $databaseParam['database'],
+                'THINKORM_DEFAULT_USERNAME=' . $databaseParam['username'],
+                'THINKORM_DEFAULT_PASSWORD=' . $databaseParam['password'],
+                'THINKORM_DEFAULT_PORT=' . $databaseParam['hostport'],
+                'THINKORM_DEFAULT_PREFIX=' . $databaseParam['prefix'],
+                'THINKORM_DEFAULT_CHARSET=utf8mb4',
+                'THINKORM_DEFAULT_DEBUG=true'
+            ];
+            
+            // 合并现有内容和新配置
+            $envFileContent = rtrim($envFileContent, "\n") . "\n\n" . implode("\n", $envConfig) . "\n";
+            
+            // 写入 .env-example 文件
+            if (file_put_contents($envFile, $envFileContent) === false) {
+                throw new \Exception(__('File has no write permission:%s', ['/.env-example']));
             }
+            
+            // 写入 .env 文件
+            if (file_put_contents($env, $envFileContent) === false) {
+                throw new \Exception(__('File has no write permission:%s', ['/.env']));
+            }
+            
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
         }
 
         // 设置新的Token随机密钥key
-        $oldTokenKey =  config('buildadmin.token.key');
+        $oldTokenKey =  config('plugin.radmin.buildadmin.token.key');
         $newTokenKey = Random::build('alnum', 32);
-        $buildConfigFile = base_path() . '/config/' . self::$buildConfigFileName;
+        $buildConfigFile = base_path() . '/plugin/radmin/config/' . self::$buildConfigFileName;
         $buildConfigContent = @file_get_contents($buildConfigFile);
         $buildConfigContent = preg_replace("/'key'(\s+)=>(\s+)'$oldTokenKey'/", "'key'\$1=>\$2'$newTokenKey'", $buildConfigContent);
         $result = @file_put_contents($buildConfigFile, $buildConfigContent);
         if (!$result) {
-            return $this->error(__('File has no write permission:%s', ['/config/' . self::$buildConfigFileName]));
+            return $this->error(__('File has no write permission:%s', ['/plugin/radmin/config/' . self::$buildConfigFileName]));
         }
 
         // 建立安装锁文件
-        $result = @file_put_contents(base_path().'/public/' . self::$lockFileName, date('Y-m-d H:i:s'));
-        if (!$result) {
-            return $this->error(__('File has no write permission:%s', ['public/' . self::$lockFileName]));
-        }
+        // $result = @file_put_contents(base_path().'/plugin/radmin/public/' . self::$lockFileName, date('Y-m-d H:i:s'));
+        // if (!$result) {
+        //     return $this->error(__('File has no write permission:%s', ['plugin/radmin/public/' . self::$lockFileName]));
+        // }
+
+
+
 
         return $this->success('', [
             'rootPath' => $rootPath,
@@ -509,8 +571,8 @@ class Install
 
     protected function isInstallComplete(): bool
     {
-        if (is_file(base_path() .'/public/'. self::$lockFileName)) {
-            $contents = @file_get_contents(base_path() .'/public/'. self::$lockFileName);
+        if (is_file(base_path() .'/plugin/radmin/public/'. self::$lockFileName)) {
+            $contents = @file_get_contents(base_path() .'/plugin/radmin/public/'. self::$lockFileName);
             if ($contents == self::$InstallationCompletionMark) {
                 return true;
             }
@@ -524,42 +586,57 @@ class Install
      */
     public function commandExecComplete(): Response
     {
-        if ($this->isInstallComplete()) {
-            return $this->error(__('The system has completed installation. If you need to reinstall, please delete the %s file first', ['public/' . self::$lockFileName]));
-        }
 
-        $param = $this->request->only(['type', 'adminname', 'adminpassword', 'sitename']);
-        if ($param['type'] == 'web') {
-            $result = @file_put_contents(base_path().'/plugin/radmin/public/' . self::$lockFileName, self::$InstallationCompletionMark);
-            if (!$result) {
-                return $this->error(__('File has no write permission:%s', ['plugin/radmin/public/' . self::$lockFileName]));
+        try {
+            if ($this->isInstallComplete()) {
+                return $this->error(__('The system has completed installation. If you need to reinstall, please delete the %s file first', ['public/' . self::$lockFileName]));
             }
-        } else {
-            // 管理员配置入库
+            $param = $this->request->only(['type', 'adminname', 'adminpassword', 'sitename']);
+            if ($param['type'] == 'web') {
+                $result = @file_put_contents(base_path().'/plugin/radmin/public/' . self::$lockFileName, self::$InstallationCompletionMark);
+                if (!$result) {
+                    return $this->error(__('File has no write permission:%s', ['plugin/radmin/public/' . self::$lockFileName]));
+                }
+            } else {
+                // 管理员配置入库
 
-            $saveData=[
-                'username' => $param['adminname'],
-                'nickname' => ucfirst($param['adminname']),
-            ];
-            if (isset($param['adminpassword']) && $param['adminpassword']) {
-                $salt   = Random::build('alnum', 16);
-                $passwd = hash_password($param['adminpassword'], $salt);
-                $saveData["password"]=$passwd;
-                $saveData['salt'] = $salt;
+                $saveData = [
+                    'username' => $param['adminname'],
+                    'nickname' => ucfirst($param['adminname']),
+                ];
+                if (isset($param['adminpassword']) && $param['adminpassword']) {
+                    $salt                 = Random::build('alnum', 16);
+                    $passwd               = hash_password($param['adminpassword'], $salt);
+                    $saveData["password"] = $passwd;
+                    $saveData['salt']     = $salt;
+                }try {
+                    // (new Terminal)->exec(false,'worker.reload');
+                    // 管理员配置入库
+                    $adminModel             = new AdminModel();
+                    $defaultAdmin           = $adminModel->where('username', 'admin')->find();
+                    $defaultAdmin->username = $param['adminname'];
+                    $defaultAdmin->nickname = ucfirst($param['adminname']);
+                    $defaultAdmin->save();
+
+                    if (isset($param['adminpassword']) && $param['adminpassword']) {
+                        $adminModel->resetPassword($defaultAdmin->id, $param['adminpassword']);
+                    }
+
+                    // 默认用户密码修改
+                    $user = new UserModel();
+                    $user->resetPassword(1, Random::build());
+                    Config::where('name', 'site_name')->update([
+                        'value' => $param['sitename']
+                    ]);
+                } catch (DbException $e) {
+                    throw new BusinessException($e->getMessage(),$e->getCode(),false,[],$e);
+                }
             }
-            AdminModel::where('username','admin')->update($saveData);
 
-
-            // 默认用户密码修改
-            $user = new UserModel();
-            $user->resetPassword(1, Random::build());
-
-            // 修改站点名称
-            Config::where('name', 'site_name')->update([
-                'value' => $param['sitename']
-            ]);
+            return $this->success();
+        } catch (Throwable $e) {
+            throw $e;
         }
-        return $this->success();
     }
 
     /**
@@ -568,7 +645,7 @@ class Install
      */
     private function commandExecutionCheck(): bool
     {
-        $pm =  config('terminal.npm_package_manager');
+        $pm =  config('plugin.radmin.terminal.npm_package_manager');
         if ($pm == 'none') {
             return false;
         }
@@ -593,7 +670,7 @@ class Install
     public function manualInstall()
     {
         return $this->success('', [
-            'webPath' => str_replace('\\', '/', base_path() . 'web')
+            'webPath' => str_replace('\\', '/', base_path() . '/web')
         ]);
     }
 
@@ -604,7 +681,7 @@ class Install
         }
 
         if (Terminal::mvDist()) {
-            copy(base_path().'/vendor/rocareer/radmin/plugin/radmin/config/event.php',base_path().'/plugin/radmin/config/event.php');
+            // copy(base_path().'/vendor/rocareer/radmin/plugin/radmin/config/event.php',base_path().'/plugin/radmin/config/event.php');
             return $this->success();
         } else {
             return $this->error(__('Failed to move the front-end file, please move it manually!'));
@@ -629,14 +706,15 @@ class Install
      */
     private function connectDb(array $database, bool $returnPdo = false): array
     {
-        try {
-            $dbConfig = config('think-orm');
-            $dbConfig['connections']['mysql'] = array_merge($dbConfig['connections']['mysql'], $database);
-            configSet(['connections' => $dbConfig['connections']], config('think-orm'), 'database');
 
-            Db::setConfig($dbConfig);
-            $connect = Db::connect('mysql');
-            $connect->execute("SELECT 1");
+        try {
+            $dbConfig = config('plugin.radmin.think-orm');
+            $dbConfig['connections']['mysql'] = array_merge($dbConfig['connections']['mysql'], $database);
+
+            // Rdb::setConfig($dbConfig);
+            // $connect = Rdb::connect('mysql');
+            Rdb::execute("SELECT 1");
+
         } catch (PDOException $e) {
             $errorMsg = $e->getMessage();
             return [
@@ -648,7 +726,7 @@ class Install
         $databases = [];
         // 不需要的数据表
         $databasesExclude = ['information_schema', 'mysql', 'performance_schema', 'sys'];
-        $res = $connect->query("SHOW DATABASES");
+        $res = Rdb::query("SHOW DATABASES");
         foreach ($res as $row) {
             if (!in_array($row['Database'], $databasesExclude)) {
                 $databases[] = $row['Database'];
@@ -659,7 +737,7 @@ class Install
             'code' => 1,
             'msg' => '',
             'databases' => $databases,
-            'pdo' => $returnPdo ? $connect->getPdo() : '',
+            'pdo' => $returnPdo ? Rdb::getPdo() : '',
         ];
     }
 
