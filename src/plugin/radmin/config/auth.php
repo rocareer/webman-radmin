@@ -51,6 +51,11 @@ return [
 
     // 免认证路径配置
     'exclude' => [
+        //
+        '/app/radmin/install',
+        '/app/radmin/api/install/*',
+        '/app/radmin/api/install/envBaseCheck',
+        '/app/radmin/api/install/envNpmCheck',
         // 管理后台免认证路径
 
         // API免认证路径

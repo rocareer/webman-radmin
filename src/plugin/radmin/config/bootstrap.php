@@ -12,8 +12,12 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use plugin\radmin\support\think\ThinkOrm;
+use plugin\radmin\support\Bootstrap;
+use plugin\radmin\support\think\orm\Orm;
 
 return [
-    ThinkOrm::class
+    // Bootstrap::class,
+    Orm::class,
+    // MemberServiceProvider::class
+    // \plugin\radmin\support\think\ThinkOrm::class
 ];

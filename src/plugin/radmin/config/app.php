@@ -25,8 +25,8 @@ return [
     'controller_reuse'  => false,
 
     'request_class'  => Request::class,
-    'public_path'    => base_path() . DIRECTORY_SEPARATOR . 'public',
-    'runtime_path'   => base_path(false) . DIRECTORY_SEPARATOR . 'runtime',
+    'public_path'    => base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/public',
+    'runtime_path'   => base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/runtime',
 
     // http cache 实验功能
     'http_cache'     => getenv('HTTP_CACHE', false),
