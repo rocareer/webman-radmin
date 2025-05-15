@@ -48,8 +48,15 @@ use think\Facade;
  */
 class Member extends Facade
 {
+    public static function setCurrentRole($role)
+    {
+        $context = Container::get('member.context');
+        $context->set('role',$role);
+        return Container::get('member.service');
+    }
     protected static function getFacadeClass(): string
     {
+
         $context = Container::get('member.context');
         return get_class($context->get('service'));
     }

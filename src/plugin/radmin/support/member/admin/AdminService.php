@@ -170,7 +170,6 @@ class AdminService extends Service
     public function terminal(string $token): bool
     {
         $payload=Token::verify($token);
-        var_dump($payload);
         if ($payload&&$this->hasRole('super',$payload->roles)){
             return true;
         }

@@ -25,6 +25,8 @@ use Throwable;
  * @property mixed  $username
  * @property string $password
  */
+
+
 abstract class Model extends ThinkModel implements InterfaceModel
 {
     /**
@@ -57,6 +59,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
         'last_login_time' => 'integer',
         'login_failure'   => 'integer',
     ];
+
 
 
     /**

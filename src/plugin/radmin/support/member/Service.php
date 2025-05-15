@@ -29,22 +29,13 @@ abstract class Service implements InterfaceService
 
     //instance
     protected ?object $memberModel = null;
-    private mixed     $context;
 
 
-    /**
-     * @throws BusinessException
-     */
     public function __construct()
     {
-        // 获取上下文管理器
-        $this->context = Container::get('member.context');
-
-        // 初始化认证器
         $this->authenticator = Container::get('member.authenticator');
-
-        // 初始化状态管理器
-        $this->state = Container::get('member.state');
+        $this->memberModel   = Container::get('member.model');
+        $this->state         = Container::get('member.state');
     }
 
 
@@ -78,7 +69,6 @@ abstract class Service implements InterfaceService
             return $this->memberModel;
 
         } catch (Exception $e) {
-            //清除状态
             //状态更新
             $this->stateUpdateLogin('false');
             throw new BusinessException($e->getMessage(), $e->getCode(), false, [], $e);

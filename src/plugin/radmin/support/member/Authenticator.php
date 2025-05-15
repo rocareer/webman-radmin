@@ -9,6 +9,7 @@ use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\think\orm\Rdb;
+use support\Container;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -44,7 +45,7 @@ abstract class Authenticator implements InterfaceAuthenticator
     public function __construct()
     {
         $this->config      = config('plugin.radmin.auth.login.' . $this->role);
-        $this->memberModel = Factory::getInstance($this->role, 'model');
+        $this->memberModel =Container::get('member.model');
     }
 
     /**

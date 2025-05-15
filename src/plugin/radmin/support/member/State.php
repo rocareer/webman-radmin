@@ -7,6 +7,7 @@ use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\think\orm\Rdb;
+use support\Container;
 use Throwable;
 
 /**
@@ -31,7 +32,6 @@ use Throwable;
     /**
      * 缓存时间（秒）
      */
-    protected int   $cacheTime = 3600;
     protected array $config=[];
 
     /**
@@ -40,15 +40,15 @@ use Throwable;
     protected static string $loginLogTable = '';
 
     //instance
-    protected  object $memberModel;
+    protected  mixed $memberModel;
     //instance
     protected InterfaceService       $service;
     protected InterfaceAuthenticator $authenticator;
+     private mixed                   $context;
 
-    public function __construct() {
-        // $this->service   = Container::get($this->role,'service');
-        $this->memberModel  = Factory::getInstance($this->role,'model');
-        // $this->authenticator = Container::get($this->role,'authenticator');
+     public function __construct() {
+        $this->context=Container::get('member.context');
+        $this->memberModel  =  $this->context->get('model');
         $this->config= config('plugin.radmin.auth');
     }
 
