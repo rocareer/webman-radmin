@@ -3,7 +3,7 @@
 
 namespace plugin\radmin\support\think;
 
-use support\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use think\Container;
 use think\Paginator;
 use Webman\Bootstrap;
@@ -27,7 +27,7 @@ class ThinkOrm implements Bootstrap
 		}
 		self::$initialized = true;
 		
-		$config = config('think-orm', config('thinkorm'));
+		$config = config('plugin.radmin.think-orm', config('plugin.radmin.thinkorm'));
 		if (!$config) {
 			return;
 		}
@@ -35,10 +35,10 @@ class ThinkOrm implements Bootstrap
 		Container::getInstance()->bind('think\DbManager', DbManager::class);
 		
 		// 配置
-		Db::setConfig($config);
+		Rdb::setConfig($config);
 		
 		if (class_exists(Cache::class)) {
-			Db::setCache(Cache::store());
+			Rdb::setCache(Cache::store());
 		}
 		
 		Paginator::currentPageResolver(function ($pageName = 'page') {
