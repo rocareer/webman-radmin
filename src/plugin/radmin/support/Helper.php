@@ -52,6 +52,16 @@ if (!function_exists('radminInstalled')) {
         return false;
     }
 }
+if (!function_exists('radminOrmInstalled')) {
+
+    function radminOrmInstalled(): bool
+    {
+        if (getenv('THINKORM_DEFAULT_PASSWORD')) {
+            return true;
+        }
+        return false;
+    }
+}
 
 /**
  * 检查路径是否需要跳过认证
@@ -63,7 +73,6 @@ if (!function_exists('shouldExclude')) {
     function shouldExclude(?string $path = null): bool
     {
         $path          = $path ?? request()->path();
-        var_dump($path);
         $excludeRoutes = config('plugin.radmin.auth.exclude', []);
 
         foreach ($excludeRoutes as $route) {
@@ -123,14 +132,16 @@ if (!function_exists('getTokenFromRequest')) {
             return extractBearerToken($token);
         }
 
+        $type=$request->role??$request->app;
         // 从配置的 headers 中获取 Token
-        $headers = config("token.headers.{$request->app}", []);
+        $headers = config("plugin.radmin.token.headers.{$type}", []);
         foreach ($headers as $header) {
             $token = $request->header($header);
             if (!empty($token)) {
                 return $token;
             }
         }
+
 
 
         /**
@@ -311,7 +322,9 @@ if (!function_exists('get_controller_list')) {
      */
     function get_controller_list(string $app = 'admin'): array
     {
-        $controllerDir = app_path() . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
+        // todo
+        // $controllerDir = app_path() . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
+        $controllerDir = base_path().'/plugin/radmin/app' . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
         return Filesystem::getDirFiles($controllerDir);
     }
 }
