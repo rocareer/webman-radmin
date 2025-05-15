@@ -3,6 +3,7 @@
 namespace plugin\radmin\middleware;
 
 
+use Exception;
 use plugin\radmin\exception\TokenException;
 use plugin\radmin\exception\TokenExpiredException;
 use plugin\radmin\exception\UnauthorizedHttpException;
@@ -41,18 +42,22 @@ class RadminAuthMiddleware implements MiddlewareInterface
         $request->role = $this->allowedRole;
         $context       ??= Container::get('member.context');
 
-
         $context->set('role', $this->allowedRole);
         $context->set('service', Container::get('member.service'));
-
-
+        $context->set('authenticator', Container::get('member.authenticator'));
+        $context->set('state', Container::get('member.state'));
+        $context->set('model', Container::get('member.model'));
         // 1. 检查是否跳过认证
         if (shouldExclude($request->path())) {
             return $handler($request);
-        }// 2. 没有凭证则跳过
+        }
+
+        // 2. 没有凭证则跳过
         if (empty($request->token)) {
-            return $handler($request);
-        }// 3. 验证Token有效性 无效则通知刷新
+            throw new UnauthorizedHttpException('没有凭证', StatusCode::TOKEN_NOT_FOUND, true);
+            // return $handler($request);
+        }
+        // 3. 验证Token有效性 无效则通知刷新
         try {
             $request->payload = Token::verify($request->token);
         } catch (TokenExpiredException) {
@@ -66,8 +71,6 @@ class RadminAuthMiddleware implements MiddlewareInterface
             throw new TokenException('', StatusCode::TOKEN_SHOULD_REFRESH);
         }//6. 通过
 
-        $response = $handler($request);
-        $context->clear();
-        return $response;
+        return $handler($request);
     }
 }
