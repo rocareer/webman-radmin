@@ -10,8 +10,7 @@ class Test
 
     public function index($id): Response
     {
-        var_dump($id);
-        var_dump(request()->input('id'));
+
         return json(['1']);
     }
 }

@@ -28,7 +28,7 @@ class Index extends Frontend
         $menus = [];
 
         //登录用户
-        if ($this->request->role==='user') {
+        if ($this->request->login) {
             $rules     = [];
             $userMenus = Member::setCurrentRole('user')->getMenus($this->request->member->id);
 

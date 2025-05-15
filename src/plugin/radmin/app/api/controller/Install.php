@@ -18,7 +18,6 @@ use plugin\radmin\app\admin\model\Config;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\admin\AdminModel;
 use plugin\radmin\support\Response;
-use support\think\Db;
 use think\db\exception\DbException;
 use Throwable;
 use PDOException;
@@ -711,8 +710,8 @@ class Install
             $dbConfig = config('plugin.radmin.think-orm');
             $dbConfig['connections']['mysql'] = array_merge($dbConfig['connections']['mysql'], $database);
 
-            // Rdb::setConfig($dbConfig);
-            // $connect = Rdb::connect('mysql');
+            Rdb::setConfig($dbConfig);
+            Rdb::connect('mysql');
             Rdb::execute("SELECT 1");
 
         } catch (PDOException $e) {
