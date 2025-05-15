@@ -5,8 +5,8 @@ namespace plugin\radmin\support\member;
 
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\BusinessException;
-use support\Log;
-use upport\think\Db;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 /**
@@ -49,7 +49,7 @@ use Throwable;
         // $this->service   = Container::get($this->role,'service');
         $this->memberModel  = Factory::getInstance($this->role,'model');
         // $this->authenticator = Container::get($this->role,'authenticator');
-        $this->config= config('auth');
+        $this->config= config('plugin.radmin.auth');
     }
 
 
@@ -135,7 +135,7 @@ use Throwable;
     protected function recordLoginLog(bool $success): void
     {
         try {
-            Db::name($this->getLoginLogTable())->insert([
+            Rdb::name($this->getLoginLogTable())->insert([
                 'user_id'     => $this->memberModel->id,
                 'username'    => $this->memberModel->username,
                 'ip'          => request()->getRealIp(),

@@ -4,23 +4,24 @@
 namespace plugin\radmin\support\member;
 
 use Exception;
-use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\StatusCode;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\support\token\Token;
 use plugin\radmin\exception\BusinessException;
+use support\Container;
 use Throwable;
 use Webman\Event\Event;
 
 abstract class Service implements InterfaceService
 {
     //common
-    protected InterfaceAuthenticator $authenticator;
-    protected InterfaceService       $service;
-    protected string                 $role     = 'admin';
-    protected string                 $error    = '';
-    public ?int                      $id       = null;
-    public ?string                   $username = null;
+    private ?InterfaceAuthenticator $authenticator;
+    private ?InterfaceState         $state;
+
+    protected string $role     = 'admin';
+    protected string $error    = '';
+    public ?int      $id       = null;
+    public ?string   $username = null;
     //state
     public bool $isLogin = false;
 
@@ -28,6 +29,7 @@ abstract class Service implements InterfaceService
 
     //instance
     protected ?object $memberModel = null;
+    private mixed     $context;
 
 
     /**
@@ -35,10 +37,14 @@ abstract class Service implements InterfaceService
      */
     public function __construct()
     {
+        // 获取上下文管理器
+        $this->context = Container::get('member.context');
 
-        $this->memberModel   = Factory::getInstance($this->role, 'model');
-        $this->authenticator = Factory::getInstance($this->role, 'authenticator');
-        // $this->stateManager  = Container::get($this->role,'state');
+        // 初始化认证器
+        $this->authenticator = Container::get('member.authenticator');
+
+        // 初始化状态管理器
+        $this->state = Container::get('member.state');
     }
 
 
@@ -75,7 +81,7 @@ abstract class Service implements InterfaceService
             //清除状态
             //状态更新
             $this->stateUpdateLogin('false');
-            throw new BusinessException($e->getMessage(), $e->getCode(),false,[],$e);
+            throw new BusinessException($e->getMessage(), $e->getCode(), false, [], $e);
         }
     }
 
@@ -112,7 +118,7 @@ abstract class Service implements InterfaceService
      */
     public function login(array $credentials, bool $keep = false): array
     {
-       try {
+        try {
             $credentials['keep'] = $keep;
             $this->memberModel   = $this->authenticator->authenticate($credentials);//设置用户信息
             $this->setMember($this->memberModel);
@@ -182,7 +188,7 @@ abstract class Service implements InterfaceService
                 throw new BusinessException('用户不存在', StatusCode::MEMBER_NOT_FOUND);
             }
             $this->setMember($member);
-            $this->memberModel=$member;
+            $this->memberModel = $member;
         } catch (Throwable $e) {
             throw new BusinessException($e->getMessage(), $e->getCode());
         }
@@ -190,7 +196,7 @@ abstract class Service implements InterfaceService
 
     public function extendMemberInfo(): void
     {
-        $this->memberModel->roles=[$this->role];
+        $this->memberModel->roles = [$this->role];
     }
 
     /**
@@ -225,7 +231,7 @@ abstract class Service implements InterfaceService
      */
     public function hasRole($role, $roles = null): bool
     {
-        $payloadRoles = $roles ?? request()->member->roles??[];
+        $payloadRoles = $roles ?? request()->member->roles ?? [];
         return in_array($role, $payloadRoles);
     }
 
@@ -272,7 +278,7 @@ abstract class Service implements InterfaceService
         if (!in_array('*', $ids)) {
             $where[] = ['id', 'in', $ids];
         }
-        $rules = Db::name($this->config['auth_rule'])
+        $rules = Rdb::name($this->config['auth_rule'])
             ->withoutField(['remark', 'status', 'weigh', 'update_time', 'create_time'])
             ->where($where)
             ->order('weigh desc,id asc')
@@ -319,7 +325,7 @@ abstract class Service implements InterfaceService
 
         $dbName = $this->config['auth_group_access'] ?: 'user';
         if ($this->config['auth_group_access']) {
-            $userGroups = Db::name($dbName)
+            $userGroups = Rdb::name($dbName)
                 ->alias('aga')
                 ->join($this->config['auth_group'] . ' ag', 'aga.group_id = ag.id', 'LEFT')
                 ->field('aga.uid,aga.group_id,ag.id,ag.pid,ag.name,ag.rules')
@@ -327,7 +333,7 @@ abstract class Service implements InterfaceService
                 ->select()
                 ->toArray();
         } else {
-            $userGroups = Db::name($dbName)
+            $userGroups = Rdb::name($dbName)
                 ->alias('u')
                 ->join($this->config['auth_group'] . ' ag', 'u.group_id = ag.id', 'LEFT')
                 ->field('u.id as uid,u.group_id,ag.id,ag.name,ag.rules')
@@ -406,8 +412,6 @@ abstract class Service implements InterfaceService
     {
         return $this->error ? __($this->error) : '';
     }
-
-
 
 
     /**

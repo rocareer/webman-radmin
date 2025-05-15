@@ -7,9 +7,9 @@ namespace plugin\radmin\support\member;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\BusinessException;
-use support\Log;
-use upport\think\Db;
-use plugin\radmin\support\think\Model as ThinkModel;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\think\orm\Rdb;
+use plugin\radmin\support\think\orm\Model as ThinkModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -27,15 +27,11 @@ use Throwable;
  */
 abstract class Model extends ThinkModel implements InterfaceModel
 {
-
-
     /**
      * @var string 当前模型角色
      */
-    public string     $role  = 'admin';
-
-    protected        $model;
-    protected string $resultSetType = '\support\member\InterfaceModel';
+    public string $role = 'admin';
+    protected     $model;
     /**
      * @var array 状态映射
      */
@@ -62,11 +58,6 @@ abstract class Model extends ThinkModel implements InterfaceModel
         'login_failure'   => 'integer',
     ];
 
-
-    public function initialize(): void
-    {
-
-    }
 
     /**
      *
@@ -133,8 +124,8 @@ abstract class Model extends ThinkModel implements InterfaceModel
         }
 
         // 检查登录失败次数
-        $maxFailures = config('auth.max_login_failures', 10);
-        $lockTime    = config('auth.login_lock_time', 900);
+        $maxFailures = config('plugin.radmin.auth.max_login_failures', 10);
+        $lockTime    = config('plugin.radmin.auth.login_lock_time', 900);
 
         if (($this->login_failure ?? 0) >= $maxFailures) {
             $lastLoginTime = $this->last_login_time ?? 0;
@@ -294,7 +285,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
                 'create_time' => time()
             ];
 
-            Db::name($this->getLoginLogTable())->insert($log);
+            Rdb::name($this->getLoginLogTable())->insert($log);
         } catch (Throwable $e) {
             Log::error('记录登录日志失败：' . $e->getMessage());
         }
@@ -314,7 +305,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
                 'create_time' => time()
             ];
 
-            Db::name($this->getPasswordLogTable())->insert($log);
+            Rdb::name($this->getPasswordLogTable())->insert($log);
         } catch (Throwable $e) {
             Log::error('记录密码修改日志失败：' . $e->getMessage());
         }
@@ -347,7 +338,6 @@ abstract class Model extends ThinkModel implements InterfaceModel
         return $this->defaultRoles;
     }
 
-
     /**
      * 检查是否有指定角色
      * @param string $role
@@ -357,6 +347,5 @@ abstract class Model extends ThinkModel implements InterfaceModel
     {
         return in_array($role, $this->getRoles());
     }
-
 
 }
