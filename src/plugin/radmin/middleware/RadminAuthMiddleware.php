@@ -3,14 +3,13 @@
 namespace plugin\radmin\middleware;
 
 
-use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\TokenException;
 use plugin\radmin\exception\TokenExpiredException;
 use plugin\radmin\exception\UnauthorizedHttpException;
-use http\Exception\UnexpectedValueException;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\Token;
+use support\Container;
 use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;
@@ -37,8 +36,14 @@ class RadminAuthMiddleware implements MiddlewareInterface
     /**
      * @throws Throwable
      */
-    public function process(\support\Request|Request $request, callable $handler): Response
+    public function process(Request $request, callable $handler): Response
     {
+        $request->role = $this->allowedRole;
+        $context       ??= Container::get('member.context');
+
+
+        $context->set('role', $this->allowedRole);
+        $context->set('service', Container::get('member.service'));
 
 
         // 1. 检查是否跳过认证
@@ -55,13 +60,14 @@ class RadminAuthMiddleware implements MiddlewareInterface
         } catch (Throwable) {
             throw new UnauthorizedHttpException('凭证无效', StatusCode::TOKEN_INVALID, true);
         }// 4. 初始化后 设置 member 信息到请求体
-        $request->member = Member::setCurrentRole($this->allowedRole)->initialization();// 5. 验证请求角色
+
+        $request->member = Member::setCurrentRole($request->role)->initialization();// 5. 验证请求角色
         if (!Member::hasRole($this->allowedRole, $request->member->roles)) {
             throw new TokenException('', StatusCode::TOKEN_SHOULD_REFRESH);
         }//6. 通过
-        $request->role = $this->allowedRole;
 
-        return $handler($request);
-
+        $response = $handler($request);
+        $context->clear();
+        return $response;
     }
 }

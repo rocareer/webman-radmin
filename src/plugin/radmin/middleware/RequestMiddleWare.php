@@ -6,7 +6,7 @@
 namespace plugin\radmin\middleware;
 
 use Exception;
-use support\Log;
+use plugin\radmin\support\Log;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
@@ -27,26 +27,23 @@ class RequestMiddleWare implements MiddlewareInterface
         /**
          * 全局请求日志
          */
-        if (config('app.request.log.enable')) {
-            //生成全局 requestID
-            $request->requestID = uniqid('R-', true);
-            $logContent         = [
-                'requestID' => $request->requestID,
-                'url'       => $request->url(),
-                'method'    => $request->method(),
-                'IP'        => $request->getRealIp(),
-                'time'      => time()
-            ];
-            Log::channel(config('app.request.log.channel'))->info('Request', $logContent);
-        }
+        // if (config('plugin.radmin.app.request.log.enable')) {
+        //     //生成全局 requestID
+        //     $request->requestID = uniqid('R-', true);
+        //     $logContent         = [
+        //         'requestID' => $request->requestID,
+        //         'url'       => $request->url(),
+        //         'method'    => $request->method(),
+        //         'IP'        => $request->getRealIp(),
+        //         'time'      => time()
+        //     ];
+        //     Log::channel(config('plugin.radmin.app.request.log.channel'))->info('Request', $logContent);
+        // }
 
         $controller = explode('\\', $request->controller);
         $controller = array_slice($controller, -2);
 
         $request->controllerName = strtolower(implode('/', $controller));
-
-
-
 
         $this->fixedInitValue($request);
 
