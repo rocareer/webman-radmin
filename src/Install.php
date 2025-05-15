@@ -11,6 +11,8 @@
 
 namespace Rocareer\WebmanRadmin;
 
+use Symfony\Component\Filesystem\Filesystem;
+
 class Install
 {
     const WEBMAN_PLUGIN = true;
@@ -74,6 +76,7 @@ class Install
                 $destFile   = base_path() . "/$dest";
                 // 如果有 先备份
                 if (file_exists($destFile)) {
+                    (new Filesystem)->copy($destFile, $backup_path .'/'. $dest);
                     if (copy($destFile, $backup_path .'/'. $dest)) {
                         echo "backup $dest\n";
                     } else {
