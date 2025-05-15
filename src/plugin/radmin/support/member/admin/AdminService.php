@@ -13,10 +13,7 @@ namespace plugin\radmin\support\member\admin;
 use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Service;
 use plugin\radmin\support\token\Token;
-use upport\think\Db;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 class AdminService extends Service
@@ -88,7 +85,7 @@ class AdminService extends Service
      */
     public function getAdminChildGroups(): array
     {
-        $groupIds = Db::name('admin_group_access')
+        $groupIds = Rdb::name('admin_group_access')
             ->where('uid', $this->id)
             ->select();
         $children = [];
@@ -105,7 +102,7 @@ class AdminService extends Service
      */
     public function getGroupAdmins(array $groups): array
     {
-        return Db::name('admin_group_access')
+        return Rdb::name('admin_group_access')
             ->where('group_id', 'in', $groups)
             ->column('uid');
     }
