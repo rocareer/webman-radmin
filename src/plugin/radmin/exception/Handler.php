@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace plugin\radmin\exception;
 
 use FastRoute\BadRouteException;
-use support\Log;
+use plugin\radmin\support\Log;
 use think\db\exception\DbException;
 use think\exception\ValidateException;
 use Throwable;
@@ -81,7 +81,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        $this->dontReport =  config('exception.exception_handler.dont_report', []);
+        $this->dontReport =  config('plugin.radmin.exception.exception_handler.dont_report', []);
         parent::report($exception);
     }
 
@@ -92,7 +92,7 @@ class Handler extends ExceptionHandler
      */
     public function render(Request $request, Throwable $exception): Response
     {
-        $this->config = array_merge($this->config,  config('exception.exception_handler', []) ?? []);
+        $this->config = array_merge($this->config,  config('plugin.radmin.exception.exception_handler', []) ?? []);
 
         $this->addRequestInfoToResponse($request);
         $this->solveAllException($exception);
@@ -190,7 +190,7 @@ class Handler extends ExceptionHandler
      */
     protected function addDebugInfoToResponse(Throwable $e): void
     {
-        if (config('app.debug', false)) {
+        if (config('plugin.radmin.app.debug', false)) {
             $this->responseData['error_message'] = $this->errorMessage;
             $this->responseData['error_trace'] = explode("\n", $e->getTraceAsString());
             $this->responseData['file'] = $e->getFile();
