@@ -32,6 +32,8 @@ return [
     'http_cache'     => getenv('HTTP_CACHE', false),
     'http_cache_ttl' => getenv('HTTP_CACHE_TTL', 0),
 
+    'plugin_url'=>'/app/radmin',
+
     // request log 实验功能
     'request'        => [
         'log' => [

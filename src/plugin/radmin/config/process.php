@@ -33,8 +33,8 @@ return [
         'constructor' => [
             'requestClass' => Request::class,
             'logger' => Log::channel('default'),
-            'appPath' => app_path(),
-            'publicPath' => public_path()
+            'appPath' => base_path().'/plugin/radmin/app',
+            'publicPath' => base_path().'/plugin/radmin/public'
         ]
     ]
 ];

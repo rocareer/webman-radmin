@@ -14,13 +14,13 @@ use plugin\radmin\support\member\State;
 
 
 return [
-    // 'state.checkStatus' => [
-    //     [State::class, 'checkStatus'],
-    // ],
-    // 'state.updateLogin.*' => [
-    //     [State::class, 'updateLoginState'],
-    // ],
-    // 'backup.log.*' => [
-    //     [BackupEvent::class, 'log'],
-    // ],
+    'state.checkStatus' => [
+        [State::class, 'checkStatus'],
+    ],
+    'state.updateLogin.*' => [
+        [State::class, 'updateLoginState'],
+    ],
+    'backup.log.*' => [
+        [BackupEvent::class, 'log'],
+    ],
 ];

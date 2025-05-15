@@ -13,6 +13,7 @@ use plugin\radmin\middleware\AccessControlMIddleWare;
 use plugin\radmin\middleware\AdminLog;
 use plugin\radmin\middleware\AdminSecurity;
 use plugin\radmin\middleware\RadminAuthMiddleware;
+use plugin\radmin\middleware\RequestContextMiddleWare;
 use plugin\radmin\middleware\RequestMiddleWare;
 
 return [
@@ -21,6 +22,7 @@ return [
         AccessControlMIddleWare::class,
         // 请求预处理
         RequestMiddleWare::class,
+        RequestContextMiddleWare::class
 
     ],
     'api'   => [

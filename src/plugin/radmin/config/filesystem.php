@@ -11,6 +11,7 @@ return [
         'local'  => [
             'type' => 'local', // 本地存储
             'root' => runtime_path('storage'), // 存储根目录
+            'url'        => '/storage',
         ],
         'ftp'    => [
             'type'     => 'ftp', // FTP 存储
@@ -28,8 +29,7 @@ return [
         ],
         'public' => [
             'type' => 'local', // 本地存储
-            'root' => public_path('storage'), // 存储根目录
-
+            'root' => base_path().'/plugin/radmin/public/storage', // 存储根目录
             'url'        => '/storage',
             // 可见性
             'visibility' => 'public',
