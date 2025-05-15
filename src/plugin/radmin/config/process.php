@@ -14,16 +14,16 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use support\Log;
+use plugin\radmin\support\Log;
 use plugin\radmin\support\Request;
 use plugin\radmin\app\process\Http;
 
 global $argv;
 
 return [
-    getenv('PROCESS_NAME','Radmin') => [
+    'HTTP' => [
         'handler' => Http::class,
-        'listen' => 'http://0.0.0.0:'.getenv('PROCESS_PORT',9696),
+        'listen' => 'http://0.0.0.0:9696',
         'count' => getenv('PROCESS_COUNT',cpu_count()),
         'user' => '',
         'group' => '',
