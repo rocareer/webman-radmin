@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 use plugin\radmin\app\admin\model\Config;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 
 class Version205 extends AbstractMigration
 {
@@ -12,7 +12,7 @@ class Version205 extends AbstractMigration
         $value               = $configQuickEntrance->value;
         foreach ($value as &$item) {
             if (str_starts_with($item['value'], '/admin/')) {
-                $pathData = Db::name('admin_rule')->where('path', substr($item['value'], 7))->find();
+                $pathData = Rdb::name('admin_rule')->where('path', substr($item['value'], 7))->find();
                 if ($pathData) {
                     $item['value'] = $pathData['name'];
                 }

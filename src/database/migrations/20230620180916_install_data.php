@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 
 class InstallData extends AbstractMigration
 {
@@ -36,7 +36,7 @@ class InstallData extends AbstractMigration
                 'createtime' => $this->nowTime,
             ]
         ];
-        $exist = Db::name('admin')->where('id', 1)->value('id');
+        $exist = Rdb::name('admin')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -79,7 +79,7 @@ class InstallData extends AbstractMigration
                 'createtime' => $this->nowTime,
             ],
         ];
-        $exist = Db::name('admin_group')->where('id', 1)->value('id');
+        $exist = Rdb::name('admin_group')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -94,7 +94,7 @@ class InstallData extends AbstractMigration
                 'group_id' => 1,
             ]
         ];
-        $exist = Db::name('admin_group_access')->where('uid', 1)->value('uid');
+        $exist = Rdb::name('admin_group_access')->where('uid', 1)->value('uid');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -223,7 +223,7 @@ class InstallData extends AbstractMigration
                 'value' => '[{"key":"数据回收规则配置","value":"/admin/security/dataRecycle"},{"key":"敏感数据规则配置","value":"/admin/security/sensitiveData"}]',
             ],
         ];
-        $exist = Db::name('config')->where('id', 1)->value('id');
+        $exist = Rdb::name('config')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -1155,7 +1155,7 @@ class InstallData extends AbstractMigration
                 'createtime' => $this->nowTime,
             ],
         ];
-        $exist = Db::name('menu_rule')->where('id', 1)->value('id');
+        $exist = Rdb::name('menu_rule')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -1226,7 +1226,7 @@ class InstallData extends AbstractMigration
                 'createtime'    => $this->nowTime,
             ],
         ];
-        $exist = Db::name('security_data_recycle')->where('id', 1)->value('id');
+        $exist = Rdb::name('security_data_recycle')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -1273,7 +1273,7 @@ class InstallData extends AbstractMigration
                 'createtime'    => $this->nowTime,
             ],
         ];
-        $exist = Db::name('security_sensitive_data')->where('id', 1)->value('id');
+        $exist = Rdb::name('security_sensitive_data')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -1297,7 +1297,7 @@ class InstallData extends AbstractMigration
                 'createtime' => $this->nowTime,
             ]
         ];
-        $exist = Db::name('user')->where('id', 1)->value('id');
+        $exist = Rdb::name('user')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -1316,7 +1316,7 @@ class InstallData extends AbstractMigration
                 'createtime' => $this->nowTime,
             ]
         ];
-        $exist = Db::name('user_group')->where('id', 1)->value('id');
+        $exist = Rdb::name('user_group')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }
@@ -1410,7 +1410,7 @@ class InstallData extends AbstractMigration
                 'createtime' => $this->nowTime,
             ]
         ];
-        $exist = Db::name('user_rule')->where('id', 1)->value('id');
+        $exist = Rdb::name('user_rule')->where('id', 1)->value('id');
         if (!$exist) {
             $table->insert($rows)->saveData();
         }

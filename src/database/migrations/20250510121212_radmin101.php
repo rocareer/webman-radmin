@@ -10,7 +10,7 @@
  */
 
 use plugin\radmin\app\admin\model\Config;
-use support\Log;
+use plugin\radmin\support\Log;
 use Phinx\Migration\AbstractMigration;
 
 class Radmin101 extends AbstractMigration

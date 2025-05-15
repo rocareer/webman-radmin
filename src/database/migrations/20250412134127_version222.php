@@ -1,6 +1,6 @@
 <?php
 
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\admin\model\CrudLog;
 use Phinx\Migration\AbstractMigration;
 
@@ -40,8 +40,8 @@ class Version222 extends AbstractMigration
             ->changeColumn('salt', 'string', ['limit' => 30, 'default' => '', 'comment' => '密码盐（废弃待删）', 'null' => false])
             ->save();
 
-        Db::name('admin')->where('status', '0')->update(['status' => 'disable']);
-        Db::name('admin')->where('status', '1')->update(['status' => 'enable']);
+        Rdb::name('admin')->where('status', '0')->update(['status' => 'disable']);
+        Rdb::name('admin')->where('status', '1')->update(['status' => 'enable']);
 
         /**
          * CRUD 历史记录表
@@ -72,8 +72,8 @@ class Version222 extends AbstractMigration
                 $mTable->changeColumn('status', 'boolean', ['default' => 1, 'signed' => false, 'comment' => '状态:0=禁用,1=启用', 'null' => false])->save();
 
                 // 原状态值兼容至新类型
-                Db::name($table)->where('status', 1)->update(['status' => 0]);
-                Db::name($table)->where('status', 2)->update(['status' => 1]);
+                Rdb::name($table)->where('status', 1)->update(['status' => 0]);
+                Rdb::name($table)->where('status', 2)->update(['status' => 1]);
             }
         }
     }

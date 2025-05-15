@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 
 class Version206 extends AbstractMigration
 {
@@ -10,7 +10,7 @@ class Version206 extends AbstractMigration
      */
     public function up()
     {
-        $exist = Db::name('config')->where('name', 'backend_entrance')->value('id');
+        $exist = Rdb::name('config')->where('name', 'backend_entrance')->value('id');
         if (!$exist) {
             $rows  = [
                 [

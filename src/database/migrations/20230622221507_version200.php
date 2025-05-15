@@ -1,8 +1,8 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use upport\think\Db;
 use Phinx\Db\Adapter\MysqlAdapter;
+use plugin\radmin\support\think\orm\Rdb;
 
 class Version200 extends AbstractMigration
 {
@@ -66,19 +66,19 @@ class Version200 extends AbstractMigration
                     ->changeColumn('create_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
                     ->save();
                 $menuRule->rename('ra_admin_rule')->save();
-                Db::name('admin_rule')
+                Rdb::name('admin_rule')
                     ->where('name', 'auth/menu')
                     ->update([
                         'name'      => 'auth/rule',
                         'path'      => 'auth/rule',
                         'component' => '/src/views/backend/auth/rule/index.vue',
                     ]);
-                Db::name('admin_rule')->where('name', 'auth/menu/index')->update(['name' => 'auth/rule/index']);
-                Db::name('admin_rule')->where('name', 'auth/menu/add')->update(['name' => 'auth/rule/add']);
-                Db::name('admin_rule')->where('name', 'auth/menu/edit')->update(['name' => 'auth/rule/edit']);
-                Db::name('admin_rule')->where('name', 'auth/menu/del')->update(['name' => 'auth/rule/del']);
-                Db::name('admin_rule')->where('name', 'auth/menu/sortable')->update(['name' => 'auth/rule/sortable']);
-                Db::name('admin_rule')->whereIn('name', [
+                Rdb::name('admin_rule')->where('name', 'auth/menu/index')->update(['name' => 'auth/rule/index']);
+                Rdb::name('admin_rule')->where('name', 'auth/menu/add')->update(['name' => 'auth/rule/add']);
+                Rdb::name('admin_rule')->where('name', 'auth/menu/edit')->update(['name' => 'auth/rule/edit']);
+                Rdb::name('admin_rule')->where('name', 'auth/menu/del')->update(['name' => 'auth/rule/del']);
+                Rdb::name('admin_rule')->where('name', 'auth/menu/sortable')->update(['name' => 'auth/rule/sortable']);
+                Rdb::name('admin_rule')->whereIn('name', [
                     'dashboard/dashboard',
                     'routine/attachment',
                 ])->update(['remark' => 'Remark lang']);
