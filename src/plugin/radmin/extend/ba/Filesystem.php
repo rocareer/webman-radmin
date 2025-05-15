@@ -3,6 +3,7 @@
 
 namespace plugin\radmin\extend\ba;
 
+use Exception;
 use plugin\radmin\exception\BusinessException;
 use Throwable;
 use PhpZip\ZipFile;

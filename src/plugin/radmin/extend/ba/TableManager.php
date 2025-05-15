@@ -122,7 +122,7 @@ class TableManager
      */
     public static function isMultiDatabase(): bool
     {
-        return count(config("think-orm.connections")) > 1;
+        return count(config("plugin.radmin.think-orm.connections")) > 1;
     }
 
     /**
@@ -146,7 +146,7 @@ class TableManager
     public static function getConnectionConfig(?string $connection = null): array
     {
         $connection = self::getConnection($connection);
-        $connection =  config("think-orm.connections.$connection");
+        $connection =  config("plugin.radmin.think-orm.connections.$connection");
         if (!is_array($connection)) {
             throw new Exception('Database connection configuration error');
         }

@@ -146,7 +146,6 @@ class Terminal
 
 
         $commands =  config('plugin.radmin.terminal.commands');
-
         if (radminInstalled()){
             $customCommands=get_sys_config('','terminal');
             foreach ($customCommands as $k=>$customCommand){
