@@ -8,7 +8,7 @@ namespace plugin\radmin\extend\ba;
 use plugin\radmin\exception\Exception;
 use Phinx\Db\Table;
 use Throwable;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Phinx\Db\Adapter\AdapterFactory;
 use Phinx\Db\Adapter\AdapterInterface;
 
@@ -72,7 +72,7 @@ class TableManager
         $tableList  = [];
         $config     = self::getConnectionConfig($connection);
         $connection = self::getConnection($connection);
-        $tables     = Db::connect($connection)->query("SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.TABLES WHERE table_schema = ? ", [$config['database']]);
+        $tables     = Rdb::connect($connection)->query("SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.TABLES WHERE table_schema = ? ", [$config['database']]);
         foreach ($tables as $row) {
             $tableList[$row['TABLE_NAME']] = $row['TABLE_NAME'] . ($row['TABLE_COMMENT'] ? ' - ' . $row['TABLE_COMMENT'] : '');
         }
@@ -99,7 +99,7 @@ class TableManager
         $sql        = "SELECT * FROM `information_schema`.`columns` "
             . "WHERE TABLE_SCHEMA = ? AND table_name = ? "
             . "ORDER BY ORDINAL_POSITION";
-        $columnList = Db::connect($connection)->query($sql, [$config['database'], $table]);
+        $columnList = Rdb::connect($connection)->query($sql, [$config['database'], $table]);
 
         $fieldList = [];
         foreach ($columnList as $item) {
@@ -133,7 +133,7 @@ class TableManager
     public static function getConnection(?string $source = null): string
     {
         if (!$source || $source === 'default') {
-            return config('think-orm.default');
+            return config('plugin.radmin.think-orm.default');
         }
         return $source;
     }
@@ -173,12 +173,12 @@ class TableManager
     {
         $config     = self::getConnectionConfig($connection);
         $connection = self::getConnection($connection);
-        $db         = Db::connect($connection);
+        $db         = Rdb::connect($connection);
 
         // 数据库为懒连接，执行 sql 命令为 $db 实例连接数据库
         $db->query('SELECT 1');
 
-        $table = config('think-orm.migration_table', 'migrations');
+        $table = config('plugin.radmin.think-orm.migration_table', 'migrations');
         return [
             'adapter'         => $config['type'],
             'connection'      => $db->getPdo(),

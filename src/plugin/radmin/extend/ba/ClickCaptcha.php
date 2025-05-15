@@ -4,7 +4,7 @@
 namespace plugin\radmin\extend\ba;
 
 use plugin\radmin\support\think\Lang;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 
@@ -82,11 +82,11 @@ class ClickCaptcha
      */
     public function __construct(array $config = [])
     {
-        $clickConfig  =  config('buildadmin.click_captcha');
+        $clickConfig  =  config('plugin.radmin.buildadmin.click_captcha');
         $this->config = array_merge($clickConfig, $this->config, $config);
 
         // 清理过期的验证码
-        Db::name('captcha')->where('expire_time', '<', time())->delete();
+        Rdb::name('captcha')->where('expire_time', '<', time())->delete();
     }
 
     /**
@@ -151,7 +151,7 @@ class ClickCaptcha
         $nowTime         = time();
         $textArr['text'] = array_splice($textArr['text'], 0, $this->config['length']);
         $text            = array_splice($text, 0, $this->config['length']);
-        Db::name('captcha')
+        Rdb::name('captcha')
             ->replace()
             ->insert([
                 'key'         => md5($id),
@@ -204,11 +204,11 @@ class ClickCaptcha
     public function check(string $id, string $info, bool $unset = true): bool
     {
         $key     = md5($id);
-        $captcha = Db::name('captcha')->where('key', $key)->find();
+        $captcha = Rdb::name('captcha')->where('key', $key)->find();
         if ($captcha) {
             // 验证码过期
             if (time() > $captcha['expire_time']) {
-                Db::name('captcha')->where('key', $key)->delete();
+                Rdb::name('captcha')->where('key', $key)->delete();
                 return false;
             }
             $textArr = json_decode($captcha['captcha'], true);
@@ -229,7 +229,7 @@ class ClickCaptcha
                     return false;
                 }
             }
-            if ($unset) Db::name('captcha')->where('key', $key)->delete();
+            if ($unset) Rdb::name('captcha')->where('key', $key)->delete();
             return true;
         } else {
             return false;

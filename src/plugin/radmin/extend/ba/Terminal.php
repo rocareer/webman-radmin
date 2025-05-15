@@ -13,8 +13,6 @@ namespace plugin\radmin\extend\ba;
 
 use plugin\radmin\app\admin\library\module\Manage;
 use plugin\radmin\support\member\Member;
-use think\exception\HttpResponseException;
-use think\Response;
 use Throwable;
 use Workerman\Protocols\Http\ServerSentEvents;
 
@@ -147,13 +145,17 @@ class Terminal
         }
 
 
-        $commands =  config('terminal.commands');
-        $customCommands=get_sys_config('','terminal');
-        foreach ($customCommands as $k=>$customCommand){
-            foreach ($customCommand as $comd){
-                $commands[$k][$comd['key']]=$comd['value'];
+        $commands =  config('plugin.radmin.terminal.commands');
+
+        if (radminInstalled()){
+            $customCommands=get_sys_config('','terminal');
+            foreach ($customCommands as $k=>$customCommand){
+                foreach ($customCommand as $comd){
+                    $commands[$k][$comd['key']]=$comd['value'];
+                }
             }
         }
+
         if (stripos($key, '.')) {
             $key = explode('.', $key);
             if (!array_key_exists($key[0], $commands) || !is_array($commands[$key[0]]) || !array_key_exists($key[1], $commands[$key[0]])) {
@@ -192,8 +194,9 @@ class Terminal
      * @param bool $authentication 是否鉴权
      * @throws Throwable
      */
-    public function exec(bool $authentication = true): void
+    public function exec(bool $authentication = true,?string $commandkey=null): void
     {
+
         $this->sendHeader();
 
         while (ob_get_level()) {
@@ -201,7 +204,7 @@ class Terminal
         }
         if (!ob_get_level()) ob_start();
 
-        $this->commandKey = request()->input('command');
+        $this->commandKey = $commandkey??request()->input('command');
         $command = self::getCommand($this->commandKey);
         if (!$command) {
             $this->execError('The command was not allowed to be executed', true);
@@ -445,15 +448,15 @@ class Terminal
 
     public static function mvDist(): bool
     {
-        $distPath      = root_path() . self::$distDir . DIRECTORY_SEPARATOR;
+        $distPath      = base_path() .DIRECTORY_SEPARATOR .self::$distDir . DIRECTORY_SEPARATOR;
         $indexHtmlPath = $distPath . 'index.html';
         $assetsPath    = $distPath . 'assets';
         if (!file_exists($indexHtmlPath) || !file_exists($assetsPath)) {
             return false;
         }
 
-        $toIndexHtmlPath = root_path() . 'public' . DIRECTORY_SEPARATOR . 'index.html';
-        $toAssetsPath    = root_path() . 'public' . DIRECTORY_SEPARATOR . 'assets';
+        $toIndexHtmlPath = base_path() . '/plugin/radmin/public' . DIRECTORY_SEPARATOR . 'index.html';
+        $toAssetsPath    = base_path() . '/plugin/radmin/public' . DIRECTORY_SEPARATOR . 'assets';
         @unlink($toIndexHtmlPath);
         Filesystem::delDir($toAssetsPath);
 
@@ -468,7 +471,7 @@ class Terminal
     public static function changeTerminalConfig($config = []): bool
     {
         // 不保存在数据库中，因为切换包管理器时，数据库资料可能还未配置
-        $oldPackageManager =  config('terminal.npm_package_manager');
+        $oldPackageManager =  config('plugin.radmin.terminal.npm_package_manager');
         $newPackageManager = request()->post('manager', $config['manager'] ?? $oldPackageManager);
 
         if ($oldPackageManager == $newPackageManager) {
@@ -512,8 +515,5 @@ class Terminal
 
 
             $this->connection->send(new \Workerman\Protocols\Http\Response(200, $headers, "\r\n"));
-
-
-
     }
 }
