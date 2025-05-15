@@ -20,9 +20,12 @@ class Install
      */
     protected static $pathRelation = array(
         'config/plugin/rocareer/webman-radmin' => 'config/plugin/rocareer/webman-radmin',
-        'plugin/radmin' => 'plugin/radmin',
-        'web' => 'web',
-        '.env-example'  => '.env-example',
+        'plugin/radmin'                        => 'plugin/radmin',
+        'database'                             => 'database',
+        'web'                                  => 'web',
+        'config/dependence.php'                => 'config/dependence.php',
+        'config/container.php'                 => 'config/container.php',
+        '.env-example'                         => '.env-example',
     );
 
     /**
@@ -53,7 +56,7 @@ class Install
      */
     public static function installByRelation(): void
     {
-        $backup_path=base_path()."/plugin/radmin/temp/backup";
+        $backup_path = base_path() . "/plugin/radmin/temp/backup";
         foreach (static::$pathRelation as $source => $dest) {
             if ($pos = strrpos($dest, '/')) {
                 $parent_dir = base_path() . '/' . substr($dest, 0, $pos);
@@ -69,6 +72,16 @@ class Install
                 // 如果是文件，则移动文件
                 $sourceFile = __DIR__ . "/$source";
                 $destFile   = base_path() . "/$dest";
+                // 如果有 先备份
+                if (file_exists($destFile)) {
+                    if (copy($destFile, $backup_path . $dest)) {
+                        echo "backup $dest\n";
+                    } else {
+                        echo "Failed to backup $dest\n";
+                    }
+                }
+
+
                 if (copy($sourceFile, $destFile)) {
                     echo "Moved file from $sourceFile to $destFile\n";
                 } else {
@@ -80,8 +93,9 @@ class Install
         // 处理 .env-example 文件，复制并重命名为 .env
         $sourceEnvFile = __DIR__ . '/.env-example';
         $destEnvFile   = base_path() . '/.env';
+
         if (file_exists($destEnvFile)) {
-            if (copy($destEnvFile, $backup_path.str_replace(base_path(),'',$destEnvFile))) {
+            if (copy($destEnvFile, $backup_path . str_replace(base_path(), '', $destEnvFile))) {
                 echo "backup .env\n";
             } else {
                 echo "Failed to backup .env\n";
