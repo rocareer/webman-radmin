@@ -64,7 +64,6 @@ class Table extends Backend
             $dbTables     = $connection->getTables();
             $sysTables= $this->model->select()->toArray();
 
-            var_dump($dbTables);
             Rdb::startTrans();
             try {
                 // 从数据库同步
@@ -124,7 +123,7 @@ class Table extends Backend
 
 
     /**
-     * 若需重写查看、编辑、删除等方法，请复制 @see \app\admin\library\traits\Backend 中对应的方法至此进行重写
+     * 若需重写查看、编辑、删除等方法，请复制 @see \plugin\radmin\app\admin\library\traits\Backend 中对应的方法至此进行重写
      */
 
     /**
@@ -192,6 +191,5 @@ class Table extends Backend
     {
         $table   = $data['name'];
         $comment = $data['comment'];
-        var_dump($data);
     }
 }

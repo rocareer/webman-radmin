@@ -5,6 +5,7 @@
 
 namespace plugin\radmin\app\admin\controller\crud;
 
+use plugin\radmin\support\Response;
 use Throwable;
 use exception;
 use plugin\radmin\extend\ba\Filesystem;
@@ -74,7 +75,7 @@ class Crud extends Backend
      * 开始生成
      * @throws Throwable
      */
-    public function generate(): \plugin\radmin\support\Response
+    public function generate(): Response
     {
         $type   = $this->request->post('type', '');
         $table  = $this->request->post('table', []);
@@ -306,7 +307,7 @@ class Crud extends Backend
      * 从log开始
      * @throws Throwable
      */
-    public function logStart(): \plugin\radmin\support\Response
+    public function logStart(): Response
     {
         $id   = $this->request->post('id');
         $type = $this->request->post('type', '');
@@ -374,7 +375,7 @@ class Crud extends Backend
      * 删除CRUD记录和生成的文件
      * @throws Throwable
      */
-    public function delete(): \plugin\radmin\support\Response
+    public function delete(): Response
     {
         $id   = $this->request->post('id');
         $info = CrudLog::find($id)->toArray();
@@ -417,7 +418,7 @@ class Crud extends Backend
      * 获取文件路径数据
      * @throws Throwable
      */
-    public function getFileData(): \plugin\radmin\support\Response
+    public function getFileData(): Response
     {
         $table       = $this->request->get('table');
         $commonModel = $this->request->get('commonModel');
@@ -436,18 +437,18 @@ class Crud extends Backend
         }
 
         // 模型和控制器文件和文件列表
-        $adminModelFiles      = Filesystem::getDirFiles(app_path(). DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
-        $commonModelFiles     = Filesystem::getDirFiles(app_path() . DIRECTORY_SEPARATOR . 'common' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
+        $adminModelFiles      = Filesystem::getDirFiles(base_path(). DIRECTORY_SEPARATOR . 'plugin/radmin/app/admin' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
+        $commonModelFiles     = Filesystem::getDirFiles(base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/app/common' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
         $adminControllerFiles = get_controller_list();
 
         $modelFileList   = [];
         $controllerFiles = [];
         foreach ($adminModelFiles as $item) {
-            $item                 = Filesystem::fsFit('app/admin/model/' . $item);
+            $item                 = Filesystem::fsFit('/plugin/radmin/app/admin/model/' . $item);
             $modelFileList[$item] = $item;
         }
         foreach ($commonModelFiles as $item) {
-            $item                 = Filesystem::fsFit('app/common/model/' . $item);
+            $item                 = Filesystem::fsFit('/plugin/radmin/app/common/model/' . $item);
             $modelFileList[$item] = $item;
         }
 
@@ -465,7 +466,7 @@ class Crud extends Backend
             if (in_array($item, $outExcludeController)) {
                 continue;
             }
-            $item                   = Filesystem::fsFit('app/admin/controller/' . $item);
+            $item                   = Filesystem::fsFit('/plugin/radmin/app/admin/controller/' . $item);
             $controllerFiles[$item] = $item;
         }
 
@@ -483,7 +484,7 @@ class Crud extends Backend
      * 检查是否已有CRUD记录
      * @throws Throwable
      */
-    public function checkCrudLog(): \plugin\radmin\support\Response
+    public function checkCrudLog(): Response
     {
         $table      = $this->request->get('table');
         $connection = $this->request->get('connection');
@@ -546,7 +547,7 @@ class Crud extends Backend
      * 生成前检查
      * @throws Throwable
      */
-    public function generateCheck(): \plugin\radmin\support\Response
+    public function generateCheck(): Response
     {
         $table          = $this->request->post('table');
         $connection     = $this->request->post('connection');
@@ -591,7 +592,7 @@ class Crud extends Backend
      * CRUD 设计记录上传成功标记
      * @throws Throwable
      */
-    public function uploadCompleted(): \plugin\radmin\support\Response
+    public function uploadCompleted(): Response
     {
         $syncIds      = $this->request->post('syncIds/a', []);
         $cancelSync   = $this->request->post('cancelSync/b', false);

@@ -435,7 +435,6 @@ class Helper
      * @param array   $fields       字段数据
      * @param array   $designChange 前端字段改变数据
      * @param ?string $connection   数据库连接标识
-     
      * @throws Throwable
      */
     public static function updateFieldOrder(string $tableName, array $fields, array $designChange, ?string $connection = null): void
@@ -583,9 +582,11 @@ class Helper
             $value        = str_replace(['.', '/', '\\', '_'], '/', $value);
             $pathArrTemp  = explode('/', $value);
             $redundantDir = [
-                'app' => 0,
-                $app  => 1,
-                $type => 2,
+                'plugin' => 0,
+                'radmin' => 1,
+                'app'    => 2,
+                $app     => 3,
+                $type    => 4,
             ];
             foreach ($pathArrTemp as $key => $item) {
                 if (!array_key_exists($item, $redundantDir) || $key !== $redundantDir[$item]) {
@@ -607,11 +608,10 @@ class Helper
             throw new Exception('Unable to use internal variable:' . $lastName);
         }
 
-        $appDir       = app_path() .DIRECTORY_SEPARATOR. $app . DIRECTORY_SEPARATOR;
-        $namespace    = "app\\$app\\$type" . ($pathArr ? '\\' . implode('\\', $pathArr) : '');
+        $appDir       = base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/app/' . $app . DIRECTORY_SEPARATOR;
+        $namespace    = "plugin\\radmin\\app\\$app\\$type" . ($pathArr ? '\\' . implode('\\', $pathArr) : '');
         $parseFile    = $appDir . $type . DIRECTORY_SEPARATOR . ($pathArr ? implode(DIRECTORY_SEPARATOR, $pathArr) . DIRECTORY_SEPARATOR : '') . $lastName . '.php';
         $rootFileName = $namespace . "/$lastName" . '.php';
-
         return [
             'lastName'         => $lastName,
             'originalLastName' => $originalLastName,
@@ -688,7 +688,8 @@ class Helper
      */
     public static function getStubFilePath(string $name): string
     {
-        return app_path().'/admin/'. DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'crud' . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . Filesystem::fsFit($name) . '.stub';
+        //todo
+        return base_path() . '/plugin/radmin/app/admin/' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'crud' . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . Filesystem::fsFit($name) . '.stub';
     }
 
     /**
