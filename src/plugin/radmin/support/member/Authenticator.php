@@ -7,8 +7,8 @@ use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\Token;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\UnauthorizedHttpException;
-use support\Log;
-use upport\think\Db;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\think\orm\Rdb;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -43,7 +43,7 @@ abstract class Authenticator implements InterfaceAuthenticator
      */
     public function __construct()
     {
-        $this->config      = config('auth.login.' . $this->role);
+        $this->config      = config('plugin.radmin.auth.login.' . $this->role);
         $this->memberModel = Factory::getInstance($this->role, 'model');
     }
 
@@ -59,7 +59,7 @@ abstract class Authenticator implements InterfaceAuthenticator
         $this->credentials = $credentials;
 
         try {
-            Db::startTrans();
+            Rdb::startTrans();
 
             // 1. 验证基本凭证
             $this->validateCredentials();
@@ -104,18 +104,18 @@ abstract class Authenticator implements InterfaceAuthenticator
             //     ]
             // ]);
 
-            Db::commit();
+            Rdb::commit();
             return $this->memberModel;
 
         } catch (UnauthorizedHttpException $e) {
-            Db::rollback();
+            Rdb::rollback();
             $this->updateLoginState('false');
-            Db::commit();
+            Rdb::commit();
             throw new UnauthorizedHttpException($e->getMessage(), StatusCode::AUTHENTICATION_FAILED);
         } catch (Throwable $e) {
-            Db::rollback();
+            Rdb::rollback();
             $this->updateLoginState('false');
-            Db::commit();
+            Rdb::commit();
             Log::error('认证异常：' . $e->getMessage());
             throw new UnauthorizedHttpException($e->getMessage(), StatusCode::AUTHENTICATION_FAILED,false,[],$e);
         }
@@ -256,7 +256,7 @@ abstract class Authenticator implements InterfaceAuthenticator
     public function refreshToken(string $refreshToken): string
     {
         try {
-            Db::startTrans();
+            Rdb::startTrans();
 
             // 验证用户
             $this->validateRefreshToken($refreshToken);
@@ -274,11 +274,11 @@ abstract class Authenticator implements InterfaceAuthenticator
                 'data'        => ['ip' => request()->getRealIp()]
             ]);
 
-            Db::commit();
+            Rdb::commit();
             return $this->memberModel->token;
 
         } catch (Throwable $e) {
-            Db::rollback();
+            Rdb::rollback();
             Log::error('刷新令牌失败', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
