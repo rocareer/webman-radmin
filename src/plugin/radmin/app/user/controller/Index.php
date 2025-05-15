@@ -43,7 +43,7 @@ class Index extends Frontend
      */
     public function login(): Response
     {
-        $openMemberCenter =  config('buildadmin.open_member_center');
+        $openMemberCenter =  config('plugin.radmin.buildadmin.open_member_center');
         if (!$openMemberCenter) {
             return $this->error(__('Member center disabled'));
         }
@@ -55,7 +55,7 @@ class Index extends Frontend
         //     ], $this->Member::LOGIN_RESPONSE_CODE);
         // }
 
-        $userLoginCaptchaSwitch =  config('buildadmin.user_login_captcha');
+        $userLoginCaptchaSwitch =  config('plugin.radmin.buildadmin.user_login_captcha');
 
         if ($this->request->isPost()) {
             $params = $this->request->only(['tab', 'email', 'mobile', 'username', 'password', 'keep', 'captcha', 'captchaId', 'captchaInfo', 'registerType']);
@@ -79,7 +79,7 @@ class Index extends Frontend
                         return $this->error(__('Captcha error'));
                     }
                 }
-                $captchaSwitch =  config('buildadmin.user_login_captcha');
+                $captchaSwitch =  config('plugin.radmin.buildadmin.user_login_captcha');
                 $credentials = [
                     'username'      => $this->request->post('username'),
                     'password'      => $this->request->post('password'),

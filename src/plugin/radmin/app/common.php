@@ -25,7 +25,7 @@
 use plugin\radmin\app\admin\library\module\Server;
 use plugin\radmin\extend\ba\Filesystem;
 use plugin\radmin\support\think\Lang;
-use upport\think\Db;
+use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\admin\model\Config as configModel;
 
 
@@ -99,6 +99,9 @@ if (!function_exists('get_sys_config')) {
      */
     function get_sys_config(string $name = '', string $group = '', bool $concise = true): mixed
     {
+        if (!radminInstalled()){
+            return [];
+        }
         if ($name) {
             // 直接使用->value('value')不能使用到模型的类型格式化
             $config = configModel::cache($name, null, configModel::$cacheTag)->where('name', $name)->find();
@@ -135,7 +138,7 @@ if (!function_exists('get_route_remark')) {
         $actionName     = request()->action;
         $path           = str_replace('.', '/', $controllerName);
         $path           = str_replace('app\admin\controller\\', '', $path);
-        $remark         = Db::name('admin_rule')
+        $remark         = Rdb::name('admin_rule')
             ->where('name', $path)
             ->whereOr('name', $path . '/' . $actionName)
             ->value('remark');
@@ -188,7 +191,7 @@ if (!function_exists('full_url')) {
         // 存储/上传资料配置 todo
         //		Event::trigger('uploadConfigInit', App::getInstance());
 
-        $cdnUrl = config('buildadmin.cdn_url');
+        $cdnUrl = config('plugin.radmin.buildadmin.cdn_url');
         if (!$cdnUrl) {
             if (request()) {
                 $cdnUrl = request()->upload['cdn'] ?? '//' . request()->host();
@@ -214,7 +217,7 @@ if (!function_exists('full_url')) {
         }
 
         $url          = $domain . $relativeUrl;
-        $cdnUrlParams = config('buildadmin.cdn_url_params');
+        $cdnUrlParams = config('plugin.radmin.buildadmin.cdn_url_params');
         if ($domain === $cdnUrl && $cdnUrlParams) {
             $separator = str_contains($url, '?') ? '&' : '?';
             $url       .= $separator . $cdnUrlParams;
@@ -235,7 +238,7 @@ if (!function_exists('set_timezone')) {
     function set_timezone($timezone = null): void
     {
 
-        $defaultTimezone = config('radmin.default_timezone');
+        $defaultTimezone = config('plugin.radmin.radmin.default_timezone');
 
         $timezone = is_null($timezone) ? get_sys_config('time_zone') : $timezone;
         if ($timezone && $defaultTimezone != $timezone) {
@@ -248,7 +251,7 @@ function get_upload_config(): array
 {
     //	Event::dispatch('uploadConfigInit', []);
 
-    $uploadConfig = config('upload', []);
+    $uploadConfig = config('plugin.radmin.upload', []);
 
     // 确保有默认配置
     if (empty($uploadConfig)) {
@@ -404,7 +407,7 @@ if (!function_exists('get_area')) {
 
         $cacheKey = 'area_data_' . md5(serialize($where));
 
-        return Db::name('area')
+        return Rdb::name('area')
             ->cache($cacheKey, $cacheTime)
             ->where($where)
             ->field('id as value,name as label')
@@ -610,7 +613,7 @@ if (!function_exists('get_ba_client')) {
     function get_ba_client(): string
     {
         // return new Client([
-        //     'base_uri'        =>  config('buildadmin.api_url'),
+        //     'base_uri'        =>  config('plugin.radmin.buildadmin.api_url'),
         //     'timeout'         => 30,
         //     'connect_timeout' => 30,
         //     'verify'          => false,
@@ -624,25 +627,6 @@ if (!function_exists('get_ba_client')) {
         return '';
     }
 
-    if (!function_exists('configSet')) {
-
-        function configSet(array $config, $configs, ?string $name = null): array
-        {
-            if (empty($name)) {
-                return array_merge($configs, array_change_key_case($config));
-            }
-
-            if (isset($configs[$name])) {
-                $result = array_merge($$configs[$name], $config);
-            } else {
-                $result = $config;
-            }
-
-            $configs[$name] = $result;
-
-            return $result;
-        }
-    }
 }
 
 
