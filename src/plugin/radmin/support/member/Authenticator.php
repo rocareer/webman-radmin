@@ -9,12 +9,13 @@ use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\think\orm\Rdb;
-use support\Container;
+use plugin\radmin\support\Container;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use Throwable;
 use Webman\Event\Event;
+use plugin\radmin\app\process\Http;
 
 /**
  * 认证器抽象基类
@@ -100,7 +101,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             //     'description' => '用户登录',
             //     'type'        => $this->role,
             //     'data'        => [
-            //         'ip'   => request()->getRealIp(),
+            //         'ip'   => Http::request()->getRealIp(),
             //         'keep' => !empty($credentials['keep'])
             //     ]
             // ]);
@@ -272,7 +273,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             $this->recordOperationLog([
                 'action'      => 'refresh_token',
                 'description' => '刷新认证令牌',
-                'data'        => ['ip' => request()->getRealIp()]
+                'data'        => ['ip' => Http::request()->getRealIp()]
             ]);
 
             Rdb::commit();
@@ -330,7 +331,7 @@ abstract class Authenticator implements InterfaceAuthenticator
             $this->recordOperationLog([
                 'action'      => 'logout',
                 'description' => '用户注销',
-                'data'        => ['ip' => request()->getRealIp()]
+                'data'        => ['ip' => Http::request()->getRealIp()]
             ]);
 
             return true;
@@ -371,7 +372,7 @@ abstract class Authenticator implements InterfaceAuthenticator
                 'description' => '强制下线用户',
                 'data'        => [
                     'target_user_id' => $userId,
-                    'ip'             => request()->getRealIp()
+                    'ip'             => Http::request()->getRealIp()
                 ]
             ]);
         }
