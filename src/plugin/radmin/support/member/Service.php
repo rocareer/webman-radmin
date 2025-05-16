@@ -8,31 +8,51 @@ use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\support\token\Token;
 use plugin\radmin\exception\BusinessException;
-use support\Container;
+use plugin\radmin\support\Container;
 use Throwable;
 use Webman\Event\Event;
+use plugin\radmin\app\process\Http;
 
 abstract class Service implements InterfaceService
 {
     //common
+    /**
+     * 登录器
+     * @var InterfaceAuthenticator|mixed|null 
+     */
     private ?InterfaceAuthenticator $authenticator;
-    private ?InterfaceState         $state;
+    private mixed $state;
 
+    /**
+     * 角色
+     * @var string 
+     */
     protected string $role     = 'admin';
-    protected string $error    = '';
+
+    /**
+     * ID
+     * @var int|null 
+     */
     public ?int      $id       = null;
+    /**
+     * 用户名
+     * @var string|null 
+     */
     public ?string   $username = null;
-    //state
-    public bool $isLogin = false;
 
+    /**
+     * 
+     * @var mixed|null 
+     */
     protected mixed $children = null;
-
     //instance
     protected ?object $memberModel = null;
+    private mixed     $context;
 
 
     public function __construct()
     {
+        $this->context       = Container::get('member.context');
         $this->authenticator = Container::get('member.authenticator');
         $this->memberModel   = Container::get('member.model');
         $this->state         = Container::get('member.state');
@@ -42,7 +62,7 @@ abstract class Service implements InterfaceService
     /**
      * @throws BusinessException
      */
-    public function initialization()
+    public function initialization(): ?object
     {
         $request = request();
         if (!empty($request->member)) {
@@ -122,15 +142,11 @@ abstract class Service implements InterfaceService
      *
      * By albert  2025/05/08 04:28:10
      * @return bool
-     * @throws BusinessException
      */
     public function logout(): bool
     {
-        if (!$this->isLogin()) {
-            throw new BusinessException('你已退出登录', StatusCode::NEED_LOGIN, ['type' => 'need login']);
-        }
-        if (request()->token) {
-            Token::destroy(request()->token);
+        if (Http::request()->token) {
+            Token::destroy(Http::request()->token);
         }
         $this->resetMember();
         return true;
@@ -165,7 +181,7 @@ abstract class Service implements InterfaceService
     public function memberInitialization(?string $token = null): void
     {
         try {
-            $token = $token ?? request()->token ?? getTokenFromRequest() ?? false;
+            $token = $token ?? Http::request()->token ?? getTokenFromRequest() ?? false;
             if (empty($token)) {
                 throw new BusinessException('没有凭证', StatusCode::TOKEN_NOT_FOUND);
             }
@@ -200,16 +216,6 @@ abstract class Service implements InterfaceService
     }
 
 
-    /**
-     * 判断是否登录
-     * By albert  2025/05/06 18:40:23
-     * @return bool
-     */
-    public function isLogin(): bool
-    {
-        return $this->isLogin;
-    }
-
 
     /**
      * 检查当前用户是否拥有指定角色
@@ -221,7 +227,7 @@ abstract class Service implements InterfaceService
      */
     public function hasRole($role, $roles = null): bool
     {
-        $payloadRoles = $roles ?? request()->member->roles ?? [];
+        $payloadRoles = $roles ?? Http::request()->member->roles ?? [];
         return in_array($role, $payloadRoles);
     }
 
@@ -361,7 +367,6 @@ abstract class Service implements InterfaceService
         $this->memberModel = $member;
         $this->id          = $member->id;
         $this->username    = $member->username;
-        $this->isLogin     = true;
     }
 
     /**
@@ -374,12 +379,8 @@ abstract class Service implements InterfaceService
         $this->memberModel = null;
         $this->id          = null;
         $this->username    = null;
-        $this->isLogin     = false;
+        $this->context->clear();
 
-        // if (empty($this->state)) {
-        //     $this->stateInitialization();
-        // }
-        // $this->stateManager->clearState();
     }
 
 
@@ -432,7 +433,7 @@ abstract class Service implements InterfaceService
         }
         $list = []; //保存验证通过的规则名
         if ('url' == $mode) {
-            $REQUEST = json_decode(strtolower(json_encode(request()->all(), JSON_UNESCAPED_UNICODE)), true);
+            $REQUEST = json_decode(strtolower(json_encode(Http::request()->all(), JSON_UNESCAPED_UNICODE)), true);
         }
         foreach ($ruleList as $rule) {
             $query = preg_replace('/^.+\?/U', '', $rule);
