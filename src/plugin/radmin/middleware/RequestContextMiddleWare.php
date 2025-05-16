@@ -6,8 +6,7 @@
 namespace plugin\radmin\middleware;
 
 use Exception;
-use plugin\radmin\support\Log;
-use support\Container;
+use plugin\radmin\support\Container;
 use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
