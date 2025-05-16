@@ -32,7 +32,7 @@ return [
             // 驱动方式
             'type' => 'file',
             // 设置不同的缓存保存目录
-            'path' => runtime_path() . '/file/',
+            'path' => runtime_path() . '/radmin/cache/',
         ],
     ],
 ];
