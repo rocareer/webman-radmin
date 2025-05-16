@@ -4,7 +4,6 @@ declare (strict_types=1);
 namespace plugin\radmin\app\admin\controller;
 
 use plugin\radmin\app\common\controller\Backend;
-use Exception;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\Response;
@@ -52,15 +51,14 @@ class Index extends Backend
      * 管理员登录
      * @throws Throwable
      */
-    public function login(): \plugin\radmin\support\Response
+    public function login(): Response
     {
         // 检查登录态
-
-        // if (Member::isLogin()) {
-        //  return $this->success(__('You have already logged in. There is no need to log in again~'), [
-        //         'type' => 'logged in'
-        //     ], 303);
-        // }
+        if ($this->request->member) {
+         return $this->success(__('You have already logged in. There is no need to log in again~'), [
+                'type' => 'logged in'
+            ], 303);
+        }
 
         $captchaSwitch = config('plugin.radmin.buildadmin.admin_login_captcha');
 

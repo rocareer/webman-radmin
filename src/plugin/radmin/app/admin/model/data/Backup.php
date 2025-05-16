@@ -3,6 +3,7 @@
 namespace plugin\radmin\app\admin\model\data;
 
 use plugin\radmin\app\common\model\BaseModel;
+use think\model\relation\BelongsTo;
 
 /**
  * Backup
@@ -30,9 +31,9 @@ class Backup extends BaseModel
     }
 
 
-    public function dataTable(): \think\model\relation\BelongsTo
+    public function dataTable(): BelongsTo
     {
-        return $this->belongsTo(\app\admin\model\data\Table::class, 'table_name', 'name');
+        return $this->belongsTo(Table::class, 'table_name', 'name');
     }
 
 

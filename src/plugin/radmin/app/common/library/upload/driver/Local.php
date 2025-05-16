@@ -3,6 +3,7 @@
 
 namespace plugin\radmin\app\common\library\upload\driver;
 
+use plugin\radmin\app\process\Http;
 use Webman\Http\UploadFile;
 use Webman\Exception\FileException;
 use plugin\radmin\extend\ba\Filesystem;
@@ -87,7 +88,7 @@ class Local extends Driver
 		$saveName = $this->clearRootPath($saveName);
 		
 		if ($domain === true) {
-			$domain = '//' . request()->host();
+			$domain = '//' . Http::request()->host();
 		} elseif ($domain === false) {
 			$domain = '';
 		}

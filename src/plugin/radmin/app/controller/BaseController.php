@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace plugin\radmin\app\controller;
 
+use plugin\radmin\app\process\Http;
 use plugin\radmin\support\Request;
 use think\Validate;
 use think\exception\ValidateException;
@@ -12,10 +13,7 @@ use think\exception\ValidateException;
  */
 abstract class BaseController
 {
-    /**
-     * Request实例
-     * @var Request
-     */
+
     protected Request $request;
 
     /**
@@ -36,7 +34,7 @@ abstract class BaseController
      */
     public function __construct()
     {
-        $this->request                 = request();
+        $this->request=Http::request();
         // 控制器初始化
         $this->initialize();
     }
@@ -59,6 +57,7 @@ abstract class BaseController
      * @return array|string|true
      * @throws ValidateException
      */
+
     protected function validate(array $data, array|string $validate, array $message = [], bool $batch = false): bool|array|string
     {
         if (is_array($validate)) {
@@ -69,7 +68,7 @@ abstract class BaseController
                 // 支持场景
                 [$validate, $scene] = explode('.', $validate);
             }
-            $class = str_contains($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
+            $class = str_contains($validate, '\\') ? $validate : parseClass('validate', $validate);
             $v     = new $class();
             if (!empty($scene)) {
                 $v->scene($scene);
@@ -85,5 +84,7 @@ abstract class BaseController
 
         return $v->failException()->check($data);
     }
+
+
 
 }

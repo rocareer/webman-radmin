@@ -13,6 +13,7 @@
 namespace plugin\radmin\app\api\controller;
 
 
+use plugin\radmin\app\process\Http;
 use Exception;
 use plugin\radmin\app\admin\model\Config;
 use plugin\radmin\exception\BusinessException;
@@ -107,7 +108,7 @@ class Install
             return;
         }
 
-        $newPackageManager = request()->post('manager', config('plugin.radmin.terminal.npm_package_manager'));
+        $newPackageManager = Http::request()->post('manager', config('plugin.radmin.terminal.npm_package_manager'));
         if (Terminal::changeTerminalConfig()) {
             return $this->success('', [
                 'manager' => $newPackageManager
@@ -285,7 +286,7 @@ class Install
             return $this->error('', [], 2);
         }
 
-        $packageManager = request()->post('manager', 'none');
+        $packageManager = Http::request()->post('manager', 'none');
 
         // npm
         $npmVersion = Version::getVersion('npm');
@@ -430,14 +431,14 @@ class Install
 
         $envOk = $this->commandExecutionCheck();
         $rootPath = str_replace('\\', '/', base_path());
-        if (request()->isGet()) {
+        if (Http::request()->isGet()) {
             return $this->success('', [
                 'rootPath' => $rootPath,
                 'executionWebCommand' => $envOk
             ]);
         }
 
-        $connectData = $databaseParam = request()->only(['hostname', 'username', 'password', 'hostport', 'database', 'prefix']);
+        $connectData = $databaseParam = Http::request()->only(['hostname', 'username', 'password', 'hostport', 'database', 'prefix']);
 
         // 数据库配置测试
         $connectData['database'] = '';

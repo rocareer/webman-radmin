@@ -6,6 +6,7 @@ use plugin\radmin\app\common\model\BaseModel;
 use Exception;
 use plugin\radmin\support\think\orm\Rdb;
 use think\model\relation\BelongsTo;
+use plugin\radmin\app\process\Http;
 
 
 /**
@@ -56,7 +57,7 @@ class AdminLog extends BaseModel
 
     public static function instance()
     {
-        $request = request();
+        $request = Http::request();
         if (!isset($request->adminLog)) {
             $request->adminLog = new static();
         }
@@ -140,14 +141,14 @@ class AdminLog extends BaseModel
     {
         $adminId=null;
         $userName=null;
-        if (request()->member){
-            $userID = request()->member->id;
-            $userName = request()->member->username;
+        if (Http::request()->member){
+            $userID = Http::request()->member->id;
+            $userName = Http::request()->member->username;
         }
         $adminId    = $adminId ?? $userID??0 ;
-        $username   = $userName ?? request()->input('username', __('Unknown'));
-        $controller = str_replace('.', '/', request()->controllerName);
-        $action     = request()->action;
+        $username   = $userName ?? Http::request()->input('username', __('Unknown'));
+        $controller = str_replace('.', '/', Http::request()->controller());
+        $action     = Http::request()->action;
         $path       = $controller . '/' . $action;
         if ($this->urlIgnoreRegex) {
             foreach ($this->urlIgnoreRegex as $item) {
@@ -158,7 +159,7 @@ class AdminLog extends BaseModel
         }
         $data = $data ?: $this->data;
         if (empty($data)) {
-            $data = request()->all();
+            $data = Http::request()->all();
         }
         $data  = $this->desensitization($data);
         $title = $title ?: $this->title;
@@ -176,14 +177,14 @@ class AdminLog extends BaseModel
                     '//app/radmin/', '',
                     str_replace
                     (
-                        request()->host(), '', request()->url()
+                        Http::request()->host(), '', Http::request()->url()
                     )
                 ), 0, 1500
             ),
             'title'     => $title,
             'data'      => !is_scalar($data) ? json_encode($data) : $data,
-            'ip'        => request()->getRealIp(),
-            'useragent' => substr(request()->header('user-agent'), 0, 255),
+            'ip'        => Http::request()->getRealIp(),
+            'useragent' => substr(Http::request()->header('user-agent'), 0, 255),
             'create_time'=> time(),
         ]);
     }

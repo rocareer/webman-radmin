@@ -65,10 +65,8 @@ class Group extends Backend
         parent::initialize();
         $this->model = new AdminGroup();
         $this->tree  = Tree::instance();
-        $isTree          = $this->request->input('isTree', true);
-        $this->initValue = $this->request->input("initValue", []);
-
-
+        $isTree          = $this->request->input('isTree/b', true);
+        $this->initValue = $this->request->input("initValue/a", []);
 
         $this->initValue = array_filter($this->initValue);
         $this->keyword   = $this->request->input("quickSearch", '');

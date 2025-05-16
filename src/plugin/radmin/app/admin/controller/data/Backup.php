@@ -2,9 +2,6 @@
 
 namespace plugin\radmin\app\admin\controller\data;
 
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
 use Throwable;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
@@ -81,15 +78,11 @@ class Backup extends Backend
 
     /**
      * 下载备份文件
-     * @param $id
-     * @return Response
+     * @return \support\Response
      * Author:   albert <albert@rocareer.com>
      * Time:     2025/5/13 03:56
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
-    public function download(): Response
+    public function download(): \support\Response
     {
         $id=$this->request->get('id');
         $row=$this->model->find($id);

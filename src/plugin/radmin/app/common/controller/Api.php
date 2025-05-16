@@ -2,11 +2,11 @@
 
 namespace plugin\radmin\app\common\controller;
 
-use plugin\radmin\app\controller\BaseController;
 use Exception;
+use plugin\radmin\app\controller\BaseController;
 use plugin\radmin\exception\ServerErrorHttpException;
-use plugin\radmin\support\think\Lang;
 use plugin\radmin\support\Response;
+use plugin\radmin\support\think\lang\Lang;
 use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
@@ -27,10 +27,6 @@ class Api extends BaseController
      */
     protected bool $useSystemSettings = true;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * 控制器初始化方法
@@ -77,7 +73,7 @@ class Api extends BaseController
         }
         else {
             // 默认加载中文公共语言文件
-            $commonLangFile = app_path('admin/lang/').$langSet.'.php';
+            $commonLangFile = base_path('plugin/radmin/admin/lang/').$langSet.'.php';
             if(is_file($commonLangFile)) {
                 Lang::load($commonLangFile);
             }
