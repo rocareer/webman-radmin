@@ -15,6 +15,7 @@ use plugin\radmin\support\member\Service;
 use plugin\radmin\support\token\Token;
 use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
+use plugin\radmin\app\process\Http;
 
 class AdminService extends Service
 {
@@ -37,8 +38,8 @@ class AdminService extends Service
 
     public function initialize(): void
     {
-        if (request()->member) {
-            $this->id = request()->member->id;
+        if (Http::request()->member) {
+            $this->id = Http::request()->member->id;
         }
     }
 
