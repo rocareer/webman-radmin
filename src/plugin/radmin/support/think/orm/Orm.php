@@ -3,7 +3,7 @@
 
 namespace plugin\radmin\support\think\orm;
 
-use support\think\Cache;
+use plugin\radmin\support\think\cache\Cache;
 use think\Container;
 use think\Paginator;
 use Webman\Bootstrap;
@@ -29,8 +29,7 @@ class Orm implements Bootstrap
 		if (!$config) {
 			return;
 		}
-		Container::getInstance()->bind('Rdbm', Rdbm::class);
-
+		// Container::getInstance()->bind('Rdbm', Rdbm::class);
 		// 配置
 		Rdb::setConfig($config);
 

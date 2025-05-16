@@ -5,7 +5,7 @@ namespace plugin\radmin\support\think\orm;
 use think\db\Query;
 use think\db\BaseQuery;
 use think\model\Collection;
-use WeakMap;
+use plugin\radmin\app\process\Http;
 
 /**
  * @method static Rdb name(string $name) 指定当前数据表名（不含前缀）
@@ -61,7 +61,7 @@ class Model extends \think\Model
     public function __construct(array | object $data = [])
     {
         // 初始化数据
-        if (radminOrmInstalled()||request()->action=='testDatabase'){
+        if (radminOrmInstalled()||Http::request()->action=='testDatabase'){
             parent::__construct($data);
         }
     }
