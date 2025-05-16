@@ -12,8 +12,29 @@
 
 
 use plugin\radmin\extend\ba\Filesystem;
+use plugin\radmin\app\process\Http;
+use think\helper\Str;
 
 
+if (!function_exists('parseClass')) {
+    /**
+     * 自动解析验证器类名称
+     * @param string $layer
+     * @param string $name
+     * @return   string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/16 15:10
+     */
+    function parseClass(string $layer, string $name): string
+    {
+        $name  = str_replace(['/', '.'], '\\', $name);
+        $array = explode('\\', $name);
+        $class = Str::studly(array_pop($array));
+        $path  = $array ? implode('\\', $array) . '\\' : '';
+
+        return 'plugin\\radmin\\app\\' . Http::request()->app . '\\' . $layer . '\\' . $path . $class;
+    }
+}
 if (!function_exists('arrayStrictFilter')) {
     /**
      * 过滤数组
@@ -72,7 +93,7 @@ if (!function_exists('radminOrmInstalled')) {
 if (!function_exists('shouldExclude')) {
     function shouldExclude(?string $path = null): bool
     {
-        $path          = $path ?? request()->path();
+        $path          = $path ?? Http::request()->path();
         $excludeRoutes = config('plugin.radmin.auth.exclude', []);
 
         foreach ($excludeRoutes as $route) {
