@@ -155,7 +155,7 @@ if (!function_exists('getTokenFromRequest')) {
 
         $type=$request->role??$request->app;
         // 从配置的 headers 中获取 Token
-        $headers = config("plugin.radmin.token.headers.{$type}", []);
+        $headers = config("plugin.radmin.auth.headers.{$type}", []);
         foreach ($headers as $header) {
             $token = $request->header($header);
             if (!empty($token)) {

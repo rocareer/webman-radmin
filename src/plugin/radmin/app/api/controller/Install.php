@@ -86,7 +86,7 @@ class Install
 
     public function __construct()
     {
-        $this->request = request();
+        $this->request = Http::request();
     }
 
     /**

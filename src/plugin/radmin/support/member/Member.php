@@ -44,8 +44,7 @@ class Member extends Facade
      */
     protected static function getFacadeClass(): string
     {
-        $context = Container::get('member.context');
-        return get_class($context->get('service'));
+        return get_class(Container::get('member.service'));
     }
 }
 

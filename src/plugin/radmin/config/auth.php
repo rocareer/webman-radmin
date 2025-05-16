@@ -89,4 +89,22 @@ return [
     ],
 
 
+    'headers' => [
+        'admin' => [
+            'Authorization',
+            'batoken',
+            'Batoken',
+            'ba-token',
+            'Ba-token',
+        ],
+        'user'  => [
+            'Ba-user-token',
+            'ba-user-token'
+        ],
+        'api'  => [
+            'Ba-user-token',
+            'ba-user-token'
+        ]
+    ],
+
 ];

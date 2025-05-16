@@ -60,9 +60,6 @@ class Model extends \think\Model
 
     public function __construct(array | object $data = [])
     {
-        // 初始化数据
-        if (radminOrmInstalled()||Http::request()->action=='testDatabase'){
             parent::__construct($data);
-        }
     }
 }

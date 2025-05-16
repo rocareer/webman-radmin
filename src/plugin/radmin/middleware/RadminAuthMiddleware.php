@@ -47,11 +47,13 @@ class RadminAuthMiddleware implements MiddlewareInterface
         // 0. 设置请求角色
         $request->role = $this->allowedRole;
 
-        // 1. 初始化上下文
-        $this->ContextInit();
+
 
         // 2. 检查是否跳过认证
         if (shouldExclude($request->path())) return $handler($request);
+
+        // 1. 初始化上下文
+        $this->ContextInit();
 
         // 3. 没有凭证则跳过
         if (empty($request->token)) throw new UnauthorizedHttpException('没有凭证', StatusCode::TOKEN_NOT_FOUND, true);
@@ -82,9 +84,5 @@ class RadminAuthMiddleware implements MiddlewareInterface
     {
         $context ??= Container::get('member.context');
         $context->set('role', $this->allowedRole);
-        $context->set('service', Container::get('member.service'));
-        $context->set('authenticator', Container::get('member.authenticator'));
-        $context->set('state', Container::get('member.state'));
-        $context->set('model', Container::get('member.model'));
     }
 }
