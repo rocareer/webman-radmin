@@ -33,7 +33,7 @@ class Radmin106 extends AbstractMigration
      */
     public function createDataBackupTable()
     {
-        $tableName = 'ra_data_backup';
+        $tableName = getDbPrefix().'data_backup';
 
         // 检查表是否已存在
         if ($this->hasTable($tableName)) {
@@ -125,7 +125,7 @@ class Radmin106 extends AbstractMigration
      */
     public function createDataBackupLogTable()
     {
-        $tableName = 'ra_data_backup_log';
+        $tableName = getDbPrefix().'data_backup_log';
 
         // 检查表是否已存在
         if ($this->hasTable($tableName)) {
@@ -184,7 +184,7 @@ class Radmin106 extends AbstractMigration
      */
     public function createDataTableTable()
     {
-        $tableName = 'ra_data_table';
+        $tableName = getDbPrefix().'data_table';
 
         // 检查表是否已存在
         if ($this->hasTable($tableName)) {

@@ -24,7 +24,7 @@ class InstallData extends AbstractMigration
 
     public function admin()
     {
-        $table = $this->table('ra_admin');
+        $table = $this->table(getDbPrefix().'admin');
         $rows  = [
             [
                 'id'         => 1,
@@ -44,7 +44,7 @@ class InstallData extends AbstractMigration
 
     public function adminGroup()
     {
-        $table = $this->table('ra_admin_group');
+        $table = $this->table(getDbPrefix().'admin_group');
         $rows  = [
             [
                 'id'         => 1,
@@ -87,7 +87,7 @@ class InstallData extends AbstractMigration
 
     public function adminGroupAccess()
     {
-        $table = $this->table('ra_admin_group_access');
+        $table = $this->table(getDbPrefix().'admin_group_access');
         $rows  = [
             [
                 'uid'      => 1,
@@ -102,7 +102,7 @@ class InstallData extends AbstractMigration
 
     public function config()
     {
-        $table = $this->table('ra_config');
+        $table = $this->table(getDbPrefix().'config');
         $rows  = [
             [
                 'id'    => 1,
@@ -231,8 +231,8 @@ class InstallData extends AbstractMigration
 
     public function menuRule()
     {
-        if (!$this->hasTable('ra_menu_rule')) return;
-        $table = $this->table('ra_menu_rule');
+        if (!$this->hasTable(getDbPrefix().'menu_rule')) return;
+        $table = $this->table(getDbPrefix().'menu_rule');
         $rows  = [
             [
                 'id'         => '1',
@@ -1163,7 +1163,7 @@ class InstallData extends AbstractMigration
 
     public function securityDataRecycle()
     {
-        $table = $this->table('ra_security_data_recycle');
+        $table = $this->table(getDbPrefix().'security_data_recycle');
         $rows  = [
             [
                 'id'            => 1,
@@ -1234,7 +1234,7 @@ class InstallData extends AbstractMigration
 
     public function securitySensitiveData()
     {
-        $table = $this->table('ra_security_sensitive_data');
+        $table = $this->table(getDbPrefix().'security_sensitive_data');
         $rows  = [
             [
                 'id'            => 1,
@@ -1281,7 +1281,7 @@ class InstallData extends AbstractMigration
 
     public function user()
     {
-        $table = $this->table('ra_user');
+        $table = $this->table(getDbPrefix().'user');
         $rows  = [
             [
                 'id'         => 1,
@@ -1305,7 +1305,7 @@ class InstallData extends AbstractMigration
 
     public function userGroup()
     {
-        $table = $this->table('ra_user_group');
+        $table = $this->table(getDbPrefix().'user_group');
         $rows  = [
             [
                 'id'         => 1,
@@ -1324,7 +1324,7 @@ class InstallData extends AbstractMigration
 
     public function userRule()
     {
-        $table = $this->table('ra_user_rule');
+        $table = $this->table(getDbPrefix().'user_rule');
         $rows  = [
             [
                 'id'         => 1,

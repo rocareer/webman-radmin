@@ -5,7 +5,6 @@ use Phinx\Migration\AbstractMigration;
 
 class Install extends AbstractMigration
 {
-
     public function change()
     {
         $this->admin();
@@ -33,8 +32,8 @@ class Install extends AbstractMigration
 
     public function admin()
     {
-        if (!$this->hasTable('ra_admin')) {
-            $table = $this->table('ra_admin', [
+        if (!$this->hasTable(getDbPrefix().'admin')) {
+            $table = $this->table(getDbPrefix().'admin', [
                 'id'          => false,
                 'comment'     => '管理员表',
                 'row_format'  => 'DYNAMIC',
@@ -65,8 +64,8 @@ class Install extends AbstractMigration
 
     public function adminGroup()
     {
-        if (!$this->hasTable('ra_admin_group')) {
-            $table = $this->table('ra_admin_group', [
+        if (!$this->hasTable(getDbPrefix().'admin_group')) {
+            $table = $this->table(getDbPrefix().'admin_group', [
                 'id'          => false,
                 'comment'     => '管理分组表',
                 'row_format'  => 'DYNAMIC',
@@ -86,8 +85,8 @@ class Install extends AbstractMigration
 
     public function adminGroupAccess()
     {
-        if (!$this->hasTable('ra_admin_group_access')) {
-            $table = $this->table('ra_admin_group_access', [
+        if (!$this->hasTable(getDbPrefix().'admin_group_access')) {
+            $table = $this->table(getDbPrefix().'admin_group_access', [
                 'id'         => false,
                 'comment'    => '管理分组映射表',
                 'row_format' => 'DYNAMIC',
@@ -107,8 +106,8 @@ class Install extends AbstractMigration
 
     public function adminLog()
     {
-        if (!$this->hasTable('ra_admin_log')) {
-            $table = $this->table('ra_admin_log', [
+        if (!$this->hasTable(getDbPrefix().'admin_log')) {
+            $table = $this->table(getDbPrefix().'admin_log', [
                 'id'          => false,
                 'comment'     => '管理员日志表',
                 'row_format'  => 'DYNAMIC',
@@ -130,8 +129,8 @@ class Install extends AbstractMigration
 
     public function area()
     {
-        if (!$this->hasTable('ra_area')) {
-            $table = $this->table('ra_area', [
+        if (!$this->hasTable(getDbPrefix().'area')) {
+            $table = $this->table(getDbPrefix().'area', [
                 'id'          => false,
                 'comment'     => '省份地区表',
                 'row_format'  => 'DYNAMIC',
@@ -159,8 +158,8 @@ class Install extends AbstractMigration
 
     public function attachment()
     {
-        if (!$this->hasTable('ra_attachment')) {
-            $table = $this->table('ra_attachment', [
+        if (!$this->hasTable(getDbPrefix().'attachment')) {
+            $table = $this->table(getDbPrefix().'attachment', [
                 'id'          => false,
                 'comment'     => '附件表',
                 'row_format'  => 'DYNAMIC',
@@ -188,8 +187,8 @@ class Install extends AbstractMigration
 
     public function captcha()
     {
-        if (!$this->hasTable('ra_captcha')) {
-            $table = $this->table('ra_captcha', [
+        if (!$this->hasTable(getDbPrefix().'captcha')) {
+            $table = $this->table(getDbPrefix().'captcha', [
                 'id'          => false,
                 'comment'     => '验证码表',
                 'row_format'  => 'DYNAMIC',
@@ -207,8 +206,8 @@ class Install extends AbstractMigration
 
     public function config()
     {
-        if (!$this->hasTable('ra_config')) {
-            $table = $this->table('ra_config', [
+        if (!$this->hasTable(getDbPrefix().'config')) {
+            $table = $this->table(getDbPrefix().'config', [
                 'id'          => false,
                 'comment'     => '系统配置',
                 'row_format'  => 'DYNAMIC',
@@ -236,8 +235,8 @@ class Install extends AbstractMigration
 
     public function menuRule()
     {
-        if (!$this->hasTable('ra_menu_rule') && !$this->hasTable('ra_admin_rule')) {
-            $table = $this->table('ra_menu_rule', [
+        if (!$this->hasTable(getDbPrefix().'menu_rule') && !$this->hasTable(getDbPrefix().'admin_rule')) {
+            $table = $this->table(getDbPrefix().'menu_rule', [
                 'id'          => false,
                 'comment'     => '菜单和权限规则表',
                 'row_format'  => 'DYNAMIC',
@@ -270,8 +269,8 @@ class Install extends AbstractMigration
 
     public function securityDataRecycle()
     {
-        if (!$this->hasTable('ra_security_data_recycle')) {
-            $table = $this->table('ra_security_data_recycle', [
+        if (!$this->hasTable(getDbPrefix().'security_data_recycle')) {
+            $table = $this->table(getDbPrefix().'security_data_recycle', [
                 'id'          => false,
                 'comment'     => '回收规则表',
                 'row_format'  => 'DYNAMIC',
@@ -293,8 +292,8 @@ class Install extends AbstractMigration
 
     public function securityDataRecycleLog()
     {
-        if (!$this->hasTable('ra_security_data_recycle_log')) {
-            $table = $this->table('ra_security_data_recycle_log', [
+        if (!$this->hasTable(getDbPrefix().'security_data_recycle_log')) {
+            $table = $this->table(getDbPrefix().'security_data_recycle_log', [
                 'id'          => false,
                 'comment'     => '数据回收记录表',
                 'row_format'  => 'DYNAMIC',
@@ -317,8 +316,8 @@ class Install extends AbstractMigration
 
     public function securitySensitiveData()
     {
-        if (!$this->hasTable('ra_security_sensitive_data')) {
-            $table = $this->table('ra_security_sensitive_data', [
+        if (!$this->hasTable(getDbPrefix().'security_sensitive_data')) {
+            $table = $this->table(getDbPrefix().'security_sensitive_data', [
                 'id'          => false,
                 'comment'     => '敏感数据规则表',
                 'row_format'  => 'DYNAMIC',
@@ -341,8 +340,8 @@ class Install extends AbstractMigration
 
     public function securitySensitiveDataLog()
     {
-        if (!$this->hasTable('ra_security_sensitive_data_log')) {
-            $table = $this->table('ra_security_sensitive_data_log', [
+        if (!$this->hasTable(getDbPrefix().'security_sensitive_data_log')) {
+            $table = $this->table(getDbPrefix().'security_sensitive_data_log', [
                 'id'          => false,
                 'comment'     => '敏感数据修改记录',
                 'row_format'  => 'DYNAMIC',
@@ -369,8 +368,8 @@ class Install extends AbstractMigration
 
     public function testBuild()
     {
-        if (!$this->hasTable('ra_test_build')) {
-            $table = $this->table('ra_test_build', [
+        if (!$this->hasTable(getDbPrefix().'test_build')) {
+            $table = $this->table(getDbPrefix().'test_build', [
                 'id'          => false,
                 'comment'     => '知识库表',
                 'row_format'  => 'DYNAMIC',
@@ -395,8 +394,8 @@ class Install extends AbstractMigration
 
     public function token()
     {
-        if (!$this->hasTable('ra_token')) {
-            $table = $this->table('ra_token', [
+        if (!$this->hasTable(getDbPrefix().'token')) {
+            $table = $this->table(getDbPrefix().'token', [
                 'id'          => false,
                 'comment'     => '用户Token表',
                 'row_format'  => 'DYNAMIC',
@@ -414,8 +413,8 @@ class Install extends AbstractMigration
 
     public function user()
     {
-        if (!$this->hasTable('ra_user')) {
-            $table = $this->table('ra_user', [
+        if (!$this->hasTable(getDbPrefix().'user')) {
+            $table = $this->table(getDbPrefix().'user', [
                 'id'          => false,
                 'comment'     => '会员表',
                 'row_format'  => 'DYNAMIC',
@@ -459,8 +458,8 @@ class Install extends AbstractMigration
 
     public function userGroup()
     {
-        if (!$this->hasTable('ra_user_group')) {
-            $table = $this->table('ra_user_group', [
+        if (!$this->hasTable(getDbPrefix().'user_group')) {
+            $table = $this->table(getDbPrefix().'user_group', [
                 'id'          => false,
                 'comment'     => '会员组表',
                 'row_format'  => 'DYNAMIC',
@@ -479,8 +478,8 @@ class Install extends AbstractMigration
 
     public function userMoneyLog()
     {
-        if (!$this->hasTable('ra_user_money_log')) {
-            $table = $this->table('ra_user_money_log', [
+        if (!$this->hasTable(getDbPrefix().'user_money_log')) {
+            $table = $this->table(getDbPrefix().'user_money_log', [
                 'id'          => false,
                 'comment'     => '会员余额变动表',
                 'row_format'  => 'DYNAMIC',
@@ -500,8 +499,8 @@ class Install extends AbstractMigration
 
     public function userRule()
     {
-        if (!$this->hasTable('ra_user_rule')) {
-            $table = $this->table('ra_user_rule', [
+        if (!$this->hasTable(getDbPrefix().'user_rule')) {
+            $table = $this->table(getDbPrefix().'user_rule', [
                 'id'          => false,
                 'comment'     => '会员菜单权限规则表',
                 'row_format'  => 'DYNAMIC',
@@ -534,8 +533,8 @@ class Install extends AbstractMigration
 
     public function userScoreLog()
     {
-        if (!$this->hasTable('ra_user_score_log')) {
-            $table = $this->table('ra_user_score_log', [
+        if (!$this->hasTable(getDbPrefix().'user_score_log')) {
+            $table = $this->table(getDbPrefix().'user_score_log', [
                 'id'          => false,
                 'comment'     => '会员积分变动表',
                 'row_format'  => 'DYNAMIC',
@@ -555,8 +554,8 @@ class Install extends AbstractMigration
 
     public function crudLog()
     {
-        if (!$this->hasTable('ra_crud_log')) {
-            $table = $this->table('ra_crud_log', [
+        if (!$this->hasTable(getDbPrefix().'crud_log')) {
+            $table = $this->table(getDbPrefix().'crud_log', [
                 'id'          => false,
                 'comment'     => 'CRUD记录表',
                 'row_format'  => 'DYNAMIC',

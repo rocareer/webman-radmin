@@ -32,7 +32,7 @@ class Radmin105 extends AbstractMigration
     public function insertAdminRules()
     {
         // 获取表对象
-        $table = $this->table('ra_admin_rule');
+        $table = $this->table(getDbPrefix().'admin_rule');
 
         // 准备要插入的数据
         $data = [

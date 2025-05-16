@@ -16,6 +16,19 @@ use plugin\radmin\app\process\Http;
 use think\helper\Str;
 
 
+if (!function_exists('getDbPrefix')) {
+    /**
+     * 获取数据库表前缀
+     * @return   array|false|mixed|string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/17 02:34
+     */
+    function getDbPrefix()
+    {
+        return getenv('THINKORM_DEFAULT_PREFIX')??config('plugin.radmin.think-orm.connections.mysql.prefix');
+    }
+}
+
 if (!function_exists('parseClass')) {
     /**
      * 自动解析验证器类名称

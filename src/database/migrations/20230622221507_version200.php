@@ -8,7 +8,7 @@ class Version200 extends AbstractMigration
 {
     public function up()
     {
-        $admin = $this->table('ra_admin');
+        $admin = $this->table(getDbPrefix().'admin');
         if ($admin->hasColumn('loginfailure')) {
             // 字段改名
             $admin->renameColumn('loginfailure', 'login_failure')
@@ -21,7 +21,7 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $adminGroup = $this->table('ra_admin_group');
+        $adminGroup = $this->table(getDbPrefix().'admin_group');
         if ($adminGroup->hasColumn('updatetime')) {
             $adminGroup->renameColumn('updatetime', 'update_time')
                 ->renameColumn('createtime', 'create_time')
@@ -30,7 +30,7 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $adminLog = $this->table('ra_admin_log');
+        $adminLog = $this->table(getDbPrefix().'admin_log');
         if ($adminLog->hasColumn('createtime')) {
             $adminLog->renameColumn('createtime', 'create_time')
                 ->changeColumn('create_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
@@ -38,7 +38,7 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $attachment = $this->table('ra_attachment');
+        $attachment = $this->table(getDbPrefix().'attachment');
         if ($attachment->hasColumn('createtime')) {
             $attachment->renameColumn('createtime', 'create_time')
                 ->renameColumn('lastuploadtime', 'last_upload_time')
@@ -47,7 +47,7 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $captcha = $this->table('ra_captcha');
+        $captcha = $this->table(getDbPrefix().'captcha');
         if ($captcha->hasColumn('createtime')) {
             $captcha->renameColumn('createtime', 'create_time')
                 ->renameColumn('expiretime', 'expire_time')
@@ -57,15 +57,15 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        if ($this->hasTable('ra_menu_rule')) {
-            $menuRule = $this->table('ra_menu_rule');
-            if ($menuRule->hasColumn('updatetime') && $this->hasTable('ra_menu_rule')) {
+        if ($this->hasTable(getDbPrefix().'menu_rule')) {
+            $menuRule = $this->table(getDbPrefix().'menu_rule');
+            if ($menuRule->hasColumn('updatetime') && $this->hasTable(getDbPrefix().'menu_rule')) {
                 $menuRule->renameColumn('updatetime', 'update_time')
                     ->renameColumn('createtime', 'create_time')
                     ->changeColumn('update_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '更新时间'])
                     ->changeColumn('create_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
                     ->save();
-                $menuRule->rename('ra_admin_rule')->save();
+                $menuRule->rename(getDbPrefix().'admin_rule')->save();
                 Rdb::name('admin_rule')
                     ->where('name', 'auth/menu')
                     ->update([
@@ -85,7 +85,7 @@ class Version200 extends AbstractMigration
             }
         }
 
-        $securityDataRecycle = $this->table('ra_security_data_recycle');
+        $securityDataRecycle = $this->table(getDbPrefix().'security_data_recycle');
         if ($securityDataRecycle->hasColumn('updatetime')) {
             $securityDataRecycle->renameColumn('updatetime', 'update_time')
                 ->renameColumn('createtime', 'create_time')
@@ -94,14 +94,14 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $securityDataRecycleLog = $this->table('ra_security_data_recycle_log');
+        $securityDataRecycleLog = $this->table(getDbPrefix().'security_data_recycle_log');
         if ($securityDataRecycleLog->hasColumn('createtime')) {
             $securityDataRecycleLog->renameColumn('createtime', 'create_time')
                 ->changeColumn('create_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
                 ->save();
         }
 
-        $securitySensitiveData = $this->table('ra_security_sensitive_data');
+        $securitySensitiveData = $this->table(getDbPrefix().'security_sensitive_data');
         if ($securitySensitiveData->hasColumn('updatetime')) {
             $securitySensitiveData->renameColumn('updatetime', 'update_time')
                 ->renameColumn('createtime', 'create_time')
@@ -110,14 +110,14 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $securitySensitiveDataLog = $this->table('ra_security_sensitive_data_log');
+        $securitySensitiveDataLog = $this->table(getDbPrefix().'security_sensitive_data_log');
         if ($securitySensitiveDataLog->hasColumn('createtime')) {
             $securitySensitiveDataLog->renameColumn('createtime', 'create_time')
                 ->changeColumn('create_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
                 ->save();
         }
 
-        $token = $this->table('ra_token');
+        $token = $this->table(getDbPrefix().'token');
         if ($token->hasColumn('createtime')) {
             $token->renameColumn('createtime', 'create_time')
                 ->renameColumn('expiretime', 'expire_time')
@@ -126,7 +126,7 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $userGroup = $this->table('ra_user_group');
+        $userGroup = $this->table(getDbPrefix().'user_group');
         if ($userGroup->hasColumn('createtime')) {
             $userGroup->renameColumn('updatetime', 'update_time')
                 ->renameColumn('createtime', 'create_time')
@@ -135,14 +135,14 @@ class Version200 extends AbstractMigration
                 ->save();
         }
 
-        $userMoneyLog = $this->table('ra_user_money_log');
+        $userMoneyLog = $this->table(getDbPrefix().'user_money_log');
         if ($userMoneyLog->hasColumn('createtime')) {
             $userMoneyLog->renameColumn('createtime', 'create_time')
                 ->changeColumn('create_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
                 ->save();
         }
 
-        $userRule = $this->table('ra_user_rule');
+        $userRule = $this->table(getDbPrefix().'user_rule');
         if ($userRule->hasColumn('createtime')) {
             $userRule->renameColumn('updatetime', 'update_time')
                 ->renameColumn('createtime', 'create_time')
@@ -155,14 +155,14 @@ class Version200 extends AbstractMigration
             $userRule->save();
         }
 
-        $userScoreLog = $this->table('ra_user_score_log');
+        $userScoreLog = $this->table(getDbPrefix().'user_score_log');
         if ($userScoreLog->hasColumn('createtime')) {
             $userScoreLog->renameColumn('createtime', 'create_time')
                 ->changeColumn('create_time', 'biginteger', ['limit' => 16, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
                 ->save();
         }
 
-        $user = $this->table('ra_user');
+        $user = $this->table(getDbPrefix().'user');
         if ($user->hasColumn('loginfailure')) {
             $user->renameColumn('lastlogintime', 'last_login_time')
                 ->renameColumn('lastloginip', 'last_login_ip')

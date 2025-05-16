@@ -14,7 +14,7 @@ class Version222 extends AbstractMigration
         /**
          * 修复附件表 name 字段长度可能不够的问题
          */
-        $attachment = $this->table('ra_attachment');
+        $attachment = $this->table(getDbPrefix().'attachment');
         $attachment->changeColumn('name', 'string', ['limit' => 120, 'default' => '', 'comment' => '原始名称', 'null' => false])->save();
 
         /**
@@ -23,7 +23,7 @@ class Version222 extends AbstractMigration
          * 2. password 增加长度至 password_hash 建议值
          * 3. salt 注释中标记废弃待删除
          */
-        $user = $this->table('ra_user');
+        $user = $this->table(getDbPrefix().'user');
         $user->changeColumn('status', 'string', ['limit' => 30, 'default' => '', 'comment' => '状态:enable=启用,disable=禁用', 'null' => false])
             ->changeColumn('password', 'string', ['limit' => 255, 'default' => '', 'comment' => '密码', 'null' => false])
             ->changeColumn('salt', 'string', ['limit' => 30, 'default' => '', 'comment' => '密码盐（废弃待删）', 'null' => false])
@@ -34,7 +34,7 @@ class Version222 extends AbstractMigration
          * 1. status 改为字符串存储
          * 2. 其他和以上用户表的改动相同
          */
-        $admin = $this->table('ra_admin');
+        $admin = $this->table(getDbPrefix().'admin');
         $admin->changeColumn('status', 'string', ['limit' => 30, 'default' => '', 'comment' => '状态:enable=启用,disable=禁用', 'null' => false])
             ->changeColumn('password', 'string', ['limit' => 255, 'default' => '', 'comment' => '密码', 'null' => false])
             ->changeColumn('salt', 'string', ['limit' => 30, 'default' => '', 'comment' => '密码盐（废弃待删）', 'null' => false])
@@ -46,7 +46,7 @@ class Version222 extends AbstractMigration
         /**
          * CRUD 历史记录表
          */
-        $crudLog = $this->table('ra_crud_log');
+        $crudLog = $this->table(getDbPrefix().'crud_log');
         if (!$crudLog->hasColumn('comment')) {
             $crudLog
                 ->addColumn('comment', 'string', ['limit' => 255, 'default' => '', 'comment' => '注释', 'null' => false, 'after' => 'table_name'])
