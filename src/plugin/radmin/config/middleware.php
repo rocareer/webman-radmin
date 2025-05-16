@@ -9,7 +9,7 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-use plugin\radmin\middleware\AccessControlMIddleWare;
+use plugin\radmin\middleware\AccessControlMiddleWare;
 use plugin\radmin\middleware\AdminLog;
 use plugin\radmin\middleware\AdminSecurity;
 use plugin\radmin\middleware\RadminAuthMiddleware;
@@ -19,7 +19,7 @@ use plugin\radmin\middleware\RequestMiddleWare;
 return [
     ''      => [
         // 全局跨域
-        AccessControlMIddleWare::class,
+        AccessControlMiddleWare::class,
         // 请求预处理
         RequestMiddleWare::class,
         RequestContextMiddleWare::class
