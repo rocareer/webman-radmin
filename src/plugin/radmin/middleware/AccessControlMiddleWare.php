@@ -6,10 +6,11 @@ use Webman\Http\Request;
 use Webman\Http\Response;
 use Webman\MiddlewareInterface;
 
-class AccessControlMIddleWare implements MiddlewareInterface
+class AccessControlMiddleWare implements MiddlewareInterface
 {
     public function process(Request $request, callable $handler): Response
     {
+
         // OPTIONS 请求处理
         if ($request->method() === 'OPTIONS') {
             $response = new Response(200);
