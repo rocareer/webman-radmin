@@ -1,3 +1,48 @@
+## v1.0.7更新内容
+* chore(plugin/radmin): 更新配置文件、移除token配置并添加Helper函数
+* refactor(src/Install.php): 移除安装配置文件引用
+* feat(radmin): 新增响应头 If-Modified-Since 检查功能
+* feat(radmin/request): 新增请求处理功能
+* feat(radmin/log): 添加适配器 radmin应用的日志类
+* feat(radmin/helper): 新增类名解析函数parseClass
+* feat(radmin): 新增容器适配器 适配 Webman容器
+* chore(plugin/radmin): 移除ThinkLang和ThinkOrm类
+* chore(radmin): 修改模型和ORM的依赖引入及初始化逻辑
+* refactor(plugin/radmin): 重命名并迁移多语言管理类
+* feat(radmin-cache): 新增基于 think-cache 的适配器
+* fix(member): 使用Http类获取登录IP和User-Agent
+* refactor: 优化会员服务类实现
+* chore(plugin/radmin): 修改获取IP和User-Agent的方式
+* feat(plugin/radmin/support/member): 更新成员系统Facade方法及注释
+* refactor(radmin): 修改认证器中获取IP的方式
+* feat(admin): 使用Http类获取请求成员ID
+* fix(plugin/radmin): 修正JwtService缓存类引用路径
+* refactor: 简化请求中间件逻辑
+* refactor(radmin): 修改RequestContextMiddleWare依赖注入
+* refactor: 移除RadminXSS过滤中间件
+* refactor: 优化RadminAuthMiddleware中间件逻辑
+* feat(radmin/middleware): 新增中间件接口定义
+* fix(radmin/middleware): 修正控制器名称获取方式
+* feat(radmin): 引入Request和Response支持
+* refactor(plugin/radmin): 修正中间件类名拼写错误
+* fix(plugin/radmin/extend/ba): 修正 ClickCaptcha 的命名空间引用
+* fix(plugin/radmin/exception): 修正异常处理中的Response引用
+* chore(radmin): 修改缓存路径配置
+* chore(plugin/radmin/config): 更新终端配置占位符取值方式
+* chore(plugin/radmin): 删除 server.php 配置文件
+* fix(plugin/radmin): 修正中间件类名拼写错误
+* chore(radmin): 修改日志文件存储路径
+* refactor(plugin/radmin): 重构容器配置并迁移依赖
+* chore: 优化代码结构及依赖管理
+* chore(migration): 添加数据管理相关表及菜单规则迁移
+* chore(config): 移除容器配置文件
+* feat(plugin/radmin): 新增orm安装检查及调整请求类结构
+* chore(token): 修改Token驱动命名空间
+* feat(plugin/radmin): 支持查询缓存标签和构造函数条件初始化
+* refactor: 优化成员服务架构及依赖注入
+* chore(public): 更新资源引用路径并添加assets忽略规则
+
+**完整的更新日志**: https://gitee.com/rocareer/webman-radmin/compare/v1.0.6...v1.0.7
 
 ## v1.0.6更新内容
 
