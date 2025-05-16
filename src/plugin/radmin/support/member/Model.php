@@ -35,6 +35,8 @@ abstract class Model extends ThinkModel implements InterfaceModel
      */
     public string $role = 'admin';
     protected     $model;
+    protected ?int      $id =0;
+    protected ?string   $username ='';
     /**
      * @var array 状态映射
      */
