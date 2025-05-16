@@ -16,7 +16,7 @@ use think\exception\ValidateException;
 use Throwable;
 use Webman\Exception\ExceptionHandler;
 use Webman\Http\Request;
-use Webman\Http\Response;
+use plugin\radmin\support\Response;
 
 class Handler extends ExceptionHandler
 {
