@@ -4,10 +4,9 @@
 namespace plugin\radmin\middleware;
 
 use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
+use plugin\radmin\support\Request;
+use plugin\radmin\support\Response;
 use Throwable;
-use Webman\Http\Request;
-use Webman\Http\Response;
-use Webman\MiddlewareInterface;
 
 class AdminLog implements MiddlewareInterface
 {

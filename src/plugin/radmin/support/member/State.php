@@ -3,11 +3,12 @@
 
 namespace plugin\radmin\support\member;
 
+use plugin\radmin\app\process\Http;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\think\orm\Rdb;
-use support\Container;
+use plugin\radmin\support\Container;
 use Throwable;
 
 /**
@@ -115,7 +116,7 @@ use Throwable;
             }
 
             $this->memberModel->last_login_time =time();
-            $this->memberModel->last_login_ip   = request()->getRealIp();
+            $this->memberModel->last_login_ip   = Http::request()->getRealIp();
 
             $this->memberModel->save();
 
@@ -138,8 +139,8 @@ use Throwable;
             Rdb::name($this->getLoginLogTable())->insert([
                 'user_id'     => $this->memberModel->id,
                 'username'    => $this->memberModel->username,
-                'ip'          => request()->getRealIp(),
-                'user_agent'  => request()->header('user-agent'),
+                'ip'          => Http::request()->getRealIp(),
+                'user_agent'  => Http::request()->header('user-agent'),
                 'success'     => $success,
                 'create_time' => time()
             ]);

@@ -61,7 +61,7 @@ class AdminSecurity implements MiddlewareInterface
 
 
             $recycle = DataRecycle::where('status', '1')
-                ->where('controller_as', $request->controllerName)
+                ->where('controller_as', $request->controller())
                 ->find();
             if (!$recycle) {
                 return;
@@ -111,7 +111,7 @@ class AdminSecurity implements MiddlewareInterface
 
         try {
             $sensitiveData = SensitiveData::where('status', '1')
-                ->where('controller_as', $request->controllerName)
+                ->where('controller_as', $request->controller())
                 ->find();
 
             if (!$sensitiveData) {

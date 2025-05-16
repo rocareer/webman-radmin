@@ -24,7 +24,7 @@ return [
     'HTTP' => [
         'handler' => Http::class,
         'listen' => 'http://0.0.0.0:9696',
-        'count' => getenv('PROCESS_COUNT',cpu_count()),
+        'count' => 4,
         'user' => '',
         'group' => '',
         'reusePort' => false,

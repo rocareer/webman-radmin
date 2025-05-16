@@ -1,7 +1,7 @@
 <?php
 
 namespace plugin\radmin\app\admin\library\module;
-
+use plugin\radmin\app\process\Http;
 use Throwable;
 use plugin\radmin\extend\ba\Version;
 use plugin\radmin\extend\ba\Depends;
@@ -373,9 +373,9 @@ class Manage
      */
     public function disable(): array
     {
-        $update                 = request()->post("update/b", false);
-        $confirmConflict        = request()->post("confirmConflict/b", false);
-        $dependConflictSolution = request()->post("dependConflictSolution/a", []);
+        $update                 = Http::request()->post("update/b", false);
+        $confirmConflict        = Http::request()->post("confirmConflict/b", false);
+        $dependConflictSolution = Http::request()->post("dependConflictSolution/a", []);
 
         $info    = $this->getInfo();
         $zipFile = $this->backupsDir . $this->uid . '-install.zip';
@@ -570,8 +570,8 @@ class Manage
         ]);
 
         if ($update) {
-            $token = request()->post("token/s", '');
-            $order = request()->post("order/d", 0);
+            $token = Http::request()->post("token/s", '');
+            $order = Http::request()->post("order/d", 0);
             $this->update($token, $order);
             throw new Exception('update', -3, [
                 'uid' => $this->uid,
@@ -608,7 +608,7 @@ class Manage
         $webDep       = new Depends(root_path() . 'web' . DIRECTORY_SEPARATOR . 'package.json');
         $webNuxtDep   = new Depends(root_path() . 'web-nuxt' . DIRECTORY_SEPARATOR . 'package.json');
         if ($fileConflict || !self::isEmptyArray($dependConflict)) {
-            $extend = request()->post('extend/a', []);
+            $extend = Http::request()->post('extend/a', []);
             if (!$extend) {
                 // 发现冲突->手动处理->转换为方便前端使用的格式
                 $fileConflictTemp   = array_map(function ($item) {

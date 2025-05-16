@@ -25,8 +25,6 @@ class Install
         'plugin/radmin'                        => 'plugin/radmin',
         'database'                             => 'database',
         'web'                                  => 'web',
-        'config/dependence.php'                => 'config/dependence.php',
-        'config/container.php'                 => 'config/container.php',
         '.env-example'                         => '.env-example',
     );
 

@@ -14,6 +14,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use Throwable;
+use plugin\radmin\app\process\Http;
 
 /**
  * 用户基础模型
@@ -214,7 +215,7 @@ abstract class Model extends ThinkModel implements InterfaceModel
 
             $this->login_failure   = ($this->login_failure ?? 0) + 1;
             $this->last_login_time = time();
-            $this->last_login_ip   = request()->getRealIp();
+            $this->last_login_ip   = Http::request()->getRealIp();
             $this->save();
 
             // 记录登录日志
@@ -281,10 +282,10 @@ abstract class Model extends ThinkModel implements InterfaceModel
             $log = [
                 'user_id'     => $data['user_id'] ?? 0,
                 'username'    => $data['username'] ?? '',
-                'ip'          => request()->getRealIp(),
+                'ip'          => Http::request()->getRealIp(),
                 'success'     => $data['success'] ?? 0,
                 'message'     => $data['message'] ?? '',
-                'user_agent'  => request()->header('user-agent'),
+                'user_agent'  => Http::request()->header('user-agent'),
                 'create_time' => time()
             ];
 
@@ -303,8 +304,8 @@ abstract class Model extends ThinkModel implements InterfaceModel
             $log = [
                 'user_id'     => $this->id,
                 'username'    => $this->username,
-                'ip'          => request()->getRealIp(),
-                'user_agent'  => request()->header('user-agent'),
+                'ip'          => Http::request()->getRealIp(),
+                'user_agent'  => Http::request()->header('user-agent'),
                 'create_time' => time()
             ];
 

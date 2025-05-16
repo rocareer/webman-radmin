@@ -26,7 +26,7 @@ class Table extends Backend
     public function initialize(): void
     {
         parent::initialize();
-        $this->model = new plugin\radmin\app\admin\model\data\Table();
+        $this->model = new \plugin\radmin\app\admin\model\data\Table();
     }
 
 

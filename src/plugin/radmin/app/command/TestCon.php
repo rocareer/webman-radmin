@@ -5,7 +5,6 @@ namespace plugin\radmin\app\command;
 use DI\Container;
 use DI\ContainerBuilder;
 use plugin\radmin\support\member\admin\AdminModel;
-use plugin\radmin\support\Test;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;

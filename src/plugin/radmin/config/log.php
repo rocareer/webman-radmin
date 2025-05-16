@@ -7,7 +7,7 @@ return [
             [
                 'class' => Monolog\Handler\RotatingFileHandler::class,
                 'constructor' => [
-                    runtime_path() . '/logs/Radmin.log',
+                    runtime_path() . '/radmin/logs/Radmin.log',
                     7,
                     Monolog\Logger::DEBUG,
                 ],

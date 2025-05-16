@@ -45,7 +45,6 @@ class Token extends Facade
     // 这里可以重写父类的方法，以确保使用实例方法
 
     /**
-     *
      * __callStatic
      * @param $method
      * @param $params

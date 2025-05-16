@@ -23,10 +23,11 @@
 // +----------------------------------------------------------------------
 
 use plugin\radmin\app\admin\library\module\Server;
-use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\think\Lang;
-use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\admin\model\Config as configModel;
+use plugin\radmin\app\process\Http;
+use plugin\radmin\extend\ba\Filesystem;
+use plugin\radmin\support\think\lang\Lang;
+use plugin\radmin\support\think\orm\Rdb;
 
 
 if (!function_exists('__')) {
@@ -134,10 +135,10 @@ if (!function_exists('get_route_remark')) {
      */
     function get_route_remark(): string
     {
-        $controllerName = request()->controller;
-        $actionName     = request()->action;
+        $controllerName = Http::request()->controller;
+        $actionName     = Http::request()->action;
         $path           = str_replace('.', '/', $controllerName);
-        $path           = str_replace('app\admin\controller\\', '', $path);
+        $path           = str_replace('plugin\radmin\app\admin\controller\\', '', $path);
         $remark         = Rdb::name('admin_rule')
             ->where('name', $path)
             ->whereOr('name', $path . '/' . $actionName)
@@ -195,7 +196,7 @@ if (!function_exists('full_url')) {
         $cdnUrl = config('plugin.radmin.buildadmin.cdn_url');
         if (!$cdnUrl) {
             if (request()) {
-                $cdnUrl = request()->upload['cdn'] ?? '//' . request()->host();
+                $cdnUrl = Http::request()->upload['cdn'] ?? '//' . Http::request()->host();
             } else {
                 $cdnUrl = get_sys_config('host');
             }
@@ -272,7 +273,7 @@ function get_upload_config(): array
 
     $uploadConfig['max_size'] = Filesystem::fileUnitToByte($uploadConfig['max_size']);
 
-    $upload = request()->upload;
+    $upload = Http::request()->upload;
     if (!$upload) {
         $uploadConfig['mode'] = 'local';
         return $uploadConfig;
@@ -336,7 +337,7 @@ if (!function_exists('action_in_arr')) {
             return false;
         }
         $arr           = array_map('strtolower', $arr);
-        $currentAction = request()->action ?? '';
+        $currentAction = Http::request()->action ?? '';
         if (in_array(strtolower($currentAction), $arr) || in_array('*', $arr)) {
             return true;
         }
@@ -352,7 +353,6 @@ if (!function_exists('build_suffix_svg')) {
      * @param string|null $background 背景颜色
      *
      * @return string
-     * @变更说明：无需修改，无框架依赖
      * @noinspection HtmlDeprecatedAttribute
      * @noinspection XmlUnusedNamespaceDeclaration
      */
@@ -391,8 +391,8 @@ if (!function_exists('get_area')) {
      */
     function get_area(?int $cacheTime = 86400): array
     {
-        $province = request()->get('province', '');
-        $city     = request()->get('city', '');
+        $province = Http::request()->get('province', '');
+        $city     = Http::request()->get('city', '');
 
         $where = [
             'pid'   => 0,
@@ -492,7 +492,7 @@ if (!function_exists('ip_check')) {
         // 确保总是返回数组
         $no_access_ip = is_array($no_access_ip) ? $no_access_ip : [];
 
-        $ip = request()->getRealIp();
+        $ip = Http::request()->getRealIp();
         if (in_array($ip, $no_access_ip)) {
             throw new Exception('IP not allowed');
         }
@@ -622,7 +622,7 @@ if (!function_exists('get_ba_client')) {
         //     'http_errors'     => false,
         //     'headers'         => [
         //         'X-REQUESTED-WITH' => 'XMLHttpRequest',
-        //         'Referer'          => dirname(request()->root(true)),
+        //         'Referer'          => dirname(Http::request()->root(true)),
         //         'User-Agent'       => 'BuildAdminClient',
         //     ]
         // ]);

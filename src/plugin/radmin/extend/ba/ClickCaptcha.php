@@ -3,7 +3,7 @@
 
 namespace plugin\radmin\extend\ba;
 
-use plugin\radmin\support\think\Lang;
+use plugin\radmin\support\think\lang\Lang;
 use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 

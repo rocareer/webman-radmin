@@ -1,7 +1,16 @@
-<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
+<?php
+/**
+ * File:        Lang.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/16 21:38
+ * Description: 从 think-lang 迁移 适配webman
+ *
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
 
 
-namespace plugin\radmin\support\think;
+namespace plugin\radmin\support\think\lang;
 
 
 

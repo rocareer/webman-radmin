@@ -11,7 +11,7 @@ use Throwable;
 
 class Backend extends Api
 {
-    protected $member;
+    protected ?object $member;
     /**
      * 无需登录的方法，访问本控制器的此方法，无需管理员登录
      * @var array
@@ -143,7 +143,7 @@ class Backend extends Api
                 throw new BusinessException('请先登录', StatusCode::NEED_LOGIN);
             }
             if (!action_in_arr($this->noNeedPermission)) {
-                $routePath = ($this->request->controllerName ?? '') . '/' . $this->request->action;
+                $routePath = ($this->request->controller() ?? '') . '/' . $this->request->action;
                 if (!Member::check($routePath,$this->request->member->id)) {
                     $this->error(__('You have no permission'), [], 401);
                 }
@@ -168,7 +168,7 @@ class Backend extends Api
         $limit        = $this->request->input("limit", 10);
         $search       = $this->request->input("search", []);
         $initKey      = $this->request->input("initKey", $pk);
-        $initValue    = $this->request->input("initValue", []);
+        $initValue    = $this->request->input("initValue/a", []);
         $initOperator = $this->request->input("initOperator", 'in');
 
         $where              = [];

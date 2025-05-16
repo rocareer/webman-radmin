@@ -1,19 +1,14 @@
 <?php
-
-namespace plugin\radmin\support;
-
 /**
- * This file is part of webman.
+ * File:        Log.php
+ * Author:      albert <albert@rocareer.com>
+ * Created:     2025/5/16 22:05
+ * Description: 适配 radmin 应用 修改自webman-log
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the MIT-LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @author    walkor<walkor@workerman.net>
- * @copyright walkor<walkor@workerman.net>
- * @link      http://www.workerman.net/
- * @license   http://www.opensource.org/licenses/mit-license.php MIT License
+ * Copyright [2014-2026] [https://rocareer.com]
+ * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
+namespace plugin\radmin\support;
 
 
 use Monolog\Formatter\FormatterInterface;
@@ -38,6 +33,7 @@ use function is_array;
  * @method static void critical($message, array $context = [])
  * @method static void alert($message, array $context = [])
  * @method static void emergency($message, array $context = [])
+ *
  */
 class Log extends \support\Log
 {
@@ -45,7 +41,6 @@ class Log extends \support\Log
      * @var array
      */
     protected static $instance = [];
-
     /**
      * Channel.
      * @param string $name
@@ -55,89 +50,12 @@ class Log extends \support\Log
     {
         if (!isset(static::$instance[$name])) {
             $config                  = include base_path() . '/plugin/radmin/config/log.php';
+            $config                  = $config[$name];
             $handlers                = self::handlers($config);
             $processors              = self::processors($config);
             static::$instance[$name] = new Logger($name, $handlers, $processors);
         }
         return static::$instance[$name];
-    }
-
-    /**
-     * Handlers.
-     * @param array $config
-     * @return array
-     */
-    protected static function handlers(array $config): array
-    {
-        $handlerConfigs = $config['handlers'] ?? [[]];
-        $handlers       = [];
-        foreach ($handlerConfigs as $value) {
-            $class       = $value['class'] ?? [];
-            $constructor = $value['constructor'] ?? [];
-
-            $formatterConfig = $value['formatter'] ?? [];
-
-            $class && $handlers[] = self::handler($class, $constructor, $formatterConfig);
-        }
-
-        return $handlers;
-    }
-
-    /**
-     * Handler.
-     * @param string $class
-     * @param array  $constructor
-     * @param array  $formatterConfig
-     * @return HandlerInterface
-     */
-    protected static function handler(string $class, array $constructor, array $formatterConfig): HandlerInterface
-    {
-        /** @var HandlerInterface $handler */
-        $handler = new $class(... array_values($constructor));
-
-        if ($handler instanceof FormattableHandlerInterface && $formatterConfig) {
-            $formatterClass       = $formatterConfig['class'];
-            $formatterConstructor = $formatterConfig['constructor'];
-
-            /** @var FormatterInterface $formatter */
-            $formatter = new $formatterClass(... array_values($formatterConstructor));
-
-            $handler->setFormatter($formatter);
-        }
-
-        return $handler;
-    }
-
-    /**
-     * Processors.
-     * @param array $config
-     * @return array
-     */
-    protected static function processors(array $config): array
-    {
-        $result = [];
-        if (!isset($config['processors']) && isset($config['processor'])) {
-            $config['processors'] = [$config['processor']];
-        }
-
-        foreach ($config['processors'] ?? [] as $value) {
-            if (is_array($value) && isset($value['class'])) {
-                $value = new $value['class'](... array_values($value['constructor'] ?? []));
-            }
-            $result[] = $value;
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param string $name
-     * @param array  $arguments
-     * @return mixed
-     */
-    public static function __callStatic(string $name, array $arguments)
-    {
-        return static::channel()->{$name}(... $arguments);
     }
 }
 
