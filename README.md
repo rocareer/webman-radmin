@@ -208,4 +208,5 @@ npm run dev
 
 - [Buildadmin官网](https://www.buildadmin.com)
 - [Webman文档](https://www.workerman.net/doc/webman)
-- [项目仓库](https://gitee.com/rocareer/radmin)
+- [仓库Github](https://github.com/rocareer/webman-radmin)
+- [仓库Gitee](https://gitee.com/rocareer/webman-radmin)

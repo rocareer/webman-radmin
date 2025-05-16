@@ -27,15 +27,16 @@ return [
     'request_class'  => Request::class,
     'public_path'    => base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/public',
     'runtime_path'   => base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/runtime',
+    'app_path'       => base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/app',
 
     // http cache 实验功能
     'http_cache'     => getenv('HTTP_CACHE', false),
     'http_cache_ttl' => getenv('HTTP_CACHE_TTL', 0),
 
-    'plugin_url'=>'/app/radmin',
+    'plugin_url' => '/app/radmin',
 
     // request log 实验功能
-    'request'        => [
+    'request'    => [
         'log' => [
             'enable'  => true,
             'channel' => 'R-request'
