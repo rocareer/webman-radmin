@@ -72,16 +72,12 @@ class Radmin103 extends AbstractMigration
             if (!$keyExists) {
                 // 追加新数据
                 $value[] = [
-                    'key' => 'data',
-                    'value' => 'data'
+                    'key'   => 'terminal',
+                    'value' => '自定义命令'
                 ];
                 $value[] = [
-                    'key' => 'terminal',
-                    'value' => 'terminal'
-                ];
-                $value[] = [
-                    'key' => 'system',
-                    'value' => 'system'
+                    'key'   => 'system',
+                    'value' => '系统配置'
                 ];
             }
 
@@ -100,66 +96,54 @@ class Radmin103 extends AbstractMigration
             Log::error('Config not found for "config_group"');
         }
 
-
     }
+
     public function insertHost()
     {
-        $authentication=Config::where([
-            'name' => 'host',
+        $authentication = Config::where([
+            'name'  => 'host',
             'group' => 'system',
         ])->find();
-        if (!$authentication){
+        if (!$authentication) {
             // 插入新记录到 ra_config 表
             $data = [
-                'name' => 'host',
-                'group' => 'system',
-                'title' => '后端主机地址',
-                'tip' => '不能为空,否则命令行文件生成等功能异常',
-                'type' => 'string',
-                'value' => 'http://localhost:8787',
-                'content' => '',
-                'rule' => '',
-                'extend' => '{"baInputExtend":{"placeholder":"\u4e0d\u80fd\u4e3a\u7a7a,\u5426\u5219\u547d\u4ee4\u884c\u6587\u4ef6\u751f\u6210\u7b49\u529f\u80fd\u5f02\u5e38"}}',
+                'name'      => 'host',
+                'group'     => 'system',
+                'title'     => '后端主机地址',
+                'tip'       => '不能为空,否则命令行文件生成等功能异常',
+                'type'      => 'string',
+                'value'     => 'http://localhost:9696',
+                'content'   => '',
+                'rule'      => '',
+                'extend'    => '{"baInputExtend":{"placeholder":"\u4e0d\u80fd\u4e3a\u7a7a,\u5426\u5219\u547d\u4ee4\u884c\u6587\u4ef6\u751f\u6210\u7b49\u529f\u80fd\u5f02\u5e38"}}',
                 'allow_del' => 0,
-                'weigh' => 0
+                'weigh'     => 0
             ];
             // 使用 Db 类插入新数据
             Config::insert($data);
         }
     }
+
     public function insertData()
     {
-        $config=Config::where([
-            'name' => 'data',
+        $config = Config::where([
+            'name'  => 'data',
             'group' => 'terminal',
         ])->find();
-        if (!$config){
+        if (!$config) {
             // 插入新记录到 ra_config 表
             $data[] = [
-                'name' => 'backup_path',
-                'group' => 'system',
-                'title' => '备份路径',
-                'tip' => '备份所在相对路径',
-                'type' => 'string',
-                'value' => '/backup/',
-                'content' =>'',
-                'rule' => 'required',
-                'extend' => '{"baInputExtend":{"placeholder":"\u9ed8\u8ba4\u662f\u5728runtime\/backup"}}',
+                'name'      => 'backup_path',
+                'group'     => 'system',
+                'title'     => '备份路径',
+                'tip'       => '备份所在相对路径',
+                'type'      => 'string',
+                'value'     => '/backup/',
+                'content'   => '',
+                'rule'      => 'required',
+                'extend'    => '{"baInputExtend":{"placeholder":"\u9ed8\u8ba4\u662f\u5728runtime\/backup"}}',
                 'allow_del' => 0,
-                'weigh' => 0
-            ];
-            $data[] = [
-                'name' => 'data',
-                'group' => 'terminal',
-                'title' => '数据管理',
-                'tip' => '',
-                'type' => 'array',
-                'value' => '[{"key":"backup","value":"php webman data:backup %s"}]',
-                'content' =>'',
-                'rule' => '',
-                'extend' => '',
-                'allow_del' => 0,
-                'weigh' => 0
+                'weigh'     => 0
             ];
             // 使用 Db 类插入新数据
             Config::insertAll($data);

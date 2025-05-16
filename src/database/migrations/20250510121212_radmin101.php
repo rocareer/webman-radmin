@@ -71,7 +71,7 @@ class Radmin101 extends AbstractMigration
                 // 追加新数据
                 $value[] = [
                     'key' => 'authentication',
-                    'value' => 'Authentication'
+                    'value' => '鉴权管理'
                 ];
             }
 

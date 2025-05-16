@@ -33,7 +33,7 @@ class Radmin106 extends AbstractMigration
      */
     public function createDataBackupTable()
     {
-        $tableName = getDbPrefix().'data_backup';
+        $tableName = getDbPrefix() . 'data_backup';
 
         // 检查表是否已存在
         if ($this->hasTable($tableName)) {
@@ -43,71 +43,71 @@ class Radmin106 extends AbstractMigration
 
         try {
             $table = $this->table($tableName, [
-                'id' => false,
+                'id'          => false,
                 'primary_key' => ['id'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'comment' => '数据备份',
-                'row_format' => 'DYNAMIC'
+                'engine'      => 'InnoDB',
+                'encoding'    => 'utf8mb4',
+                'collation'   => 'utf8mb4_unicode_ci',
+                'comment'     => '数据备份',
+                'row_format'  => 'DYNAMIC'
             ]);
 
             $table->addColumn('id', 'integer', [
-                'signed' => false,
+                'signed'   => false,
                 'identity' => true,
-                'comment' => 'ID'
+                'comment'  => 'ID'
             ])
-            ->addColumn('table_name', 'string', [
-                'null' => true,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '远程下拉'
-            ])
-            ->addColumn('version', 'string', [
-                'null' => true,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '版本号'
-            ])
-            ->addColumn('file', 'string', [
-                'null' => false,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '备份文件'
-            ])
-            ->addColumn('remark', 'string', [
-                'null' => false,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '备注'
-            ])
-            ->addColumn('status', 'integer', [
-                'signed' => false,
-                'null' => false,
-                'default' => 0,
-                'limit' => 1,
-                'comment' => '状态:0=未开始,1=成功,2=失败'
-            ])
-            ->addColumn('runnow', 'integer', [
-                'signed' => false,
-                'null' => false,
-                'default' => 1,
-                'limit' => 1,
-                'comment' => '立即开始:0=否,1=是'
-            ])
-            ->addColumn('run_time', 'integer', [
-                'signed' => false,
-                'null' => true,
-                'limit' => 20,
-                'comment' => '执行时间'
-            ])
-            ->addColumn('create_time', 'integer', [
-                'signed' => false,
-                'null' => true,
-                'limit' => 20,
-                'comment' => '创建时间'
-            ])
-            ->create();
+                ->addColumn('table_name', 'string', [
+                    'null'    => true,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '表名'
+                ])
+                ->addColumn('version', 'string', [
+                    'null'    => true,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '版本号'
+                ])
+                ->addColumn('file', 'string', [
+                    'null'    => false,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '备份文件'
+                ])
+                ->addColumn('remark', 'string', [
+                    'null'    => false,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '备注'
+                ])
+                ->addColumn('status', 'integer', [
+                    'signed'  => false,
+                    'null'    => false,
+                    'default' => 0,
+                    'limit'   => 1,
+                    'comment' => '状态:0=未开始,1=成功,2=失败'
+                ])
+                ->addColumn('runnow', 'integer', [
+                    'signed'  => false,
+                    'null'    => false,
+                    'default' => 1,
+                    'limit'   => 1,
+                    'comment' => '立即开始:0=否,1=是'
+                ])
+                ->addColumn('run_time', 'integer', [
+                    'signed'  => false,
+                    'null'    => true,
+                    'limit'   => 20,
+                    'comment' => '执行时间'
+                ])
+                ->addColumn('create_time', 'integer', [
+                    'signed'  => false,
+                    'null'    => true,
+                    'limit'   => 20,
+                    'comment' => '创建时间'
+                ])
+                ->create();
 
             Log::info('创建数据备份表成功', ['table' => $tableName]);
         } catch (\Exception $e) {
@@ -125,7 +125,7 @@ class Radmin106 extends AbstractMigration
      */
     public function createDataBackupLogTable()
     {
-        $tableName = getDbPrefix().'data_backup_log';
+        $tableName = getDbPrefix() . 'data_backup_log';
 
         // 检查表是否已存在
         if ($this->hasTable($tableName)) {
@@ -135,38 +135,38 @@ class Radmin106 extends AbstractMigration
 
         try {
             $table = $this->table($tableName, [
-                'id' => false,
+                'id'          => false,
                 'primary_key' => ['id'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'comment' => '操作日志',
-                'row_format' => 'DYNAMIC'
+                'engine'      => 'InnoDB',
+                'encoding'    => 'utf8mb4',
+                'collation'   => 'utf8mb4_unicode_ci',
+                'comment'     => '操作日志',
+                'row_format'  => 'DYNAMIC'
             ]);
 
             $table->addColumn('id', 'integer', [
-                'signed' => false,
+                'signed'   => false,
                 'identity' => true,
-                'comment' => 'ID'
+                'comment'  => 'ID'
             ])
-            ->addColumn('string', 'string', [
-                'null' => false,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '字符串'
-            ])
-            ->addColumn('backup_id', 'integer', [
-                'signed' => false,
-                'null' => true,
-                'comment' => '远程下拉'
-            ])
-            ->addColumn('create_time', 'integer', [
-                'signed' => false,
-                'null' => true,
-                'limit' => 20,
-                'comment' => '创建时间'
-            ])
-            ->create();
+                ->addColumn('string', 'string', [
+                    'null'    => false,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '字符串'
+                ])
+                ->addColumn('backup_id', 'integer', [
+                    'signed'  => false,
+                    'null'    => true,
+                    'comment' => '远程下拉'
+                ])
+                ->addColumn('create_time', 'integer', [
+                    'signed'  => false,
+                    'null'    => true,
+                    'limit'   => 20,
+                    'comment' => '创建时间'
+                ])
+                ->create();
 
             Log::info('创建数据备份日志表成功', ['table' => $tableName]);
         } catch (\Exception $e) {
@@ -184,7 +184,7 @@ class Radmin106 extends AbstractMigration
      */
     public function createDataTableTable()
     {
-        $tableName = getDbPrefix().'data_table';
+        $tableName = getDbPrefix() . 'data_table';
 
         // 检查表是否已存在
         if ($this->hasTable($tableName)) {
@@ -194,60 +194,60 @@ class Radmin106 extends AbstractMigration
 
         try {
             $table = $this->table($tableName, [
-                'id' => false,
+                'id'          => false,
                 'primary_key' => ['id'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'comment' => '数据表',
-                'row_format' => 'DYNAMIC'
+                'engine'      => 'InnoDB',
+                'encoding'    => 'utf8mb4',
+                'collation'   => 'utf8mb4_unicode_ci',
+                'comment'     => '数据表',
+                'row_format'  => 'DYNAMIC'
             ]);
 
             $table->addColumn('id', 'integer', [
-                'signed' => false,
+                'signed'   => false,
                 'identity' => true,
-                'comment' => 'ID'
+                'comment'  => 'ID'
             ])
-            ->addColumn('name', 'string', [
-                'null' => false,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '表名'
-            ])
-            ->addColumn('charset', 'string', [
-                'null' => false,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '字符集'
-            ])
-            ->addColumn('record_count', 'integer', [
-                'null' => true,
-                'comment' => '记录数'
-            ])
-            ->addColumn('comment', 'string', [
-                'null' => true,
-                'limit' => 255,
-                'comment' => '描述'
-            ])
-            ->addColumn('engine', 'string', [
-                'null' => false,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '引擎'
-            ])
-            ->addColumn('remark', 'string', [
-                'null' => false,
-                'default' => '',
-                'limit' => 255,
-                'comment' => '备注'
-            ])
-            ->addColumn('create_time', 'integer', [
-                'signed' => false,
-                'null' => true,
-                'limit' => 20,
-                'comment' => '创建时间'
-            ])
-            ->create();
+                ->addColumn('name', 'string', [
+                    'null'    => false,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '表名'
+                ])
+                ->addColumn('charset', 'string', [
+                    'null'    => false,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '字符集'
+                ])
+                ->addColumn('record_count', 'integer', [
+                    'null'    => true,
+                    'comment' => '记录数'
+                ])
+                ->addColumn('comment', 'string', [
+                    'null'    => true,
+                    'limit'   => 255,
+                    'comment' => '描述'
+                ])
+                ->addColumn('engine', 'string', [
+                    'null'    => false,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '引擎'
+                ])
+                ->addColumn('remark', 'string', [
+                    'null'    => false,
+                    'default' => '',
+                    'limit'   => 255,
+                    'comment' => '备注'
+                ])
+                ->addColumn('create_time', 'integer', [
+                    'signed'  => false,
+                    'null'    => true,
+                    'limit'   => 20,
+                    'comment' => '创建时间'
+                ])
+                ->create();
 
             Log::info('创建数据表信息表成功', ['table' => $tableName]);
         } catch (\Exception $e) {
