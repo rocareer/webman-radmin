@@ -3,25 +3,29 @@
 namespace plugin\radmin\app\command;
 
 use plugin\radmin\app\admin\model\data\Backup;
-use plugin\radmin\support\think\orm\Model;
-use plugin\radmin\support\think\orm\Rdb;
+use plugin\radmin\support\Event;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\orm\Model;
+use plugin\radmin\support\orm\Rdb;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use ZipArchive;
 
 class DataRestore extends Command
 {
-    protected static $defaultName = 'data:restore';
+    protected static $defaultName        = 'data:restore';
     protected static $defaultDescription = 'Restore database from backup';
 
     private float $startTime;
-    private int $startMemory;
-    private int $restoredTables = 0;
-    private int $restoredRecords = 0;
-    private float $peakMemory = 0;
+    private int   $startMemory;
+    private int   $restoredTables  = 0;
+    private int   $restoredRecords = 0;
+    private float $peakMemory      = 0;
+    private int   $admin_id        = 0;
 
     protected function configure()
     {
@@ -29,7 +33,9 @@ class DataRestore extends Command
             ->setDescription('数据库还原工具')
             ->addArgument('table', InputArgument::OPTIONAL, '要还原的表 (all|multi|table_name)', 'all')
             ->addOption('ver', 'b', InputOption::VALUE_OPTIONAL, '通过版本号还原 (默认使用最新版本)')
+            ->addOption('admin', 'a', InputOption::VALUE_OPTIONAL, '管理员')
             ->addOption('force', 'f', InputOption::VALUE_NONE, '强制还原（不提示确认）')
+            ->addOption('force-all', 'fff', InputOption::VALUE_NONE, '强制还原所有表（不检查表是否存在）')
             ->addUsage('使用方法:')
             ->addUsage('  php webman data:restore -b 20250516000000  # 还原指定版本的所有表')
             ->addUsage('  php webman data:restore users  # 还原users表的最新备份')
@@ -44,8 +50,13 @@ class DataRestore extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->startTime = microtime(true);
+        $this->startTime   = microtime(true);
         $this->startMemory = memory_get_usage();
+
+
+        if ($input->getOption('admin')){
+            $this->admin_id=$input->getOption('admin');
+        }
 
         try {
             // 获取备份记录
@@ -66,7 +77,7 @@ class DataRestore extends Command
             usleep(2000000);
             $this->restoreFromBackup($backup, $input, $output);
             $this->outputStatistics($output);
-            
+
             return self::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln("<error>还原失败: " . $e->getMessage() . "</error>");
@@ -79,12 +90,12 @@ class DataRestore extends Command
      */
     private function getBackupRecord(InputInterface $input): ?Model
     {
-        $tables = $input->getArgument('table');
+        $tables  = $input->getArgument('table');
         $version = $input->getOption('ver');
 
         // 构建查询
         $query = Backup::where(true);
-        
+
         // 如果没有指定版本，获取最新备份
         if (!$version) {
             $query->order('create_time', 'desc');
@@ -93,34 +104,41 @@ class DataRestore extends Command
         }
 
         // 处理表名
-        if ($tables === 'all' || $tables === 'multi') {
+        if ($tables == 'all' || $tables == 'multi') {
             $query->where('table_name', 'all');
         } else {
             $tableNames = explode(',', $tables);
-            
+
             // 检查表是否存在并过滤掉data_backup表
             $filteredTables = [];
             foreach ($tableNames as $tableName) {
-                if ($tableName === getDbPrefix().'data_backup') {
+                Log::debug($tableName);
+                if ($tableName === getDbPrefix() . 'data_backup') {
                     continue; // 跳过data_backup表
                 }
-                if (!$this->tableExists($tableName)) {
+                if ($tableName === getDbPrefix() . 'log_data_backup') {
+                    continue; // 跳过log_data_backup表
+                }
+                if ($tableName === getDbPrefix() . 'log_data_restore') {
+                    continue; // 跳过log_data_restore表
+                }
+                if (!$this->tableExists($tableName, $input->getOption('force-all'))) {
                     throw new \Exception("表 {$tableName} 不存在");
                 }
                 $filteredTables[] = $tableName;
             }
-            
+
             if (empty($filteredTables)) {
                 throw new \Exception("没有有效的表可以恢复");
             }
-            
+
             $query->where('table_name', 'in', $filteredTables);
         }
 
         $backup = $query->find();
-        
+
         if (!$backup) {
-            $msg = $version 
+            $msg = $version
                 ? "找不到表 {$tables} 版本 {$version} 的备份记录"
                 : "找不到表 {$tables} 的备份记录";
             throw new \Exception($msg);
@@ -128,15 +146,17 @@ class DataRestore extends Command
 
         // 验证备份记录是否匹配请求的表
         if ($tables !== 'all' && $tables !== 'multi') {
-            $backupTables = explode(',', $backup->table_name);
+            $backupTables  = explode(',', $backup->table_name);
             $requestTables = explode(',', $tables);
-            
+
             if (array_diff($requestTables, $backupTables)) {
-                throw new \Exception(sprintf(
-                    "备份记录中的表 (%s) 与请求的表 (%s) 不匹配",
-                    $backup->table_name,
-                    $tables
-                ));
+                throw new \Exception(
+                    sprintf(
+                        "备份记录中的表 (%s) 与请求的表 (%s) 不匹配",
+                        $backup->table_name,
+                        $tables
+                    )
+                );
             }
         }
 
@@ -146,9 +166,13 @@ class DataRestore extends Command
     /**
      * 检查表是否存在
      */
-    private function tableExists(string $tableName): bool
+    private function tableExists(string $tableName, bool $forceAll = false): bool
     {
-        return true;
+        // 如果启用了force-all参数，直接返回true
+        if ($forceAll) {
+            return true;
+        }
+        
         try {
             return (bool)Rdb::table('information_schema.tables')
                 ->where('table_schema', config('plugin.radmin.think-orm.connections.mysql.database'))
@@ -171,11 +195,11 @@ class DataRestore extends Command
             "",
             "<bg=cyan;fg=black> 备份信息 </>\n",
             "<info>版本号:</info>    " . $backup->version,
-            "<info>备份文件:</info>  " . $backup->file . " (" . 
-            (file_exists(runtime_path() . $backup->file) 
-                ? $this->format_bytes(filesize(runtime_path() . $backup->file)) 
+            "<info>备份文件:</info>  " . $backup->file . " (" .
+            (file_exists(runtime_path() . $backup->file)
+                ? $this->format_bytes(filesize(runtime_path() . $backup->file))
                 : '文件不存在') . ")",
-            "<info>备份时间:</info>  " .$backup->create_time,
+            "<info>备份时间:</info>  " . $backup->create_time,
             ""
         ]);
         usleep(1000000); // 减少等待时间
@@ -186,7 +210,7 @@ class DataRestore extends Command
      */
     private function confirmRestore(InputInterface $input, OutputInterface $output): bool
     {
-        $helper = $this->getHelper('question');
+        $helper   = $this->getHelper('question');
         $question = new \Symfony\Component\Console\Question\ConfirmationQuestion(
             '确定要执行还原操作吗？这将覆盖现有数据。 (y/N) ',
             false
@@ -232,7 +256,7 @@ class DataRestore extends Command
                     if (empty($backupFiles)) {
                         throw new \Exception("备份文件中未找到任何表数据");
                     }
-                    
+
                     // 获取所有表名并验证
                     $tables = $this->getTablesFromDirectory($tempDir);
                     foreach ($tables as $table) {
@@ -240,29 +264,38 @@ class DataRestore extends Command
                         if (!file_exists($tableZip)) {
                             throw new \Exception("表 {$table} 的备份文件缺失");
                         }
-                        
-                        if (!$this->tableExists($table)) {
+
+                        // 跳过系统表
+                        if ($table === getDbPrefix() . 'data_backup' || 
+                            $table === getDbPrefix() . 'log_data_backup' || 
+                            $table === getDbPrefix() . 'log_data_restore') {
+                            $output->writeln("<comment>跳过系统表: {$table}</comment>");
+                            $tables = array_diff($tables, [$table]);
+                            continue;
+                        }
+
+                        if (!$this->tableExists($table, $input->getOption('force-all'))) {
                             $output->writeln("<comment>警告: 表 {$table} 不存在，将跳过还原</comment>");
                             $tables = array_diff($tables, [$table]);
                         }
                     }
-                    
+
                     if (empty($tables)) {
                         throw new \Exception("没有找到任何有效的表可以还原");
                     }
-                    
+
                     $output->writeln(sprintf("找到 %d 个有效的表备份文件", count($tables)));
                     usleep(2000000);
                 } else {
                     $tables = explode(',', $tables);
                     // 验证指定的表是否都存在
                     foreach ($tables as $key => $table) {
-                        if (!$this->tableExists($table)) {
+                        if (!$this->tableExists($table, $input->getOption('force-all'))) {
                             $output->writeln("<error>错误: 指定的表 {$table} 不存在</error>");
                             unset($tables[$key]);
                         }
                     }
-                    
+
                     if (empty($tables)) {
                         throw new \Exception("没有找到任何有效的表");
                     }
@@ -273,14 +306,16 @@ class DataRestore extends Command
                 // 还原每个表
                 $output->writeln("\n<bg=blue;fg=white> 开始还原数据 </>\n");
                 usleep(500000); // 0.5秒延时
-                
+
                 // 初始化进度条
-                $progress = new \Symfony\Component\Console\Helper\ProgressBar($output, count($tables));
-                $progress->setFormat("
+                $progress = new ProgressBar($output, count($tables));
+                $progress->setFormat(
+                    "
  %current%/%max% [%bar%] %percent:3s%%
  耗时: %elapsed:6s% 预计: %estimated:-6s% 内存: %memory:6s%
  状态: %message%
-");
+"
+                );
                 $progress->setBarWidth(50);
                 $progress->setRedrawFrequency(1);
                 $progress->start();
@@ -288,21 +323,30 @@ class DataRestore extends Command
                 foreach ($tables as $table) {
                     $progress->setMessage("<comment>准备还原表 {$table}...</comment>");
                     usleep(200000); // 0.2秒延时
-                    
+
                     $tableZipFile = $tempDir . $table . '.zip';
                     if (file_exists($tableZipFile)) {
                         try {
                             try {
                                 $recordCount = $this->restoreTable($table, $tableZipFile, $output);
-                                $fileSize = file_exists($tableZipFile) ? $this->format_bytes(filesize($tableZipFile)) : '未知';
-                                $progress->setMessage(sprintf(
-                                    "<info>✓ 表 %s 还原成功\n  记录数: %d\n  备份大小: %s\n  备份时间: %s\n  当前时间: %s</info>",
-                                    $table,
-                                    $recordCount,
-                                    $fileSize,
-                                    date('Y-m-d H:i:s', filemtime($tableZipFile)),
-                                    date('Y-m-d H:i:s')
-                                ));
+                                $fileSize    = file_exists($tableZipFile) ? $this->format_bytes(filesize($tableZipFile)) : '未知';
+                                $progress->setMessage(
+                                    sprintf(
+                                        "<info>✓ 表 %s 还原成功\n  记录数: %d\n  备份大小: %s\n  备份时间: %s\n  当前时间: %s</info>",
+                                        $table,
+                                        $recordCount,
+                                        $fileSize,
+                                        date('Y-m-d H:i:s', filemtime($tableZipFile)),
+                                        date('Y-m-d H:i:s')
+                                    )
+                                );
+
+                                // 记录日志
+                                $data['admin_id'] = $this->admin_id;
+                                $data['table_name'] =$table;
+                                $data['version'] =$backup->version;
+                                Event::emit('log.data.restore', $data);
+
                             } catch (\Exception $e) {
                                 $progress->setMessage("<error>✗ 表 {$table} 还原失败: " . $e->getMessage() . "</error>");
                                 throw $e;
@@ -313,10 +357,10 @@ class DataRestore extends Command
                     } else {
                         $progress->setMessage("<comment>! 找不到表 {$table} 的备份文件</comment>");
                     }
-                    
+
                     $progress->advance();
                     usleep(300000); // 0.3秒延时
-                    
+
                     // 优化清除输出
                     $progress->clear();
                     $progress->display();
@@ -324,7 +368,7 @@ class DataRestore extends Command
 
                 $progress->finish();
                 $output->writeln("\n");
-                $output->writeln("<bg=green;fg=white> 数据还原完成 ".date('Y-m-d H:i:s')." </>");
+                $output->writeln("<bg=green;fg=white> 数据还原完成 " . date('Y-m-d H:i:s') . " </>");
                 $output->writeln("");
                 usleep(500000); // 0.5秒延时
             } else {
@@ -332,11 +376,13 @@ class DataRestore extends Command
                 $output->writeln(sprintf("准备还原表 %s", $backup->table_name));
                 usleep(1000000);
                 $recordCount = $this->restoreTable($backup->table_name, $backupFile, $output);
-                $output->writeln(sprintf(
-                    "<info>表 %s 还原完成，共还原 %d 条记录</info>",
-                    $backup->table_name,
-                    $recordCount
-                ));
+                $output->writeln(
+                    sprintf(
+                        "<info>表 %s 还原完成，共还原 %d 条记录</info>",
+                        $backup->table_name,
+                        $recordCount
+                    )
+                );
             }
 
         } catch (\Exception $e) {
@@ -387,10 +433,10 @@ class DataRestore extends Command
             }
 
             $sqlFile = $sqlFiles[0];
-            
+
             // 使用生成器分批读取SQL文件，避免内存溢出
-            $queries = $this->readSqlFile($sqlFile);
-            $totalQueries = 0;
+            $queries        = $this->readSqlFile($sqlFile);
+            $totalQueries   = 0;
             $successQueries = 0;
 
             // 开始事务
@@ -398,7 +444,7 @@ class DataRestore extends Command
             try {
                 // 先删除已存在的表
                 Rdb::execute("DROP TABLE IF EXISTS `{$table}`");
-                
+
                 foreach ($queries as $query) {
                     $totalQueries++;
                     if (!empty(trim($query))) {
@@ -409,7 +455,7 @@ class DataRestore extends Command
                         $this->updateMemoryUsage();
                     }
                 }
-                
+
                 Rdb::commit();
                 $this->restoredTables++;
                 return $this->restoredRecords;
@@ -438,7 +484,7 @@ class DataRestore extends Command
         $query = '';
         while (($line = fgets($handle)) !== false) {
             $line = trim($line);
-            
+
             // 跳过注释和空行
             if (empty($line) || strpos($line, '--') === 0 || strpos($line, '#') === 0) {
                 continue;
@@ -490,10 +536,10 @@ class DataRestore extends Command
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
+        $pow   = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow   = min($pow, count($units) - 1);
         $bytes /= pow(1024, $pow);
-        
+
         return round($bytes, $precision) . ' ' . $units[$pow];
     }
 
@@ -508,17 +554,17 @@ class DataRestore extends Command
     private function outputStatistics(OutputInterface $output): void
     {
         $executionTime = microtime(true) - $this->startTime;
-        $speed = $executionTime > 0 ? round($this->restoredRecords / $executionTime) : 0;
+        $speed         = $executionTime > 0 ? round($this->restoredRecords / $executionTime) : 0;
         $this->updateMemoryUsage();
 
-        $output->writeln(['', '<bg=blue;fg=white> 执行统计 '.date('Y-m-d H:i:s').' </>']);
+        $output->writeln(['', '<bg=blue;fg=white> 执行统计 ' . date('Y-m-d H:i:s') . ' </>']);
         usleep(300000); // 0.3秒延时
-        
+
         $table = new \Symfony\Component\Console\Helper\Table($output);
         $table->setStyle('box')
             ->setHeaderTitle('<info>还原结果统计</info>')
             ->setHeaders([
-                '<comment>统计项</comment>', 
+                '<comment>统计项</comment>',
                 '<comment>数值</comment>'
             ])
             ->setRows([

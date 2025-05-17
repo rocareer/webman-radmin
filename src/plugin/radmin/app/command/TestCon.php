@@ -32,10 +32,7 @@ class TestCon extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-       // var_dump((new \DI\Container)->getKnownEntryNames());
-       // \support\Container::instance('radmin');
-       //  require_once base_path(). '/plugin/radmin/config/container.php';
-        // \support\Container::get('test1');
+
 
         $admin=AdminModel::select();
 
