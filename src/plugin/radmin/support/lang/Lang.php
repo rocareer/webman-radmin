@@ -10,7 +10,7 @@
  */
 
 
-namespace plugin\radmin\support\think\lang;
+namespace plugin\radmin\support\lang;
 
 
 

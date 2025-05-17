@@ -1,7 +1,7 @@
 <?php
 
 
-namespace plugin\radmin\support\think\lang;
+namespace plugin\radmin\support\lang;
 
 use plugin\radmin\support\Request;
 use think\facade\Cookie;
