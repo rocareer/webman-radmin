@@ -13,6 +13,7 @@
  */
 
 use DI\ContainerBuilder;
+use plugin\radmin\app\process\Http;
 use plugin\radmin\support\member\admin\AdminAuthenticator;
 use plugin\radmin\support\member\admin\AdminService;
 use plugin\radmin\support\member\admin\AdminState;
@@ -76,28 +77,28 @@ $definitions= [
     // 动态绑定服务
     InterfaceService::class => factory(function ($container) {
         $context = $container->get('member.context');
-        $role= request()->role??$context->get('role');
+        $role= Http::request()->role??$context->get('role');
         $serviceMap = $container->get('member.service.map');
         return $container->get($serviceMap[$role]);
     }),
     // 动态绑定状态
     InterfaceState::class => factory(function ($container) {
         $context = $container->get('member.context');
-        $role= request()->role??$context->get('role');
+        $role= Http::request()->role??$context->get('role');
         $stateMap = $container->get('member.state.map');
         return $container->get($stateMap[$role]);
     }),
     // 动态绑定模型
     InterfaceModel::class => factory(function ($container) {
         $context = $container->get('member.context');
-        $role= request()->role??$context->get('role');
+        $role= Http::request()->role??$context->get('role');
         $modelMap = $container->get('member.model.map');
         return $container->get($modelMap[$role]);
     }),
     // 动态绑定认证器
     InterfaceAuthenticator::class => factory(function ($container) {
         $context = $container->get('member.context');
-        $role= request()->role??$context->get('role');
+        $role= Http::request()->role??$context->get('role');
         $authenticatorMap = $container->get('member.authenticator.map');
         return $container->get($authenticatorMap[$role]);
     }),
