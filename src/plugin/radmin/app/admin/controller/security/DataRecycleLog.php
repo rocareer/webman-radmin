@@ -2,11 +2,11 @@
 
 namespace plugin\radmin\app\admin\controller\security;
 
-use Throwable;
-use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\think\orm\Rdb;
-use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\admin\model\DataRecycleLog as DataRecycleLogModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\extend\ba\TableManager;
+use plugin\radmin\support\orm\Rdb;
+use Throwable;
 
 class DataRecycleLog extends Backend
 {

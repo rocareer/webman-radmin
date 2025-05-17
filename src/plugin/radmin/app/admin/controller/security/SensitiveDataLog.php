@@ -2,12 +2,12 @@
 
 namespace plugin\radmin\app\admin\controller\security;
 
+use plugin\radmin\app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
+use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\extend\ba\TableManager;
+use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\Response;
 use Throwable;
-use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\think\orm\Rdb;
-use plugin\radmin\app\common\controller\Backend;
-use plugin\radmin\app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
 
 class SensitiveDataLog extends Backend
 {
