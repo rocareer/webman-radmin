@@ -1,8 +1,8 @@
 <?php
 
-use Phinx\Migration\AbstractMigration;
 use Phinx\Db\Adapter\MysqlAdapter;
-use plugin\radmin\support\think\orm\Rdb;
+use Phinx\Migration\AbstractMigration;
+use plugin\radmin\support\orm\Rdb;
 
 class Version200 extends AbstractMigration
 {

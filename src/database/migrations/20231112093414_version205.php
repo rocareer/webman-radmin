@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 use plugin\radmin\app\admin\model\Config;
-use plugin\radmin\support\think\orm\Rdb;
+use plugin\radmin\support\orm\Rdb;
 
 class Version205 extends AbstractMigration
 {

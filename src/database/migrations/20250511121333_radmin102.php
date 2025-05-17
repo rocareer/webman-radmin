@@ -9,9 +9,8 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-use plugin\radmin\app\admin\model\Config;
-use plugin\radmin\support\think\orm\Rdb;
 use Phinx\Migration\AbstractMigration;
+use plugin\radmin\app\admin\model\Config;
 
 class Radmin102 extends AbstractMigration
 {
