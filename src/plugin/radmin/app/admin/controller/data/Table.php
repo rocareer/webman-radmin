@@ -3,8 +3,8 @@
 namespace plugin\radmin\app\admin\controller\data;
 
 use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 /**
@@ -33,7 +33,6 @@ class Table extends Backend
     public function index(): ?Response
     {
 
-
         list($where, $alias, $limit, $order) = $this->queryBuilder();
 
         $res = $this->model
@@ -50,6 +49,7 @@ class Table extends Backend
             'remark' => get_route_remark(),
         ]);
     }
+
     /**
      * 同步数据表
      * @return Response
@@ -61,16 +61,19 @@ class Table extends Backend
     {
         try {
             $connection = Rdb::connect();
-            $dbTables     = $connection->getTables();
-            $sysTables= $this->model->select()->toArray();
+            $dbTables   = $connection->getTables();
+            $sysTables  = $this->model->select()->toArray();
 
             Rdb::startTrans();
             try {
                 // 从数据库同步
                 foreach ($dbTables as $table) {
                     // 获取表信息
-                    $tableStatus = $connection->query("SHOW TABLE STATUS LIKE '{$table}'")[0];
                     $createTable = $connection->query("SHOW CREATE TABLE `{$table}`")[0];
+
+                    // 使用Table工具类获取表状态信息
+                    $tableStatus = \plugin\radmin\support\orm\Table::status($table);
+
                     // 解析字符集
                     preg_match('/CHARSET=([^\s]+)/i', $createTable['Create Table'], $charsetMatch);
                     $charset = $charsetMatch[1] ?? 'unknown';
@@ -81,22 +84,30 @@ class Table extends Backend
 
                     $table_record = $this->model->where('name', $table)->find();
                     if ($table_record) {
+                        // 更新表记录
                         $table_record->update([
                             'id'           => $table_record->id,
                             'name'         => $table,
                             'charset'      => $charset,
-                            'record_count' => Rdb::table($table)->count(),
-                            'engine'       => $tableStatus['Engine'] ?? 'unknown',
-                            'comment'      => $comment
-
+                            'record_count' => $tableStatus['rows'], // 使用精确的行数统计
+                            'engine'       => $tableStatus['engine'],
+                            'comment'      => $comment,
+                            'data_size'    => $tableStatus['dataSize'],    // 数据大小（字节）
+                            'index_size'   => $tableStatus['indexSize'],   // 索引大小（字节）
+                            'total_size'   => $tableStatus['size'],        // 总存储大小（字节）
+                            'update_time'  => $tableStatus['lastModified'], // 使用表的最后修改时间
+                            'create_time'  => $tableStatus['createTime']
                         ]);
                     } else {
                         $this->model->create([
                             'name'         => $table,
+                            'table_type'   => 2,
                             'charset'      => $charset,
-                            'record_count' => $tableStatus['Rows'] ?? 0,
-                            'engine'       => $tableStatus['Engine'] ?? 'unknown',
-                            'comment'      => $comment
+                            'record_count' => $tableStatus['rows'],
+                            'engine'       => $tableStatus['engine'],
+                            'comment'      => $comment,
+                            'update_time'  => $tableStatus['lastModified'],
+                            'create_time'  => $tableStatus['createTime']    // 使用表的创建时间
                         ]);
                     }
                 }
@@ -165,10 +176,15 @@ class Table extends Backend
                     }
                 }
 
+                // 如果有注释字段，更新表描述
                 if (!empty($data['comment'])) {
-                    $this->updataTable($data);
+                    $tableUpdateResult = $this->updataTable($data);
+                    if (!$tableUpdateResult) {
+                        throw new \Exception(__('Failed to update table comment'));
+                    }
                 }
 
+                // 保存记录到数据库
                 $result = $row->save($data);
                 $this->model->commit();
             } catch (Throwable $e) {
@@ -187,9 +203,21 @@ class Table extends Backend
         ]);
     }
 
-    protected function updataTable($data)
+    /**
+     * 更新数据表的描述信息
+     * @param array $data 表数据，包含 name 和 comment
+     * @return bool 是否更新成功
+     */
+    // 常量已移至 \plugin\radmin\support\orm\Table 类
+
+    /**
+     * 更新数据表的描述信息
+     * @param array $data 表数据，包含 name 和 comment
+     * @return bool 是否更新成功
+     */
+    protected function updataTable(array $data): bool
     {
-        $table   = $data['name'];
-        $comment = $data['comment'];
+        // 使用工具类的方法更新表注释
+        return \plugin\radmin\support\orm\Table::updateTableComment($data['name'], $data['comment'] ?? '');
     }
 }

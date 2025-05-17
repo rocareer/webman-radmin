@@ -2,6 +2,7 @@
 
 namespace plugin\radmin\app\admin\controller\data;
 
+use plugin\radmin\support\orm\Rdb;
 use Throwable;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
@@ -91,4 +92,13 @@ class Backup extends Backend
     /**
      * 若需重写查看、编辑、删除等方法，请复制 @see \plugin\radmin\app\admin\library\traits\Backend 中对应的方法至此进行重写
      */
+
+    /**
+     * 记录备份
+     * @param $data
+     * @return   bool
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/17 23:34
+     */
+
 }
