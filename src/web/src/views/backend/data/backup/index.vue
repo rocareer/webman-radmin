@@ -34,6 +34,8 @@ import {download} from '/@/api/backend/data/backup'
 import {ElMessageBox, ElNotification} from "element-plus";
 import {routePush} from "/@/utils/router";
 import {taskStatus} from "/@/stores/constant/terminalTaskStatus";
+import {useAdminInfo} from "/@/stores/adminInfo";
+const adminInfo=useAdminInfo();
 
 const terminal = useTerminal()
 defineOptions({
@@ -186,7 +188,7 @@ const clickRestore = (row: any) => {
 const restore = (row: any) => {
 
     // 安全转换，处理空数组情况
-    const extend: string = row.table_name+'~~'+row.version;
+    const extend: string = row.table_name+'~~'+row.version+'~~'+adminInfo.id;
 
     // 不显示设置栏
     terminal.configShow(false)

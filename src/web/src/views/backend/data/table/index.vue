@@ -48,6 +48,18 @@
                         <span class="table-header-operate-text">还原表</span>
                     </el-button>
                 </el-tooltip>
+                <el-tooltip content="可视化创建新表" placement="top">
+                    <el-button
+                        v-blur
+                        @click="crud"
+                        type="primary"
+                        class="table-header-operate"
+                    >
+                        <Icon name="fa fa-code"/>
+
+                        <span class="table-header-operate-text">创建新表</span>
+                    </el-button>
+                </el-tooltip>
             </template>
         </TableHeader>
 
@@ -74,9 +86,11 @@ import {syncTable} from "/@/api/backend/data/table";
 import {Refresh} from "@element-plus/icons-vue";
 import {useTerminal} from "/@/stores/terminal";
 import {ElMessageBox} from "element-plus";
-import {changeListenDirtyFileSwitch} from "/@/utils/vite";
 import {routePush} from "/@/utils/router";
 import Router from "/@/router";
+import {useAdminInfo} from "/@/stores/adminInfo";
+
+const adminInfo = useAdminInfo();
 
 const terminal = useTerminal()
 
@@ -162,7 +176,11 @@ optButtons = optButtons.concat(defaultOptButtons(['edit']))
 const baTable = new baTableClass(
     new baTableApi('/admin/data.Table/'),
     {
+        // dblClickNotEditColumn: ['all'],
         pk: 'id',
+        filter: {
+            limit: 15
+        },
         column: [
             {type: 'selection', align: 'center', operator: false},
             {
@@ -175,6 +193,7 @@ const baTable = new baTableClass(
             },
             {
                 label: t('data.table.name'),
+                width: 220,
                 prop: 'name',
                 align: 'left',
                 operatorPlaceholder: t('Fuzzy query'),
@@ -182,16 +201,52 @@ const baTable = new baTableClass(
                 sortable: true,
             },
             {
+                label: t('data.table.table_type'),
+                prop: 'table_type',
+                align: 'center',
+                render: 'tag',
+                custom: {2: 'primary', 1: 'warning'},
+                operator: 'eq',
+                sortable: false,
+                replaceValue: {'1': t('data.table.table_type 1'), '2': t('data.table.table_type 2')},
+            },
+            {
                 label: t('data.table.comment'),
                 prop: 'comment',
+                width: 240,
                 align: 'left',
                 operator: 'LIKE',
                 formatter: (row) => row.comment || t('None'),
             },
             {
                 label: t('data.table.record_count'),
+                width: 100,
                 prop: 'record_count',
                 align: 'center',
+                operator: 'RANGE',
+                sortable: true
+            },
+            {
+                label: t('data.table.total_size'),
+                width: 120,
+                prop: 'total_size',
+                align: 'left',
+                operator: 'RANGE',
+                sortable: true
+            },
+            {
+                label: t('data.table.data_size'),
+                width: 120,
+                prop: 'data_size',
+                align: 'left',
+                operator: 'RANGE',
+                sortable: true
+            },
+            {
+                label: t('data.table.index_size'),
+                width: 120,
+                prop: 'index_size',
+                align: 'left',
                 operator: 'RANGE',
                 sortable: true
             },
@@ -201,7 +256,7 @@ const baTable = new baTableClass(
                 align: 'center',
                 operatorPlaceholder: t('Fuzzy query'),
                 operator: 'LIKE',
-                sortable: false,
+
             },
 
 
@@ -211,9 +266,17 @@ const baTable = new baTableClass(
                 align: 'center',
                 render: 'tag',
                 operator: 'eq',
-                sortable: true,
             },
-
+            {
+                label: t('data.table.update_time'),
+                prop: 'update_time',
+                align: 'center',
+                render: 'datetime',
+                operator: 'RANGE',
+                sortable: 'custom',
+                width: 160,
+                timeFormat: 'yyyy-mm-dd hh:MM:ss',
+            },
             {
                 label: t('data.table.create_time'),
                 prop: 'create_time',
@@ -223,14 +286,23 @@ const baTable = new baTableClass(
                 sortable: 'custom',
                 width: 160,
                 timeFormat: 'yyyy-mm-dd hh:MM:ss',
+
             },
-            {label: t('Operate'), align: 'center', width: 200, render: 'buttons', buttons: optButtons, operator: false},
+            {
+                label: t('Operate'),
+                align: 'center',
+                width: 120,
+                render: 'buttons',
+                buttons: optButtons,
+                operator: false,
+                fixed: 'right',
+            },
         ],
         dblClickNotEditColumn: [undefined, 'engine'],
     },
     {
         defaultItems: {engine: '1'},
-    }
+    },
 )
 
 provide('baTable', baTable)
@@ -241,6 +313,7 @@ provide('baTable', baTable)
  */
 const sync = () => {
     baTable.getIndex()
+
     syncTable().then((res) => {
         baTable.getIndex()?.then(() => {
             baTable.initSort()
@@ -249,7 +322,10 @@ const sync = () => {
     })
 }
 const restore = () => {
-    routePush({ name: 'data/backup' })
+    routePush({name: 'data/backup'})
+}
+const crud = () => {
+    routePush({name: 'crud/crud'})
 }
 
 
@@ -263,7 +339,7 @@ const backupSelectiontables = () => {
         tables.push(item.name!)
     })
 
-    if (selection?.length==0){
+    if (selection?.length == 0) {
         ElMessageBox.confirm(t('您没有选中任何表,继续执行将备份所有表'), "提示!", {
             confirmButtonText: t('Confirm'),
             cancelButtonText: t('Cancel'),
@@ -272,8 +348,8 @@ const backupSelectiontables = () => {
             backup(tables)
         })
     }
-    if (selection?.length!=0){
-        ElMessageBox.confirm(t('您选中了'+selection?.length+'个表,确认执行备份吗?'), "提示!", {
+    if (selection?.length != 0) {
+        ElMessageBox.confirm(t('您选中了' + selection?.length + '个表,确认执行备份吗?'), "提示!", {
             confirmButtonText: t('Confirm'),
             cancelButtonText: t('Cancel'),
             type: 'warning',
@@ -281,10 +357,6 @@ const backupSelectiontables = () => {
             backup(tables)
         })
     }
-
-
-
-
 }
 
 /**
@@ -294,7 +366,8 @@ const backupSelectiontables = () => {
 const backup = (tables: any) => {
 
     // 安全转换，处理空数组情况
-    const extend: string = tables.length > 0 ? tables.join(',') : '-a';
+    const ext: string = tables.length > 0 ? tables.join(',') : '-a';
+    const extend: string = ext + "~~" + adminInfo.id;
 
     // 不显示设置栏
     terminal.configShow(false)
@@ -310,7 +383,7 @@ const backup = (tables: any) => {
                 cancelButtonText: t('Cancel'),
                 type: 'success',
             }).then(() => {
-                routePush({ name: 'data/backup' })
+                routePush({name: 'data/backup'})
             })
         })
     })

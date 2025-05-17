@@ -30,38 +30,24 @@
                     :label-width="baTable.form.labelWidth + 'px'"
                     :rules="rules"
                 >
+                    <FormItem :label="t('test.image')" type="image" v-model="baTable.form.items!.image" prop="image" />
                     <FormItem
-                        :label="t('log.login.admin.log')"
+                        :label="t('test.string')"
+                        type="string"
+                        v-model="baTable.form.items!.string"
+                        prop="string"
+                        :placeholder="t('Please input field', { field: t('test.string') })"
+                    />
+                    <FormItem :label="t('test.file')" type="file" v-model="baTable.form.items!.file" prop="file" />
+                    <FormItem
+                        :label="t('test.remark')"
                         type="textarea"
-                        v-model="baTable.form.items!.log"
-                        prop="log"
+                        v-model="baTable.form.items!.remark"
+                        prop="remark"
                         :input-attr="{ rows: 3 }"
                         @keyup.enter.stop=""
                         @keyup.ctrl.enter="baTable.onSubmit(formRef)"
-                        :placeholder="t('Please input field', { field: t('log.login.admin.log') })"
-                    />
-                    <FormItem
-                        :label="t('log.login.admin.ip')"
-                        type="string"
-                        v-model="baTable.form.items!.ip"
-                        prop="ip"
-                        :placeholder="t('Please input field', { field: t('log.login.admin.ip') })"
-                    />
-                    <FormItem
-                        :label="t('log.login.admin.inout')"
-                        type="switch"
-                        v-model="baTable.form.items!.inout"
-                        prop="inout"
-                        :input-attr="{
-                            content: { '0': t('log.login.admin.inout 0'), '1': t('log.login.admin.inout 1'), '2': t('log.login.admin.inout 2') },
-                        }"
-                    />
-                    <FormItem
-                        :label="t('log.login.admin.status')"
-                        type="switch"
-                        v-model="baTable.form.items!.status"
-                        prop="status"
-                        :input-attr="{ content: { '0': t('log.login.admin.status 0'), '1': t('log.login.admin.status 1') } }"
+                        :placeholder="t('Please input field', { field: t('test.remark') })"
                     />
                 </el-form>
             </div>
@@ -93,7 +79,8 @@ const baTable = inject('baTable') as baTableClass
 const { t } = useI18n()
 
 const rules: Partial<Record<string, FormItemRule[]>> = reactive({
-    create_time: [buildValidatorData({ name: 'date', title: t('log.login.admin.create_time') })],
+    update_time: [buildValidatorData({ name: 'date', title: t('test.update_time') })],
+    create_time: [buildValidatorData({ name: 'date', title: t('test.create_time') })],
 })
 </script>
 
