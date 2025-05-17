@@ -10,7 +10,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace plugin\radmin\support\think\orm;
+namespace plugin\radmin\support\orm;
 
 use think\Event;
 use think\Facade;

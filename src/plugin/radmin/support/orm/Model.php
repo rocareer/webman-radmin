@@ -1,11 +1,10 @@
 <?php
 
-namespace plugin\radmin\support\think\orm;
+namespace plugin\radmin\support\orm;
 
-use think\db\Query;
 use think\db\BaseQuery;
+use think\db\Query;
 use think\model\Collection;
-use plugin\radmin\app\process\Http;
 
 /**
  * @method static Rdb name(string $name) 指定当前数据表名（不含前缀）

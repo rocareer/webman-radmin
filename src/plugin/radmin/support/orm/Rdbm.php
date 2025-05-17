@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-namespace plugin\radmin\support\think\orm;
+namespace plugin\radmin\support\orm;
 
 use MongoDB\Driver\Command;
 use think\db\BaseQuery;

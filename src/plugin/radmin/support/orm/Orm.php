@@ -1,10 +1,10 @@
 <?php
 
 
-namespace plugin\radmin\support\think\orm;
+namespace plugin\radmin\support\orm;
 
 use plugin\radmin\app\process\Http;
-use plugin\radmin\support\think\cache\Cache;
+use plugin\radmin\support\cache\Cache;
 use think\Paginator;
 use Webman\Bootstrap;
 
