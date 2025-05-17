@@ -60,7 +60,7 @@ class Rule extends Backend
         $this->tree  = Tree::instance();
 
         $isTree          = $this->request->input('isTree', true);
-        $this->initValue = $this->request->input('initValue', []);
+        $this->initValue = $this->request->input('initValue/a', []);
         $this->initValue = array_filter($this->initValue);
         $this->keyword   = $this->request->input('quickSearch', '');
 

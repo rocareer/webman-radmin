@@ -8,8 +8,8 @@ namespace plugin\radmin\app\admin\controller\auth;
 use plugin\radmin\app\admin\model\Admin as AdminModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\member\Member;
+use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 class Admin extends Backend

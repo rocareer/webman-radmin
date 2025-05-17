@@ -2,16 +2,16 @@
 
 namespace plugin\radmin\app\admin\controller;
 
-use plugin\radmin\exception\Exception;
-use Throwable;
-use plugin\radmin\extend\ba\Terminal;
-use plugin\radmin\support\Response;
-use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\think\orm\Rdb;
-use plugin\radmin\support\Cache;
 use plugin\radmin\app\admin\model\AdminLog;
-use plugin\radmin\app\common\library\upload;
 use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\app\common\library\upload;
+use plugin\radmin\exception\Exception;
+use plugin\radmin\extend\ba\TableManager;
+use plugin\radmin\extend\ba\Terminal;
+use plugin\radmin\support\Cache;
+use plugin\radmin\support\orm\Rdb;
+use plugin\radmin\support\Response;
+use Throwable;
 
 class Ajax extends Backend
 {
