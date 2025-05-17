@@ -5,9 +5,9 @@ namespace plugin\radmin\app\common\controller;
 use Exception;
 use plugin\radmin\app\controller\BaseController;
 use plugin\radmin\exception\ServerErrorHttpException;
+use plugin\radmin\support\lang\Lang;
+use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\lang\Lang;
-use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 /**

@@ -4,8 +4,8 @@ namespace plugin\radmin\app\common\controller;
 
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
+use plugin\radmin\support\orm\Model;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\think\orm\Model;
 use Throwable;
 
 

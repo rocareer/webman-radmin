@@ -3,9 +3,8 @@
 
 namespace plugin\radmin\app\common\model\ai;
 
-use plugin\radmin\support\think\orm\Rdb;
-use think\model\relation\BelongsTo;
 use plugin\radmin\app\common\model\BaseModel;
+use think\model\relation\BelongsTo;
 
 /**
  * Session

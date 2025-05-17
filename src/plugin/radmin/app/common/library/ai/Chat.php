@@ -3,23 +3,20 @@
 
 namespace plugin\radmin\app\common\library\ai;
 
-use exception;
-use plugin\radmin\extend\ba\Date;
-use Throwable;
 use DateInterval;
-use plugin\radmin\support\think\orm\Rdb;
-use plugin\radmin\support\Cache;
-use Workerman\Protocols\Http\Chunk;
-use Psr\Http\Message\StreamInterface;
-use Workerman\Protocols\Http\Response;
+use exception;
 use plugin\radmin\app\common\model\ai\AiUser;
-use think\db\exception\DataNotFoundException;
-use plugin\radmin\app\common\model\ai\Session;
-use think\db\exception\ModelNotFoundException;
 use plugin\radmin\app\common\model\ai\ChatModel;
-use plugin\radmin\app\common\model\ai\UserTokens;
-
+use plugin\radmin\app\common\model\ai\Session;
 use plugin\radmin\app\common\model\ai\SessionMessage;
+use plugin\radmin\app\common\model\ai\UserTokens;
+use plugin\radmin\extend\ba\Date;
+use plugin\radmin\support\Cache;
+use plugin\radmin\support\orm\Rdb;
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+use Workerman\Protocols\Http\Chunk;
+use Workerman\Protocols\Http\Response;
 
 class Chat
 {

@@ -15,7 +15,7 @@
 
 namespace plugin\radmin\app\common\model;
 
-use plugin\radmin\support\think\orm\Model as ThinkModel;
+use plugin\radmin\support\orm\Model as ThinkModel;
 
 class BaseModel extends ThinkModel
 {

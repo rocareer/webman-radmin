@@ -3,11 +3,10 @@
 
 namespace plugin\radmin\app\common\model\ai;
 
-use Throwable;
 use exception;
-use plugin\radmin\app\common\model\BaseModel;
-use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\app\common\library\ai\Helper;
+use plugin\radmin\app\common\model\BaseModel;
+use plugin\radmin\support\orm\Rdb;
 
 /**
  * AiUser
