@@ -5,8 +5,8 @@
         <!-- 表格顶部菜单 -->
         <!-- 自定义按钮请使用插槽，甚至公共搜索也可以使用具名插槽渲染，参见文档 -->
         <TableHeader
-            :buttons="['refresh', 'add', 'edit', 'delete', 'comSearch', 'quickSearch', 'columnDisplay']"
-            :quick-search-placeholder="t('Quick search placeholder', { fields: t('log.login.admin.quick Search Fields') })"
+            :buttons="['refresh', 'delete', 'comSearch', 'quickSearch', 'columnDisplay']"
+            :quick-search-placeholder="t('Quick search placeholder', { fields: t('log.data.backup.quick Search Fields') })"
         ></TableHeader>
 
         <!-- 表格 -->
@@ -30,44 +30,51 @@ import Table from '/@/components/table/index.vue'
 import baTableClass from '/@/utils/baTable'
 
 defineOptions({
-    name: 'log/login/admin',
+    name: 'log/data/backup',
 })
 
 const { t } = useI18n()
 const tableRef = ref()
-const optButtons: OptButton[] = defaultOptButtons(['edit', 'delete'])
+const optButtons: OptButton[] = defaultOptButtons(['delete'])
 
 /**
  * baTable 内包含了表格的所有数据且数据具备响应性，然后通过 provide 注入给了后代组件
  */
 const baTable = new baTableClass(
-    new baTableApi('/admin/log.login.Admin/'),
+    new baTableApi('/admin/log.data.Backup/'),
     {
         pk: 'id',
         column: [
             { type: 'selection', align: 'center', operator: false },
-            { label: t('log.login.admin.id'), prop: 'id', align: 'center', width: 70, operator: 'RANGE', sortable: 'custom' },
-            { label: t('log.login.admin.ip'), prop: 'ip', align: 'center', operatorPlaceholder: t('Fuzzy query'), operator: 'LIKE', sortable: false },
+            { label: t('log.data.backup.id'), prop: 'id', align: 'center', width: 70, operator: 'RANGE', sortable: 'custom' },
             {
-                label: t('log.login.admin.inout'),
-                prop: 'inout',
-                align: 'center',
-                render: 'switch',
-                operator: 'eq',
-                sortable: false,
-                replaceValue: { '0': t('log.login.admin.inout 0'), '1': t('log.login.admin.inout 1'), '2': t('log.login.admin.inout 2') },
+                label: t('log.data.backup.table_name'),
+                prop: 'table_name',
+                align: 'left',
+                operatorPlaceholder: t('Fuzzy query'),
+                operator: 'LIKE',
+                sortable: true,
             },
             {
-                label: t('log.login.admin.status'),
-                prop: 'status',
+                label: t('log.data.backup.version'),
+                prop: 'version',
                 align: 'center',
-                render: 'tag',
-                operator: 'eq',
-                sortable: false,
-                replaceValue: { '0': t('log.login.admin.status 0'), '1': t('log.login.admin.status 1') },
+                operatorPlaceholder: t('Fuzzy query'),
+                operator: 'LIKE',
+                sortable: true,
             },
+
             {
-                label: t('log.login.admin.create_time'),
+                label: t('log.data.backup.admin__username'),
+                prop: 'admin.username',
+                align: 'center',
+                operatorPlaceholder: t('Fuzzy query'),
+                render: 'tags',
+                operator: 'LIKE',
+            },
+
+            {
+                label: t('log.data.backup.create_time'),
                 prop: 'create_time',
                 align: 'center',
                 render: 'datetime',
@@ -78,10 +85,10 @@ const baTable = new baTableClass(
             },
             { label: t('Operate'), align: 'center', width: 100, render: 'buttons', buttons: optButtons, operator: false },
         ],
-        dblClickNotEditColumn: [undefined, 'inout', 'status'],
+        dblClickNotEditColumn: [undefined],
     },
     {
-        defaultItems: { status: '1' },
+        defaultItems: {},
     }
 )
 
