@@ -4,9 +4,9 @@
 namespace plugin\radmin\extend\ba;
 
 use GdImage;
-use Throwable;
+use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\Response;
-use plugin\radmin\support\think\orm\Rdb;
+use Throwable;
 
 /**
  * 验证码类（图形验证码、继续流程验证码）
