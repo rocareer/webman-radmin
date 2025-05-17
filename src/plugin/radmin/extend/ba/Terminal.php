@@ -212,7 +212,7 @@ class Terminal
 
         if ($authentication) {
             try {
-                $token = getTokenFromRequest(request());
+                $token = getTokenFromRequest(Http::request());
                 if (!Member::terminal($token)) {
                     $this->execError("You are not super administrator or not logged in", true);
                 }
