@@ -21,7 +21,7 @@ class Backup extends Backend
 
     protected array $withJoinTable = ['data_table'];
 
-    protected string|array $quickSearchField = ['table_name'];
+    protected string|array $quickSearchField = ['table_name', 'version'];
 
     protected string $backupPath ='backup';
 
@@ -78,15 +78,14 @@ class Backup extends Backend
 
     /**
      * 下载备份文件
-     * @return \support\Response
      * Author:   albert <albert@rocareer.com>
      * Time:     2025/5/13 03:56
      */
-    public function download(): \support\Response
+    public function download():Response
     {
         $id=$this->request->get('id');
         $row=$this->model->find($id);
-        return response()->download(runtime_path() .$row->file,$row->version.'.zip');
+        return Response::response()->download(runtime_path() .$row->file,$row->version.'.zip');
     }
 
     /**

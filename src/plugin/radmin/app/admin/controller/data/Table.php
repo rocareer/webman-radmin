@@ -15,7 +15,7 @@ class Table extends Backend
     /**
      * Table模型对象
      * @var object
-     * @phpstan-var \app\admin\model\data\Table
+     * @phpstan-var \plugin\radmin\app\admin\model\data\Table
      */
     protected object $model;
 
@@ -85,7 +85,7 @@ class Table extends Backend
                             'id'           => $table_record->id,
                             'name'         => $table,
                             'charset'      => $charset,
-                            'record_count' => $tableStatus['Rows'] ?? 0,
+                            'record_count' => Rdb::table($table)->count(),
                             'engine'       => $tableStatus['Engine'] ?? 'unknown',
                             'comment'      => $comment
 

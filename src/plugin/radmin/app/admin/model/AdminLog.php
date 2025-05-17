@@ -44,15 +44,12 @@ class AdminLog extends BaseModel
         '/(password|salt|token)/i'
     ];
 
-    protected string $table ='ra_admin_log';
-
     protected $name='admin_log';
-
 
     protected $pk='id';
     public function getTable(bool $alias = false): string
     {
-        return $this->table;
+        return getDbPrefix().$this->name;
     }
 
     public static function instance()
