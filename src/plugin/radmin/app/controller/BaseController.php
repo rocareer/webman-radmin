@@ -14,7 +14,7 @@ use think\exception\ValidateException;
 abstract class BaseController
 {
 
-    protected Request $request;
+    protected ?Request $request;
 
     /**
      * 是否批量验证
