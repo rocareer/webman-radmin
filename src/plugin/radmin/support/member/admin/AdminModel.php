@@ -11,7 +11,7 @@ namespace plugin\radmin\support\member\admin;
 
 use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Model;
-use plugin\radmin\support\think\orm\Rdb;
+use plugin\radmin\support\orm\Rdb;
 use think\db\exception\DbException;
 
 /**

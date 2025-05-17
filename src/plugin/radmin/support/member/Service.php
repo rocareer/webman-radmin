@@ -4,14 +4,14 @@
 namespace plugin\radmin\support\member;
 
 use Exception;
-use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\think\orm\Rdb;
-use plugin\radmin\support\token\Token;
+use plugin\radmin\app\process\Http;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\Container;
+use plugin\radmin\support\Event;
+use plugin\radmin\support\orm\Rdb;
+use plugin\radmin\support\StatusCode;
+use plugin\radmin\support\token\Token;
 use Throwable;
-use Webman\Event\Event;
-use plugin\radmin\app\process\Http;
 
 abstract class Service implements InterfaceService
 {
@@ -90,7 +90,7 @@ abstract class Service implements InterfaceService
 
         } catch (Exception $e) {
             //状态更新
-            $this->stateUpdateLogin('false');
+            $this->stateUpdateLogin('failure');
             throw new BusinessException($e->getMessage(), $e->getCode(), false, [], $e);
         }
     }
@@ -132,8 +132,10 @@ abstract class Service implements InterfaceService
             $credentials['keep'] = $keep;
             $this->memberModel   = $this->authenticator->authenticate($credentials);//设置用户信息
             $this->setMember($this->memberModel);
+            Event::emit("log.authentication.{$this->role}.login.success", $this->memberModel);
             return $this->memberModel->toArray();
         } catch (Throwable $e) {
+            Event::emit("log.authentication.{$this->role}.login.failure", $this->memberModel);
             throw $e;
         }
     }
@@ -141,15 +143,19 @@ abstract class Service implements InterfaceService
     /**
      *
      * By albert  2025/05/08 04:28:10
-     * @return bool
+     * @return
      */
-    public function logout(): bool
+    public function logout(): void
     {
-        if (Http::request()->token) {
-            Token::destroy(Http::request()->token);
+        try {
+            if (Http::request()->token) {
+                Token::destroy(Http::request()->token);
+            }
+            Event::emit("log.authentication.{$this->role}.logout.success", $this->memberModel);
+            $this->resetMember();
+        } catch (Exception $e) {
+            Event::emit("log.authentication.{$this->role}.logout.failure", $this->memberModel);
         }
-        $this->resetMember();
-        return true;
     }
 
     public function register()

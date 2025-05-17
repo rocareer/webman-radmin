@@ -4,26 +4,27 @@
 namespace plugin\radmin\support\member;
 
 use plugin\radmin\app\process\Http;
-use plugin\radmin\support\StatusCode;
 use plugin\radmin\exception\BusinessException;
-use plugin\radmin\support\Log;
-use plugin\radmin\support\think\orm\Rdb;
 use plugin\radmin\support\Container;
+use plugin\radmin\support\Event;
+use plugin\radmin\support\Log;
+use plugin\radmin\support\orm\Rdb;
+use plugin\radmin\support\StatusCode;
 use Throwable;
 
 /**
  * 基础状态管理器
  */
- class State implements InterfaceState
+class State implements InterfaceState
 {
 
 
-    public bool $login=false;
+    public bool $login = false;
 
     /**
      * @var string 用户类型
      */
-    public string $role='admin';
+    public string $role = 'admin';
 
     /**
      * 缓存前缀
@@ -33,7 +34,7 @@ use Throwable;
     /**
      * 缓存时间（秒）
      */
-    protected array $config=[];
+    protected array $config = [];
 
     /**
      * @var string
@@ -41,29 +42,30 @@ use Throwable;
     protected static string $loginLogTable = '';
 
     //instance
-    protected  mixed $memberModel;
+    protected mixed $memberModel;
     //instance
     protected InterfaceService       $service;
     protected InterfaceAuthenticator $authenticator;
-     private mixed                   $context;
+    private mixed                    $context;
 
-     public function __construct() {
-        $this->context=Container::get('member.context');
-        $this->memberModel  =  $this->context->get('model');
-        $this->config= config('plugin.radmin.auth');
+    public function __construct()
+    {
+        $this->context     = Container::get('member.context');
+        $this->memberModel = $this->context->get('model');
+        $this->config      = config('plugin.radmin.auth');
     }
 
 
-     /**
-      * 检查用户状态
-      * By albert  2025/05/06 01:41:07
-      * @throws BusinessException
-      */
+    /**
+     * 检查用户状态
+     * By albert  2025/05/06 01:41:07
+     * @throws BusinessException
+     */
     public function checkStatus($member): bool
     {
-        $this->memberModel=$member;
+        $this->memberModel = $member;
         if ($this->memberModel->status !== 'enable') {
-            throw new BusinessException('账号已被禁用', StatusCode::USER_DISABLED,true);
+            throw new BusinessException('账号已被禁用', StatusCode::USER_DISABLED, true);
         }
         // 检查登录失败次数
         $this->checkLoginFailures();
@@ -87,7 +89,7 @@ use Throwable;
             if (time() < $unlockTime) {
                 throw new BusinessException(
                     "账号已锁定，请在" . ($unlockTime - time()) . "秒后重试",
-                    StatusCode::LOGIN_ACCOUNT_LOCKED,true
+                    StatusCode::LOGIN_ACCOUNT_LOCKED, true
                 );
             }
             $this->memberModel->login_failure = 0;
@@ -96,31 +98,31 @@ use Throwable;
         return true;
     }
 
-     /**
-      * 更新登录信息
-      * By albert  2025/05/06 02:50:25
-      * @param        $member
-      * @param string $success
-      * @return bool
-      */
-    public function updateLoginState($member,string $success): bool
+    /**
+     * 更新登录信息
+     * By albert  2025/05/06 02:50:25
+     * @param        $member
+     * @param string $success
+     * @return bool
+     */
+    public function updateLoginState($member, string $success): bool
     {
         try {
-            $this->memberModel=$member;
+            $this->memberModel = $member;
             $this->memberModel->startTrans();
 
-            if ($success==='state.updateLogin.success') {
+            if ($success === 'state.updateLogin.success') {
                 $this->memberModel->login_failure = 0;
             } else {
                 $this->memberModel->login_failure++;
             }
 
-            $this->memberModel->last_login_time =time();
+            $this->memberModel->last_login_time = time();
             $this->memberModel->last_login_ip   = Http::request()->getRealIp();
 
             $this->memberModel->save();
 
-            // $this->recordLoginLog($success);
+            // 记录登录日志
 
             $this->memberModel->commit();
             return true;
@@ -130,7 +132,6 @@ use Throwable;
             return false;
         }
     }
-
 
 
     protected function recordLoginLog(bool $success): void
@@ -148,7 +149,6 @@ use Throwable;
             Log::error('记录登录日志失败：' . $e->getMessage());
         }
     }
-
 
 
     /**
@@ -177,8 +177,6 @@ use Throwable;
     }
 
 
-
-
     /**
      * 自动检测用户类型
      * @return string
@@ -200,6 +198,7 @@ use Throwable;
     {
         return $this->cachePrefix . "{$this->memberModel->id}";
     }
+
     /**
      * 初始化缓存前缀
      * By albert  2025/05/06 04:03:36
@@ -208,15 +207,15 @@ use Throwable;
     protected function initCachePrefix(): void
     {
         $type              = strtolower(class_basename($this->memberModel));
-        $this->cachePrefix = $this->config['state']['prefix'] ."{$type}-";
+        $this->cachePrefix = $this->config['state']['prefix'] . "{$type}-";
     }
 
-     /**
-      * 检查扩展状态
-      * @throws AuthException
-      */
-     protected function checkExtendStatus(): void
-     {
-         // 简化状态检查
-     }
+    /**
+     * 检查扩展状态
+     * @throws AuthException
+     */
+    protected function checkExtendStatus(): void
+    {
+        // 简化状态检查
+    }
 }
