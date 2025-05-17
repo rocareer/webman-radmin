@@ -1,30 +1,30 @@
 <?php
 
-namespace plugin\radmin\app\admin\controller\log\login;
+namespace plugin\radmin\app\admin\controller;
 
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\Response;
 
 /**
- * 管理员登录
+ * 测试管理
  */
-class Admin extends Backend
+class Test extends Backend
 {
     /**
-     * Admin模型对象
+     * Test模型对象
      * @var object
-     * @phpstan-var \app\admin\model\log\login\Admin
+     * @phpstan-var \plugin\radmin\app\admin\model\Test
      */
     protected object $model;
 
-    protected array|string $preExcludeFields = ['id', 'create_time'];
+    protected array|string $preExcludeFields = ['id', 'update_time', 'create_time'];
 
     protected string|array $quickSearchField = ['id'];
 
     public function initialize():void
     {
         parent::initialize();
-        $this->model = new plugin\radmin\app\admin\model\log\login\Admin();
+        $this->model = new \plugin\radmin\app\admin\model\Test();
     }
 
 
