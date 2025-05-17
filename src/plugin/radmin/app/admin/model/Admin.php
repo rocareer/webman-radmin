@@ -7,7 +7,7 @@ namespace plugin\radmin\app\admin\model;
 
 
 use plugin\radmin\app\common\model\BaseModel;
-use plugin\radmin\support\think\orm\Rdb;
+use plugin\radmin\support\orm\Rdb;
 use think\db\exception\DbException;
 
 /**

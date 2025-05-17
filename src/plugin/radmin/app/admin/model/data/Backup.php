@@ -36,5 +36,29 @@ class Backup extends BaseModel
         return $this->belongsTo(Table::class, 'table_name', 'name');
     }
 
+    public function record($data): bool
+    {
+        try {
+            $this->startTrans();
+            $result = $this->create([
+                'table_name'  => $data['table_name'],
+                'file'        => $data['file'],
+                'status'      => 1,
+                'runnow'      => 1,
+                'run_time'    => time(),
+                'version'     => $data['version']
+            ]);
+            $this->commit();
+            if ($result) {
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            $this->rollback();
+            return false;
+        }
+
+    }
+
 
 }
