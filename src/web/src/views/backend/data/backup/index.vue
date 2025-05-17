@@ -6,8 +6,8 @@
         <!-- 表格顶部菜单 -->
         <!-- 自定义按钮请使用插槽，甚至公共搜索也可以使用具名插槽渲染，参见文档 -->
         <TableHeader
-            :buttons="['refresh', 'add', 'edit', 'delete', 'comSearch', 'quickSearch', 'columnDisplay']"
-            :quick-search-placeholder="t('Quick search placeholder', { fields: t('data.backup.quick Search Fields') })"
+            :buttons="['refresh', 'edit', 'delete', 'comSearch', 'quickSearch', 'columnDisplay']"
+            quick-search-placeholder="通过表名和版本号模糊搜索"
         ></TableHeader>
 
         <!-- 表格 -->
@@ -30,7 +30,10 @@ import TableHeader from '/@/components/table/header/index.vue'
 import Table from '/@/components/table/index.vue'
 import baTableClass from '/@/utils/baTable'
 import {useTerminal} from '/@/stores/terminal'
-import {backupRun, download} from '/@/api/backend/data/backup'
+import {download} from '/@/api/backend/data/backup'
+import {ElMessageBox, ElNotification} from "element-plus";
+import {routePush} from "/@/utils/router";
+import {taskStatus} from "/@/stores/constant/terminalTaskStatus";
 
 const terminal = useTerminal()
 defineOptions({
@@ -62,18 +65,15 @@ let optButtons: OptButton[] = [
     // },
 
     {
-        render: 'confirmButton',
+        render: 'tipButton',
         name: 'restore',
         title: '还原备份',
         text: '还原',
         type: 'warning',
         icon: 'el-icon-RefreshRight',
         class: 'table-row-edit',
-        popconfirm: {
-            confirmButtonText: t('security.dataRecycleLog.restore'),
-            cancelButtonText: t('Cancel'),
-            confirmButtonType: 'success',
-            title: t('security.dataRecycleLog.Are you sure to restore the selected records?'),
+        click(row, field) {
+            clickRestore(row)
         },
         disabledTip: false,
         // click: (row: TableRow) => {
@@ -156,7 +156,7 @@ const baTable = new baTableClass(
                 label: t('Operate'),
                 fixed: 'right',
                 align: 'center',
-                width: 240,
+                width: 200,
                 render: 'buttons',
                 buttons: optButtons,
                 operator: false
@@ -171,27 +171,44 @@ const baTable = new baTableClass(
 
 provide('baTable', baTable)
 
-const run = (id: number) => {
+const clickRestore = (row: any) => {
+    ElMessageBox.confirm('操作不可逆!还原数据前最好先备份!', "谨慎操作!", {
+        confirmButtonText: "前去备份",
+        cancelButtonText:"继续操作",
+        type: 'warning',
+    }).then(() => {
+        routePush({ name: 'data/table' })
+    }).catch(() => {
+        restore(row)
+    })
+}
+
+const restore = (row: any) => {
+
+    // 安全转换，处理空数组情况
+    const extend: string = row.table_name+'~~'+row.version;
 
     // 不显示设置栏
     terminal.configShow(false)
-    // 自动打开窗口
-    terminal.toggle(true)
-    terminal.messageShow(true)
-    terminal.addTask('data.backup', true, 'webViewsDir', () => {
-        // terminal.toggle(false)
-        // terminal.toggleDot(true)
+    terminal.toggle(true) // 自动打开窗口
+    // terminal.messageShow(true)
+    terminal.addTask('data.restore', true, extend, (status: number) => {
+
+        terminal.toggleDot(true)
+        terminal.configShow(true)
 
         nextTick(() => {
-            // 要求 Vite 服务端重启
-            // if (import.meta.hot) {
-            //     reloadServer('crud')
-            // } else {
-            //     ElNotification({
-            //         type: 'error',
-            //         message: t('crud.crud.Vite hot warning'),
-            //     })
-            // }
+            if (status === taskStatus.Success) {
+                ElNotification({
+                    message: t('还原成功'),
+                    type: 'success'
+                })
+            } else {
+                ElNotification({
+                    message: t('还原失败'),
+                    type: 'error'
+                })
+            }
         })
     })
 }

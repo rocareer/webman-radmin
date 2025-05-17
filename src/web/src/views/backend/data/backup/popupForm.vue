@@ -32,10 +32,10 @@
                 >
                     <FormItem
                         :label="t('data.backup.table_name')"
-                        type="remoteSelect"
+                        type="string"
                         v-model="baTable.form.items!.table_name"
                         prop="table_name"
-                        :input-attr="{ pk: 'table.name', field: 'name', remoteUrl: '/admin/data/Table/index' }"
+                        :input-attr="{ pk: 'table.name', field: 'name',disabled: true }"
                         :placeholder="t('Please select field', { field: t('data.backup.table_name') })"
                     />
                     <FormItem
