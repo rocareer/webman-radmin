@@ -1,6 +1,6 @@
 export default {
     id: 'ID',
-    table_name: '远程下拉',
+    table_name: '表名',
     data_table__name: '表名',
     file: '备份文件',
     remark: '备注',
