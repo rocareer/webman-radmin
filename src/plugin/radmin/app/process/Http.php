@@ -28,7 +28,7 @@ class Http extends App
     /**
      * Get request.
      */
-    public static function request()
+    public static function request(): ?Request
     {
         return Context::get(Request::class);
     }
