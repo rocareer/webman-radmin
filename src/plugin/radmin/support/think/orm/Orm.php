@@ -3,8 +3,8 @@
 
 namespace plugin\radmin\support\think\orm;
 
+use plugin\radmin\app\process\Http;
 use plugin\radmin\support\think\cache\Cache;
-use think\Container;
 use think\Paginator;
 use Webman\Bootstrap;
 
@@ -38,7 +38,7 @@ class Orm implements Bootstrap
 		}
 		
 		Paginator::currentPageResolver(function ($pageName = 'page') {
-			$request = request();
+			$request = Http::request();
 			if (!$request) {
 				return 1;
 			}
@@ -51,7 +51,7 @@ class Orm implements Bootstrap
 		
 		// 设置分页url中域名与参数之间的path字符串
 		Paginator::currentPathResolver(function () {
-			$request = request();
+			$request = Http::request();
 			return $request ? $request->path() : '/';
 		});
 	}
