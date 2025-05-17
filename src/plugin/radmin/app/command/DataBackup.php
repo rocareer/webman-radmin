@@ -72,7 +72,7 @@ class DataBackup extends Command
 
         // 备份每个表
         foreach ($tables as $table) {
-            usleep(200000); // 避免CPU占用过高
+            usleep(300000); // 避免CPU占用过高
             $this->backupTable($table, $input, $output, $baseBackupDir, $versionTimestamp);
         }
 
@@ -99,6 +99,11 @@ class DataBackup extends Command
         $tables = $input->getOption('all') || empty($tablesArg)
             ? array_column(Table::select()->toArray(), 'name')
             : explode(',', $tablesArg);
+
+        // 排除data_backup表本身，避免循环备份
+        $tables = array_filter($tables, function($table) {
+            return $table !== getDbPrefix().'data_backup';
+        });
 
         // 增量备份处理
         if ($input->getOption('incremental')) {
@@ -165,8 +170,11 @@ class DataBackup extends Command
     private function outputBackupHeader(OutputInterface $output): void
     {
         $output->writeln("Webman-Radmin Backup Tool By albert <albert@rocareer.com>");
+        usleep(1000000);
         $output->writeln("Version  V1.0.4 ...");
+        usleep(2000000);
         $output->writeln("Backup Starting ...");
+        usleep(3000000);
     }
 
     /**
@@ -213,7 +221,7 @@ class DataBackup extends Command
     {
         $outputPath = str_replace(runtime_path(), '', $zipFile);
         $zipSize = $this->formatSize(filesize($zipFile));
-        $padding = str_pad($zipSize, 81 - mb_strwidth($outputPath, 'UTF-8'), ' ', STR_PAD_LEFT);
+        $padding = str_pad($zipSize, 71 - mb_strwidth($outputPath, 'UTF-8'), ' ', STR_PAD_LEFT);
         return "Backup completed: {$outputPath} {$padding}";
     }
 
@@ -251,17 +259,29 @@ class DataBackup extends Command
         }
 
         if ($zipCreated && file_exists($timestampZip)) {
-            $this->recordBackup(
-                $input->getOption('all') ? 'all' : (count($tables) > 1 ? 'multi' : $tables[0]),
-                str_replace(runtime_path(), '', $timestampZip),
-                $versionTimestamp
-            );
-            
-            $outputZip = str_replace(runtime_path(), '', $timestampZip);
+            $versionZipPath = str_replace(runtime_path(), '', $timestampZip);
             $outputZipSize = filesize($timestampZip);
             $this->totalSize += $outputZipSize;
             
-            $output->writeln($this->formatVersionPackageOutput($outputZip, $outputZipSize));
+            // 记录备份
+            if ($input->getOption('all')) {
+                // 创建一个总的版本包记录
+                $this->recordBackup(
+                    'all',
+                    $versionZipPath,
+                    $versionTimestamp
+                );
+            } else {
+                // 如果不是 --all 选项，则按原来的逻辑处理
+                $this->recordBackup(
+                    count($tables) > 1 ? 'multi' : $tables[0],
+                    $versionZipPath,
+                    $versionTimestamp
+                );
+            }
+            
+            $output->writeln($this->formatVersionPackageOutput($versionZipPath, $outputZipSize));
+            usleep(1000000);
         } else {
             $output->writeln("<error>Failed to create version zip file</error>");
         }
@@ -273,7 +293,8 @@ class DataBackup extends Command
     private function formatVersionPackageOutput(string $zipPath, int $size): string
     {
         $sizeFormatted = $this->formatSize($size);
-        $padding = str_pad($sizeFormatted, 83 - mb_strwidth($zipPath, 'UTF-8'), ' ', STR_PAD_LEFT);
+        $padding = str_pad($sizeFormatted, 74 - mb_strwidth($zipPath, 'UTF-8'), ' ', STR_PAD_LEFT);
+        usleep(1000000);
         return "<info>Total Zip Done: {$zipPath}{$padding}</info>";
     }
 
@@ -282,11 +303,12 @@ class DataBackup extends Command
      */
     private function outputStatistics(OutputInterface $output): void
     {
-        $executionTime = microtime(true) - $this->startTime;
+        $executionTime = round(microtime(true) - $this->startTime,2);
         $memoryUsage = round((memory_get_peak_usage() - $this->startMemory) / 1024 / 1024, 2);
         $totalSize = round($this->totalSize / 1024 / 1024, 2);
 
         $output->writeln(['', '<comment>执行统计:</comment>']);
+        usleep(3000000);
         $table = new \Symfony\Component\Console\Helper\Table($output);
         $table->setStyle('borderless');
         $table
@@ -297,6 +319,7 @@ class DataBackup extends Command
             ->addRow(['文件大小:', $totalSize, 'MB']);
 
         $table->render();
+        usleep(5000000);
     }
 
     /**
@@ -322,7 +345,7 @@ class DataBackup extends Command
             $data = Rdb::table($table)->select()->toArray();
             $this->recordCount += count($data);
 
-            $output->writeln($this->formatOutput("Backing up table: {$table}", count($data) . " 条", 100));
+            $output->writeln($this->formatOutput("Backing up table: {$table}", count($data) . " 条", 90));
 
             // 创建表备份目录
             $tableBackupDir = $baseBackupDir . "table/{$table}/";
@@ -335,9 +358,9 @@ class DataBackup extends Command
             // 压缩备份文件
             $zipFile = $this->compressBackupFile($backupFile, $tableBackupDir, $versionTimestamp);
 
-            // 记录备份
+            // 记录备份 - 始终为每个表创建一条记录
             $this->recordBackup(
-                $input->getOption('all') ? 'all' : $table,
+                $table,
                 str_replace(runtime_path(), '', $zipFile),
                 $versionTimestamp
             );
