@@ -34,9 +34,6 @@ class AdminModel extends Model
 
     // 表名
     protected $name = 'admin';
-
-    protected $table='ra_admin';
-    
     // 允许字段
     protected array $allowFields = [
         'id',
