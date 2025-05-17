@@ -14,12 +14,12 @@
 
 namespace plugin\radmin\support\token\driver;
 
+use plugin\radmin\exception\TokenException;
 use plugin\radmin\extend\ba\Random;
+use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\TokenInterface;
-use plugin\radmin\exception\TokenException;
 use stdClass;
-use plugin\radmin\support\think\orm\Rdb;
 use Throwable;
 
 class Mysql implements TokenInterface
