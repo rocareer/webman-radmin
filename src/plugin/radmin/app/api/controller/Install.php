@@ -13,21 +13,21 @@
 namespace plugin\radmin\app\api\controller;
 
 
-use plugin\radmin\app\process\Http;
 use Exception;
+use PDOException;
 use plugin\radmin\app\admin\model\Config;
+use plugin\radmin\app\admin\model\User as UserModel;
+use plugin\radmin\app\process\Http;
 use plugin\radmin\exception\BusinessException;
+use plugin\radmin\extend\ba\Filesystem;
+use plugin\radmin\extend\ba\Random;
+use plugin\radmin\extend\ba\Terminal;
+use plugin\radmin\extend\ba\Version;
 use plugin\radmin\support\member\admin\AdminModel;
+use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\Response;
 use think\db\exception\DbException;
 use Throwable;
-use PDOException;
-use plugin\radmin\support\think\orm\Rdb;
-use plugin\radmin\extend\ba\Random;
-use plugin\radmin\extend\ba\Version;
-use plugin\radmin\extend\ba\Terminal;
-use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\app\admin\model\User as UserModel;
 
 /**
  * 安装控制器
