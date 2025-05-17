@@ -24,7 +24,7 @@
                     </el-button>
                 </el-tooltip>
 
-                <el-tooltip content="备份" placement="top">
+                <el-tooltip content="备份数据" placement="top">
                     <el-button
                         v-blur
                         @click="backupSelectiontables"
@@ -33,7 +33,19 @@
                     >
                         <Icon name="el-icon-CopyDocument"/>
 
-                        <span class="table-header-operate-text">备份</span>
+                        <span class="table-header-operate-text">备份表</span>
+                    </el-button>
+                </el-tooltip>
+                <el-tooltip content="还原数据" placement="top">
+                    <el-button
+                        v-blur
+                        @click="restore"
+                        type="warning"
+                        class="table-header-operate"
+                    >
+                        <Icon name="el-icon-RefreshRight"/>
+
+                        <span class="table-header-operate-text">还原表</span>
                     </el-button>
                 </el-tooltip>
             </template>
@@ -64,6 +76,7 @@ import {useTerminal} from "/@/stores/terminal";
 import {ElMessageBox} from "element-plus";
 import {changeListenDirtyFileSwitch} from "/@/utils/vite";
 import {routePush} from "/@/utils/router";
+import Router from "/@/router";
 
 const terminal = useTerminal()
 
@@ -107,25 +120,25 @@ let optButtons: OptButton[] = [
             backup([row.name])
         },
     },
-    {
-        render: 'confirmButton',
-        name: 'restore',
-        title: '还原备份',
-        text: '',
-        type: 'warning',
-        icon: 'el-icon-RefreshRight',
-        class: 'table-row-edit',
-        popconfirm: {
-            confirmButtonText: t('security.dataRecycleLog.restore'),
-            cancelButtonText: t('Cancel'),
-            confirmButtonType: 'success',
-            title: t('security.dataRecycleLog.Are you sure to restore the selected records?'),
-        },
-        disabledTip: false,
-        // click: (row: TableRow) => {
-        //     onRestore([row[baTable.table.pk!]])
-        // },
-    },
+    // {
+    //     render: 'confirmButton',
+    //     name: 'restore',
+    //     title: '还原备份',
+    //     text: '',
+    //     type: 'warning',
+    //     icon: 'el-icon-RefreshRight',
+    //     class: 'table-row-edit',
+    //     popconfirm: {
+    //         confirmButtonText: t('security.dataRecycleLog.restore'),
+    //         cancelButtonText: t('Cancel'),
+    //         confirmButtonType: 'success',
+    //         title: t('security.dataRecycleLog.Are you sure to restore the selected records?'),
+    //     },
+    //     disabledTip: false,
+    //     // click: (row: TableRow) => {
+    //     //     onRestore([row[baTable.table.pk!]])
+    //     // },
+    // },
 
     {
         render: 'tipButton',
@@ -176,6 +189,13 @@ const baTable = new baTableClass(
                 formatter: (row) => row.comment || t('None'),
             },
             {
+                label: t('data.table.record_count'),
+                prop: 'record_count',
+                align: 'center',
+                operator: 'RANGE',
+                sortable: true
+            },
+            {
                 label: t('data.table.charset'),
                 prop: 'charset',
                 align: 'center',
@@ -183,13 +203,7 @@ const baTable = new baTableClass(
                 operator: 'LIKE',
                 sortable: false,
             },
-            {
-                label: t('data.table.record_count'),
-                prop: 'record_count',
-                align: 'center',
-                operator: 'RANGE',
-                sortable: true
-            },
+
 
             {
                 label: t('data.table.engine'),
@@ -210,7 +224,7 @@ const baTable = new baTableClass(
                 width: 160,
                 timeFormat: 'yyyy-mm-dd hh:MM:ss',
             },
-            {label: t('Operate'), align: 'center', width: 260, render: 'buttons', buttons: optButtons, operator: false},
+            {label: t('Operate'), align: 'center', width: 200, render: 'buttons', buttons: optButtons, operator: false},
         ],
         dblClickNotEditColumn: [undefined, 'engine'],
     },
@@ -228,8 +242,14 @@ provide('baTable', baTable)
 const sync = () => {
     baTable.getIndex()
     syncTable().then((res) => {
-        baTable.getIndex()
+        baTable.getIndex()?.then(() => {
+            baTable.initSort()
+            baTable.dragSort()
+        })
     })
+}
+const restore = () => {
+    routePush({ name: 'data/backup' })
 }
 
 
@@ -300,10 +320,8 @@ const backup = (tables: any) => {
 onMounted(() => {
     baTable.table.ref = tableRef.value
     baTable.mount()
-    baTable.getIndex()?.then(() => {
-        baTable.initSort()
-        baTable.dragSort()
-    })
+    sync()
+
 })
 </script>
 

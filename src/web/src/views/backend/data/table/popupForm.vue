@@ -30,13 +30,14 @@
                     :label-width="baTable.form.labelWidth + 'px'"
                     :rules="rules"
                 >
-<!--                    <FormItem-->
-<!--                        :label="t('data.table.name')"-->
-<!--                        type="string"-->
-<!--                        v-model="baTable.form.items!.name"-->
-<!--                        prop="name"-->
-<!--                        :placeholder="t('Please input field', { field: t('data.table.name') })"-->
-<!--                    />-->
+                    <FormItem
+                        :label="t('data.table.name')"
+                        type="string"
+                        v-model="baTable.form.items!.name"
+                        prop="name"
+                        :placeholder="t('Please input field', { field: t('data.table.name') })"
+                        :input-attr="{ disabled: true}"
+                    />
 <!--                    <FormItem-->
 <!--                        :label="t('data.table.charset')"-->
 <!--                        type="string"-->
