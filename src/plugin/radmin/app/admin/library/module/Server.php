@@ -3,18 +3,17 @@
 
 namespace plugin\radmin\app\admin\library\module;
 
-use Throwable;
 use ba\Depends;
 use exception;
-use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\think\orm\Rdb;
 use FilesystemIterator;
-
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
-use think\db\exception\PDOException;
-use plugin\radmin\app\admin\library\crud\Helper;
 use GuzzleHttp\Exception\TransferException;
+use plugin\radmin\app\admin\library\crud\Helper;
+use plugin\radmin\extend\ba\Filesystem;
+use plugin\radmin\support\orm\Rdb;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use think\db\exception\PDOException;
+use Throwable;
 
 /**
  * 模块服务类
