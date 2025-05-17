@@ -3,14 +3,14 @@
 
 namespace plugin\radmin\middleware;
 
+use exception;
 use plugin\radmin\app\admin\model\DataRecycle;
 use plugin\radmin\app\admin\model\DataRecycleLog;
 use plugin\radmin\app\admin\model\SensitiveData;
 use plugin\radmin\app\admin\model\SensitiveDataLog;
-use exception;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\support\Log;
-use plugin\radmin\support\think\orm\Rdb;
+use plugin\radmin\support\orm\Rdb;
 use Throwable;
 use Webman\Http\Request;
 use Webman\Http\Response;
