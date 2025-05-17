@@ -158,7 +158,7 @@ class Radmin106 extends AbstractMigration
                 ->addColumn('backup_id', 'integer', [
                     'signed'  => false,
                     'null'    => true,
-                    'comment' => '远程下拉'
+                    'comment' => '表名'
                 ])
                 ->addColumn('create_time', 'integer', [
                     'signed'  => false,

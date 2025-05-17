@@ -137,19 +137,6 @@ class Radmin104 extends AbstractMigration
         if (!$config) {
             // 插入新记录到 ra_config 表
             $data[] = [
-                'name'      => 'backup_path',
-                'group'     => 'system',
-                'title'     => '备份路径',
-                'tip'       => '备份所在相对路径',
-                'type'      => 'string',
-                'value'     => '/backup/',
-                'content'   => '',
-                'rule'      => 'required',
-                'extend'    => '{"baInputExtend":{"placeholder":"\u9ed8\u8ba4\u662f\u5728runtime\/backup"}}',
-                'allow_del' => 0,
-                'weigh'     => 0
-            ];
-            $data[] = [
                 'name'      => 'data',
                 'group'     => 'terminal',
                 'title'     => '数据管理',

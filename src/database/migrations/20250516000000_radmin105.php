@@ -479,7 +479,7 @@ class Radmin105 extends AbstractMigration
             // 检查每条记录是否已存在，如果不存在则插入
             foreach ($data as $item) {
                 $id     = $item['id'];
-                $exists = $this->fetchRow("SELECT id FROM ra_admin_rule WHERE id = $id");
+                $exists = $this->fetchRow("SELECT id FROM ".getDbPrefix()."admin_rule WHERE id = $id");
 
                 if (!$exists) {
                     $table->insert($item)->save();
