@@ -10,6 +10,7 @@
  */
 
 use plugin\radmin\support\backup\BackupEvent;
+use plugin\radmin\support\Log;
 use plugin\radmin\support\member\State;
 
 
@@ -20,7 +21,7 @@ return [
     'state.updateLogin.*' => [
         [State::class, 'updateLoginState'],
     ],
-    'backup.log.*' => [
-        [BackupEvent::class, 'log'],
+    'log.data.*' => [
+        [Log::class, 'data'],
     ],
 ];
