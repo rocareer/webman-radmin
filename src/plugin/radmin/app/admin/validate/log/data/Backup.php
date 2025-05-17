@@ -1,10 +1,10 @@
 <?php
 
-namespace plugin\radmin\app\admin\validate\log\login;
+namespace plugin\radmin\app\admin\validate\log\data;
 
 use think\Validate;
 
-class Admin extends Validate
+class Backup extends Validate
 {
     protected $failException = true;
 
