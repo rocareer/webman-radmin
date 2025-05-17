@@ -26,8 +26,8 @@ use plugin\radmin\app\admin\library\module\Server;
 use plugin\radmin\app\admin\model\Config as configModel;
 use plugin\radmin\app\process\Http;
 use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\think\lang\Lang;
-use plugin\radmin\support\think\orm\Rdb;
+use plugin\radmin\support\lang\Lang;
+use plugin\radmin\support\orm\Rdb;
 
 
 if (!function_exists('__')) {
@@ -492,7 +492,7 @@ if (!function_exists('ip_check')) {
         // 确保总是返回数组
         $no_access_ip = is_array($no_access_ip) ? $no_access_ip : [];
 
-        $ip = Http::request()->getRealIp();
+        $ip = Http::request()->getRealIp()??'';
         if (in_array($ip, $no_access_ip)) {
             throw new Exception('IP not allowed');
         }
