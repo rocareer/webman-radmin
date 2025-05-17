@@ -57,5 +57,15 @@ class Log extends \support\Log
         }
         return static::$instance[$name];
     }
+
+
+    public function data($log,$event)
+    {
+        if ($event=='log.data.backup.success'){
+
+        }
+        if ($event=='log.data.restore.faile'){
+        }
+    }
 }
 
