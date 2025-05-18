@@ -3,9 +3,9 @@
 
 namespace plugin\radmin\app\admin\controller\routine;
 
-use Throwable;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\common\model\Attachment as AttachmentModel;
+use Throwable;
 
 class Attachment extends Backend
 {
@@ -31,7 +31,7 @@ class Attachment extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del(): \plugin\radmin\support\Response
+    public function del(): \Radmin\Response
     {
         $where             = [];
         $dataLimitAdminIds = $this->getDataLimitAdminIds();

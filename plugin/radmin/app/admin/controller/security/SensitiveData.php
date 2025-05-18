@@ -2,10 +2,10 @@
 
 namespace plugin\radmin\app\admin\controller\security;
 
-use plugin\radmin\support\Response;
-use Throwable;
-use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\admin\model\SensitiveData as SensitiveDataModel;
+use plugin\radmin\app\common\controller\Backend;
+use Radmin\Response;
+use Throwable;
 
 class SensitiveData extends Backend
 {

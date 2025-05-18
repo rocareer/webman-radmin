@@ -2,10 +2,10 @@
 
 namespace plugin\radmin\app\admin\controller\user;
 
-use plugin\radmin\support\Response;
-use Throwable;
-use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\admin\model\User as UserModel;
+use plugin\radmin\app\common\controller\Backend;
+use Radmin\Response;
+use Throwable;
 
 class User extends Backend
 {

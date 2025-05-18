@@ -4,8 +4,8 @@
 namespace plugin\radmin\middleware;
 
 use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
-use plugin\radmin\support\Request;
-use plugin\radmin\support\Response;
+use Radmin\Request;
+use Radmin\Response;
 use Throwable;
 
 class AdminLog implements MiddlewareInterface

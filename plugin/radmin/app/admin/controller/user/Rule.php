@@ -2,12 +2,12 @@
 
 namespace plugin\radmin\app\admin\controller\user;
 
-use plugin\radmin\extend\ba\Tree;
-use plugin\radmin\support\Response;
-use Throwable;
-use plugin\radmin\app\admin\model\UserRule;
 use plugin\radmin\app\admin\model\UserGroup;
+use plugin\radmin\app\admin\model\UserRule;
 use plugin\radmin\app\common\controller\Backend;
+use plugin\radmin\extend\ba\Tree;
+use Radmin\Response;
+use Throwable;
 
 class Rule extends Backend
 {
@@ -78,7 +78,7 @@ class Rule extends Backend
     /**
      * 添加
      */
-    public function add(): \plugin\radmin\support\Response
+    public function add(): \Radmin\Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -136,7 +136,7 @@ class Rule extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit(): \plugin\radmin\support\Response
+    public function edit(): \Radmin\Response
     {
         $id  = $this->request->input($this->model->getPk());
         $row = $this->model->find($id);
@@ -199,7 +199,7 @@ class Rule extends Backend
      * 删除
      * @throws Throwable
      */
-    public function del(): \plugin\radmin\support\Response
+    public function del(): \Radmin\Response
     {
         $ids = $this->request->input('ids', []);
 

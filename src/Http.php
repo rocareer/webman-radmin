@@ -12,8 +12,6 @@ namespace Radmin;
 
 
 use ArrayObject;
-use plugin\radmin\support\Request;
-use plugin\radmin\support\Response;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionException;

@@ -12,8 +12,8 @@ use plugin\radmin\extend\ba\Captcha;
 use plugin\radmin\extend\ba\Date;
 use plugin\radmin\extend\ba\Random;
 use plugin\radmin\support\member\Member;
-use plugin\radmin\support\Response;
 use plugin\radmin\support\token\Token;
+use Radmin\Response;
 use think\facade\Validate;
 use Throwable;
 

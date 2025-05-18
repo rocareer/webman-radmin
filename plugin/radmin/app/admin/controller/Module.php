@@ -9,13 +9,12 @@
 
 namespace plugin\radmin\app\admin\controller;
 
-use Throwable;
 use exception;
-
-use plugin\radmin\app\admin\model\AdminLog;
-use plugin\radmin\app\admin\library\module\Server;
 use plugin\radmin\app\admin\library\module\Manage;
+use plugin\radmin\app\admin\library\module\Server;
+use plugin\radmin\app\admin\model\AdminLog;
 use plugin\radmin\app\common\controller\Backend;
+use Throwable;
 
 class Module extends Backend
 {
@@ -26,7 +25,7 @@ class Module extends Backend
         parent::initialize();
     }
 
-    public function index(): \plugin\radmin\support\Response
+    public function index(): \Radmin\Response
     {
      return $this->success('', [
             'sysVersion' =>  config('plugin.radmin.buildadmin.version'),
@@ -34,7 +33,7 @@ class Module extends Backend
         ]);
     }
 
-    public function state(): \plugin\radmin\support\Response
+    public function state(): \Radmin\Response
     {
         $uid = $this->request->get("uid/s", '');
         if (!$uid) {
@@ -45,7 +44,7 @@ class Module extends Backend
         ]);
     }
 
-    public function install(): \plugin\radmin\support\Response
+    public function install(): \Radmin\Response
     {
         AdminLog::instance()->setTitle(__('Install module'));
         $uid     = $this->request->get("uid/s", '');
@@ -67,7 +66,7 @@ class Module extends Backend
         ]);
     }
 
-    public function dependentInstallComplete(): \plugin\radmin\support\Response
+    public function dependentInstallComplete(): \Radmin\Response
     {
         $uid = $this->request->get("uid/s", '');
         if (!$uid) {
@@ -83,7 +82,7 @@ class Module extends Backend
      return $this->success();
     }
 
-    public function changeState(): \plugin\radmin\support\Response
+    public function changeState(): \Radmin\Response
     {
         AdminLog::instance()->setTitle(__('Change module state'));
         $uid   = $this->request->post("uid/s", '');
@@ -104,7 +103,7 @@ class Module extends Backend
         ]);
     }
 
-    public function uninstall(): \plugin\radmin\support\Response
+    public function uninstall(): \Radmin\Response
     {
         AdminLog::instance()->setTitle(__('Unload module'));
         $uid = $this->request->get("uid/s", '');
@@ -121,7 +120,7 @@ class Module extends Backend
      return $this->success();
     }
 
-    public function update(): \plugin\radmin\support\Response
+    public function update(): \Radmin\Response
     {
         AdminLog::instance()->setTitle(__('Update module'));
         $uid     = $this->request->get("uid/s", '');
@@ -140,7 +139,7 @@ class Module extends Backend
      return $this->success();
     }
 
-    public function upload(): \plugin\radmin\support\Response
+    public function upload(): \Radmin\Response
     {
         AdminLog::instance()->setTitle(__('Upload install module'));
         $file  = $this->request->get("file/s", '');

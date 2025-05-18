@@ -2,9 +2,9 @@
 
 namespace plugin\radmin\app\admin\controller\log\authentication;
 
-use Throwable;
 use plugin\radmin\app\common\controller\Backend;
-use plugin\radmin\support\Response;
+use Radmin\Response;
+use Throwable;
 
 /**
  * 管理员日志

@@ -6,7 +6,7 @@ use plugin\radmin\app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\support\orm\Rdb;
-use plugin\radmin\support\Response;
+use Radmin\Response;
 use Throwable;
 
 class SensitiveDataLog extends Backend

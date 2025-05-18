@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\controller\data;
 
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\orm\Rdb;
-use plugin\radmin\support\Response;
+use Radmin\Response;
 use Throwable;
 
 /**

@@ -3,10 +3,10 @@
 
 namespace plugin\radmin\app\api\controller;
 
-use Throwable;
-use plugin\radmin\support\Response;
-use plugin\radmin\app\common\library\upload;
 use plugin\radmin\app\common\controller\Frontend;
+use plugin\radmin\app\common\library\upload;
+use Radmin\Response;
+use Throwable;
 
 class Ajax extends Frontend
 {

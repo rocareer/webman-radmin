@@ -59,7 +59,9 @@
       "Rocareer\\WebmanRadmin\\": "src"
     },
     "files": [
-      "src/functions.php"
+      "src/functions.php",
+      "src/Request.php",
+      "src/Response.php"
     ]
   },
   "minimum-stability": "dev",

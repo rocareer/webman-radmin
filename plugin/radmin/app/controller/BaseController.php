@@ -4,7 +4,7 @@ declare (strict_types=1);
 namespace plugin\radmin\app\controller;
 
 use Radmin\Http;
-use plugin\radmin\support\Request;
+use Radmin\Request;
 use think\exception\ValidateException;
 use think\Validate;
 

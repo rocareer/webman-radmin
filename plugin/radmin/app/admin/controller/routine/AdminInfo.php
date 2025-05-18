@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\controller\routine;
 
 use plugin\radmin\app\admin\model\Admin;
 use plugin\radmin\app\common\controller\Backend;
-use plugin\radmin\support\Response;
+use Radmin\Response;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

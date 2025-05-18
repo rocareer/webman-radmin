@@ -15,7 +15,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use plugin\radmin\support\Request;
+use Radmin\Request;
 
 return [
     'debug'             => getenv('APP_DEBUG', true),

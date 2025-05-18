@@ -2,7 +2,6 @@
 
 namespace plugin\radmin\app\api\controller;
 
-use plugin\radmin\support\Request;
 use support\Response;
 
 class Test

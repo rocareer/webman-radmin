@@ -6,8 +6,8 @@ namespace plugin\radmin\app\admin\controller;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\support\member\Member;
-use plugin\radmin\support\Response;
 use plugin\radmin\support\token\Token;
+use Radmin\Response;
 use Throwable;
 
 class Index extends Backend

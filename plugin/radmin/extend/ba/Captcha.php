@@ -5,7 +5,7 @@ namespace plugin\radmin\extend\ba;
 
 use GdImage;
 use plugin\radmin\support\orm\Rdb;
-use plugin\radmin\support\Response;
+use Radmin\Response;
 use Throwable;
 
 /**

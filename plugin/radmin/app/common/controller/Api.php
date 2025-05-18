@@ -7,7 +7,7 @@ use plugin\radmin\app\controller\BaseController;
 use plugin\radmin\exception\ServerErrorHttpException;
 use plugin\radmin\support\lang\Lang;
 use plugin\radmin\support\orm\Rdb;
-use plugin\radmin\support\Response;
+use Radmin\Response;
 use Throwable;
 
 /**

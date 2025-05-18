@@ -1,8 +1,7 @@
 <?php
 
 
-namespace plugin\radmin\support;
-
+namespace Radmin;
 
 /**
  * Class Response

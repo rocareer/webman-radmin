@@ -2,9 +2,9 @@
 
 namespace plugin\radmin\app\admin\controller\security;
 
-use Throwable;
-use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\admin\model\DataRecycle as DataRecycleModel;
+use plugin\radmin\app\common\controller\Backend;
+use Throwable;
 
 class DataRecycle extends Backend
 {
@@ -29,7 +29,7 @@ class DataRecycle extends Backend
      * 添加
      * @throws Throwable
      */
-    public function add(): \plugin\radmin\support\Response
+    public function add(): \Radmin\Response
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
@@ -76,7 +76,7 @@ class DataRecycle extends Backend
      * 编辑
      * @throws Throwable
      */
-    public function edit(): \plugin\radmin\support\Response
+    public function edit(): \Radmin\Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);

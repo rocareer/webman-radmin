@@ -14,9 +14,9 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use Radmin\Http;
 use plugin\radmin\support\Log;
-use plugin\radmin\support\Request;
+use Radmin\Http;
+use Radmin\Request;
 
 global $argv;
 

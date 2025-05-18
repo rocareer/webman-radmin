@@ -15,7 +15,7 @@ use plugin\radmin\app\common\library\Menu;
 use plugin\radmin\extend\ba\Filesystem;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\support\orm\Rdb;
-use plugin\radmin\support\Response;
+use Radmin\Response;
 use Throwable;
 
 class Crud extends Backend

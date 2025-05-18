@@ -3,7 +3,7 @@
 
 namespace plugin\radmin\support\lang;
 
-use plugin\radmin\support\Request;
+use Radmin\Request;
 use think\facade\Cookie;
 
 

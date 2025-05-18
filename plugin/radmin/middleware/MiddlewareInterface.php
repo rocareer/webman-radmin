@@ -11,8 +11,8 @@
 
 namespace plugin\radmin\middleware;
 
-use plugin\radmin\support\Response;
-use plugin\radmin\support\Request;
+use Radmin\Request;
+use Radmin\Response;
 
 interface MiddlewareInterface
 {

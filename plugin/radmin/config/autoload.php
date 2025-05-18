@@ -16,7 +16,5 @@ return [
     'files' => [
         base_path() . '/plugin/radmin/app/functions.php',
         base_path() . '/plugin/radmin/app/common.php',
-        base_path() . '/plugin/radmin/support/Request.php',
-        base_path() . '/plugin/radmin/support/Response.php',
     ]
 ];

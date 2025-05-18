@@ -3,11 +3,11 @@
 
 namespace plugin\radmin\app\admin\controller\user;
 
-use plugin\radmin\support\Response;
-use Throwable;
-use plugin\radmin\app\admin\model\UserRule;
 use plugin\radmin\app\admin\model\UserGroup;
+use plugin\radmin\app\admin\model\UserRule;
 use plugin\radmin\app\common\controller\Backend;
+use Radmin\Response;
+use Throwable;
 
 class Group extends Backend
 {
