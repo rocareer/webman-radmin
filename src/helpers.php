@@ -15,6 +15,30 @@ use plugin\radmin\extend\ba\Filesystem;
 use Radmin\Http;
 use think\helper\Str;
 
+if (!function_exists('radmin_path')) {
+    /**
+     * @return   string
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/19 01:41
+     */
+    function radmin_path(): string
+    {
+       return base_path() . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . 'radmin';
+    }
+}
+if (!function_exists('radmin_config')) {
+    /**
+     * @param $name
+     * @param $default
+     * @return   mixed
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/19 01:41
+     */
+    function radmin_config($name, $default = null): mixed
+    {
+        return config("plugin.radmin.$name", $default);
+    }
+}
 
 if (!function_exists('getDbPrefix')) {
     /**

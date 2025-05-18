@@ -59,7 +59,7 @@
       "Rocareer\\WebmanRadmin\\": "src"
     },
     "files": [
-      "src/functions.php",
+      "src/helpers.php",
       "src/Request.php",
       "src/Response.php"
     ]
