@@ -65,7 +65,7 @@
 
         <!-- 表格 -->
         <!-- 表格列有多种自定义渲染方式，比如自定义组件、具名插槽等，参见文档 -->
-        <!-- 要使用 el-table 组件原有的属性，直接加在 TableUtil 标签上即可 -->
+        <!-- 要使用 el-table 组件原有的属性，直接加在 Table 标签上即可 -->
         <Table ref="tableRef"></Table>
 
         <Info />
@@ -139,7 +139,7 @@ optButtons = optButtons.concat(defaultOptButtons(['edit']))
  * baTable 内包含了表格的所有数据且数据具备响应性，然后通过 provide 注入给了后代组件
  */
 const baTable = new baTableClass(
-    new baTableApi('/admin/data.TableUtil/'),
+    new baTableApi('/admin/data.Table/'),
     {
         // dblClickNotEditColumn: ['all'],
         pk: 'id',

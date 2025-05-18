@@ -49,7 +49,7 @@ export default {
     'rich Text': 'Rich Text',
     'multi image': 'Multi image',
     textarea: 'Textarea',
-    'time date': 'Time DateUtil',
+    'time date': 'Time Date',
     'remote select': 'Remote Select',
     'city select': 'City select',
     'icon select': 'Icon select',

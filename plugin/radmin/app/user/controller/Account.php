@@ -9,11 +9,11 @@ use plugin\radmin\app\common\model\User;
 use plugin\radmin\app\common\model\UserMoneyLog;
 use plugin\radmin\app\common\model\UserScoreLog;
 use plugin\radmin\extend\ba\Captcha;
+use plugin\radmin\extend\ba\Date;
 use plugin\radmin\extend\ba\Random;
 use plugin\radmin\support\member\Member;
 use Radmin\Response;
 use Radmin\token\Token;
-use Radmin\util\DateUtil;
 use think\facade\Validate;
 use Throwable;
 
@@ -30,7 +30,7 @@ class Account extends Frontend
 
     public function overview(): Response
     {
-        $sevenDays = DateUtil::unixTime('day', -6);
+        $sevenDays = Date::unixTime('day', -6);
         $score     = $money = $days = [];
         for ($i = 0; $i < 7; $i++) {
             $days[$i]    = date("Y-m-d", $sevenDays + ($i * 86400));

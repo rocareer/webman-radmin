@@ -17,7 +17,7 @@
                         />
                         <FormItem
                             class="table-comment-item"
-                            :label="t('crud.crud.Data TableUtil Notes')"
+                            :label="t('crud.crud.Data Table Notes')"
                             v-model="state.table.comment"
                             type="string"
                             :placeholder="t('crud.crud.For example: `user table` will be generated into `user management`')"
@@ -25,7 +25,7 @@
                     </div>
                     <div class="header-right">
                         <el-link v-if="crudState.type != 'create'" @click="state.showDesignChangeLog = true" class="design-change-log" type="primary">
-                            {{ t('crud.crud.TableUtil design change') }}
+                            {{ t('crud.crud.Table design change') }}
                         </el-link>
                         <el-button type="primary" :loading="state.loading.generate" @click="onGenerate" v-blur>
                             {{ t('crud.crud.Generate CRUD code') }}
@@ -37,7 +37,7 @@
             <transition :name="state.showHeaderSeniorConfig ? 'el-zoom-in-top' : 'el-zoom-in-bottom'">
                 <div v-if="state.showHeaderSeniorConfig" class="header-senior-config-box">
                     <div class="header-senior-config-form">
-                        <el-form-item :label-width="140" :label="t('crud.crud.TableUtil Quick Search Fields')">
+                        <el-form-item :label-width="140" :label="t('crud.crud.Table Quick Search Fields')">
                             <el-select :clearable="true" :multiple="true" class="w100" v-model="state.table.quickSearchField" placement="bottom">
                                 <el-option
                                     v-for="(item, idx) in state.fields"
@@ -48,7 +48,7 @@
                             </el-select>
                         </el-form-item>
                         <div class="default-sort-field-box">
-                            <el-form-item :label-width="140" class="default-sort-field" :label="t('crud.crud.TableUtil Default Sort Fields')">
+                            <el-form-item :label-width="140" class="default-sort-field" :label="t('crud.crud.Table Default Sort Fields')">
                                 <el-select :clearable="true" v-model="state.table.defaultSortField" placement="bottom">
                                     <el-option
                                         v-for="(item, idx) in state.fields"
@@ -68,7 +68,7 @@
                                 }"
                             />
                         </div>
-                        <el-form-item :label-width="140" :label="t('crud.crud.Fields as TableUtil Columns')">
+                        <el-form-item :label-width="140" :label="t('crud.crud.Fields as Table Columns')">
                             <el-select :clearable="true" :multiple="true" class="w100" v-model="state.table.columnFields" placement="bottom">
                                 <el-option
                                     v-for="(item, idx) in state.fields"
@@ -369,7 +369,7 @@
                                 />
                             </div>
                             <template v-if="!isEmpty(state.fields[state.activateField].table)">
-                                <el-divider content-position="left">{{ t('crud.crud.Field TableUtil Properties') }}</el-divider>
+                                <el-divider content-position="left">{{ t('crud.crud.Field Table Properties') }}</el-divider>
                                 <template v-for="(item, idx) in state.fields[state.activateField].table" :key="idx">
                                     <FormItem
                                         :label="$t('crud.crud.' + idx)"
@@ -425,7 +425,7 @@
                         v-if="state.remoteSelectPre.index != -1 && state.fields[state.remoteSelectPre.index]"
                     >
                         <FormItem
-                            :label="t('crud.crud.Associated Data TableUtil')"
+                            :label="t('crud.crud.Associated Data Table')"
                             v-model="state.remoteSelectPre.form.table"
                             type="remoteSelect"
                             :key="state.table.databaseConnection"

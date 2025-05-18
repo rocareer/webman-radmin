@@ -1,5 +1,5 @@
 export default {
-    show: 'Show in TableUtil Columns',
+    show: 'Show in Table Columns',
     width: 'Width',
     sortable: 'sortable',
     operator: 'Search operator',
