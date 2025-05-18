@@ -11,6 +11,7 @@
 
 namespace Rocareer\WebmanRadmin;
 
+use Radmin\util\FileUtil;
 use Symfony\Component\Filesystem\Filesystem;
 
 class Install
@@ -74,14 +75,13 @@ class Install
                 $destFile   = base_path() . "/$dest";
                 // 如果有 先备份
                 if (file_exists($destFile)) {
-                    (new Filesystem)->copy($destFile, $backup_path . '/' . $dest);
+                    copy($destFile, $backup_path . '/' . $dest);
                     if (copy($destFile, $backup_path . '/' . $dest)) {
                         echo "backup $dest\n";
                     } else {
                         echo "Failed to backup $dest\n";
                     }
                 }
-
 
                 if (copy($sourceFile, $destFile)) {
                     echo "Moved file from $sourceFile to $destFile\n";
@@ -130,6 +130,9 @@ class Install
             }
             remove_dir($path);
         }
+    }
+    public static function modify_config(){
+        modify_config('think-cache.php',[ 'default' => 'file']);
     }
 
 }
