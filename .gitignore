@@ -13,6 +13,5 @@
 /Writerside/
 /.env.production
 /temp/
-/config/plugin/
 /plugin/admin/
 /src/plugin/radmin/Writerside/

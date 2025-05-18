@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\app\command;
+namespace Radmin\command;
 
 use DI\Container;
 use DI\ContainerBuilder;

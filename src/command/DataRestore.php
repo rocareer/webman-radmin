@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\app\command;
+namespace Radmin\command;
 
 use plugin\radmin\app\admin\model\data\Backup;
 use Radmin\Event;
@@ -196,8 +196,8 @@ class DataRestore extends Command
             "<bg=cyan;fg=black> 备份信息 </>\n",
             "<info>版本号:</info>    " . $backup->version,
             "<info>备份文件:</info>  " . $backup->file . " (" .
-            (file_exists(runtime_path() . $backup->file)
-                ? $this->format_bytes(filesize(runtime_path() . $backup->file))
+            (file_exists(DataRestore . phpruntime_path() . $backup->file)
+                ? $this->format_bytes(filesize(DataRestore . phpruntime_path() . $backup->file))
                 : '文件不存在') . ")",
             "<info>备份时间:</info>  " . $backup->create_time,
             ""
@@ -224,7 +224,7 @@ class DataRestore extends Command
      */
     private function restoreFromBackup(Backup $backup, InputInterface $input, OutputInterface $output): void
     {
-        $backupFile = runtime_path() . $backup->file;
+        $backupFile = DataRestore . phpruntime_path() . $backup->file;
         if (!file_exists($backupFile)) {
             throw new \Exception("备份文件不存在: " . $backupFile);
         }
@@ -410,7 +410,7 @@ class DataRestore extends Command
      */
     private function restoreTable(string $table, string $zipFile, OutputInterface $output): int
     {
-        $tempDir = dirname($zipFile) . '/' . $table . '_temp/';
+        $tempDir = dirname($zipFile) . 'DataRestore.php/' . $table . '_temp/';
         if (!is_dir($tempDir)) {
             mkdir($tempDir, 0755, true);
         }
@@ -540,7 +540,7 @@ class DataRestore extends Command
         $pow   = min($pow, count($units) - 1);
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return round($bytes, $precision) . ' DataRestore.php' . $units[$pow];
     }
 
     private function updateMemoryUsage(): void

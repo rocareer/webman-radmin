@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\app\command;
+namespace Radmin\command;
 
 use plugin\radmin\app\admin\model\data\Table;
 use Radmin\Command;
@@ -59,7 +59,7 @@ class DataBackup extends Command
         }
 
         // 初始化目录
-        $baseBackupDir = runtime_path() . get_sys_config('backup_path') . self::BACKUP_PATH;
+        $baseBackupDir = DataBackup . phpruntime_path() . get_sys_config('backup_path') . self::BACKUP_PATH;
         $versionDir    = $baseBackupDir . self::VERSION_PATH;
         FileUtil::mkdir($baseBackupDir);
         FileUtil::mkdir($versionDir);
@@ -238,7 +238,7 @@ class DataBackup extends Command
         $memoryUsage      = round((memory_get_peak_usage() - $this->startMemory) / 1024 / 1024, 2);
         $totalSize        = round($this->totalSize / 1024 / 1024, 2);
         $compressionRatio = $this->totalSize > 0
-            ? round(($this->totalSize - filesize(runtime_path() . get_sys_config('backup_path') . self::VERSION_PATH . $this->version . '.zip')) / $this->totalSize * 100, 1)
+            ? round(($this->totalSize - filesize(DataBackup . phpruntime_path() . get_sys_config('backup_path') . self::VERSION_PATH . $this->version . '.zip')) / $this->totalSize * 100, 1)
             : 0;
 
         $output->writeln(['', '<comment>备份统计信息:</comment>']);

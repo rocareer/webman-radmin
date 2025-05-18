@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\app\command;
+namespace Radmin\command;
 
 use Radmin\Command;
 use Radmin\util\FileUtil;
@@ -42,11 +42,12 @@ class RadminExport extends Command
         $this->initializeStats();
 
         $this->plugin_path=base_path().'/plugin/radmin';
-        $this->plugin_vendor=base_path().DIRECTORY_SEPARATOR.'vendor/rocareer/webman-radmin';
+        $this->plugin_vendor= base_path() . DIRECTORY_SEPARATOR .'vendor/rocareer/webman-radmin';
 
         $this->paths=[
             'web'=>'web',
             'plugin/radmin'=>'plugin/radmin',
+            'config/plugin/rocareer/webman-radmin'=>'config/plugin/rocareer/webman-radmin',
         ];
         $name = $input->getArgument('name');
         $this->force = $input->getOption('force');
@@ -58,7 +59,7 @@ class RadminExport extends Command
     public function sync()
     {
         foreach ($this->paths as $source=>$target) {
-            $source=base_path().DIRECTORY_SEPARATOR.$source;
+            $source=base_path() . DIRECTORY_SEPARATOR .$source;
             $target=$this->plugin_vendor.DIRECTORY_SEPARATOR.$target;
             FileUtil::syncDir($source, $target);
         }

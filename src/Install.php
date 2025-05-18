@@ -21,11 +21,11 @@ class Install
      * @var array
      */
     protected static $pathRelation = array(
-        'config/plugin/rocareer/webman-radmin' => 'config/plugin/rocareer/webman-radmin',
+        '../config/plugin/rocareer/webman-radmin' => 'config/plugin/rocareer/webman-radmin',
         '../plugin/radmin'                        => 'plugin/radmin',
-        'database'                             => 'database',
         '../web'                                  => 'web',
-        '.env-example'                         => '.env-example',
+        '.env-example'                            => '.env-example',
+        'database'                                => 'database',
     );
 
     /**
@@ -74,8 +74,8 @@ class Install
                 $destFile   = base_path() . "/$dest";
                 // 如果有 先备份
                 if (file_exists($destFile)) {
-                    (new Filesystem)->copy($destFile, $backup_path .'/'. $dest);
-                    if (copy($destFile, $backup_path .'/'. $dest)) {
+                    (new Filesystem)->copy($destFile, $backup_path . '/' . $dest);
+                    if (copy($destFile, $backup_path . '/' . $dest)) {
                         echo "backup $dest\n";
                     } else {
                         echo "Failed to backup $dest\n";
