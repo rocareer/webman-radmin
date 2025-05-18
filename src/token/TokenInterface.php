@@ -21,7 +21,7 @@
  *
  */
 
-namespace plugin\radmin\support\token;
+namespace Radmin\token;
 
 use stdClass;
 

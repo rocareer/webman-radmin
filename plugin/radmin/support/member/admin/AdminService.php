@@ -11,10 +11,10 @@
 namespace plugin\radmin\support\member\admin;
 
 use plugin\radmin\app\admin\model\AdminGroup;
-use Radmin\Http;
 use plugin\radmin\support\member\Service;
 use plugin\radmin\support\orm\Rdb;
-use plugin\radmin\support\token\Token;
+use Radmin\Http;
+use Radmin\token\Token;
 use Throwable;
 
 class AdminService extends Service

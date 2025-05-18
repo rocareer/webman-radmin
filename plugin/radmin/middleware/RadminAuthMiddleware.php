@@ -16,10 +16,10 @@ use plugin\radmin\exception\TokenExpiredException;
 use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\Token;
 use Radmin\Container;
 use Radmin\Request;
 use Radmin\Response;
+use Radmin\token\Token;
 use Throwable;
 
 class RadminAuthMiddleware implements MiddlewareInterface

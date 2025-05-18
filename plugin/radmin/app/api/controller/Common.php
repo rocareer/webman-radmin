@@ -9,8 +9,8 @@ use plugin\radmin\exception\BusinessException;
 use plugin\radmin\extend\ba\Captcha;
 use plugin\radmin\extend\ba\ClickCaptcha;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\Token;
 use Radmin\Response;
+use Radmin\token\Token;
 use Throwable;
 
 

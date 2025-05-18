@@ -9,15 +9,15 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-namespace plugin\radmin\support\token\driver;
+namespace Radmin\token\driver;
 
 use Exception;
+use plugin\radmin\exception\TokenException;
 use plugin\radmin\support\jwt\Jwt as JwtFacade;
 use plugin\radmin\support\jwt\JwtService;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\support\token\Token;
-use plugin\radmin\support\token\TokenInterface;
-use plugin\radmin\exception\TokenException;
+use Radmin\token\Token;
+use Radmin\token\TokenInterface;
 use stdClass;
 
 class Jwt implements TokenInterface
