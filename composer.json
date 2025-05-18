@@ -57,10 +57,7 @@
     "psr-4": {
       "Rocareer\\WebmanRadmin\\": "src",
       "Radmin\\": "src"
-    },
-    "files": [
-      "src/Helper.php"
-    ]
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
