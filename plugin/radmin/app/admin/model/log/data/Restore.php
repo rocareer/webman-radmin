@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\model\log\data;
 
 use plugin\radmin\app\admin\model\Admin;
 use plugin\radmin\app\common\model\BaseModel;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 use think\model\relation\BelongsTo;
 
 /**

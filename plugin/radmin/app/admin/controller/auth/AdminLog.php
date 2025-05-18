@@ -5,7 +5,7 @@ namespace plugin\radmin\app\admin\controller\auth;
 use plugin\radmin\app\admin\model\AdminLog as AdminLogModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\member\Member;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 use Radmin\Response;
 use Throwable;
 

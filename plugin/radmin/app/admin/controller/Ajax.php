@@ -9,7 +9,7 @@ use plugin\radmin\exception\Exception;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\extend\ba\Terminal;
 use plugin\radmin\support\Cache;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 use Radmin\Response;
 use Throwable;
 

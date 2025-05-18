@@ -12,8 +12,8 @@ namespace plugin\radmin\support\member\admin;
 
 use plugin\radmin\app\admin\model\AdminGroup;
 use plugin\radmin\support\member\Service;
-use plugin\radmin\support\orm\Rdb;
 use Radmin\Http;
+use Radmin\orm\Rdb;
 use Radmin\token\Token;
 use Throwable;
 

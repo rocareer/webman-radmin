@@ -3,10 +3,10 @@
 namespace plugin\radmin\app\command;
 
 use plugin\radmin\app\admin\model\data\Backup;
-use plugin\radmin\support\orm\Model;
-use plugin\radmin\support\orm\Rdb;
 use Radmin\Event;
 use Radmin\Log;
+use Radmin\orm\Model;
+use Radmin\orm\Rdb;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;

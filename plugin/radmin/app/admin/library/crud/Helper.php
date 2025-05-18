@@ -9,7 +9,7 @@ use plugin\radmin\app\admin\model\CrudLog;
 use plugin\radmin\app\common\library\Menu;
 use plugin\radmin\extend\ba\Filesystem;
 use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 use think\db\exception\DbException;
 use think\Exception;
 use Throwable;

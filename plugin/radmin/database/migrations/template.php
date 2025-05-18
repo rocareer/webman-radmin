@@ -1,6 +1,6 @@
 <?php
 
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 
 class YourMigrationName
 {

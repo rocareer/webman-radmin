@@ -3,7 +3,7 @@
 
 namespace Radmin\orm;
 
-use plugin\radmin\support\cache\Cache;
+use Radmin\cache\Cache;
 use Radmin\Http;
 use think\Paginator;
 use Webman\Bootstrap;

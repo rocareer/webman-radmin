@@ -6,7 +6,7 @@ namespace plugin\radmin\app\common\model\ai;
 use exception;
 use plugin\radmin\app\common\library\ai\Helper;
 use plugin\radmin\app\common\model\BaseModel;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 
 /**
  * AiUser

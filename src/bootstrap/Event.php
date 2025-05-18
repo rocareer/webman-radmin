@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\radmin\support\bootstrap;
+namespace Radmin\bootstrap;
 
 use Radmin\Container;
 use Radmin\Event as E;

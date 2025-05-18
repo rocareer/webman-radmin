@@ -3,8 +3,8 @@
 
 namespace plugin\radmin\extend\ba;
 
-use plugin\radmin\support\lang\Lang;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\lang\Lang;
+use Radmin\orm\Rdb;
 use Throwable;
 
 

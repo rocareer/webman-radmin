@@ -12,8 +12,8 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use plugin\radmin\support\bootstrap\Event;
-use plugin\radmin\support\orm\Orm;
+use Radmin\bootstrap\Event;
+use Radmin\orm\Orm;
 
 return [
     Orm::class,

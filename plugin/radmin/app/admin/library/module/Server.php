@@ -9,7 +9,7 @@ use FilesystemIterator;
 use GuzzleHttp\Exception\TransferException;
 use plugin\radmin\app\admin\library\crud\Helper;
 use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use think\db\exception\PDOException;

@@ -6,11 +6,11 @@ namespace plugin\radmin\support\member;
 
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\UnauthorizedHttpException;
-use plugin\radmin\support\orm\Model as ThinkModel;
-use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\StatusCode;
 use Radmin\Http;
 use Radmin\Log;
+use Radmin\orm\Model as ThinkModel;
+use Radmin\orm\Rdb;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

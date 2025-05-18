@@ -5,7 +5,7 @@ namespace plugin\radmin\app\admin\controller\security;
 use plugin\radmin\app\admin\model\SensitiveDataLog as SensitiveDataLogModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\extend\ba\TableManager;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 use Radmin\Response;
 use Throwable;
 

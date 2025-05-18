@@ -26,8 +26,8 @@ use plugin\radmin\app\admin\library\module\Server;
 use plugin\radmin\app\admin\model\Config as configModel;
 use plugin\radmin\extend\ba\Filesystem;
 use Radmin\Http;
-use plugin\radmin\support\lang\Lang;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\lang\Lang;
+use Radmin\orm\Rdb;
 
 
 if (!function_exists('__')) {
