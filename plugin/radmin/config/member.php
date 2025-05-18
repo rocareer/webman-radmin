@@ -1,16 +1,5 @@
 <?php
 
-use DI\ContainerBuilder;
-use plugin\radmin\exception\BusinessException;
-use plugin\radmin\support\member\InterfaceAuthenticator;
-use plugin\radmin\support\member\InterfaceModel;
-use plugin\radmin\support\member\InterfaceService;
-use plugin\radmin\support\member\InterfaceState;
-use plugin\radmin\support\member\Context;
-use Psr\Container\ContainerInterface;
-
-use function DI\autowire;
-
 return [
     // 默认角色
     'default_role' => 'admin',
