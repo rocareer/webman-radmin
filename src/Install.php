@@ -22,9 +22,9 @@ class Install
      */
     protected static $pathRelation = array(
         'config/plugin/rocareer/webman-radmin' => 'config/plugin/rocareer/webman-radmin',
-        'plugin/radmin'                        => 'plugin/radmin',
+        '../plugin/radmin'                        => 'plugin/radmin',
         'database'                             => 'database',
-        'web'                                  => 'web',
+        '../web'                                  => 'web',
         '.env-example'                         => '.env-example',
     );
 
