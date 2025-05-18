@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 use plugin\radmin\app\admin\model\CrudLog;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 
 class Version222 extends AbstractMigration
 {

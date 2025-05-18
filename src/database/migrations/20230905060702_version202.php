@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 
 class Version202 extends AbstractMigration
 {

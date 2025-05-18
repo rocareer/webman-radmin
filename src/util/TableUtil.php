@@ -2,8 +2,7 @@
 
 namespace Radmin\util;
 
-use Radmin\util\FileUtil;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 use ZipArchive;
 
 

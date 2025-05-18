@@ -16,8 +16,8 @@ namespace Radmin\token\driver;
 
 use plugin\radmin\exception\TokenException;
 use plugin\radmin\extend\ba\Random;
-use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\StatusCode;
+use Radmin\orm\Rdb;
 use Radmin\token\TokenInterface;
 use stdClass;
 use Throwable;

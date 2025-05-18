@@ -2,7 +2,7 @@
 
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
-use plugin\radmin\support\orm\Rdb;
+use Radmin\orm\Rdb;
 
 class Version200 extends AbstractMigration
 {
