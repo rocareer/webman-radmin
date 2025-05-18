@@ -55,8 +55,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Rocareer\\WebmanRadmin\\": "src",
-      "Radmin\\": "src"
+      "Radmin\\": "src",
+      "Rocareer\\WebmanRadmin\\": "src"
     },
     "files": [
       "src/functions.php"
