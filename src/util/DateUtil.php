@@ -1,18 +1,18 @@
 <?php
 
 
-namespace plugin\radmin\extend\ba;
+namespace Radmin\util;
 
 use DateTime;
-use Throwable;
-use DateTimeZone;
 use DateTimeInterface;
+use DateTimeZone;
+use Throwable;
 
 /**
  * 日期时间处理类
  * @form https://gitee.com/karson/fastadmin/blob/develop/extend/fast/Date.php
  */
-class Date
+class DateUtil
 {
     private const YEAR   = 31536000;
     private const MONTH  = 2592000;

@@ -3,11 +3,11 @@
 
 namespace plugin\radmin\app\common\library\ai;
 
-use plugin\radmin\extend\ba\Date;
-use Throwable;
 use GuzzleHttp\Client;
 use plugin\radmin\app\common\model\ai\Config;
 use plugin\radmin\app\common\model\ai\Session;
+use Radmin\util\DateUtil;
+use Throwable;
 
 class Helper
 {
@@ -295,7 +295,7 @@ class Helper
 				//todo 时间转换 需要验证
 		        $item['create_time']= strtotime($item['create_time']);
 	        }
-            $sessionList[$key]['create_time'] = Date::human($item['last_message_time'] ?? $item['create_time']);
+            $sessionList[$key]['create_time'] = DateUtil::human($item['last_message_time'] ?? $item['create_time']);
         }
         return $sessionList;
     }
