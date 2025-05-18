@@ -1,15 +1,15 @@
 <?php
 
 
-namespace plugin\radmin\support\file;
+namespace plugin\radmin\support;
 
 use Exception;
-use plugin\radmin\exception\BusinessException;
-use Throwable;
-use PhpZip\ZipFile;
 use FilesystemIterator;
-use RecursiveIteratorIterator;
+use PhpZip\ZipFile;
+use plugin\radmin\exception\BusinessException;
 use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use Throwable;
 
 /**
  * 访问和操作文件系统
@@ -207,23 +207,6 @@ class File
     }
 
     /**
-     * 格式化文件大小
-     * @param int $bytes 字节数
-     * @param int $precision 小数位数
-     * @return string 格式化后的字符串
-     */
-    public static function formatSize(int $bytes, int $precision = 2): string
-    {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-        $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
-        $bytes /= pow(1024, $pow);
-        
-        return round($bytes, $precision) . ' ' . $units[$pow];
-    }
-
-    /**
      * 清理临时文件目录
      * @param string $dir 目录路径
      */
@@ -275,18 +258,5 @@ class File
         return $fileList;
     }
 
-    /**
-     * 将一个文件单位转为字节
-     * @param string $unit 将b、kb、m、mb、g、gb的单位转为 byte
-     * @return int byte
-     */
-    public static function fileUnitToByte(string $unit): int
-    {
-        preg_match('/([0-9.]+)(\w+)/', $unit, $matches);
-        if (!$matches) {
-            return 0;
-        }
-        $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
-        return (int)($matches[1] * pow(1024, $typeDict[strtolower($matches[2])] ?? 0));
-    }
+
 }

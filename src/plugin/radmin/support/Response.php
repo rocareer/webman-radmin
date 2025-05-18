@@ -3,8 +3,6 @@
 
 namespace plugin\radmin\support;
 
-use plugin\radmin\app\process\Http;
-
 
 /**
  * Class Response

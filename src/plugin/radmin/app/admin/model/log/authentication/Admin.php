@@ -3,7 +3,7 @@
 namespace plugin\radmin\app\admin\model\log\authentication;
 
 use plugin\radmin\app\common\model\BaseModel;
-use plugin\radmin\app\process\Http;
+use plugin\radmin\support\Http;
 
 /**
  * Admin

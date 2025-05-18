@@ -15,10 +15,15 @@ class Table extends BaseModel
     // 自动写入时间戳字段
     protected $autoWriteTimestamp = true;
     protected $updateTime = false;
+    protected $json = ['columns'];
+
+
+    protected $jsonAssoc = true;
 
     public function getName():string
     {
         return $this->name;
     }
+
 
 }

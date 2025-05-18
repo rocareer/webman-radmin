@@ -11,7 +11,7 @@
 namespace plugin\radmin\support\member\admin;
 
 use plugin\radmin\app\admin\model\AdminGroup;
-use plugin\radmin\app\process\Http;
+use plugin\radmin\support\Http;
 use plugin\radmin\support\member\Service;
 use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\token\Token;

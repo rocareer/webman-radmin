@@ -3,10 +3,10 @@ declare (strict_types=1);
 
 namespace plugin\radmin\app\controller;
 
-use plugin\radmin\app\process\Http;
+use plugin\radmin\support\Http;
 use plugin\radmin\support\Request;
-use think\Validate;
 use think\exception\ValidateException;
+use think\Validate;
 
 /**
  * 控制器基础类

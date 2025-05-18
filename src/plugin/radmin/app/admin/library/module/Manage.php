@@ -1,16 +1,15 @@
 <?php
 
 namespace plugin\radmin\app\admin\library\module;
-use plugin\radmin\app\process\Http;
-use Throwable;
-use plugin\radmin\extend\ba\Version;
-use plugin\radmin\extend\ba\Depends;
 use exception;
-use plugin\radmin\extend\ba\Filesystem;
 use FilesystemIterator;
-
+use plugin\radmin\extend\ba\Depends;
+use plugin\radmin\extend\ba\Filesystem;
+use plugin\radmin\extend\ba\Version;
+use plugin\radmin\support\Http;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Throwable;
 
 /**
  * 模块管理类

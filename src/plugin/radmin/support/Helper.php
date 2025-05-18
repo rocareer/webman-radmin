@@ -12,9 +12,50 @@
 
 
 use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\app\process\Http;
+use plugin\radmin\support\Http;
 use think\helper\Str;
 
+
+if (!function_exists('formatBytes')) {
+    /**
+     * 将字节大小转换为人类可读的格式
+     * @param int $bytes     字节数
+     * @param int $precision 精度
+     * @return string 格式化后的大小
+     */
+    function formatBytes(int $bytes, int $precision = 2): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+        $bytes = max($bytes, 0);
+        $pow   = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow   = min($pow, count($units) - 1);
+
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
+}
+if (!function_exists('formatBytes')) {
+
+    /**
+     * 单位转为字节
+     * @param string $unit 将b、kb、m、mb、g、gb的单位转为 byte
+     * @return   int
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/18 22:42
+     */
+    function unitToByte(string $unit): int
+    {
+        preg_match('/([0-9.]+)(\w+)/', $unit, $matches);
+        if (!$matches) {
+            return 0;
+        }
+        $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
+        return (int)($matches[1] * pow(1024, $typeDict[strtolower($matches[2])] ?? 0));
+
+    }
+}
 
 if (!function_exists('getDbPrefix')) {
     /**
@@ -25,7 +66,7 @@ if (!function_exists('getDbPrefix')) {
      */
     function getDbPrefix()
     {
-        return getenv('THINKORM_DEFAULT_PREFIX')??config('plugin.radmin.think-orm.connections.mysql.prefix');
+        return getenv('THINKORM_DEFAULT_PREFIX') ?? config('plugin.radmin.think-orm.connections.mysql.prefix');
     }
 }
 
@@ -79,7 +120,7 @@ if (!function_exists('radminInstalled')) {
 
     function radminInstalled(): bool
     {
-        $lockedFile=base_path().'/plugin/radmin/public/install.lock';
+        $lockedFile = base_path() . '/plugin/radmin/public/install.lock';
         if (file_exists($lockedFile)) {
             return true;
         }
@@ -166,7 +207,7 @@ if (!function_exists('getTokenFromRequest')) {
             return extractBearerToken($token);
         }
 
-        $type=$request->role??$request->app;
+        $type = $request->role ?? $request->app;
         // 从配置的 headers 中获取 Token
         $headers = config("plugin.radmin.auth.headers.{$type}", []);
         foreach ($headers as $header) {
@@ -177,13 +218,12 @@ if (!function_exists('getTokenFromRequest')) {
         }
 
 
-
         /**
          * api-token 给前端 下载等用
          * 从 query 参数或 body 获取 Token
          */
 
-        return $request->input('api-token') ??$request->input('batoken');
+        return $request->input('api-token') ?? $request->input('batoken');
     }
 
     /**
@@ -358,7 +398,7 @@ if (!function_exists('get_controller_list')) {
     {
         // todo
         // $controllerDir = app_path() . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
-        $controllerDir = base_path().'/plugin/radmin/app' . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
+        $controllerDir = base_path() . '/plugin/radmin/app' . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
         return Filesystem::getDirFiles($controllerDir);
     }
 }

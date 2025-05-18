@@ -1,44 +1,45 @@
 <?php
-/**
- * File:        Table.php
- * Author:      albert <albert@rocareer.com>
- * Created:     2025/5/17 22:59
- * Description: 数据库表操作工具类
- *
- * Copyright [2014-2026] [https://rocareer.com]
- * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
- */
 
-namespace plugin\radmin\support\orm;
+namespace plugin\radmin\support;
 
-use plugin\radmin\support\file\File;
+use plugin\radmin\exception\Exception;
+use plugin\radmin\support\orm\Rdb;
 use ZipArchive;
 
+/**
+ * 数据库表操作工具类
+ * 
+ * 提供数据库表的创建、修改、查询等操作，支持多数据库连接
+ */
 class Table
 {
-    /**
-     * 有效的数据库引擎列表
-     * @var array
-     */
+    // 支持的数据库引擎
     public const VALID_ENGINES = [
-        'InnoDB',    // 支持事务、外键、行级锁
-        'MyISAM',    // 支持全文索引
-        'MEMORY',    // 内存表
-        'CSV',       // CSV文件存储
-        'ARCHIVE'    // 压缩存储
+        'InnoDB' => '支持事务、行级锁和外键',
+        'MyISAM' => '支持全文索引',
+        'MEMORY' => '内存表，速度快但不持久',
+        'ARCHIVE' => '压缩存储，适合历史数据',
+        'CSV' => 'CSV格式存储'
     ];
 
-    /**
-     * 有效的字符集列表
-     * @var array
-     */
+    // 支持的字符集
     public const VALID_CHARSETS = [
-        'utf8',      // UTF-8 Unicode
-        'utf8mb4',   // UTF-8 Unicode (4字节)
-        'latin1',    // ISO 8859-1 West European
-        'ascii',     // US ASCII
-        'binary'     // 二进制
+        'utf8' => 'UTF-8 Unicode (3字节)',
+        'utf8mb4' => 'UTF-8 Unicode (4字节，支持emoji)',
+        'latin1' => 'ISO 8859-1 West European',
+        'ascii' => 'US ASCII',
+        'binary' => '二进制数据'
     ];
+
+    // 默认配置
+    protected static $defaultConfig = [
+        'engine' => 'InnoDB',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_general_ci'
+    ];
+
+    // 当前连接配置
+    protected static $connection;
     /**
      * 获取所有表信息
      */
@@ -78,25 +79,7 @@ class Table
      * @param string $tableName 表名
      * @return array 包含表状态信息的数组
      */
-    /**
-     * 将字节大小转换为人类可读的格式
-     * @param int $bytes 字节数
-     * @param int $precision 精度
-     * @return string 格式化后的大小
-     */
-    private static function formatBytes(int $bytes, int $precision = 2): string
-    {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-        
-        $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
-        
-        $bytes /= pow(1024, $pow);
-        
-        return round($bytes, $precision) . ' ' . $units[$pow];
-    }
-
+    
     public static function status(string $tableName): array
     {
         try {
@@ -109,15 +92,20 @@ class Table
                 : time();
             
             // 获取更新时间，如果为空则尝试使用其他时间字段
-            $updateTime = null;
-            if (isset($status['Update_time']) && $status['Update_time']) {
-                $updateTime = strtotime($status['Update_time']);
-            } elseif (isset($status['Check_time']) && $status['Check_time']) {
-                $updateTime = strtotime($status['Check_time']);
-            } else {
-                // 如果没有任何时间信息，使用当前时间
-                $updateTime = time();
+            try {
+                $updateTime = Rdb::table($tableName)->max('update_time');
+                $ctime = Rdb::table($tableName)->max('create_time');
+                if ($ctime >= $updateTime) {
+                    $updateTime = $ctime;
+                }
+            }  catch (\Exception $e) {
+
+                $updateTime = isset($status['Create_time']) && $status['Create_time']
+                    ? strtotime($status['Create_time'])
+                    : time();
+
             }
+
                     
             // 更新表统计信息
             if (strtolower($status['Engine'] ?? '') === 'innodb') {
@@ -142,9 +130,9 @@ class Table
                 'size' => $totalSize,                  // 总存储大小（字节）
                 'dataSize' => $dataSize,               // 数据大小（字节）
                 'indexSize' => $indexSize,             // 索引大小（字节）
-                'formattedSize' => self::formatBytes($totalSize),      // 格式化后的总大小
-                'formattedDataSize' => self::formatBytes($dataSize),   // 格式化后的数据大小
-                'formattedIndexSize' => self::formatBytes($indexSize), // 格式化后的索引大小
+                'formattedSize' => formatBytes($totalSize),      // 格式化后的总大小
+                'formattedDataSize' =>formatBytes($dataSize),   // 格式化后的数据大小
+                'formattedIndexSize' => formatBytes($indexSize), // 格式化后的索引大小
                 'engine' => $status['Engine'] ?? 'unknown',            // 存储引擎
                 'collation' => $status['Collation'] ?? 'unknown',      // 字符集
                 'comment' => $status['Comment'] ?? ''                  // 表注释
@@ -556,5 +544,91 @@ class Table
         }
         
         return [$engine, $charset];
+    }
+
+    /**
+     * 获取表的字段信息
+     * @param string $tableName 表名
+     * @return array 字段信息数组
+     */
+    public static function getColumns(string $tableName): array
+    {
+        try {
+            // 验证表名有效性
+            if (!self::isValidTableName($tableName)) {
+                error_log("无效的表名: {$tableName}");
+                return [];
+            }
+            
+            // 转义表名
+            $escapedTableName = str_replace('`', '``', $tableName);
+            
+            // 获取表字段信息
+            $columns = Rdb::query("SHOW FULL COLUMNS FROM `{$escapedTableName}`");
+            if (empty($columns)) {
+                return [];
+            }
+            
+            $result = [];
+            foreach ($columns as $column) {
+                // 解析类型和长度
+                $typeInfo = self::parseColumnType($column['Type']);
+                
+                $result[] = [
+                    'field' => $column['Field'],                  // 字段名
+                    'type' => $typeInfo['type'],                  // 数据类型
+                    'length' => $typeInfo['length'],              // 长度
+                    'precision' => $typeInfo['precision'],        // 精度（小数点位数）
+                    'nullable' => $column['Null'] === 'YES',      // 是否允许为NULL
+                    'key' => $column['Key'],                      // 键类型（PRI, UNI, MUL等）
+                    'default' => $column['Default'],              // 默认值
+                    'extra' => $column['Extra'],                  // 额外信息（如auto_increment）
+                    'comment' => $column['Comment'] ?? '',        // 注释
+                    'collation' => $column['Collation'] ?? null,  // 字符集
+                    'privileges' => $column['Privileges'] ?? null  // 权限
+                ];
+            }
+            
+            return $result;
+        } catch (\Exception $e) {
+            error_log("获取表字段信息失败: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * 解析字段类型信息
+     * @param string $typeString 类型字符串，如 varchar(255) 或 decimal(10,2)
+     * @return array 包含类型、长度和精度的数组
+     */
+    private static function parseColumnType(string $typeString): array
+    {
+        $type = $typeString;
+        $length = null;
+        $precision = null;
+        
+        // 匹配类型和长度/精度
+        if (preg_match('/^([a-z]+)(\(([0-9]+)(,([0-9]+))?\))?/', $typeString, $matches)) {
+            $type = $matches[1]; // 基本类型
+            
+            if (isset($matches[3])) {
+                $length = (int)$matches[3]; // 长度
+                
+                if (isset($matches[5])) {
+                    $precision = (int)$matches[5]; // 精度（小数点位数）
+                }
+            }
+        }
+        
+        // 处理无需长度的类型
+        if (in_array(strtolower($type), ['text', 'mediumtext', 'longtext', 'blob', 'mediumblob', 'longblob', 'date', 'time', 'datetime', 'timestamp', 'year'])) {
+            $length = null;
+        }
+        
+        return [
+            'type' => $type,
+            'length' => $length,
+            'precision' => $precision
+        ];
     }
 }

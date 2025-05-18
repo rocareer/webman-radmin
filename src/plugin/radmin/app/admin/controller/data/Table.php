@@ -41,7 +41,17 @@ class Table extends Backend
             ->alias($alias)
             ->where($where)
             ->order($order)
-            ->paginate($limit);
+            ->paginate($limit)
+            ->each(function ($item, $key) {
+                if ($item->table_type == 1) {
+                    $item->table_type_name = '系统表';
+                }
+                if ($item->table_type == 2) {
+                    $item->table_type_name = '业务表';
+                }
+                // $item->update_time=date("Y-m-d H:i:s",$item->update_time);
+                return $item;
+            });
 
         return $this->success('', [
             'list'   => $res->items(),
@@ -72,7 +82,7 @@ class Table extends Backend
                     $createTable = $connection->query("SHOW CREATE TABLE `{$table}`")[0];
 
                     // 使用Table工具类获取表状态信息
-                    $tableStatus = \plugin\radmin\support\orm\Table::status($table);
+                    $tableStatus = \plugin\radmin\support\Table::status($table);
 
                     // 解析字符集
                     preg_match('/CHARSET=([^\s]+)/i', $createTable['Create Table'], $charsetMatch);
@@ -95,6 +105,7 @@ class Table extends Backend
                             'data_size'    => $tableStatus['dataSize'],    // 数据大小（字节）
                             'index_size'   => $tableStatus['indexSize'],   // 索引大小（字节）
                             'total_size'   => $tableStatus['size'],        // 总存储大小（字节）
+                            'columns'      => json_encode(\plugin\radmin\support\Table::getColumns($table), JSON_UNESCAPED_UNICODE), // 字段信息（JSON格式）
                             'update_time'  => $tableStatus['lastModified'], // 使用表的最后修改时间
                             'create_time'  => $tableStatus['createTime']
                         ]);
@@ -106,7 +117,7 @@ class Table extends Backend
                             'record_count' => $tableStatus['rows'],
                             'engine'       => $tableStatus['engine'],
                             'comment'      => $comment,
-                            'update_time'  => $tableStatus['lastModified'],
+                            'update_time'  => (int)$tableStatus['lastModified'],
                             'create_time'  => $tableStatus['createTime']    // 使用表的创建时间
                         ]);
                     }
@@ -218,6 +229,6 @@ class Table extends Backend
     protected function updataTable(array $data): bool
     {
         // 使用工具类的方法更新表注释
-        return \plugin\radmin\support\orm\Table::updateTableComment($data['name'], $data['comment'] ?? '');
+        return \plugin\radmin\support\Table::updateTableComment($data['name'], $data['comment'] ?? '');
     }
 }

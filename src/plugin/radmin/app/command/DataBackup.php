@@ -3,14 +3,14 @@
 namespace plugin\radmin\app\command;
 
 use plugin\radmin\app\admin\model\data\Table;
-use plugin\radmin\support\file\File;
+use plugin\radmin\support\Command as BaseCommand;
+use plugin\radmin\support\Event;
+use plugin\radmin\support\File;
 use plugin\radmin\support\orm\Rdb;
-use plugin\radmin\support\command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use plugin\radmin\support\Event;
 use ZipArchive;
 
 class DataBackup extends BaseCommand
@@ -27,7 +27,6 @@ class DataBackup extends BaseCommand
     private float   $totalSize      = 0;
     private int     $successBackups = 0;
     private int     $recordCount    = 0;
-    protected       $output;
     protected       $admin_id       = 0;
 
     public function __construct()
@@ -42,7 +41,7 @@ class DataBackup extends BaseCommand
             ->setDescription('数据库表备份工具')
             ->addArgument('tables', InputArgument::OPTIONAL, '要备份的表名，多个用逗号分隔', '')
             ->addOption('all', 'a', InputOption::VALUE_NONE, '备份所有表')
-            ->addOption('admin', 'admin', InputOption::VALUE_NONE, '备份所有表')
+            ->addOption('admin', 'admin', InputOption::VALUE_OPTIONAL, '备份所有表')
             ->addUsage('使用方法:')
             ->addUsage('  php webman data:backup --all  # 备份所有表并压缩')
             ->addUsage('  php webman data:backup users,posts     # 备份指定表并压缩')
@@ -202,7 +201,9 @@ class DataBackup extends BaseCommand
             if ($input->getOption('all')) {
                 $data['table_name'] = 'all';
             } else {
-                $data['table_name'] = 'multi';
+                if (count($tables)>1){
+                    $data['table_name'] = 'multi';
+                }
             }
 
             Event::emit('data.backup.record', $data);

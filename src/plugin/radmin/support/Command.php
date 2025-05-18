@@ -9,13 +9,13 @@
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
-namespace plugin\radmin\support\command;
+namespace plugin\radmin\support;
 
 use Symfony\Component\Console\Command\Command as BaseCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class Command extends BaseCommand
@@ -23,7 +23,8 @@ abstract class Command extends BaseCommand
     protected float $startTime;
     protected int   $startMemory;
     protected float $peakMemory = 0;
-    protected         $output;
+    protected OutputInterface $output;
+    protected InputInterface  $input;
 
     /**
      * 初始化计时器和内存统计
