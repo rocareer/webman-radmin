@@ -71,7 +71,7 @@ class Rule extends Backend
 
      return $this->success('', [
             'list'   => $this->getRules(),
-            'remark' => get_route_remark(),
+            'remark' => SystemUtil::get_route_remark(),
         ]);
     }
 

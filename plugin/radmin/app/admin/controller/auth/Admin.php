@@ -10,6 +10,7 @@ use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\support\member\Member;
 use Radmin\orm\Rdb;
 use Radmin\Response;
+use Radmin\util\SystemUtil;
 use Throwable;
 
 class Admin extends Backend
@@ -60,7 +61,7 @@ class Admin extends Backend
         return $this->success('', [
             'list'   => $res->items(),
             'total'  => $res->total(),
-            'remark' => get_route_remark(),
+            'remark' => SystemUtil::get_route_remark(),
         ]);
     }
 

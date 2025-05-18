@@ -9,6 +9,7 @@ use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\member\Member;
 use Radmin\orm\Rdb;
 use Radmin\Response;
+use Radmin\util\SystemUtil;
 use Throwable;
 
 class Group extends Backend
@@ -86,7 +87,7 @@ class Group extends Backend
         return $this->success('', [
             'list'   => $this->getGroups(),
             'group'  => $this->adminGroups,
-            'remark' => get_route_remark(),
+            'remark' => SystemUtil::get_route_remark(),
         ]);
     }
 

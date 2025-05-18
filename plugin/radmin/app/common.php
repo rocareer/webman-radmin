@@ -28,6 +28,7 @@ use Radmin\util\FileUtil;
 use Radmin\Http;
 use Radmin\lang\Lang;
 use Radmin\orm\Rdb;
+use Radmin\util\SystemUtil;
 
 
 if (!function_exists('__')) {
@@ -88,65 +89,6 @@ if (!function_exists('htmlspecialchars_decode_improve')) {
 }
 
 
-if (!function_exists('get_sys_config')) {
-
-    /**
-     * 获取站点的系统配置，不传递参数则获取所有配置项
-     * @param string $name    变量名
-     * @param string $group   变量分组，传递此参数来获取某个分组的所有配置项
-     * @param bool   $concise 是否开启简洁模式，简洁模式下，获取多项配置时只返回配置的键值对
-     * @return mixed
-     * @throws Throwable
-     */
-    function get_sys_config(string $name = '', string $group = '', bool $concise = true): mixed
-    {
-        if (!radminInstalled()){
-            return [];
-        }
-        if ($name) {
-            // 直接使用->value('value')不能使用到模型的类型格式化
-            $config = configModel::cache($name, null, configModel::$cacheTag)->where('name', $name)->find();
-            if ($config) $config = $config['value'];
-        } else {
-            if ($group) {
-                $temp = configModel::cache('group' . $group, null, configModel::$cacheTag)->where('group', $group)->select()->toArray();
-            } else {
-                $temp = configModel::cache('sys_config_all', null, configModel::$cacheTag)->order('weigh desc')->select()->toArray();
-            }
-            if ($concise) {
-                $config = [];
-                foreach ($temp as $item) {
-                    $config[$item['name']] = $item['value'];
-                }
-            } else {
-                $config = $temp;
-            }
-        }
-        return $config;
-    }
-}
-
-if (!function_exists('get_route_remark')) {
-    /**
-     * 获取当前路由后台菜单规则的备注信息
-     *
-     * @return string
-     * @变更说明：修改数据库操作方式，使用support\think\Db
-     */
-    function get_route_remark(): string
-    {
-        $controllerName = Http::request()->controller;
-        $actionName     = Http::request()->action;
-        $path           = str_replace('.', '/', $controllerName);
-        $path           = str_replace('plugin\radmin\app\admin\controller\\', '', $path);
-        $remark         = Rdb::name('admin_rule')
-            ->where('name', $path)
-            ->whereOr('name', $path . '/' . $actionName)
-            ->value('remark');
-        return __((string)$remark);
-    }
-}
-
 if (!function_exists('getProtocol')) {
     // 适用于需要自定义处理的场景
     /**
@@ -198,7 +140,7 @@ if (!function_exists('full_url')) {
             if (request()) {
                 $cdnUrl = Http::request()->upload['cdn'] ?? '//' . Http::request()->host();
             } else {
-                $cdnUrl = get_sys_config('host');
+                $cdnUrl = SystemUtil::get_sys_config('host');
             }
 
         }
@@ -271,7 +213,7 @@ function get_upload_config(): array
         $uploadConfig['max_size'] = '10M';
     }
 
-    $uploadConfig['max_size'] = FileUtil::fileUnitToByte($uploadConfig['max_size']);
+    $uploadConfig['max_size'] = unitToByte($uploadConfig['max_size']);
 
     $upload = Http::request()->upload;
     if (!$upload) {
@@ -488,7 +430,7 @@ if (!function_exists('ip_check')) {
      */
     function ip_check(): void
     {
-        $no_access_ip = get_sys_config('no_access_ip');
+        $no_access_ip = SystemUtil::get_sys_config('no_access_ip');
         // 确保总是返回数组
         $no_access_ip = is_array($no_access_ip) ? $no_access_ip : [];
 
@@ -542,7 +484,7 @@ if (!function_exists('get_account_verification_type')) {
         $types = [];
 
         // 电子邮件，检查后台系统邮件配置是否全部填写
-        $sysMailConfig = get_sys_config('', 'mail');
+        $sysMailConfig = SystemUtil::get_sys_config('', 'mail');
         $configured    = true;
         foreach ($sysMailConfig as $item) {
             if (!$item) {

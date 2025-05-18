@@ -30,7 +30,7 @@ class TokenManager
      */
     public function __construct(array $config = [])
     {
-        $tokenConfig         = get_sys_config('', 'authentication');
+        $tokenConfig         = SystemUtil::get_sys_config('', 'authentication');
         $this->defaultDriver = $tokenConfig['driver'] ?? $this->defaultDriver;
         $this->config        = array_merge($config, $tokenConfig);
     }

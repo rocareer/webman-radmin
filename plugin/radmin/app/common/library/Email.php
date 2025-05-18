@@ -3,6 +3,7 @@
 
 namespace plugin\radmin\app\common\library;
 
+use Radmin\util\SystemUtil;
 use Throwable;
 use Illuminate\Support\Facades\Lang;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -46,7 +47,7 @@ class Email extends PHPMailer
         $this->setLanguage($this->options['lang'], root_path() . 'vendor' . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR);
         $this->CharSet = $this->options['charset'];
 
-        $sysMailConfig    = get_sys_config('', 'mail');
+        $sysMailConfig    = SystemUtil::get_sys_config('', 'mail');
         $this->configured = true;
         foreach ($sysMailConfig as $item) {
             if (!$item) {

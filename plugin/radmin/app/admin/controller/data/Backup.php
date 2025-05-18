@@ -4,6 +4,7 @@ namespace plugin\radmin\app\admin\controller\data;
 
 use plugin\radmin\app\common\controller\Backend;
 use Radmin\Response;
+use Radmin\util\SystemUtil;
 use Throwable;
 
 /**
@@ -29,7 +30,7 @@ class Backup extends Backend
     {
         parent::initialize();
         $this->model = new \plugin\radmin\app\admin\model\data\Backup();
-        $this->backupPath=get_sys_config('backup_path');
+        $this->backupPath=SystemUtil::get_sys_config('backup_path');
     }
 
     /**
@@ -60,7 +61,7 @@ class Backup extends Backend
         return $this->success('', [
             'list'   => $res->items(),
             'total'  => $res->total(),
-            'remark' => get_route_remark(),
+            'remark' => SystemUtil::get_route_remark(),
         ]);
     }
 

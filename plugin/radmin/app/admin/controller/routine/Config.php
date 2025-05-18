@@ -34,7 +34,7 @@ class Config extends Backend
 
     public function index(): Response
     {
-        $configGroup = get_sys_config('config_group');
+        $configGroup = SystemUtil::get_sys_config('config_group');
         $config      = $this->model->order('weigh desc')->select()->toArray();
 
         $list           = [];
@@ -53,7 +53,7 @@ class Config extends Backend
 
      return $this->success('', [
             'list'          => $list,
-            'remark'        => get_route_remark(),
+            'remark'        => SystemUtil::get_route_remark(),
             'configGroup'   => $newConfigGroup ?? [],
             'quickEntrance' => get_sys_config('config_quick_entrance'),
         ]);
@@ -93,7 +93,7 @@ class Config extends Backend
 
                     // 自定义后台入口
                     if ($item->name == 'backend_entrance') {
-                        $backendEntrance = get_sys_config('backend_entrance');
+                        $backendEntrance = SystemUtil::get_sys_config('backend_entrance');
                         if ($backendEntrance == $data[$item->name]) continue;
 
                         if (!preg_match("/^\/[a-zA-Z0-9]+$/", $data[$item->name])) {

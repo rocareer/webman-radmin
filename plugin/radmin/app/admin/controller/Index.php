@@ -8,6 +8,7 @@ use plugin\radmin\support\member\Member;
 use Radmin\exception\BusinessException;
 use Radmin\Response;
 use Radmin\token\Token;
+use Radmin\util\SystemUtil;
 use Throwable;
 
 class Index extends Backend
@@ -32,8 +33,8 @@ class Index extends Backend
             'adminInfo'  => $userInfo,
             'menus'      => $menus,
             'siteConfig' => [
-                'siteName'     => get_sys_config('site_name'),
-                'version'      => get_sys_config('version'),
+                'siteName'     => SystemUtil::get_sys_config('site_name'),
+                'version'      => SystemUtil::get_sys_config('version'),
                 'apiUrl'       => config('plugin.radmin.buildadmin.api_url'),
                 'upload'       => keys_to_camel_case(get_upload_config(), ['max_size', 'save_name', 'allowed_suffixes', 'allowed_mime_types']),
                 'cdnUrl'       => full_url(),
