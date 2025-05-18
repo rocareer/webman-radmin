@@ -19,7 +19,7 @@ use plugin\radmin\support\Request;
 use plugin\radmin\support\Response;
 use plugin\radmin\support\StatusCode;
 use plugin\radmin\support\token\Token;
-use plugin\radmin\support\Container;
+use Radmin\Container;
 use Throwable;
 
 class RadminAuthMiddleware implements MiddlewareInterface

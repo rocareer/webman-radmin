@@ -8,7 +8,7 @@
  */
 
 namespace plugin\radmin\support\member;
-use plugin\radmin\support\Container;
+use Radmin\Container;
 use think\Facade;
 
 /**

@@ -5,7 +5,7 @@ namespace plugin\radmin\support\member;
 
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\UnauthorizedHttpException;
-use plugin\radmin\support\Container;
+use Radmin\Container;
 use plugin\radmin\support\Http;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\orm\Rdb;

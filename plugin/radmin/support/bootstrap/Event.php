@@ -2,7 +2,7 @@
 
 namespace plugin\radmin\support\bootstrap;
 
-use plugin\radmin\support\Container;
+use Radmin\Container;
 use plugin\radmin\support\Event as E;
 use plugin\radmin\support\Log;
 use Webman\Bootstrap;

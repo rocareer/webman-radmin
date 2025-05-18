@@ -5,7 +5,7 @@ namespace plugin\radmin\support\member;
 
 use Exception;
 use plugin\radmin\exception\BusinessException;
-use plugin\radmin\support\Container;
+use Radmin\Container;
 use plugin\radmin\support\Event;
 use plugin\radmin\support\Http;
 use plugin\radmin\support\orm\Rdb;
