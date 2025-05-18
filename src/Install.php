@@ -11,9 +11,6 @@
 
 namespace Rocareer\WebmanRadmin;
 
-use Radmin\util\FileUtil;
-use Symfony\Component\Filesystem\Filesystem;
-
 class Install
 {
     const WEBMAN_PLUGIN = true;

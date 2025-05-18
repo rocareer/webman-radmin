@@ -212,28 +212,6 @@ if (!function_exists('arrayStrictFilter')) {
     }
 }
 
-if (!function_exists('radminInstalled')) {
-
-    function radminInstalled(): bool
-    {
-        $lockedFile=base_path().'/plugin/radmin/public/install.lock';
-        if (file_exists($lockedFile)) {
-            return true;
-        }
-        return false;
-    }
-}
-if (!function_exists('radminOrmInstalled')) {
-
-    function radminOrmInstalled(): bool
-    {
-        if (getenv('THINKORM_DEFAULT_PASSWORD')) {
-            return true;
-        }
-        return false;
-    }
-}
-
 /**
  * 检查路径是否需要跳过认证
  * @param string|null $path
