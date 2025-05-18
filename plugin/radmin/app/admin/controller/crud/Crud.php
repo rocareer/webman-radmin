@@ -488,7 +488,7 @@ class Crud extends Backend
     {
         $table      = $this->request->get('table');
         $connection = $this->request->get('connection');
-        $connection = $connection ?: config('plugin.radmin.think-orm.default');
+        $connection = $connection ?: config('plugin.radmin.database.default');
 
         $crudLog = Rdb::name('crud_log')
             ->where('table_name', $table)

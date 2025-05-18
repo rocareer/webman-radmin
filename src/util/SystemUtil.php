@@ -19,7 +19,7 @@ class SystemUtil
 {
     public static function get_sys_config(string $name = '', string $group = '', bool $concise = true): mixed
     {
-        if (!radminInstalled()) {
+        if (!static::installed()) {
             return [];
         }
         if ($name) {
@@ -66,9 +66,6 @@ class SystemUtil
      */
     public static function installed(): bool
     {
-        if (getenv('INSTALLED')){
-            return true;
-        }
-        return false;
+        return radmin_config('app.installed');
     }
 }

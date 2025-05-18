@@ -122,7 +122,7 @@ class TableManager
      */
     public static function isMultiDatabase(): bool
     {
-        return count(config("plugin.radmin.think-orm.connections")) > 1;
+        return count(config("plugin.radmin.database.connections")) > 1;
     }
 
     /**
@@ -133,7 +133,7 @@ class TableManager
     public static function getConnection(?string $source = null): string
     {
         if (!$source || $source === 'default') {
-            return config('plugin.radmin.think-orm.default');
+            return config('plugin.radmin.database.default');
         }
         return $source;
     }
@@ -146,7 +146,7 @@ class TableManager
     public static function getConnectionConfig(?string $connection = null): array
     {
         $connection = self::getConnection($connection);
-        $connection =  config("plugin.radmin.think-orm.connections.$connection");
+        $connection =  config("plugin.radmin.database.connections.$connection");
         if (!is_array($connection)) {
             throw new Exception('Database connection configuration error');
         }
@@ -178,7 +178,7 @@ class TableManager
         // 数据库为懒连接，执行 sql 命令为 $db 实例连接数据库
         $db->query('SELECT 1');
 
-        $table = config('plugin.radmin.think-orm.migration_table', 'migrations');
+        $table = config('plugin.radmin.database.migration_table', 'migrations');
         return [
             'adapter'         => $config['type'],
             'connection'      => $db->getPdo(),

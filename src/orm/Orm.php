@@ -25,7 +25,7 @@ class Orm implements Bootstrap
 		}
 		self::$initialized = true;
 		
-		$config = config('plugin.radmin.think-orm', config('plugin.radmin.thinkorm'));
+		$config = config('plugin.radmin.database', config('plugin.radmin.thinkorm'));
 		if (!$config) {
 			return;
 		}

@@ -14,6 +14,7 @@ namespace plugin\radmin\extend\ba;
 use plugin\radmin\app\admin\library\module\Manage;
 use Radmin\Http;
 use plugin\radmin\support\member\Member;
+use Radmin\util\SystemUtil;
 use Throwable;
 use Workerman\Protocols\Http\ServerSentEvents;
 
@@ -147,8 +148,8 @@ class Terminal
 
 
         $commands =  config('plugin.radmin.terminal.commands');
-        if (radminInstalled()){
-            $customCommands=get_sys_config('','terminal');
+        if (SystemUtil::installed()){
+            $customCommands=SystemUtil::get_sys_config('','terminal');
             foreach ($customCommands as $k=>$customCommand){
                 foreach ($customCommand as $comd){
                     $commands[$k][$comd['key']]=$comd['value'];

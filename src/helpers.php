@@ -15,6 +15,24 @@ use Radmin\util\FileUtil;
 use Radmin\Http;
 use think\helper\Str;
 
+if (!function_exists('env')) {
+    /**
+     * 获取环境变量
+     * @param $key
+     * @param $default
+     * @return   array|false|mixed|string|null
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/19 06:45
+     */
+    function env($key, $default = null): mixed
+    {
+        if (getenv($key)) {
+          return getenv($key);
+        }
+        return $default;
+    }
+}
+
 if (!function_exists('modify_config')) {
     /**
      * 修改配置文件
@@ -162,7 +180,7 @@ if (!function_exists('getDbPrefix')) {
      */
     function getDbPrefix()
     {
-        return getenv('THINKORM_DEFAULT_PREFIX')??config('plugin.radmin.think-orm.connections.mysql.prefix');
+        return env('MYSQL_PREFIX')??config('plugin.radmin.database.connections.mysql.prefix');
     }
 }
 

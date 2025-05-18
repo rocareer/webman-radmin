@@ -40,7 +40,7 @@ class Rdbm extends DbManager
         if (empty($name)) {
             $name = $this->getConfig('default', 'mysql');
         }
-        $key = "plugin.radmin.think-orm.connections.$name";
+        $key = "plugin.radmin.database.connections.$name";
         $connection = Context::get($key);
         if (!$connection) {
             if (!isset(static::$pools[$name])) {
@@ -97,7 +97,6 @@ class Rdbm extends DbManager
     }
     public function setConfig($config): void
     {
-        // $config=config('plugin.radmin.think-orm.connections.mysql');
         $this->config = $config;
     }
 }

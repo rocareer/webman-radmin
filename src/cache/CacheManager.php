@@ -36,9 +36,9 @@ class CacheManager extends  \Webman\ThinkCache\CacheManager
     public function getConfig(string $name = '', mixed $default = null): mixed
     {
         if ($name) {
-            return config("plugin.radmin.think-cache.$name", $default);
+            return config("plugin.radmin.cache.$name", $default);
         }
-        return config('plugin.radmin.think-cache');
+        return config('plugin.radmin.cache');
     }
 
 }

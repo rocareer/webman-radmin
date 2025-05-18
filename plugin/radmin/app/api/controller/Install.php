@@ -53,7 +53,7 @@ class Install
      * 配置文件
      */
     //    static string $dbConfigFileName    = 'database.php';
-    static string $dbConfigFileName    = 'think-orm.php';
+    static string $dbConfigFileName    = 'database.php';
     static string $buildConfigFileName = 'buildadmin.php';
 
     /**
@@ -126,9 +126,9 @@ class Install
         if ($this->isInstallComplete()) {
             return $this->error(__('The system has completed installation. If you need to reinstall, please delete the %s file first', ['plugin/radmin/public/' . self::$lockFileName]), []);
         }
-        //        if (getenv('THINKORM_DEFAULT_TYPE')) {
-        //            return $this->error(__('检测到带有数据库配置的 .env 文件。请清理后再试一次!'));
-        //        }
+        if (getenv('MYSQL_DATABASE')) {
+            return $this->error(__('检测到带有数据库配置的 .env 文件。请清理后再试一次!'));
+        }
 
         // php版本-start
         $phpVersion        = phpversion();
@@ -470,10 +470,10 @@ class Install
                 $key   = $matches[1];
                 $value = $databaseParam[$key] ?? $matches[4]; // 如果 $databaseParam 中没有值，则保留原来的默认值
 
-                // 特殊处理 hostport，因为环境变量名称是 THINKORM_DEFAULT_PORT
+                // 特殊处理 hostport
                 $envKey = ($key == 'hostport') ? 'PORT' : strtoupper($key);
 
-                return "'{$key}' => getenv('THINKORM_DEFAULT_{$envKey}', '{$value}'),";
+                return "'{$key}' => getenv('MYSQL_{$envKey}', '{$value}'),";
             };
 
             $dbConfigText = preg_replace_callback(
@@ -504,32 +504,32 @@ class Install
             }
 
             // 清理已有的数据库配置
-            $databasePos = stripos($envFileContent, '#THINKORM');
+            $databasePos = stripos($envFileContent, '#MYSQL');
             if ($databasePos !== false) {
                 $envFileContent = substr($envFileContent, 0, $databasePos);
             }
 
             // 准备新的数据库配置
             $envConfig = [
-                '#THINKORM',
-                'THINKORM_DEFAULT_TYPE=mysql',
-                'THINKORM_DEFAULT_HOSTNAME=' . $databaseParam['hostname'],
-                'THINKORM_DEFAULT_DATABASE=' . $databaseParam['database'],
-                'THINKORM_DEFAULT_USERNAME=' . $databaseParam['username'],
-                'THINKORM_DEFAULT_PASSWORD=' . $databaseParam['password'],
-                'THINKORM_DEFAULT_PORT=' . $databaseParam['hostport'],
-                'THINKORM_DEFAULT_PREFIX=' . $databaseParam['prefix'],
-                'THINKORM_DEFAULT_CHARSET=utf8mb4',
-                'THINKORM_DEFAULT_DEBUG=true'
+                '#MYSQL',
+                'MYSQL_DEFAULT=mysql',
+                'MYSQL_HOSTNAME=' . $databaseParam['hostname'],
+                'MYSQL_DATABASE=' . $databaseParam['database'],
+                'MYSQL_USERNAME=' . $databaseParam['username'],
+                'MYSQL_PASSWORD=' . $databaseParam['password'],
+                'MYSQL_HOSTPORT=' . $databaseParam['hostport'],
+                'MYSQL_PREFIX=' . $databaseParam['prefix'],
+                'MYSQL_CHARSET=utf8mb4',
+                'MYSQL_DEBUG=true'
             ];
 
             // 合并现有内容和新配置
             $envFileContent = rtrim($envFileContent, "\n") . "\n\n" . implode("\n", $envConfig) . "\n";
 
             // 写入 .env-example 文件
-            if (file_put_contents($envFile, $envFileContent) === false) {
-                throw new \Exception(__('File has no write permission:%s', ['/.env-example']));
-            }
+            // if (file_put_contents($envFile, $envFileContent) === false) {
+            //     throw new \Exception(__('File has no write permission:%s', ['/.env-example']));
+            // }
 
             // 写入 .env 文件
             if (file_put_contents($env, $envFileContent) === false) {
@@ -541,12 +541,8 @@ class Install
         }
 
         // 设置新的Token随机密钥key
-        $oldTokenKey        = config('plugin.radmin.buildadmin.token.key');
         $newTokenKey        = Random::build('alnum', 32);
-        $buildConfigFile    = base_path() . '/plugin/radmin/config/' . self::$buildConfigFileName;
-        $buildConfigContent = @file_get_contents($buildConfigFile);
-        $buildConfigContent = preg_replace("/'key'(\s+)=>(\s+)'$oldTokenKey'/", "'key'\$1=>\$2'$newTokenKey'", $buildConfigContent);
-        $result             = @file_put_contents($buildConfigFile, $buildConfigContent);
+        $result             =  modify_config(self::$buildConfigFileName,['token'=>['key'=>$newTokenKey]],'radmin');
         if (!$result) {
             return $this->error(__('File has no write permission:%s', ['/plugin/radmin/config/' . self::$buildConfigFileName]));
         }
@@ -594,17 +590,6 @@ class Install
                 }
             } else {
                 // 管理员配置入库
-
-                $saveData = [
-                    'username' => $param['adminname'],
-                    'nickname' => ucfirst($param['adminname']),
-                ];
-                if (isset($param['adminpassword']) && $param['adminpassword']) {
-                    $salt                 = Random::build('alnum', 16);
-                    $passwd               = hash_password($param['adminpassword'], $salt);
-                    $saveData["password"] = $passwd;
-                    $saveData['salt']     = $salt;
-                }
                 try {
                     // (new Terminal)->exec(false,'worker.reload');
                     // 管理员配置入库
@@ -677,7 +662,6 @@ class Install
         }
 
         if (Terminal::mvDist()) {
-            // copy(base_path().'/vendor/rocareer/radmin/plugin/radmin/config/event.php',base_path().'/plugin/radmin/config/event.php');
             return $this->success();
         } else {
             return $this->error(__('Failed to move the front-end file, please move it manually!'));
@@ -704,9 +688,10 @@ class Install
     {
 
         try {
-            $dbConfig                         = config('plugin.radmin.think-orm');
+            $dbConfig                         = config('plugin.radmin.database');
             $dbConfig['connections']['mysql'] = array_merge($dbConfig['connections']['mysql'], $database);
 
+            var_dump($dbConfig);
             Rdb::setConfig($dbConfig);
             Rdb::connect('mysql');
             Rdb::execute("SELECT 1");

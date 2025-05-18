@@ -1,29 +1,45 @@
 <?php
-return  [
-    'default' => 'mysql',
+
+
+return [
+    'default' => env('MYSQL_DEFAULT', 'mysql'),
     'connections' => [
         'mysql' => [
-            'driver'      => 'mysql',
-            'host'        => '127.0.0.1',
-            'port'        => '3306',
-            'database'    => 'your_database',
-            'username'    => 'your_username',
-            'password'    => 'your_password',
-            'charset'     => 'utf8mb4',
-            'collation'   => 'utf8mb4_general_ci',
-            'prefix'      => '',
-            'strict'      => true,
-            'engine'      => null,
-            'options'   => [
-                PDO::ATTR_EMULATE_PREPARES => false, // Must be false for Swoole and Swow drivers.
+            // 数据库类型
+            'type' => 'mysql',
+            // 服务器地址
+            'hostname' => env('MYSQL_HOSTNAME', '127.0.0.1'),
+            // 数据库名
+            'database' => env('MYSQL_DATABASE', 'dev'),
+            // 数据库用户名
+            'username' => env('MYSQL_USERNAME', 'root'),
+            // 数据库密码
+            'password' => env('MYSQL_PASSWORD', '123456'),
+            // 数据库连接端口
+            'hostport' => env('MYSQL_HOSTPORT', '3306'),
+            // 数据库连接参数
+            'params' => [
+                // 连接超时3秒
+                \PDO::ATTR_TIMEOUT => 3,
             ],
+            // 数据库编码默认采用utf8
+            'charset' => env('MYSQL_CHARSET', 'utf8mb4'),
+            // 数据库表前缀
+            'prefix' => env('MYSQL_PREFIX', 'ra_'),
+            // 断线重连
+            'break_reconnect' => true,
+            // 自定义分页类
+            'bootstrap' =>  '',
+            // 连接池配置
             'pool' => [
-                'max_connections' => 5,
-                'min_connections' => 1,
-                'wait_timeout' => 3,
-                'idle_timeout' => 60,
-                'heartbeat_interval' => 50,
+                'max_connections' => 5, // 最大连接数
+                'min_connections' => 1, // 最小连接数
+                'wait_timeout' => 3,    // 从连接池获取连接等待超时时间
+                'idle_timeout' => 60,   // 连接最大空闲时间，超过该时间会被回收
+                'heartbeat_interval' => 50, // 心跳检测间隔，需要小于60秒
             ],
+            'deploy'=>0,
+            'migration_table' => env('MYSQL_MIGRATION_TABLE', 'migrations')
         ],
     ],
 ];

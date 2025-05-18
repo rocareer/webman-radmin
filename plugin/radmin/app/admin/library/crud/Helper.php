@@ -285,7 +285,7 @@ class Helper
             return $data['id'];
         }
 
-        $connection = $data['table']['databaseConnection'] ?: config('plugin.radmin.think-orm.default');
+        $connection = $data['table']['databaseConnection'] ?: config('plugin.radmin.database.default');
         $log        = CrudLog::create([
             'table_name' => $data['table']['name'],
             'comment'    => $data['table']['comment'],
@@ -1013,7 +1013,7 @@ class Helper
 
     public static function writeModelFile(string $tablePk, array $fieldsMap, array $modelData, array $modelFile): void
     {
-        if ($modelData['connection'] && $modelData['connection'] != config('plugin.radmin.think-orm.default')) {
+        if ($modelData['connection'] && $modelData['connection'] != config('plugin.radmin.database.default')) {
             $modelData['connection'] = "\n" . self::tab() . "// 数据库连接配置标识\n" . self::tab() . 'protected $connection = ' . "'{$modelData['connection']}';\n";
         } else {
             $modelData['connection'] = '';

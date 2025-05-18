@@ -398,7 +398,7 @@ class DataMigrate extends Command
     private function ensureMigrationsTableExists(): void
     {
         $tableName     = self::MIGRATIONS_TABLE;
-        $prefix        = config('plugin.radmin.think-orm.connections.mysql.prefix');
+        $prefix        = config('plugin.radmin.database.connections.mysql.prefix');
         $fullTableName = $prefix . $tableName;
 
         // todo 没有fetch 方法

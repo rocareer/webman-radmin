@@ -18,9 +18,10 @@
 use Radmin\Request;
 
 return [
-    'debug'             => getenv('APP_DEBUG', true),
+    'debug'             => env('APP_DEBUG', true),
+    'installed'         => false,
     'error_reporting'   => E_ALL,
-    'default_timezone'  => getenv('DEFAULT_TIMEZONE', 'Asia/Shanghai'),
+    'default_timezone'  => env('DEFAULT_TIMEZONE', 'Asia/Shanghai'),
     'controller_suffix' => '',
     'controller_reuse'  => false,
 
@@ -30,8 +31,8 @@ return [
     'app_path'       => base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/app',
 
     // http cache 实验功能
-    'http_cache'     => getenv('HTTP_CACHE', false),
-    'http_cache_ttl' => getenv('HTTP_CACHE_TTL', 0),
+    'http_cache'     => env('HTTP_CACHE', false),
+    'http_cache_ttl' => env('HTTP_CACHE_TTL', 0),
 
     'plugin_url' => '/app/radmin',
 
