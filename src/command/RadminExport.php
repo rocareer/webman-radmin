@@ -61,7 +61,7 @@ class RadminExport extends Command
         foreach ($this->paths as $source=>$target) {
             $source=base_path() . DIRECTORY_SEPARATOR .$source;
             $target=$this->plugin_vendor.DIRECTORY_SEPARATOR.$target;
-            FileUtil::syncDir($source, $target);
+            FileUtil::syncDir($source, $target,['*node_modules*']);
         }
 
     }

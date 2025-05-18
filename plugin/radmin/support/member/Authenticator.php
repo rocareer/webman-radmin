@@ -15,7 +15,6 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use Throwable;
-use Webman\Event\Event;
 
 /**
  * 认证器抽象基类
