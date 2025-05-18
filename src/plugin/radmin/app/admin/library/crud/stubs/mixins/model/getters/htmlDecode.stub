@@ -1,5 +1,0 @@
-
-    public function get{%field%}Attr($value): string
-    {
-        return !$value ? '' : htmlspecialchars_decode($value);
-    }
