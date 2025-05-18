@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace plugin\radmin\exception;
 
 use FastRoute\BadRouteException;
-use plugin\radmin\support\Log;
+use Radmin\Log;
 use Radmin\Response;
 use think\db\exception\DbException;
 use think\exception\ValidateException;

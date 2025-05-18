@@ -2,7 +2,6 @@
 
 namespace Radmin;
 
-use plugin\radmin\support\Log;
 use Psr\Log\LoggerInterface;
 
 class Event
@@ -72,7 +71,7 @@ class Event
                 $response = $listener($data, $event_name);
             } catch (\Throwable $e) {
                 $responses[] = $e;
-                if (!static::$logger && is_callable('\plugin\radmin\support\Log::error')) {
+                if (!static::$logger && is_callable('\Radmin\Log')) {
                     static::$logger = Log::channel();
                 }
                 if (static::$logger) {

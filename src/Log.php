@@ -8,17 +8,10 @@
  * Copyright [2014-2026] [https://rocareer.com]
  * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
-namespace plugin\radmin\support;
+namespace Radmin;
 
 
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Handler\FormattableHandlerInterface;
-use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
-
-use function array_values;
-use function config;
-use function is_array;
 
 /**
  * Class Log

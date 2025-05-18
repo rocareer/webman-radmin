@@ -4,7 +4,7 @@ namespace plugin\radmin\support\bootstrap;
 
 use Radmin\Container;
 use Radmin\Event as E;
-use plugin\radmin\support\Log;
+use Radmin\Log;
 use Webman\Bootstrap;
 
 class Event implements Bootstrap
