@@ -7,6 +7,7 @@ use plugin\radmin\app\common\controller\Frontend;
 use plugin\radmin\extend\ba\Tree;
 use plugin\radmin\support\member\Member;
 use Radmin\orm\Rdb;
+use Radmin\util\SystemUtil;
 use Throwable;
 
 class Index extends Frontend
@@ -71,9 +72,9 @@ class Index extends Frontend
 
         $data = [
             'site'             => [
-                'siteName'     => get_sys_config('site_name'),
-                'recordNumber' => get_sys_config('record_number'),
-                'version'      => get_sys_config('version'),
+                'siteName'     => SystemUtil::get_sys_config('site_name'),
+                'recordNumber' => SystemUtil::get_sys_config('record_number'),
+                'version'      => SystemUtil::get_sys_config('version'),
                 'cdnUrl'       => full_url(),
                 'upload'       => keys_to_camel_case(get_upload_config(), [
                     'max_size',

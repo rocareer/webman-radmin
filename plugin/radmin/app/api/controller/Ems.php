@@ -3,6 +3,7 @@
 
 namespace plugin\radmin\app\api\controller;
 
+use Radmin\util\SystemUtil;
 use think\facade\Validate;
 use Throwable;
 use plugin\radmin\extend\ba\Captcha;
@@ -90,7 +91,7 @@ class Ems extends Frontend
 
         // 生成一个验证码
         $code    = $captchaObj->create($params['email'] . $params['event']);
-        $subject = __($params['event']) . '-' . get_sys_config('site_name');
+        $subject = __($params['event']) . '-' . SystemUtil::get_sys_config('site_name');
         $body    = __('Your verification code is: %s', [$code]);
 
         try {

@@ -185,7 +185,7 @@ if (!function_exists('set_timezone')) {
 
         $defaultTimezone = config('plugin.radmin.radmin.default_timezone');
 
-        $timezone = is_null($timezone) ? get_sys_config('time_zone') : $timezone;
+        $timezone = is_null($timezone) ? SystemUtil::get_sys_config('time_zone') : $timezone;
         if ($timezone && $defaultTimezone != $timezone) {
             date_default_timezone_set($timezone);
         }

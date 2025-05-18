@@ -9,6 +9,7 @@ use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\common\library\Email;
 use Radmin\util\FileUtil;
 use Radmin\Response;
+use Radmin\util\SystemUtil;
 use Throwable;
 
 class Config extends Backend
@@ -55,7 +56,7 @@ class Config extends Backend
             'list'          => $list,
             'remark'        => SystemUtil::get_route_remark(),
             'configGroup'   => $newConfigGroup ?? [],
-            'quickEntrance' => get_sys_config('config_quick_entrance'),
+            'quickEntrance' => SystemUtil::get_sys_config('config_quick_entrance'),
         ]);
     }
 
@@ -259,7 +260,7 @@ class Config extends Backend
             $mail->isSMTP();
             $mail->addAddress($data['testMail']);
             $mail->isHTML();
-            $mail->setSubject(__('This is a test email') . '-' . get_sys_config('site_name'));
+            $mail->setSubject(__('This is a test email') . '-' . SystemUtil::get_sys_config('site_name'));
             $mail->Body = __('Congratulations, receiving this email means that your email service has been configured correctly');
             $mail->send();
         } catch (PHPMailerException) {

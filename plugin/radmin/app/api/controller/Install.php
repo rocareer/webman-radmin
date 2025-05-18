@@ -547,11 +547,6 @@ class Install
             return $this->error(__('File has no write permission:%s', ['/plugin/radmin/config/' . self::$buildConfigFileName]));
         }
 
-        // 建立安装锁文件
-        // $result = @file_put_contents(base_path().'/plugin/radmin/public/' . self::$lockFileName, date('Y-m-d H:i:s'));
-        // if (!$result) {
-        //     return $this->error(__('File has no write permission:%s', ['plugin/radmin/public/' . self::$lockFileName]));
-        // }
 
 
         return $this->success('', [
@@ -563,6 +558,8 @@ class Install
     protected function isInstallComplete(): bool
     {
         if (is_file(base_path() . '/plugin/radmin/public/' . self::$lockFileName)) {
+            // 修改配置文件,标记安装完成
+            modify_config('app.php',['installed'=>true],'radmin');
             $contents = @file_get_contents(base_path() . '/plugin/radmin/public/' . self::$lockFileName);
             if ($contents == self::$InstallationCompletionMark) {
                 return true;
@@ -577,7 +574,6 @@ class Install
      */
     public function commandExecComplete(): Response
     {
-
         try {
             if ($this->isInstallComplete()) {
                 return $this->error(__('The system has completed installation. If you need to reinstall, please delete the %s file first', ['public/' . self::$lockFileName]));

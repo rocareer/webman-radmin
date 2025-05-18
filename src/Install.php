@@ -88,24 +88,6 @@ class Install
             }
         }
 
-        // 处理 .env-example 文件，复制并重命名为 .env
-        $sourceEnvFile = __DIR__ . '/.env-example';
-        $destEnvFile   = base_path() . '/.env';
-
-        // if (file_exists($destEnvFile)) {
-        //     if (copy($destEnvFile, $backup_path . str_replace(base_path(), '', $destEnvFile))) {
-        //         echo "backup .env\n";
-        //     } else {
-        //         echo "Failed to backup .env\n";
-        //     }
-        // }
-        // if (file_exists($sourceEnvFile)) {
-        //     if (copy($sourceEnvFile, $destEnvFile)) {
-        //         echo "Copied .env-example to .env\n";
-        //     } else {
-        //         echo "Failed to copy .env-example to .env\n";
-        //     }
-        // }
     }
 
     /**
