@@ -5,6 +5,7 @@ namespace Radmin\bootstrap;
 use Radmin\Container;
 use Radmin\Event as E;
 use Radmin\Log;
+use Radmin\util\SystemUtil;
 use Webman\Bootstrap;
 
 class Event implements Bootstrap
@@ -21,14 +22,15 @@ class Event implements Bootstrap
      */
     public static function start($worker): void
     {
-
-        static::getEvents([config()]);
-        foreach (static::$events as $name => $events) {
-            // 支持排序，1 2 3 ... 9 a b c...z
-            ksort($events, SORT_NATURAL);
-            foreach ($events as $callbacks) {
-                foreach ($callbacks as $callback) {
-                    E::on($name, $callback);
+        if (SystemUtil::installed()) {
+            static::getEvents([config()]);
+            foreach (static::$events as $name => $events) {
+                // 支持排序，1 2 3 ... 9 a b c...z
+                ksort($events, SORT_NATURAL);
+                foreach ($events as $callbacks) {
+                    foreach ($callbacks as $callback) {
+                        E::on($name, $callback);
+                    }
                 }
             }
         }

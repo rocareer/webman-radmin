@@ -15,6 +15,78 @@ use Radmin\util\FileUtil;
 use Radmin\Http;
 use think\helper\Str;
 
+if (!function_exists('modify_config')) {
+    /**
+     * 修改配置文件
+     *
+     * @param string $configFile 配置文件路径（相对于config目录）
+     * @param array  $newConfig  要修改或添加的配置项
+     * @return bool 是否修改成功
+     */
+    function modify_config(string $configFile, array $newConfig, ?string $plugin = null, bool $replace = false, bool $convertToClass = true): bool
+    {
+        $configPath=config_path();
+        if ($plugin){
+            $configPath=base_path().DIRECTORY_SEPARATOR.'plugin'.DIRECTORY_SEPARATOR.$plugin.DIRECTORY_SEPARATOR.'config';
+        }
+        $configPath = $configPath. DIRECTORY_SEPARATOR . $configFile;
+
+        // 检查文件是否存在
+        if (!file_exists($configPath)) {
+            throw new InvalidArgumentException("配置文件 {$configFile} 不存在");
+        }
+
+        // 获取当前配置
+        $currentConfig = include $configPath;
+        if (!is_array($currentConfig)) {
+            throw new RuntimeException("配置文件 {$configFile} 必须返回数组");
+        }
+
+        // 处理配置
+        if ($replace) {
+            $mergedConfig = $newConfig;
+        } else {
+            if (array_keys($currentConfig) === range(0, count($currentConfig) - 1)) {
+                // 简单数组处理
+                $mergedConfig = array_unique(array_merge($currentConfig, $newConfig));
+
+                // 格式转换
+                if ($convertToClass) {
+                    $mergedConfig = array_map(function($item) {
+                        if (is_string($item) && strpos($item, '\\') !== false && !str_ends_with($item, '::class')) {
+                            return '\\' . trim(str_replace("'", "", $item), '\\') . '::class';
+                        }
+                        return $item;
+                    }, $mergedConfig);
+                }
+            } else {
+                // 关联数组处理
+                $mergedConfig = array_merge_recursive($currentConfig, $newConfig);
+            }
+        }
+
+        // 保留注释
+        $originalContent = file_get_contents($configPath);
+        preg_match('/<\?php(.*?)\nreturn\s*\[/s', $originalContent, $matches);
+        $headerComment = $matches[1] ?? '';
+
+        // 生成新的配置内容
+        $newContent = "<?php{$headerComment}\nreturn " . var_export($mergedConfig, true) . ";\n";
+
+        // 格式化数组缩进
+        $newContent = preg_replace('/\s+array\s*\(/', ' [', $newContent);
+        $newContent = preg_replace('/\s+\)/', ' ]', $newContent);
+        $newContent = preg_replace('/array\s*\(/', '[', $newContent);
+        $newContent = preg_replace('/\)/', ']', $newContent);
+        $newContent = str_replace('  ', '    ', $newContent); // 统一缩进为4个空格
+
+        // 写入文件
+        return file_put_contents($configPath, $newContent) !== false;
+    }
+
+}
+
+
 if (!function_exists('formatBytes')) {
     /**
      * 将字节大小转换为人类可读的格式

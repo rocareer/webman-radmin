@@ -13,4 +13,5 @@ return [
     \Radmin\command\RadminExport::class,
     \Radmin\command\DataBackup::class,
     \Radmin\command\DataRestore::class,
+    \Radmin\command\DevTest::class
 ];

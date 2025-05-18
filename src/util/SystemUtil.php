@@ -56,4 +56,19 @@ class SystemUtil
             ->value('remark');
         return __((string)$remark);
     }
+
+
+    /**
+     *
+     * @return   bool
+     * Author:   albert <albert@rocareer.com>
+     * Time:     2025/5/19 05:58
+     */
+    public static function installed(): bool
+    {
+        if (getenv('INSTALLED')){
+            return true;
+        }
+        return false;
+    }
 }
