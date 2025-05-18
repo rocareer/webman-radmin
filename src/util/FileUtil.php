@@ -6,7 +6,7 @@ namespace Radmin\util;
 use Exception;
 use FilesystemIterator;
 use PhpZip\ZipFile;
-use plugin\radmin\exception\BusinessException;
+use Radmin\exception\BusinessException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Throwable;

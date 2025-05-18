@@ -10,7 +10,7 @@ return [
     'disks'   => [
         'local'  => [
             'type' => 'local', // 本地存储
-            'root' => runtime_path('storage'), // 存储根目录
+            'root' => runtime_path('radmin/storage'), // 存储根目录
             'url'        => '/storage',
         ],
         'ftp'    => [

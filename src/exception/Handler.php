@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace plugin\radmin\exception;
+namespace Radmin\exception;
 
 use FastRoute\BadRouteException;
 use Radmin\Log;

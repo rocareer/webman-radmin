@@ -4,7 +4,7 @@
 namespace plugin\radmin\support\member\user;
 
 use plugin\radmin\support\member\Authenticator;
-use plugin\radmin\exception\UnauthorizedHttpException;
+use Radmin\exception\UnauthorizedHttpException;
 
 class UserAuthenticator extends Authenticator
 {

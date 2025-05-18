@@ -8,7 +8,7 @@ namespace plugin\radmin\extend\ba;
 use Phinx\Db\Adapter\AdapterFactory;
 use Phinx\Db\Adapter\AdapterInterface;
 use Phinx\Db\Table;
-use plugin\radmin\exception\Exception;
+use Radmin\exception\Exception;
 use Radmin\orm\Rdb;
 use Throwable;
 

@@ -3,7 +3,7 @@
 
 namespace plugin\radmin\support\member;
 
-use plugin\radmin\exception\BusinessException;
+use Radmin\exception\BusinessException;
 
 interface InterfaceAuthenticator
 {

@@ -12,7 +12,7 @@ use plugin\radmin\support\member\user\UserModel;
 use plugin\radmin\support\member\user\UserService;
 use plugin\radmin\support\member\user\UserState;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\exception\BusinessException;
+use Radmin\exception\BusinessException;
 
 class Factory
 {

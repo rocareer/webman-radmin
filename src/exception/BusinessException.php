@@ -18,10 +18,12 @@
 
 declare(strict_types=1);
 
-namespace plugin\radmin\exception;
+namespace Radmin\exception;
 
+use plugin\radmin\support\StatusCode;
+use Throwable;
 
-class TokenExpiredException extends Exception
+class BusinessException extends Exception
 {
     /**
      * HTTP 状态码
@@ -31,6 +33,19 @@ class TokenExpiredException extends Exception
     /**
      * 错误消息.
      */
-    public string $errorMessage = 'Token已过期';
+    public string $errorMessage = 'BusinessException';
 
+
+    public function __construct($errorMessage = null, $code = 0,$needLogin = false,$data = [], ?Throwable $previous = null)
+    {
+
+        $params['errorCode'] = $code;
+        $params['data'] = $data;
+        if ($needLogin) {
+            $params['data']['type'] = 'need login';
+            $params['errorCode']    = StatusCode::NEED_LOGIN;
+        }
+        parent::__construct($errorMessage, $params, $previous);
+
+    }
 }

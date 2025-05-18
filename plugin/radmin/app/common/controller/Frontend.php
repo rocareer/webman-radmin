@@ -1,10 +1,10 @@
 <?php
 
 namespace plugin\radmin\app\common\controller;
-use service\auth\Auth;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
-use plugin\radmin\exception\UnauthorizedHttpException;
+use Radmin\exception\UnauthorizedHttpException;
+use service\auth\Auth;
 use think\exception\HttpResponseException;
 use Throwable;
 

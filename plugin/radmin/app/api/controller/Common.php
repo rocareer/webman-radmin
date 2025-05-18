@@ -5,10 +5,10 @@ namespace plugin\radmin\app\api\controller;
 
 use Exception;
 use plugin\radmin\app\common\controller\Api;
-use plugin\radmin\exception\BusinessException;
 use plugin\radmin\extend\ba\Captcha;
 use plugin\radmin\extend\ba\ClickCaptcha;
 use plugin\radmin\support\StatusCode;
+use Radmin\exception\BusinessException;
 use Radmin\Response;
 use Radmin\token\Token;
 use Throwable;

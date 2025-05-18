@@ -18,12 +18,11 @@
 
 declare(strict_types=1);
 
-namespace plugin\radmin\exception;
+namespace Radmin\exception;
 
-use plugin\radmin\support\StatusCode;
 use Throwable;
 
-class UnauthorizedHttpException extends Exception
+class TokenException extends Exception
 {
     /**
      * HTTP 状态码
@@ -33,19 +32,13 @@ class UnauthorizedHttpException extends Exception
     /**
      * 错误消息.
      */
-    public string $errorMessage = 'Unauthorized';
+    public string $errorMessage = 'TokenException';
 
 
-    public function __construct(?string $errorMessage = null, $code = 0,$needLogin = false,array $data = [], ?Throwable $previous = null)
+    public function __construct($errorMessage = null, $code = 0,array $data = [], ?Throwable $previous = null)
     {
-
-        $errorMessage=$errorMessage??$this->errorMessage;
-        $params['errorCode'] = $code;
         $params['data'] = $data;
-        if ($needLogin) {
-            $params['data']['type'] = 'need login';
-            $params['errorCode']    = StatusCode::NEED_LOGIN;
-        }
+        $params['errorCode'] = $code;
         parent::__construct($errorMessage, $params, $previous);
     }
 }

@@ -17,11 +17,11 @@ namespace plugin\radmin\app\user\controller;
 
 use plugin\radmin\app\api\validate\User as UserValidate;
 use plugin\radmin\app\common\controller\Frontend;
-use plugin\radmin\exception\UnauthorizedHttpException;
 use plugin\radmin\extend\ba\Captcha;
 use plugin\radmin\extend\ba\ClickCaptcha;
 use plugin\radmin\support\member\Member;
 use plugin\radmin\support\StatusCode;
+use Radmin\exception\UnauthorizedHttpException;
 use Radmin\Response;
 use Radmin\token\Token;
 use Throwable;

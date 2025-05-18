@@ -4,7 +4,7 @@ namespace plugin\radmin\app\common\controller;
 
 use Exception;
 use plugin\radmin\app\controller\BaseController;
-use plugin\radmin\exception\ServerErrorHttpException;
+use Radmin\exception\ServerErrorHttpException;
 use Radmin\lang\Lang;
 use Radmin\orm\Rdb;
 use Radmin\Response;
