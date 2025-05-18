@@ -2,7 +2,7 @@
 
 namespace plugin\radmin\app\command;
 
-use plugin\radmin\support\Command as BaseCommand;
+use Radmin\Command;
 use plugin\radmin\support\Event;
 use plugin\radmin\support\orm\Rdb;
 use Symfony\Component\Console\Helper\Table;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class DataMigrate extends BaseCommand
+class DataMigrate extends Command
 {
     protected static $defaultName        = 'data:migrate';
     protected static $defaultDescription = 'Database migration tool';

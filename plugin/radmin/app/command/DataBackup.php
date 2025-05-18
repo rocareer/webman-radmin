@@ -3,7 +3,7 @@
 namespace plugin\radmin\app\command;
 
 use plugin\radmin\app\admin\model\data\Table;
-use plugin\radmin\support\Command as BaseCommand;
+use Radmin\Command;
 use plugin\radmin\support\Event;
 use plugin\radmin\support\File;
 use plugin\radmin\support\orm\Rdb;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use ZipArchive;
 
-class DataBackup extends BaseCommand
+class DataBackup extends Command
 {
     protected static $defaultName        = 'data:backup';
     protected static $defaultDescription = 'Backup specified database tables';

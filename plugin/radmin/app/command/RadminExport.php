@@ -2,8 +2,8 @@
 
 namespace plugin\radmin\app\command;
 
-use plugin\radmin\support\Command;
-use Radmin\HelperFile;
+use Radmin\Command;
+use Radmin\util\FileUtil;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -60,7 +60,7 @@ class RadminExport extends Command
         foreach ($this->paths as $source=>$target) {
             $source=base_path().DIRECTORY_SEPARATOR.$source;
             $target=$this->plugin_vendor.DIRECTORY_SEPARATOR.$target;
-            HelperFile::syncDir($source, $target);
+            FileUtil::syncDir($source, $target);
         }
 
     }
