@@ -7,7 +7,6 @@
 /composer.lock
 
 /app/test/
-/plugin/radmin/
 /public/assets/
 /.idea/
 
