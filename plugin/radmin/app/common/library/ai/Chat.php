@@ -10,10 +10,10 @@ use plugin\radmin\app\common\model\ai\ChatModel;
 use plugin\radmin\app\common\model\ai\Session;
 use plugin\radmin\app\common\model\ai\SessionMessage;
 use plugin\radmin\app\common\model\ai\UserTokens;
-use plugin\radmin\extend\ba\Date;
 use plugin\radmin\support\Cache;
 use Psr\Http\Message\StreamInterface;
 use Radmin\orm\Rdb;
+use Radmin\util\DateUtil;
 use Throwable;
 use Workerman\Protocols\Http\Chunk;
 use Workerman\Protocols\Http\Response;
@@ -696,7 +696,7 @@ class Chat
                 unset($sessionMessage['kbs']);
             }
 
-            $sessionMessage['last_message_time'] = Date::human(time() - 1);
+            $sessionMessage['last_message_time'] = DateUtil::human(time() - 1);
 
             $this->output([
                 'code'  => 1,
