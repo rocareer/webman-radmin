@@ -12,7 +12,7 @@
 namespace plugin\radmin\extend\ba;
 
 use plugin\radmin\app\admin\library\module\Manage;
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use plugin\radmin\support\member\Member;
 use Throwable;
 use Workerman\Protocols\Http\ServerSentEvents;

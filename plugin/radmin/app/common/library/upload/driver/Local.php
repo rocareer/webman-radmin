@@ -5,7 +5,7 @@ namespace plugin\radmin\app\common\library\upload\driver;
 
 use plugin\radmin\app\common\library\upload\driver;
 use plugin\radmin\extend\ba\Filesystem;
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use Webman\Exception\FileException;
 use Webman\Http\UploadFile;
 

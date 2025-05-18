@@ -5,7 +5,7 @@ namespace plugin\radmin\app\command;
 use plugin\radmin\app\admin\model\data\Table;
 use Radmin\Command;
 use Radmin\Event;
-use plugin\radmin\support\File;
+use Radmin\util\FileUtil;
 use plugin\radmin\support\orm\Rdb;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -61,8 +61,8 @@ class DataBackup extends Command
         // 初始化目录
         $baseBackupDir = runtime_path() . get_sys_config('backup_path') . self::BACKUP_PATH;
         $versionDir    = $baseBackupDir . self::VERSION_PATH;
-        File::mkdir($baseBackupDir);
-        File::mkdir($versionDir);
+        FileUtil::mkdir($baseBackupDir);
+        FileUtil::mkdir($versionDir);
 
         // 获取要备份的表
         $tables = $this->getTablesToBackup($input, $output);

@@ -13,7 +13,7 @@
  */
 
 use DI\ContainerBuilder;
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use plugin\radmin\support\member\admin\AdminAuthenticator;
 use plugin\radmin\support\member\admin\AdminModel;
 use plugin\radmin\support\member\admin\AdminService;

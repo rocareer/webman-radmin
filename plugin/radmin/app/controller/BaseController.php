@@ -3,7 +3,7 @@ declare (strict_types=1);
 
 namespace plugin\radmin\app\controller;
 
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use plugin\radmin\support\Request;
 use think\exception\ValidateException;
 use think\Validate;

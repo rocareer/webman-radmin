@@ -6,7 +6,7 @@ use FilesystemIterator;
 use plugin\radmin\extend\ba\Depends;
 use plugin\radmin\extend\ba\Filesystem;
 use plugin\radmin\extend\ba\Version;
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Throwable;

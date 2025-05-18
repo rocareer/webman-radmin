@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\model;
 
 use Exception;
 use plugin\radmin\app\common\model\BaseModel;
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use plugin\radmin\support\orm\Rdb;
 use think\model\relation\BelongsTo;
 

@@ -6,7 +6,7 @@ namespace plugin\radmin\support\member;
 
 use plugin\radmin\exception\BusinessException;
 use plugin\radmin\exception\UnauthorizedHttpException;
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\orm\Model as ThinkModel;
 use plugin\radmin\support\orm\Rdb;

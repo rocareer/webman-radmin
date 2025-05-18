@@ -2,7 +2,7 @@
 
 namespace plugin\radmin\app\admin\controller\log\data;
 
-use plugin\radmin\support\Event;
+use Radmin\Event;
 use plugin\radmin\support\orm\Rdb;
 use Throwable;
 use plugin\radmin\app\common\controller\Backend;

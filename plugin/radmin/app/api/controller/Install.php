@@ -22,7 +22,7 @@ use plugin\radmin\extend\ba\Filesystem;
 use plugin\radmin\extend\ba\Random;
 use plugin\radmin\extend\ba\Terminal;
 use plugin\radmin\extend\ba\Version;
-use plugin\radmin\support\Http;
+use Radmin\Http;
 use plugin\radmin\support\member\admin\AdminModel;
 use plugin\radmin\support\orm\Rdb;
 use plugin\radmin\support\Response;
