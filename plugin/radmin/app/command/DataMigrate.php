@@ -3,7 +3,7 @@
 namespace plugin\radmin\app\command;
 
 use Radmin\Command;
-use plugin\radmin\support\Event;
+use Radmin\Event;
 use plugin\radmin\support\orm\Rdb;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;

@@ -3,7 +3,7 @@
 namespace plugin\radmin\app\command;
 
 use plugin\radmin\app\admin\model\data\Backup;
-use plugin\radmin\support\Event;
+use Radmin\Event;
 use plugin\radmin\support\Log;
 use plugin\radmin\support\orm\Model;
 use plugin\radmin\support\orm\Rdb;

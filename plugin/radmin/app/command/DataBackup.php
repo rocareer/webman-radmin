@@ -4,7 +4,7 @@ namespace plugin\radmin\app\command;
 
 use plugin\radmin\app\admin\model\data\Table;
 use Radmin\Command;
-use plugin\radmin\support\Event;
+use Radmin\Event;
 use plugin\radmin\support\File;
 use plugin\radmin\support\orm\Rdb;
 use Symfony\Component\Console\Input\InputArgument;
