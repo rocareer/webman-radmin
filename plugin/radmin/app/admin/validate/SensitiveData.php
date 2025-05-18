@@ -42,7 +42,7 @@ class SensitiveData extends Validate
             'name'        => __('Name'),
             'data_fields' => __('Data Fields'),
             'controller'  => __('Controller'),
-            'data_table'  => __('Data Table'),
+            'data_table'  => __('Data TableUtil'),
             'primary_key' => __('Primary Key'),
         ];
         parent::__construct();

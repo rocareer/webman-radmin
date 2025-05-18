@@ -40,7 +40,7 @@ class DataRecycle extends Validate
         $this->field = [
             'name'        => __('Name'),
             'controller'  => __('Controller'),
-            'data_table'  => __('Data Table'),
+            'data_table'  => __('Data TableUtil'),
             'primary_key' => __('Primary Key'),
         ];
         parent::__construct();

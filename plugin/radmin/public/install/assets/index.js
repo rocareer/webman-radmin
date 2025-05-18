@@ -27226,7 +27226,7 @@ var nue = _$((go, bo) => {
     };
 
     function wX(e, t) {
-        if (!e) throw new Error("Table is required.");
+        if (!e) throw new Error("TableUtil is required.");
         const n = yX();
         return n.toggleAllSelection = co(n._toggleAllSelection, 10), Object.keys(Vi).forEach(o => {
             u2(c2(t, o), o, n)
@@ -27260,8 +27260,8 @@ var nue = _$((go, bo) => {
         constructor(t) {
             this.observers = [], this.table = null, this.store = null, this.columns = [], this.fit = !0, this.showHeader = !0, this.height = R(null), this.scrollX = R(!1), this.scrollY = R(!1), this.bodyWidth = R(null), this.fixedWidth = R(null), this.rightFixedWidth = R(null), this.gutterWidth = 0;
             for (const n in t) Tt(t, n) && (xt(this[n]) ? this[n].value = t[n] : this[n] = t[n]);
-            if (!this.table) throw new Error("Table is required for Table Layout");
-            if (!this.store) throw new Error("Store is required for Table Layout")
+            if (!this.table) throw new Error("TableUtil is required for TableUtil Layout");
+            if (!this.store) throw new Error("Store is required for TableUtil Layout")
         }
 
         updateScrollY() {

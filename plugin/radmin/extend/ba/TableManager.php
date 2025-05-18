@@ -18,9 +18,9 @@ use Throwable;
 class TableManager
 {
     /**
-     * 返回一个 Phinx/Db/Table 实例 用于操作数据表
+     * 返回一个 Phinx/Db/TableUtil 实例 用于操作数据表
      * @param string  $table         表名
-     * @param array   $options       传递给 Phinx/Db/Table 的 options
+     * @param array   $options       传递给 Phinx/Db/TableUtil 的 options
      * @param bool    $prefixWrapper 是否使用表前缀包装表名
      * @param ?string $connection    连接配置标识
      * @return Table

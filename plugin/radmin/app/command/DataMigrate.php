@@ -464,14 +464,14 @@ class DataMigrate extends Command
             
             if ($tableExists) {
                 // 获取现有表结构
-                $createTableSql = Rdb::query("SHOW CREATE TABLE `{$table}`")->fetch()['Create Table'] ?? '';
+                $createTableSql = Rdb::query("SHOW CREATE TABLE `{$table}`")->fetch()['Create TableUtil'] ?? '';
                 
                 // 生成修改表结构的迁移代码
                 $tableCode = <<<PHP
         // 修改表 {$tableName} 结构
         if (\$this->tableExists('{$table}')) {
             // 获取当前表结构
-            \$currentStructure = Rdb::query("SHOW CREATE TABLE `{$table}`")->fetch()['Create Table'] ?? '';
+            \$currentStructure = Rdb::query("SHOW CREATE TABLE `{$table}`")->fetch()['Create TableUtil'] ?? '';
             
             // 这里添加需要修改的表结构逻辑
             // 示例：添加新字段

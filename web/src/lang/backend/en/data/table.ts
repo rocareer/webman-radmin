@@ -9,6 +9,6 @@ export default {
     remark: 'remark',
     comment: 'Comment',
     create_time: 'create_time',
-    'quick Search Fields': 'Table Name',
+    'quick Search Fields': 'TableUtil Name',
     'None': 'None',
 }

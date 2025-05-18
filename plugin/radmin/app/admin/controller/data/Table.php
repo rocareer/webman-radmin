@@ -82,14 +82,14 @@ class Table extends Backend
                     $createTable = $connection->query("SHOW CREATE TABLE `{$table}`")[0];
 
                     // 使用Table工具类获取表状态信息
-                    $tableStatus = \plugin\radmin\support\Table::status($table);
+                    $tableStatus = \Radmin\util\TableUtil::status($table);
 
                     // 解析字符集
-                    preg_match('/CHARSET=([^\s]+)/i', $createTable['Create Table'], $charsetMatch);
+                    preg_match('/CHARSET=([^\s]+)/i', $createTable['Create TableUtil'], $charsetMatch);
                     $charset = $charsetMatch[1] ?? 'unknown';
 
                     // 解析表注释
-                    preg_match('/COMMENT=\'(.*?)\'/i', $createTable['Create Table'], $commentMatch);
+                    preg_match('/COMMENT=\'(.*?)\'/i', $createTable['Create TableUtil'], $commentMatch);
                     $comment = $commentMatch[1] ?? '';
 
                     $table_record = $this->model->where('name', $table)->find();
@@ -105,7 +105,7 @@ class Table extends Backend
                             'data_size'    => $tableStatus['dataSize'],    // 数据大小（字节）
                             'index_size'   => $tableStatus['indexSize'],   // 索引大小（字节）
                             'total_size'   => $tableStatus['size'],        // 总存储大小（字节）
-                            'columns'      => json_encode(\plugin\radmin\support\Table::getColumns($table), JSON_UNESCAPED_UNICODE), // 字段信息（JSON格式）
+                            'columns'      => json_encode(\Radmin\util\TableUtil::getColumns($table), JSON_UNESCAPED_UNICODE), // 字段信息（JSON格式）
                             'update_time'  => $tableStatus['lastModified'], // 使用表的最后修改时间
                             'create_time'  => $tableStatus['createTime']
                         ]);
@@ -219,7 +219,7 @@ class Table extends Backend
      * @param array $data 表数据，包含 name 和 comment
      * @return bool 是否更新成功
      */
-    // 常量已移至 \plugin\radmin\support\orm\Table 类
+    // 常量已移至 \plugin\radmin\support\orm\TableUtil 类
 
     /**
      * 更新数据表的描述信息
@@ -229,6 +229,6 @@ class Table extends Backend
     protected function updataTable(array $data): bool
     {
         // 使用工具类的方法更新表注释
-        return \plugin\radmin\support\Table::updateTableComment($data['name'], $data['comment'] ?? '');
+        return \Radmin\util\TableUtil::updateTableComment($data['name'], $data['comment'] ?? '');
     }
 }

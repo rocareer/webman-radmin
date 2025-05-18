@@ -111,9 +111,9 @@ class DataBackup extends Command
     private function createSqlBackupFile(string $table, string $tableBackupDir, string $versionTimestamp, array $data): string
     {
         $backupFile  = $tableBackupDir . "{$versionTimestamp}.sql";
-        $createTable = Rdb::query("SHOW CREATE TABLE `{$table}`")[0]['Create Table'];
+        $createTable = Rdb::query("SHOW CREATE TABLE `{$table}`")[0]['Create TableUtil'];
 
-        $content = "-- Table structure for {$table}\n";
+        $content = "-- TableUtil structure for {$table}\n";
         $content .= $createTable . ";\n\n";
         $content .= "-- Data for {$table}\n";
 

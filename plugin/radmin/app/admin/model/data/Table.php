@@ -5,7 +5,7 @@ namespace plugin\radmin\app\admin\model\data;
 use plugin\radmin\app\common\model\BaseModel;
 
 /**
- * Table
+ * TableUtil
  */
 class Table extends BaseModel
 {

@@ -1,17 +1,18 @@
 <?php
 
-namespace plugin\radmin\support;
+namespace Radmin\util;
 
-use plugin\radmin\exception\Exception;
+use Radmin\util\FileUtil;
 use plugin\radmin\support\orm\Rdb;
 use ZipArchive;
+
 
 /**
  * 数据库表操作工具类
  * 
  * 提供数据库表的创建、修改、查询等操作，支持多数据库连接
  */
-class Table
+class TableUtil
 {
     // 支持的数据库引擎
     public const VALID_ENGINES = [
@@ -165,15 +166,15 @@ class Table
             throw new \Exception("表 {$tableName} 不存在");
         }
 
-        File::mkdir($backupDir);
+        FileUtil::mkdir($backupDir);
 
         // 获取表结构和数据
-        $createTable = Rdb::query("SHOW CREATE TABLE `{$tableName}`")[0]['Create Table'];
+        $createTable = Rdb::query("SHOW CREATE TABLE `{$tableName}`")[0]['Create TableUtil'];
         $data = Rdb::table($tableName)->select()->toArray();
         $recordCount = count($data);
 
         // 生成SQL文件内容
-        $content = "-- Table structure for {$tableName}\n";
+        $content = "-- TableUtil structure for {$tableName}\n";
         $content .= $createTable . ";\n\n";
         $content .= "-- Data for {$tableName}\n";
         foreach ($data as $row) {
@@ -219,7 +220,7 @@ class Table
         }
 
         $tempDir = sys_get_temp_dir() . '/restore_' . md5($backupFile) . '/';
-        File::mkdir($tempDir);
+        FileUtil::mkdir($tempDir);
 
         try {
             // 解压备份文件
@@ -262,7 +263,7 @@ class Table
                 throw new \Exception("执行SQL失败: " . $e->getMessage());
             }
         } finally {
-            File::cleanupTempFiles($tempDir);
+            FileUtil::cleanupTempFiles($tempDir);
         }
     }
 
@@ -304,7 +305,7 @@ class Table
         }
 
         $tempDir = sys_get_temp_dir() . '/validate_' . md5($backupFile) . '/';
-       File::mkdir($tempDir);
+       FileUtil::mkdir($tempDir);
 
         try {
             $zip = new ZipArchive();
@@ -320,7 +321,7 @@ class Table
         } catch (\Exception $e) {
             return false;
         } finally {
-           File::cleanupTempFiles($tempDir);
+           FileUtil::cleanupTempFiles($tempDir);
         }
     }
 
@@ -400,13 +401,13 @@ class Table
             $escapedTableName = str_replace('`', '``', $tableName);
             $tableInfo = Rdb::query("SHOW CREATE TABLE `{$escapedTableName}`")[0] ?? [];
 
-            if (empty($tableInfo['Create Table'])) {
+            if (empty($tableInfo['Create TableUtil'])) {
                 error_log("无法获取表结构: {$tableName}");
                 return false;
             }
             
             // 提取并验证表的字符集和引擎信息
-            $createTable = $tableInfo['Create Table'];
+            $createTable = $tableInfo['Create TableUtil'];
             [$engine, $charset] = self::extractAndValidateTableProperties($createTable);
             
             // 手动转义注释内容，避免在DDL语句中使用参数化查询
