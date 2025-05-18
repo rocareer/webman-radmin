@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use plugin\radmin\app\admin\model\Config as ConfigModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\common\library\Email;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use Radmin\Response;
 use Throwable;
 
@@ -101,7 +101,7 @@ class Config extends Backend
                         }
 
                         // 修改 adminBaseRoutePath
-                        $adminBaseFilePath = Filesystem::fsFit(root_path() . $this->filePath['webAdminBase']);
+                        $adminBaseFilePath = FileUtil::fsFit(root_path() . $this->filePath['webAdminBase']);
                         $adminBaseContent  = @file_get_contents($adminBaseFilePath);
                         if (!$adminBaseContent) {
                             return $this->error(__('Configuration write failed: %s', [$this->filePath['webAdminBase']]));
@@ -126,7 +126,7 @@ class Config extends Backend
                         if ($newBackendEntrance != 'admin') {
                             $appMap[$newBackendEntrance] = 'admin';
                         }
-                        $appConfigFilePath = Filesystem::fsFit(root_path() . $this->filePath['appConfig']);
+                        $appConfigFilePath = FileUtil::fsFit(root_path() . $this->filePath['appConfig']);
                         $appConfigContent = @file_get_contents($appConfigFilePath);
                         if (!$appConfigContent) {
                             return $this->error(__('Configuration write failed: %s', [$this->filePath['appConfig']]));
@@ -146,14 +146,14 @@ class Config extends Backend
                         }
 
                         // 建立API入口文件
-                        $oldBackendEntranceFile = Filesystem::fsFit(public_path() . $oldBackendEntrance . '.php');
-                        $newBackendEntranceFile = Filesystem::fsFit(public_path() . $newBackendEntrance . '.php');
+                        $oldBackendEntranceFile = FileUtil::fsFit(public_path() . $oldBackendEntrance . '.php');
+                        $newBackendEntranceFile = FileUtil::fsFit(public_path() . $newBackendEntrance . '.php');
                         if (file_exists($oldBackendEntranceFile)) {
                             @unlink($oldBackendEntranceFile);
                         }
 
                         if ($newBackendEntrance != 'admin') {
-                            $backendEntranceStub = @file_get_contents(Filesystem::fsFit(root_path() . $this->filePath['backendEntranceStub']));
+                            $backendEntranceStub = @file_get_contents(FileUtil::fsFit(root_path() . $this->filePath['backendEntranceStub']));
                             if (!$backendEntranceStub) {
                                 return $this->error(__('Configuration write failed: %s', [$this->filePath['backendEntranceStub']]));
                             }

@@ -7,7 +7,7 @@ use Phinx\Db\Adapter\MysqlAdapter;
 use plugin\radmin\app\admin\model\AdminRule;
 use plugin\radmin\app\admin\model\CrudLog;
 use plugin\radmin\app\common\library\Menu;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use plugin\radmin\extend\ba\TableManager;
 use Radmin\orm\Rdb;
 use think\db\exception\DbException;
@@ -617,8 +617,8 @@ class Helper
             'originalLastName' => $originalLastName,
             'path'             => $pathArr,
             'namespace'        => $namespace,
-            'parseFile'        => Filesystem::fsFit($parseFile),
-            'rootFileName'     => Filesystem::fsFit($rootFileName),
+            'parseFile'        => FileUtil::fsFit($parseFile),
+            'rootFileName'     => FileUtil::fsFit($rootFileName),
         ];
     }
 
@@ -666,7 +666,7 @@ class Helper
             }
         }
         foreach ($webDir as &$item) {
-            if (is_string($item)) $item = Filesystem::fsFit($item);
+            if (is_string($item)) $item = FileUtil::fsFit($item);
         }
         return $webDir;
     }
@@ -689,7 +689,7 @@ class Helper
     public static function getStubFilePath(string $name): string
     {
         //todo
-        return base_path() . '/plugin/radmin/app/admin/' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'crud' . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . Filesystem::fsFit($name) . '.stub';
+        return base_path() . '/plugin/radmin/app/admin/' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'crud' . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . FileUtil::fsFit($name) . '.stub';
     }
 
     /**
@@ -981,7 +981,7 @@ class Helper
 
     public static function writeFile($path, $content): bool|int
     {
-        $path = Filesystem::fsFit($path);
+        $path = FileUtil::fsFit($path);
         if (!is_dir(dirname($path))) {
             mkdir(dirname($path), 0755, true);
         }

@@ -24,7 +24,7 @@
 
 use plugin\radmin\app\admin\library\module\Server;
 use plugin\radmin\app\admin\model\Config as configModel;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use Radmin\Http;
 use Radmin\lang\Lang;
 use Radmin\orm\Rdb;
@@ -271,7 +271,7 @@ function get_upload_config(): array
         $uploadConfig['max_size'] = '10M';
     }
 
-    $uploadConfig['max_size'] = Filesystem::fileUnitToByte($uploadConfig['max_size']);
+    $uploadConfig['max_size'] = FileUtil::fileUnitToByte($uploadConfig['max_size']);
 
     $upload = Http::request()->upload;
     if (!$upload) {
@@ -554,7 +554,7 @@ if (!function_exists('get_account_verification_type')) {
         }
 
         // 手机号，检查是否安装短信模块
-        $sms = Server::getIni(Filesystem::fsFit(root_path() . 'modules/sms/'));
+        $sms = Server::getIni(FileUtil::fsFit(root_path() . 'modules/sms/'));
         if ($sms && $sms['state'] == 1) {
             $types[] = 'mobile';
         }

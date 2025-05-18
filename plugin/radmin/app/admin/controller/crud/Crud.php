@@ -12,7 +12,7 @@ use plugin\radmin\app\admin\model\AdminRule;
 use plugin\radmin\app\admin\model\CrudLog;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\common\library\Menu;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use plugin\radmin\extend\ba\TableManager;
 use Radmin\orm\Rdb;
 use Radmin\Response;
@@ -394,11 +394,11 @@ class Crud extends Backend
         ];
         try {
             foreach ($files as &$file) {
-                $file = Filesystem::fsFit(root_path() . $file);
+                $file = FileUtil::fsFit(root_path() . $file);
                 if (file_exists($file)) {
                     unlink($file);
                 }
-                Filesystem::delEmptyDir(dirname($file));
+                FileUtil::delEmptyDir(dirname($file));
             }
 
             // 删除菜单
@@ -437,18 +437,18 @@ class Crud extends Backend
         }
 
         // 模型和控制器文件和文件列表
-        $adminModelFiles      = Filesystem::getDirFiles(base_path(). DIRECTORY_SEPARATOR . 'plugin/radmin/app/admin' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
-        $commonModelFiles     = Filesystem::getDirFiles(base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/app/common' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
+        $adminModelFiles      = FileUtil::getDirFiles(base_path(). DIRECTORY_SEPARATOR . 'plugin/radmin/app/admin' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
+        $commonModelFiles     = FileUtil::getDirFiles(base_path() . DIRECTORY_SEPARATOR . 'plugin/radmin/app/common' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
         $adminControllerFiles = get_controller_list();
 
         $modelFileList   = [];
         $controllerFiles = [];
         foreach ($adminModelFiles as $item) {
-            $item                 = Filesystem::fsFit('/plugin/radmin/app/admin/model/' . $item);
+            $item                 = FileUtil::fsFit('/plugin/radmin/app/admin/model/' . $item);
             $modelFileList[$item] = $item;
         }
         foreach ($commonModelFiles as $item) {
-            $item                 = Filesystem::fsFit('/plugin/radmin/app/common/model/' . $item);
+            $item                 = FileUtil::fsFit('/plugin/radmin/app/common/model/' . $item);
             $modelFileList[$item] = $item;
         }
 
@@ -466,7 +466,7 @@ class Crud extends Backend
             if (in_array($item, $outExcludeController)) {
                 continue;
             }
-            $item                   = Filesystem::fsFit('/plugin/radmin/app/admin/controller/' . $item);
+            $item                   = FileUtil::fsFit('/plugin/radmin/app/admin/controller/' . $item);
             $controllerFiles[$item] = $item;
         }
 

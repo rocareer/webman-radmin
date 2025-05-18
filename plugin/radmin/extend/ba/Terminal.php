@@ -458,10 +458,10 @@ class Terminal
         $toIndexHtmlPath = base_path() . '/plugin/radmin/public' . DIRECTORY_SEPARATOR . 'index.html';
         $toAssetsPath    = base_path() . '/plugin/radmin/public' . DIRECTORY_SEPARATOR . 'assets';
         @unlink($toIndexHtmlPath);
-        Filesystem::delDir($toAssetsPath);
+        FileUtil::delDir($toAssetsPath);
 
         if (rename($indexHtmlPath, $toIndexHtmlPath) && rename($assetsPath, $toAssetsPath)) {
-            Filesystem::delDir($distPath);
+            FileUtil::delDir($distPath);
             return true;
         } else {
             return false;

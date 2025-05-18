@@ -4,7 +4,7 @@ namespace plugin\radmin\app\admin\library\module;
 use exception;
 use FilesystemIterator;
 use plugin\radmin\extend\ba\Depends;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use plugin\radmin\extend\ba\Version;
 use Radmin\Http;
 use RecursiveDirectoryIterator;
@@ -91,7 +91,7 @@ class Manage
         }
 
         // 目录已存在，但非正常的模块
-        return Filesystem::dirIsEmpty($this->modulesDir) ? self::UNINSTALLED : self::DIRECTORY_OCCUPIED;
+        return FileUtil::dirIsEmpty($this->modulesDir) ? self::UNINSTALLED : self::DIRECTORY_OCCUPIED;
     }
 
     /**
@@ -116,10 +116,10 @@ class Manage
         ]);
 
         // 删除旧版本代码
-        Filesystem::delDir($this->modulesDir);
+        FileUtil::delDir($this->modulesDir);
 
         // 解压
-        Filesystem::unzip($zipFile);
+        FileUtil::unzip($zipFile);
 
         // 删除下载的zip
         @unlink($zipFile);
@@ -143,7 +143,7 @@ class Manage
      */
     public function upload(string $token, string $file): array
     {
-        $file = Filesystem::fsFit(root_path() . 'public' . $file);
+        $file = FileUtil::fsFit(root_path() . 'public' . $file);
         if (!is_file($file)) {
             // 包未找到
             throw new Exception('Zip file not found');
@@ -153,7 +153,7 @@ class Manage
         copy($file, $copyTo);
 
         // 解压
-        $copyToDir = Filesystem::unzip($copyTo);
+        $copyToDir = FileUtil::unzip($copyTo);
         $copyToDir .= DIRECTORY_SEPARATOR;
 
         // 删除zip
@@ -163,7 +163,7 @@ class Manage
         // 读取ini
         $info = Server::getIni($copyToDir);
         if (empty($info['uid'])) {
-            Filesystem::delDir($copyToDir);
+            FileUtil::delDir($copyToDir);
             // 基本配置不完整
             throw new Exception('Basic configuration of the Module is incomplete');
         }
@@ -180,7 +180,7 @@ class Manage
                 'server'        => 1,
             ]);
         } catch (Throwable $e) {
-            Filesystem::delDir($copyToDir);
+            FileUtil::delDir($copyToDir);
             throw $e;
         }
 
@@ -198,14 +198,14 @@ class Manage
                 $nextVersion = implode('.', $versions);
                 $upgrade     = Version::compare($nextVersion, $info['version']);
                 if (!$upgrade) {
-                    Filesystem::delDir($copyToDir);
+                    FileUtil::delDir($copyToDir);
                     // 模块已经存在
                     throw new Exception('Module already exists');
                 }
             }
 
-            if (!Filesystem::dirIsEmpty($this->modulesDir) && !$upgrade) {
-                Filesystem::delDir($copyToDir);
+            if (!FileUtil::dirIsEmpty($this->modulesDir) && !$upgrade) {
+                FileUtil::delDir($copyToDir);
                 // 模块目录被占
                 throw new Exception('The directory required by the module is occupied');
             }
@@ -216,7 +216,7 @@ class Manage
             $newInfo['update'] = 1;
 
             // 清理旧版本代码
-            Filesystem::delDir($this->modulesDir);
+            FileUtil::delDir($this->modulesDir);
         }
 
         // 放置新模块
@@ -304,7 +304,7 @@ class Manage
         // 执行卸载脚本
         Server::execEvent($this->uid, 'uninstall');
 
-        Filesystem::delDir($this->modulesDir);
+        FileUtil::delDir($this->modulesDir);
     }
 
     /**
@@ -382,7 +382,7 @@ class Manage
         if (is_file($zipFile)) {
             try {
                 $zipDir = $this->backupsDir . $this->uid . '-install' . DIRECTORY_SEPARATOR;
-                Filesystem::unzip($zipFile, $zipDir);
+                FileUtil::unzip($zipFile, $zipDir);
             } catch (Exception) {
                 // skip
             }
@@ -466,14 +466,14 @@ class Manage
                 if (in_array($paths[0], $overwriteDir) || in_array($item, $dependJsonFiles)) {
                     $conflictFile[$key] = $item;
                 } else {
-                    $conflictFile[$key] = Filesystem::fsFit(str_replace(root_path(), '', $this->modulesDir . $item));
+                    $conflictFile[$key] = FileUtil::fsFit(str_replace(root_path(), '', $this->modulesDir . $item));
                 }
                 if (!is_file(root_path() . $conflictFile[$key])) {
                     unset($conflictFile[$key]);
                 }
             }
             $backupsZip = $this->backupsDir . $this->uid . '-disable-' . date('YmdHis') . '.zip';
-            Filesystem::zip($conflictFile, $backupsZip);
+            FileUtil::zip($conflictFile, $backupsZip);
         }
 
         // 删除依赖
@@ -501,7 +501,7 @@ class Manage
         // 配置了不删除的文件
         $protectedFiles = Server::getConfig($this->modulesDir, 'protectedFiles');
         foreach ($protectedFiles as &$protectedFile) {
-            $protectedFile = Filesystem::fsFit(root_path() . $protectedFile);
+            $protectedFile = FileUtil::fsFit(root_path() . $protectedFile);
         }
         // 模块文件列表
         $moduleFile = Server::getFileList($this->modulesDir);
@@ -509,8 +509,8 @@ class Manage
         // 删除模块文件
         foreach ($moduleFile as &$file) {
             // 纯净模式下，模块文件将被删除，此处直接检查模块目录中是否有该文件并恢复（不检查是否开启纯净模式，因为开关可能被调整）
-            $moduleFilePath = Filesystem::fsFit($this->modulesDir . $file);
-            $file           = Filesystem::fsFit(root_path() . $file);
+            $moduleFilePath = FileUtil::fsFit($this->modulesDir . $file);
+            $file           = FileUtil::fsFit(root_path() . $file);
             if (!file_exists($file)) continue;
             if (!file_exists($moduleFilePath)) {
                 if (!is_dir(dirname($moduleFilePath))) {
@@ -525,15 +525,15 @@ class Manage
             if (file_exists($file)) {
                 unlink($file);
             }
-            Filesystem::delEmptyDir(dirname($file));
+            FileUtil::delEmptyDir(dirname($file));
         }
 
         // 恢复备份文件
         if ($zipDir) {
             $unrecoverableFiles = [
-                Filesystem::fsFit(root_path() . 'composer.json'),
-                Filesystem::fsFit(root_path() . 'web/package.json'),
-                Filesystem::fsFit(root_path() . 'web-nuxt/package.json'),
+                FileUtil::fsFit(root_path() . 'composer.json'),
+                FileUtil::fsFit(root_path() . 'web/package.json'),
+                FileUtil::fsFit(root_path() . 'web-nuxt/package.json'),
             ];
             foreach (
                 new RecursiveIteratorIterator(
@@ -541,7 +541,7 @@ class Manage
                     RecursiveIteratorIterator::SELF_FIRST
                 ) as $item
             ) {
-                $backupsFile = Filesystem::fsFit(root_path() . str_replace($zipDir, '', $item->getPathname()));
+                $backupsFile = FileUtil::fsFit(root_path() . str_replace($zipDir, '', $item->getPathname()));
 
                 // 在模块包中，同时不在 $protectedFiles 列表的文件不恢复，这些文件可能是模块升级时备份的
                 if (in_array($backupsFile, $moduleFile) && !in_array($backupsFile, $protectedFiles)) {
@@ -559,7 +559,7 @@ class Manage
         }
 
         // 删除解压后的备份文件
-        Filesystem::delDir($zipDir);
+        FileUtil::delDir($zipDir);
 
         // 卸载 WebBootstrap
         Server::uninstallWebBootstrap($this->uid);
@@ -697,7 +697,7 @@ class Manage
         // 备份将被覆盖的文件
         if ($coverFiles) {
             $backupsZip = $trigger == 'install' ? $this->backupsDir . $this->uid . '-install.zip' : $this->backupsDir . $this->uid . '-cover-' . date('YmdHis') . '.zip';
-            Filesystem::zip($coverFiles, $backupsZip);
+            FileUtil::zip($coverFiles, $backupsZip);
         }
 
         if ($depends) {
@@ -776,17 +776,17 @@ class Manage
                     RecursiveIteratorIterator::SELF_FIRST
                 ) as $item
             ) {
-                $destDirItem = Filesystem::fsFit($destDir . DIRECTORY_SEPARATOR . str_replace($baseDir, '', $item->getPathname()));
+                $destDirItem = FileUtil::fsFit($destDir . DIRECTORY_SEPARATOR . str_replace($baseDir, '', $item->getPathname()));
                 if ($item->isDir()) {
-                    Filesystem::mkdir($destDirItem);
+                    FileUtil::mkdir($destDirItem);
                 } elseif (!in_array(str_replace(root_path(), '', $destDirItem), $discardFiles)) {
-                    Filesystem::mkdir(dirname($destDirItem));
+                    FileUtil::mkdir(dirname($destDirItem));
                     copy($item, $destDirItem);
                 }
             }
             // 纯净模式
             if ( config('plugin.radmin.buildadmin.module_pure_install')) {
-                Filesystem::delDir($baseDir);
+                FileUtil::delDir($baseDir);
             }
         }
         return true;
@@ -908,7 +908,7 @@ class Manage
         $infoKeys = ['uid', 'title', 'intro', 'author', 'version', 'state'];
         foreach ($infoKeys as $value) {
             if (!array_key_exists($value, $info)) {
-                Filesystem::delDir($this->modulesDir);
+                FileUtil::delDir($this->modulesDir);
                 throw new Exception('Basic configuration of the Module is incomplete');
             }
         }

@@ -374,7 +374,7 @@ class Captcha
      */
     private function background(): void
     {
-        $path = Filesystem::fsFit(public_path() . 'static/images/captcha/image/');
+        $path = FileUtil::fsFit(public_path() . 'static/images/captcha/image/');
         $dir  = dir($path);
 
         $bgs = [];

@@ -17,7 +17,7 @@ use Exception;
 use PDOException;
 use plugin\radmin\app\admin\model\Config;
 use plugin\radmin\app\admin\model\User as UserModel;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use plugin\radmin\extend\ba\Random;
 use plugin\radmin\extend\ba\Terminal;
 use plugin\radmin\extend\ba\Version;
@@ -153,7 +153,7 @@ class Install
 
         // 配置文件-start
         $dbConfigFile     = base_path() . '/plugin/radmin/config/' . self::$dbConfigFileName;
-        $configIsWritable = Filesystem::pathIsWritable(base_path() . '/plugin/radmin/config') && Filesystem::pathIsWritable($dbConfigFile);
+        $configIsWritable = FileUtil::pathIsWritable(base_path() . '/plugin/radmin/config') && FileUtil::pathIsWritable($dbConfigFile);
         if (!$configIsWritable) {
             $configIsWritableLink = [
                 [
@@ -168,7 +168,7 @@ class Install
         // 配置文件-end
 
         // public-start
-        $publicIsWritable = Filesystem::pathIsWritable(base_path() . '/plugin/radmin/public');
+        $publicIsWritable = FileUtil::pathIsWritable(base_path() . '/plugin/radmin/public');
         if (!$publicIsWritable) {
             $publicIsWritableLink = [
                 [

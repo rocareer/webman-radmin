@@ -8,7 +8,7 @@ use exception;
 use FilesystemIterator;
 use GuzzleHttp\Exception\TransferException;
 use plugin\radmin\app\admin\library\crud\Helper;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use Radmin\orm\Rdb;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -165,7 +165,7 @@ class Server
                 ];
                 foreach ($moduleFileList as $file) {
                     // 如果是要安装到项目的文件，从项目根目录开始，如果不是，从模块根目录开始
-                    $path          = Filesystem::fsFit(str_replace($dir, '', $file['path']));
+                    $path          = FileUtil::fsFit(str_replace($dir, '', $file['path']));
                     $paths         = explode(DIRECTORY_SEPARATOR, $path);
                     $overwriteFile = in_array($paths[0], $overwriteDir) ? root_path() . $path : $dir . $path;
                     if (is_file($overwriteFile) && !in_array($path, $excludeFile) && (filesize($overwriteFile) != $file['size'] || md5_file($overwriteFile) != $file['md5'])) {
@@ -178,7 +178,7 @@ class Server
                     $baseDir = $dir . $item;
                     foreach ($moduleFileList as $file) {
                         if (!str_starts_with($file['path'], $baseDir)) continue;
-                        $fileList[] = Filesystem::fsFit(str_replace($dir, '', $file['path']));
+                        $fileList[] = FileUtil::fsFit(str_replace($dir, '', $file['path']));
                     }
                 }
             }
@@ -502,7 +502,7 @@ class Server
 
     public static function getNuxtVersion()
     {
-        $nuxtPackageJsonPath = Filesystem::fsFit(root_path() . 'web-nuxt/package.json');
+        $nuxtPackageJsonPath = FileUtil::fsFit(root_path() . 'web-nuxt/package.json');
         if (is_file($nuxtPackageJsonPath)) {
             $nuxtPackageJson = file_get_contents($nuxtPackageJsonPath);
             $nuxtPackageJson = json_decode($nuxtPackageJson, true);
@@ -528,7 +528,7 @@ class Server
                 $pathName = $file->getPathName();
                 if ($pathName == $runtimeFilePath) continue;
                 $filePaths[] = [
-                    'path' => Filesystem::fsFit($pathName),
+                    'path' => FileUtil::fsFit($pathName),
                     'size' => filesize($pathName),
                     'md5'  => md5_file($pathName),
                 ];

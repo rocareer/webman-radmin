@@ -4,7 +4,7 @@
 namespace plugin\radmin\app\common\library\upload\driver;
 
 use plugin\radmin\app\common\library\upload\driver;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use Radmin\Http;
 use Webman\Exception\FileException;
 use Webman\Http\UploadFile;
@@ -71,7 +71,7 @@ class Local extends Driver
 		if ($this->exists($saveFullName)) {
 			@unlink($saveFullName);
 		}
-		Filesystem::delEmptyDir(dirname($saveFullName));
+		FileUtil::delEmptyDir(dirname($saveFullName));
 		return true;
 	}
 	
@@ -129,17 +129,17 @@ class Local extends Driver
 		
 		// 以 root 路径开始时单独返回，避免重复调用此方法时造成 $dirName 的错误拼接
 		if (str_starts_with($saveName, $root)) {
-			return Filesystem::fsFit($baseName || !isset($savePathInfo['extension']) ? $saveName : $dirName);
+			return FileUtil::fsFit($baseName || !isset($savePathInfo['extension']) ? $saveName : $dirName);
 		}
 		
-		return Filesystem::fsFit($root . $dirName . ($baseName ? $savePathInfo['basename'] : ''));
+		return FileUtil::fsFit($root . $dirName . ($baseName ? $savePathInfo['basename'] : ''));
 	}
 	
 	public function clearRootPath(string $saveName): string
 	{
 
         try {
-            return str_replace($this->options['url'], '', Filesystem::fsFit($saveName));
+            return str_replace($this->options['url'], '', FileUtil::fsFit($saveName));
         } catch (\Exception $e) {
             throw $e;
         }
@@ -147,6 +147,6 @@ class Local extends Driver
 	
 	public function getRootPath(): string
 	{
-		return Filesystem::fsFit(str_replace($this->options['url'], '', $this->options['root']));
+		return FileUtil::fsFit(str_replace($this->options['url'], '', $this->options['root']));
 	}
 }

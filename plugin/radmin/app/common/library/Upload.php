@@ -7,7 +7,7 @@ use exception;
 use InvalidArgumentException;
 use plugin\radmin\app\common\library\upload\driver;
 use plugin\radmin\app\common\model\Attachment;
-use plugin\radmin\extend\ba\Filesystem;
+use Radmin\util\FileUtil;
 use plugin\radmin\extend\ba\Random;
 use Radmin\Log;
 use think\helper\Str;
@@ -259,7 +259,7 @@ class Upload
             '{fileSha1}' => $sha1,
         ];
         $saveName   = $saveName ?: $this->config['save_name'];
-        return Filesystem::fsFit(str_replace(array_keys($replaceArr), array_values($replaceArr), $saveName));
+        return FileUtil::fsFit(str_replace(array_keys($replaceArr), array_values($replaceArr), $saveName));
     }
 
     /**
@@ -272,7 +272,7 @@ class Upload
             throw new Exception(__('No files have been uploaded or the file size exceeds the upload limit of the server'));
         }
 
-        $size   = Filesystem::fileUnitToByte($this->config['max_size']);
+        $size   = FileUtil::fileUnitToByte($this->config['max_size']);
         $mime   = $this->checkConfig($this->config['allowed_mime_types']);
         $suffix = $this->checkConfig($this->config['allowed_suffixes']);
 
