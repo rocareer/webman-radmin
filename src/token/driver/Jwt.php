@@ -13,9 +13,9 @@ namespace Radmin\token\driver;
 
 use Exception;
 use plugin\radmin\exception\TokenException;
-use plugin\radmin\support\jwt\Jwt as JwtFacade;
-use plugin\radmin\support\jwt\JwtService;
 use plugin\radmin\support\StatusCode;
+use Radmin\jwt\Jwt as JwtFacade;
+use Radmin\jwt\JwtService;
 use Radmin\token\Token;
 use Radmin\token\TokenInterface;
 use stdClass;
