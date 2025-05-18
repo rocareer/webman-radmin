@@ -5,6 +5,7 @@ namespace plugin\radmin\support\member;
 
 use plugin\radmin\support\StatusCode;
 use Radmin\Container;
+use Radmin\Event;
 use Radmin\exception\BusinessException;
 use Radmin\exception\UnauthorizedHttpException;
 use Radmin\Http;
@@ -238,14 +239,7 @@ abstract class Authenticator implements InterfaceAuthenticator
      */
     protected function recordOperationLog(array $logData): void
     {
-        // if ($this->stateManager && method_exists($this->stateManager, 'recordOperationLog')) {
-        //     $this->stateManager->recordOperationLog(
-        //         $logData['action'] ?? 'operation',
-        //         $logData['type'] ?? 'common',
-        //         $logData['description'] ?? '',
-        //         $logData['data'] ?? []
-        //     );
-        // }
+
     }
 
     /**

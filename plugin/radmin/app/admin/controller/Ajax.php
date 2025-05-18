@@ -7,7 +7,7 @@ use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\app\common\library\upload;
 use plugin\radmin\extend\ba\TableManager;
 use plugin\radmin\extend\ba\Terminal;
-use plugin\radmin\support\Cache;
+use Radmin\cache\Cache;
 use Radmin\exception\Exception;
 use Radmin\orm\Rdb;
 use Radmin\Response;

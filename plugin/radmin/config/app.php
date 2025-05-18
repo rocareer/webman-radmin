@@ -19,7 +19,7 @@ use Radmin\Request;
 
 return [
     'debug'             => env('APP_DEBUG', true),
-    'installed'         => false,
+    'installed'         => true,
     'error_reporting'   => E_ALL,
     'default_timezone'  => env('DEFAULT_TIMEZONE', 'Asia/Shanghai'),
     'controller_suffix' => '',

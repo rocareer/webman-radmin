@@ -12,6 +12,7 @@
 namespace Radmin\token;
 
 use InvalidArgumentException;
+use Radmin\util\SystemUtil;
 use RuntimeException;
 use stdClass;
 use think\helper\Arr;

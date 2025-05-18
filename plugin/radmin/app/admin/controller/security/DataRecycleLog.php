@@ -6,6 +6,7 @@ use plugin\radmin\app\admin\model\DataRecycleLog as DataRecycleLogModel;
 use plugin\radmin\app\common\controller\Backend;
 use plugin\radmin\extend\ba\TableManager;
 use Radmin\orm\Rdb;
+use Radmin\Response;
 use Throwable;
 
 class DataRecycleLog extends Backend
@@ -33,7 +34,7 @@ class DataRecycleLog extends Backend
      * 还原
      * @throws Throwable
      */
-    public function restore(): \Radmin\Response
+    public function restore(): Response
     {
         $ids  = $this->request->input('ids', []);
         $data = $this->model->where('id', 'in', $ids)->select();
@@ -68,7 +69,7 @@ class DataRecycleLog extends Backend
      * 详情
      * @throws Throwable
      */
-    public function info(): \Radmin\Response
+    public function info(): Response
     {
         $pk  = $this->model->getPk();
         $id  = $this->request->input($pk);
