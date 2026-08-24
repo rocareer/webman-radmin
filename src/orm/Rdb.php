@@ -3,11 +3,11 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2023 http://thinkphp.cn All rights reserved.
+// | Copyright (c) Rocareer Team. All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// | Author: albert@rocareer.com
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
+// | Author: albert <albert@rocareer.com>
 // +----------------------------------------------------------------------
 
 namespace Radmin\orm;

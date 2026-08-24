@@ -5,8 +5,8 @@
  * Created:     2025/5/16 15:25
  * Description:
  *
- * Copyright [2014-2026] [https://rocareer.com]
- * Licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ * Copyright (c) Rocareer Team. All rights reserved.
+ * Author: albert@rocareer.com
  */
 
 namespace plugin\radmin\middleware;

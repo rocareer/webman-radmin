@@ -2,14 +2,14 @@
 /**
  * This file is part of webman.
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the MIT-LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
+ * Proprietary license (Rocareer Team)
+ * Copyright (c) Rocareer Team. All rights reserved.
+ * Author: albert@rocareer.com
  *
- * @author    walkor<walkor@workerman.net>
- * @copyright walkor<walkor@workerman.net>
+ * @author    albert <albert@rocareer.com>
+ * @copyright Rocareer Team (albert@rocareer.com)
  * @link      http://www.workerman.net/
- * @license   http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license   Proprietary (Rocareer Team)
  */
 
 return [

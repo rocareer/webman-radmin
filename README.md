@@ -194,7 +194,7 @@ npm run dev
 
 ## 版权声明
 
-遵循Apache2.0协议  license：https://gitee.com/rocareer/radmin/blob/master/LICENSE
+Rocareer Team 商业及内部专有项目，不适用开源许可证。版权所有 © Rocareer Team，作者：albert@rocareer.com。
 
 
 ## 致谢

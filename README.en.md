@@ -191,7 +191,7 @@ npm run dev
 
 ## Copyright Statement
 
-Licensed under the Apache 2.0 License: https://gitee.com/rocareer/radmin/blob/master/LICENSE
+Proprietary. Copyright (c) Rocareer Team. All rights reserved. Author: albert@rocareer.com
 
 ## Acknowledgments
 
